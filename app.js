@@ -284,9 +284,19 @@ function renderCurrentSong() {
   let lyricsArray = null;
   let liveVariants = null;
 
-  if (state.lyricsDb && state.lyricsDb.bands[activeBand.name] && state.lyricsDb.bands[activeBand.name].songs[song.display_name]) {
-    lyricsArray = state.lyricsDb.bands[activeBand.name].songs[song.display_name].lyrics;
-    liveVariants = state.lyricsDb.bands[activeBand.name].songs[song.display_name].live_variations;
+  if (state.lyricsDb && state.lyricsDb.bands) {
+    const bandKey = Object.keys(state.lyricsDb.bands).find(
+      k => k.toLowerCase() === activeBand.name.toLowerCase()
+    );
+    if (bandKey) {
+      const songKey = Object.keys(state.lyricsDb.bands[bandKey].songs).find(
+        k => k.toLowerCase() === song.display_name.toLowerCase()
+      );
+      if (songKey) {
+        lyricsArray = state.lyricsDb.bands[bandKey].songs[songKey].lyrics;
+        liveVariants = state.lyricsDb.bands[bandKey].songs[songKey].live_variations;
+      }
+    }
   }
 
   if (!lyricsArray) {
