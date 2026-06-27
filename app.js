@@ -175,15 +175,17 @@ async function loadArtistSonglist() {
       "different-kind-of-love", "my-body", "teachers", "the-garden", 
       "cough-syrup", "the-walk-home", "mind-over-matter"
     ];
-    for (const song of songlist) {
+    const promises = songlist.map(async (song) => {
       try {
         const res = await fetch(`bundles/songs/song-young-the-giant-${song}.jsonc`);
-        const text = await res.text();
-        state.songs.push(parseJSONC(text));
+        if (res.ok) return parseJSONC(await res.text());
       } catch(e) {
         console.warn("Failed to load song:", song, e);
       }
-    }
+      return null;
+    });
+    const loaded = await Promise.all(promises);
+    state.songs = loaded.filter(s => s !== null);
   } else if (activeSlug === 'cold-war-kids') {
     const songlist = [
       "all-this-could-be-yours", "can-we-hang-on", "first", "hang-me-up-to-dry",
@@ -192,15 +194,17 @@ async function loadArtistSonglist() {
       "there-goes-the-night", "we-used-to-vacation", "what-you-say",
       "whos-gonna-love-me-now"
     ];
-    for (const song of songlist) {
+    const promises = songlist.map(async (song) => {
       try {
         const res = await fetch(`bundles/songs/song-cold-war-kids-${song}.jsonc`);
-        const text = await res.text();
-        state.songs.push(parseJSONC(text));
+        if (res.ok) return parseJSONC(await res.text());
       } catch(e) {
         console.warn("Failed to load song:", song, e);
       }
-    }
+      return null;
+    });
+    const loaded = await Promise.all(promises);
+    state.songs = loaded.filter(s => s !== null);
   } else {
     // almost monday or KennyHoopla fallback mock songs
     state.songs = [
@@ -512,9 +516,25 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
             <p style="margin:2px 0 4px 0; line-height:1.3; color:#ff9f0a;">A new kind of light for the show. Mapping the stories, soundscapes, and paths that grow between the stage and the lawn.</p>
             <p style="margin:0; font-size:0.7rem; color:#aaa;">Developed by <a href="mailto:chozcunningham+sunmap@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:700;">C. Cunningham</a>. Contact us to build this for your tour, concert, or music event.</p>
           </div>
+
+          <div style="margin-top: 18px; display:flex; gap:10px; font-size:0.8rem; font-family:'Segoe UI', sans-serif;">
+            <button id="lnk-to-venue" style="background:transparent; border:1px solid #444; color:#fff; padding:10px; border-radius:6px; cursor:pointer; flex-grow:1; font-weight:700; font-family:'Segoe UI',sans-serif;">🗺️ Venue Policies</button>
+            <button id="lnk-to-band" style="background:transparent; border:1px solid #444; color:#fff; padding:10px; border-radius:6px; cursor:pointer; flex-grow:1; font-weight:700; font-family:'Segoe UI',sans-serif;">🎸 Openers Lore</button>
+          </div>
         </div>
       </div>
     `;
+
+    // Bind shortcuts
+    document.getElementById('lnk-to-venue').addEventListener('click', () => {
+      document.getElementById('btn-venue').click();
+    });
+    document.getElementById('lnk-to-band').addEventListener('click', () => {
+      state.activeBandIndex = 0; // almost monday
+      loadArtistSonglist().then(() => {
+        triggerTransition(renderActiveBandProfile);
+      });
+    });
   });
 });
 
@@ -538,18 +558,50 @@ function renderActiveBandProfile() {
     return `<option value="${idx}" ${isSelected}>${b.display_name}</option>`;
   }).join('');
 
+  // CSS aesthetic block/collage representation of the band
+  let bandArtStyle = '';
+  let linksHTML = '';
+  
+  if (activeBand.id === 'artist:almost-monday') {
+    bandArtStyle = `background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);`; // Surf sun pastel gradient
+    linksHTML = `<a href="https://almostmonday.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 surf pop wraps era</a>`;
+  } else if (activeBand.id === 'artist:cold-war-kids') {
+    bandArtStyle = `background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);`; // Deep classic blue
+    linksHTML = `<a href="https://coldwarkids.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 20 years of robbers & cowards</a>`;
+  } else if (activeBand.id === 'artist:young-the-giant') {
+    bandArtStyle = `background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);`; // Warm woodcut soil green/yellow
+    linksHTML = `
+      <div style="display:flex; gap:12px;">
+        <a href="https://youngthegiant.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 victory garden tour</a>
+        <a href="https://youngthegiant.com/music" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 mirror master</a>
+      </div>
+    `;
+  } else {
+    bandArtStyle = `background: linear-gradient(135deg, #ed213a 0%, #93291e 100%);`; // Punk deep red
+    linksHTML = `<a href="https://kennyhoopla.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 alternative punk sound</a>`;
+  }
+
   const content = document.getElementById('viewport-content');
   content.innerHTML = `
-    <div class="lyrics-view" style="display:flex; flex-direction:column; justify-content:space-between; height:100%;">
+    <div class="lyrics-view" style="display:flex; flex-direction:column; height:100%; justify-content:space-between;">
       <div class="song-header">
         <h1>${activeBand.name}</h1>
         <p>${activeBand.genre} &bull; ${activeBand.origin}</p>
       </div>
 
-      <div class="lyrics-body" style="font-size:0.95rem; font-weight:500; line-height:1.6; color:#fff; text-align:left; overflow-y:auto;">
-        <p style="margin-bottom:12px;">${activeBand.bio}</p>
+      <!-- Band Aesthetic Collage Banner -->
+      <div style="width:100%; height:75px; ${bandArtStyle} border-radius:8px; display:flex; justify-content:center; align-items:center; box-shadow:inset 0 0 15px rgba(0,0,0,0.2); margin-bottom:12px;">
+        <span style="font-family:'Segoe UI', sans-serif; font-weight:900; font-size:1.1rem; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.3); text-transform:uppercase; letter-spacing:0.1em;">${activeBand.name}</span>
+      </div>
+
+      <div class="lyrics-body" style="flex-grow:1; overflow-y:auto; padding:10px 0; text-align:left; font-family:'Segoe UI', sans-serif;">
+        <p style="font-size:1.05rem; line-height:1.55; color:rgba(255,255,255,0.95); margin-bottom:14px;">${activeBand.bio}</p>
         
-        <div style="margin-top: 18px; font-size: 0.75rem; font-family: 'Segoe UI', sans-serif;">
+        <div style="margin: 16px 0; border-top: 1px dashed rgba(255,255,255,0.15); padding-top:12px;">
+          ${linksHTML}
+        </div>
+
+        <div style="margin-top: 14px; font-size: 0.75rem; font-family: 'Segoe UI', sans-serif;">
           <label for="band-select" style="display:block; margin-bottom:4px; text-transform:uppercase; font-weight:700; color:var(--text-secondary);">Select active band profile:</label>
           <select id="band-select" style="width:100%; padding:10px; background:#222; border:1px solid #444; color:#fff; border-radius:6px; font-family:'Segoe UI', sans-serif;">
             ${bandOptionsHTML}
@@ -557,7 +609,7 @@ function renderActiveBandProfile() {
         </div>
       </div>
 
-      <div class="song-controller" style="justify-content: center; gap: 20px;">
+      <div class="song-controller" style="justify-content: center; gap: 20px; flex-shrink:0; margin-top:6px;">
         <button class="ctrl-btn" id="btn-prev-band">◀</button>
         <span class="song-index" style="font-family:'Courier Prime', monospace;">${state.activeBandIndex + 1} / ${bandsList.length}</span>
         <button class="ctrl-btn" id="btn-next-band">▶</button>

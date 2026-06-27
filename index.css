@@ -161,7 +161,7 @@ body {
 .viewport-content {
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 26px 22px;
   overflow-y: auto;
   scrollbar-width: none; /* Hide scrollbar for clean UI */
 }
@@ -373,7 +373,7 @@ body {
 
 /* DETAIL TEXT STYLING (Nuts & Bolts) */
 .details-view {
-  font-family: 'Inter', sans-serif;
+  font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
   color: var(--text-primary);
   line-height: 1.5;
 }
@@ -381,7 +381,7 @@ body {
 .details-view h2 {
   font-family: "Segoe UI", sans-serif;
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   margin-bottom: 12px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 4px;
@@ -389,7 +389,7 @@ body {
 
 .details-view h3 {
   font-family: "Segoe UI", sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 14px;
@@ -397,27 +397,29 @@ body {
 }
 
 .details-view p {
-  font-size: 0.85rem;
-  margin-bottom: 8px;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.5;
 }
 
 .details-view ul {
   list-style: none;
-  font-size: 0.85rem;
+  font-size: 1.05rem;
   margin-top: 4px;
 }
 
 .details-view li {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   position: relative;
-  padding-left: 12px;
+  padding-left: 14px;
+  line-height: 1.4;
 }
 
 .details-view li::before {
   content: "■";
   color: var(--accent);
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   position: absolute;
   left: 0;
   top: 4px;
