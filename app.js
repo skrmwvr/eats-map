@@ -52,13 +52,15 @@ const factoids = [
   "almost monday's surf pop guitar sound uses spring-reverb tanks from the 1960s."
 ];
 
-// Evolved Band profiles for Switcher transport
+// Evolved Band profiles for Switcher transport (KennyHoopla is kept for safeguard, but hidden from switcher count)
 const bandsList = [
   { id: 'artist:almost-monday', name: 'almost monday', display_name: 'almost monday', origin: 'San Diego, CA', genre: 'Surf Pop', theme: 'theme-venue', bio: 'San Diego surf-pop trio brings sun-drenched indie pop and funky basslines to the opening slot. confirmed by Hollywood Records, their run wraps tonight.' },
   { id: 'artist:cold-war-kids', name: 'Cold War Kids', display_name: 'Cold War Kids', origin: 'Fullerton, CA', genre: 'Blues Indie Rock', theme: 'theme-cwk', bio: 'Performing their landmark debut album Robbers & Cowards in full to celebrate its 20th anniversary, including Hang Me Up to Dry.' },
   { id: 'artist:young-the-giant', name: 'Young the Giant', display_name: 'Young the Giant', origin: 'Irvine, CA', genre: 'Alternative Rock', theme: 'theme-ytg', bio: 'Headline performance of their Victory Garden Tour. Rooted in the themes of radical empathy, resilience, and caring through chaos.' },
   { id: 'artist:kennyhoopla', name: 'KennyHoopla', display_name: 'KennyHoopla (Safeguard)', origin: 'Cleveland, OH', genre: 'Post-Punk / Dance-Punk', theme: 'theme-tour', bio: 'Alternative support act cached offline in case of lineup variations. Cleveland native Kenneth La\'ron brings high-energy alternative rock.' }
 ];
+
+const switcherBandsCount = 3; // hide KennyHoopla from active cycling count
 
 // Data State Cache
 const state = {
@@ -73,6 +75,7 @@ const state = {
   sentiment: null,
   tourHistory: null,
   dismissedAlertText: null,
+  hideSpoilers: false,
   activeViewport: 'lyrics', // 'lyrics', 'weather', 'venue', 'timeline', 'band'
   lyricsDb: null
 };
@@ -127,6 +130,8 @@ function triggerTransition(callback) {
 
 // Load Core Data from bundles/ & fill-data/
 async function loadCorpusData() {
+  state.hideSpoilers = localStorage.getItem('hideSpoilers') === 'true';
+
   // Safe fetching netting fallbacks
   try {
     const venueRes = await fetch('bundles/venues/venue-ascend-federal-credit-union-amphitheater.jsonc');
@@ -309,17 +314,22 @@ function renderCurrentSong() {
     `;
   }
 
-  // Dropdown list HTML
+  // Dropdown list HTML (Hiding projected songs names if Anti-Spoiler Mode is active)
   let optionsHTML = state.songs.map((s, idx) => {
     const isSelected = idx === state.activeSongIndex ? 'selected' : '';
+    if (state.hideSpoilers && idx > state.activeSongIndex) {
+      return `<option value="${idx}" ${isSelected}>${idx + 1}. [Projected Track]</option>`;
+    }
     return `<option value="${idx}" ${isSelected}>${idx + 1}. ${s.display_name}</option>`;
   }).join('');
+
+  const displaySongName = (state.hideSpoilers && state.activeSongIndex > 0) ? `Track ${state.activeSongIndex + 1}` : song.display_name;
 
   const content = document.getElementById('viewport-content');
   content.innerHTML = `
     <div class="lyrics-view" style="display:flex; flex-direction:column; height:100%;">
       <div class="song-header">
-        <h1>${song.display_name}</h1>
+        <h1>${displaySongName}</h1>
         <p>${activeBand.display_name} &bull; ${song.musicality?.canonical_key || 'C Major'} &bull; ${song.musicality?.tempo_bpm || 110} BPM</p>
       </div>
       
@@ -336,7 +346,7 @@ function renderCurrentSong() {
         </div>
 
         <div style="margin-top: 18px; display:flex; gap:10px; font-size:0.75rem; font-family:'Segoe UI', sans-serif;">
-          <a href="https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:700; flex-grow:1; text-align:center; padding:8px; border:1px solid #333; border-radius:4px;">Full Live Catalog ↗</a>
+          <a href="https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html" target="_blank" style="color:var(--accent); text-decoration:none; font-weight:700; flex-grow:1; text-align:center; padding:8px; border:1px solid #333; border-radius:4px;">Full Catalog ↗</a>
           <button id="btn-share-trigger" style="background:transparent; border:1px dashed #666; color:#aaa; padding:8px; border-radius:4px; cursor:pointer; flex-grow:1;">Share App</button>
         </div>
       </div>
@@ -513,6 +523,14 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
             </div>
           </div>
 
+          <!-- Anti-Spoiler Mode Settings -->
+          <div style="margin:14px 0; background:rgba(255,255,255,0.04); padding:10px; border-radius:6px; font-size:0.82rem; font-family:'Segoe UI',sans-serif; text-align:left; border: 1px solid #333;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+              <input type="checkbox" id="spoiler-toggle" ${state.hideSpoilers ? 'checked' : ''}>
+              <strong>Anti-Spoiler Mode (Hide future tracks)</strong>
+            </label>
+          </div>
+
           <!-- Auto-Shuffling Trivia (Moved from Venue to Program view) -->
           <div id="shuffling-factoid" style="margin-top:14px; font-size:0.85rem; min-height:40px; padding:10px; background:rgba(255,255,255,0.03); border-radius:6px; color:#ff9f0a; transition: opacity 0.4s ease; border-left: 3px solid #ff9f0a;">
             💡 Loading trivia...
@@ -521,12 +539,6 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
           <div style="margin-top:14px; padding:10px; background:rgba(255,255,255,0.03); border-radius:6px; font-size:0.75rem; border:1px dashed #444;">
             <strong>📲 Add to Home Screen (PWA):</strong>
             <p style="margin:2px 0 0 0; line-height:1.3; color:#aaa;">Install app for 100% offline access to all lists and keys when cellular network grids clog.</p>
-          </div>
-          
-          <div style="margin-top:14px; padding:10px; background:rgba(255,87,34,0.08); border-radius:6px; font-size:0.75rem;">
-            <strong>🔌 About Sun Map:</strong>
-            <p style="margin:2px 0 4px 0; line-height:1.3; color:#ff9f0a;">A new kind of light for the show. Mapping the stories, soundscapes, and paths that grow between the stage and the lawn.</p>
-            <p style="margin:0; font-size:0.7rem; color:#aaa;">Developed by <a href="mailto:chozcunningham+sunmap@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:700;">C. Cunningham</a>. Contact us to build this for your tour, concert, or music event.</p>
           </div>
 
           <div style="margin-top: 18px; display:flex; gap:10px; font-size:0.8rem; font-family:'Segoe UI', sans-serif;">
@@ -547,6 +559,11 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
         triggerTransition(renderActiveBandProfile);
       });
     });
+
+    document.getElementById('spoiler-toggle').addEventListener('change', (e) => {
+      state.hideSpoilers = e.target.checked;
+      localStorage.setItem('hideSpoilers', state.hideSpoilers ? 'true' : 'false');
+    });
     
     startFactoidShuffler();
   });
@@ -566,10 +583,10 @@ function renderActiveBandProfile() {
   viewport.className = 'viewport-square'; 
   viewport.classList.add(activeBand.theme);
 
-  // Dropdown list HTML for bands
-  let bandOptionsHTML = bandsList.map((b, idx) => {
+  // Dropdown list HTML for bands (limiting to switcherBandsCount = 3 to hide KennyHoopla)
+  let bandOptionsHTML = bandsList.slice(0, switcherBandsCount).map((b, idx) => {
     const isSelected = idx === state.activeBandIndex ? 'selected' : '';
-    return `<option value="${idx}" ${isSelected}>${idx + 1} / ${bandsList.length}</option>`;
+    return `<option value="${idx}" ${isSelected}>${idx + 1} / ${switcherBandsCount}</option>`;
   }).join('');
 
   // CSS aesthetic block/collage representation of the band
@@ -616,7 +633,7 @@ function renderActiveBandProfile() {
         </div>
       </div>
 
-      <!-- Dropdown picker low inside port between navigation buttons -->
+      <!-- Dropdown picker low inside port between navigation buttons (limits to 3 performer slides) -->
       <div class="song-controller" style="justify-content: center; gap: 14px; flex-shrink:0; margin-top:6px; display:flex; align-items:center;">
         <button class="ctrl-btn" id="btn-prev-band">◀</button>
         
@@ -632,15 +649,15 @@ function renderActiveBandProfile() {
     </div>
   `;
 
-  // Bind controls
+  // Bind controls (Cycling within the bounds of switcherBandsCount = 3)
   document.getElementById('btn-prev-band').addEventListener('click', () => {
-    state.activeBandIndex = (state.activeBandIndex - 1 + bandsList.length) % bandsList.length;
+    state.activeBandIndex = (state.activeBandIndex - 1 + switcherBandsCount) % switcherBandsCount;
     loadArtistSonglist().then(() => {
       triggerTransition(renderActiveBandProfile);
     });
   });
   document.getElementById('btn-next-band').addEventListener('click', () => {
-    state.activeBandIndex = (state.activeBandIndex + 1) % bandsList.length;
+    state.activeBandIndex = (state.activeBandIndex + 1) % switcherBandsCount;
     loadArtistSonglist().then(() => {
       triggerTransition(renderActiveBandProfile);
     });
@@ -787,21 +804,60 @@ function cancelPress() {
 }
 
 function triggerPageHelp() {
-  let tip = "Long-press active! Navigate using top and bottom controls.";
+  let tip = "Navigate using top and bottom controls.";
   
   if (state.activeViewport === 'lyrics') {
-    tip = "🎵 Lyrics Mode: Tap arrows to cycle songs, or select a track from the dropdown to skip directly to it.";
+    tip = `
+      <p style="margin-bottom:10px;"><strong>🎵 Song & Lyrics Mode</strong></p>
+      <ul style="padding-left:16px; margin:0; display:flex; flex-direction:column; gap:6px;">
+        <li>Use the bottom <strong>◀ / ▶</strong> transport buttons to flip tracks sequentially.</li>
+        <li>Tap the <strong>Jumplist select box</strong> to skip straight to any song in tonight's set list.</li>
+        <li>Observe highlighted live performance warnings showing ad-libs or crowd prompts.</li>
+      </ul>
+    `;
   } else if (state.activeViewport === 'venue') {
-    tip = "🏟️ Venue Mode: Use the top action bar to mark parking, view accessibility maps, or dial help.";
+    tip = `
+      <p style="margin-bottom:10px;"><strong>🏟️ Venue & Security Guide</strong></p>
+      <ul style="padding-left:16px; margin:0; display:flex; flex-direction:column; gap:6px;">
+        <li>Tap <strong>🚗 Mark Car</strong> when you park. The app calculates walk coordinates and remembers your lot offline.</li>
+        <li>Tap <strong>🚻 Facilities</strong> to check ramps, bathrooms, or first aid details.</li>
+        <li>Tap <strong>📞 Call Help</strong> to call Venue Guest Services and ADA assistance instantly.</li>
+      </ul>
+    `;
   } else if (state.activeViewport === 'weather') {
-    tip = "⛈️ Weather Mode: Inspect the local NWS flood watch status, or toggle the top alert banner display.";
+    tip = `
+      <p style="margin-bottom:10px;"><strong>⛈️ Live Weather Center</strong></p>
+      <ul style="padding-left:16px; margin:0; display:flex; flex-direction:column; gap:6px;">
+        <li>Check local NOAA flood watch guidelines.</li>
+        <li>Toggle the <strong>Show Alert Banner</strong> checkbox to show or hide the emergency header banner.</li>
+      </ul>
+    `;
   } else if (state.activeViewport === 'timeline') {
-    tip = "⏰ Program Mode: Scroll up and down to check opening act set windows, transit schedules, and credits.";
+    tip = `
+      <p style="margin-bottom:10px;"><strong>⏰ Program Timeline & Lore</strong></p>
+      <ul style="padding-left:16px; margin:0; display:flex; flex-direction:column; gap:6px;">
+        <li>View gate opening offsets and set window guidelines for all performers.</li>
+        <li>Click shortcuts to jump directly to venue maps or opener details.</li>
+        <li>Enable or disable the <strong>Anti-Spoiler Mode</strong> to hide upcoming track sequences.</li>
+      </ul>
+    `;
   } else if (state.activeViewport === 'band') {
-    tip = "🎸 Band Mode: Use the arrows or selector at the bottom to swap bios and dynamically sync UI themes.";
+    tip = `
+      <p style="margin-bottom:10px;"><strong>🎸 Band Profiles & Themes</strong></p>
+      <ul style="padding-left:16px; margin:0; display:flex; flex-direction:column; gap:6px;">
+        <li>Tap the left or right arrows to cycle performers scheduled tonight.</li>
+        <li>Swapping the active band dynamically adapts the entire app's visual color theme.</li>
+        <li>Tap custom links to explore their albums or tour charities.</li>
+      </ul>
+    `;
   }
   
-  showHelpBubble(tip);
+  const modal = document.getElementById('help-modal');
+  const context = document.getElementById('help-modal-context');
+  if (modal && context) {
+    context.innerHTML = tip;
+    modal.classList.add('active');
+  }
 }
 
 function showHelpBubble(text) {
@@ -905,6 +961,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('btn-foot-help').addEventListener('click', () => {
     triggerPageHelp();
+  });
+
+  document.getElementById('btn-close-help-modal').addEventListener('click', () => {
+    document.getElementById('help-modal').classList.remove('active');
   });
 
   // Bind Long-Press handlers to main elements

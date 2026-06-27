@@ -334,7 +334,7 @@ body {
 /* BOTTOM AREA */
 .dashboard-bottom {
   display: grid;
-  grid-template-columns: 1.2fr auto 1.2fr auto 1.2fr;
+  grid-template-columns: 1fr 1fr 1fr;
   background-color: var(--header-footer-bg);
   padding: 8px 12px;
   gap: 8px;
@@ -342,21 +342,42 @@ body {
   align-items: end; /* align other buttons to bottom */
 }
 
+.home-btn-container {
+  position: relative;
+  height: 64px;
+  margin-top: -18px; /* apply the break upward to the container */
+  display: flex;
+  justify-content: center;
+  z-index: 5;
+  width: 100%;
+}
+
 .tiny-foot-btn {
-  height: 38px;
-  width: 38px;
+  position: absolute;
+  height: 32px;
+  width: 32px;
   border-radius: 50%;
-  background-color: #222;
-  border: 1px solid #444;
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 87, 34, 0.4);
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 0.9rem;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  margin-bottom: 22px; /* sits high in sun's third of row */
-  transition: all 0.15s ease;
   z-index: 6;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.5);
+  transition: all 0.15s ease;
+}
+
+#btn-foot-restroom {
+  left: calc(50% - 56px); /* sits beautifully to the left of the sun */
+  top: 10px;
+}
+
+#btn-foot-help {
+  right: calc(50% - 56px); /* sits beautifully to the right of the sun */
+  top: 10px;
 }
 
 .tiny-foot-btn:active {
@@ -367,7 +388,7 @@ body {
 
 #btn-home {
   height: 64px;
-  margin-top: -18px; /* break upward touching viewport edge */
+  width: 76px;
   border-radius: 50% 50% 8px 8px;
   background-color: #2a1508;
   border: 2px solid var(--accent);
