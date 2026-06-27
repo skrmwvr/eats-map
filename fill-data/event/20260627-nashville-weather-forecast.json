@@ -1,0 +1,13 @@
+{
+  "location": "Nashville, TN",
+  "date": "2026-06-27",
+  "weather": {
+    "forecast_summary": "Showers and thunderstorms likely, high near 89F, overnight low around 74F. Flood Watch in effect from 7:00 AM June 27 to 7:00 AM June 28.",
+    "temp_f_high": 89,
+    "temp_f_low": 74,
+    "precipitation_chance": 80,
+    "conditions": "Rain / Thunderstorms",
+    "source_url": "https://forecast.weather.gov/MapClick.php?lat=36.1606&lon=-86.7756",
+    "captured_at": "2026-06-27T06:28:22-05:00"
+  }
+}

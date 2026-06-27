@@ -26,4 +26,9 @@ Use the table below to log current ingestion status of files stored in this fold
 
 | Date | File Path | Destination Table/Entity | Status | Notes / Errors |
 |------|-----------|--------------------------|--------|----------------|
-|      |           |                          |        |                |
+| 2026-06-27 | [20260627-young-the-giant-bio.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/band/20260627-young-the-giant-bio.json) | `Artist` | `captured` | Raw bio & social vectors |
+| 2026-06-27 | [20260627-young-the-giant-setlist.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/band/20260627-young-the-giant-setlist.json) | `Song`, `PerformanceContext` | `captured` | Core song list with keys & tempos |
+| 2026-06-27 | [20260627-ascend-amphitheater-info.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/venue/20260627-ascend-amphitheater-info.json) | `Venue` | `captured` | Capacity, rules, parking, bag rules |
+| 2026-06-27 | [20260627-young-the-giant-event-info.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/event/20260627-young-the-giant-event-info.json) | `Event` | `captured` | Schedule, lineups, AXS ticketing details |
+| 2026-06-27 | [20260627-nashville-weather-forecast.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/event/20260627-nashville-weather-forecast.json) | `Event.weather` | `captured` | NOAA forecast (flood watch, storms) |
+

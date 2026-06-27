@@ -1,0 +1,24 @@
+{
+  "name": "Ascend Federal Credit Union Amphitheater",
+  "display_name": "Ascend Amphitheater",
+  "slug": "ascend-federal-credit-union-amphitheater",
+  "address": "310 First Avenue South, Nashville, TN 37201",
+  "city": "Nashville",
+  "state": "TN",
+  "country": "US",
+  "capacity": 6800,
+  "is_outdoor": true,
+  "utility": {
+    "parking_url": "https://parking.com/nashville/events/9740983/young-the-giant-victory-garden-tour-with-cold-war-kids-6-27",
+    "bag_policy_url": "https://www.ascendamphitheater.com/day-of-show",
+    "accessibility_url": "https://www.ascendamphitheater.com/day-of-show",
+    "gates_open_offset_minutes": 90,
+    "clear_bag_required": true,
+    "bag_limits": {
+      "clear_bag_max_size": "12x6x12",
+      "non_clear_clutch_max_size": "6x9"
+    },
+    "rules_summary": "No professional cameras, no laser pointers, clear bags only, small clutches allowed. Offsite parking garages nearby or park at Nissan Stadium and walk pedestrian bridge."
+  },
+  "official_url": "https://www.ascendamphitheater.com"
+}

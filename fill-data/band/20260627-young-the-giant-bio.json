@@ -1,0 +1,20 @@
+{
+  "artist": "Young the Giant",
+  "display_name": "Young the Giant",
+  "slug": "young-the-giant",
+  "origin_city": "Irvine",
+  "origin_state": "CA",
+  "origin_country": "US",
+  "active_since_year": 2004,
+  "genre_tags": [
+    "alternative rock",
+    "indie rock",
+    "indie pop"
+  ],
+  "official_url": "https://youngthegiant.com",
+  "social_urls": {
+    "facebook": "https://www.facebook.com/youngthegiant/",
+    "instagram": "https://www.instagram.com/youngthegiant/",
+    "youtube": "https://www.youtube.com/channel/UCG0B2Q2T94FmP8w7T8Bw6Yw"
+  }
+}

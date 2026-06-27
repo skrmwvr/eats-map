@@ -1,0 +1,108 @@
+{
+  "tour": "Victory Garden Tour",
+  "year": 2026,
+  "setlist": [
+    "Evergreen",
+    "Superposition",
+    "Bitter Fruit",
+    "Apartment",
+    "Repeat",
+    "Mr. Know-it-all",
+    "Dancing in the Rain",
+    "Already There",
+    "Something to Believe In",
+    "Garands",
+    "Mona Lisa",
+    "This Too Shall Pass",
+    "Ships Passing",
+    "Different Kind of Love",
+    "My Body",
+    "Teachers",
+    "The Garden",
+    "Cough Syrup",
+    "The Walk Home",
+    "Mind Over Matter"
+  ],
+  "musicality": {
+    "Evergreen": {
+      "canonical_key": "D# Major",
+      "tempo_bpm": 93
+    },
+    "Superposition": {
+      "canonical_key": "G Major",
+      "tempo_bpm": 85
+    },
+    "Bitter Fruit": {
+      "canonical_key": "D Major",
+      "tempo_bpm": 160
+    },
+    "Apartment": {
+      "canonical_key": "D Major",
+      "tempo_bpm": 110
+    },
+    "Repeat": {
+      "canonical_key": "C# Major",
+      "tempo_bpm": 150
+    },
+    "Mr. Know-it-all": {
+      "canonical_key": "D Major",
+      "tempo_bpm": 151
+    },
+    "Dancing in the Rain": {
+      "canonical_key": "G Major",
+      "tempo_bpm": 135
+    },
+    "Already There": {
+      "canonical_key": "C Major",
+      "tempo_bpm": 120
+    },
+    "Something to Believe In": {
+      "canonical_key": "D# Minor",
+      "tempo_bpm": 92
+    },
+    "Garands": {
+      "canonical_key": "A Major",
+      "tempo_bpm": 115
+    },
+    "Mona Lisa": {
+      "canonical_key": "E Major",
+      "tempo_bpm": 105
+    },
+    "This Too Shall Pass": {
+      "canonical_key": "G Major",
+      "tempo_bpm": 128
+    },
+    "Ships Passing": {
+      "canonical_key": "A Minor",
+      "tempo_bpm": 95
+    },
+    "Different Kind of Love": {
+      "canonical_key": "C Major",
+      "tempo_bpm": 118
+    },
+    "My Body": {
+      "canonical_key": "F Major",
+      "tempo_bpm": 130
+    },
+    "Teachers": {
+      "canonical_key": "E Minor",
+      "tempo_bpm": 112
+    },
+    "The Garden": {
+      "canonical_key": "C Major",
+      "tempo_bpm": 90
+    },
+    "Cough Syrup": {
+      "canonical_key": "B Minor",
+      "tempo_bpm": 129
+    },
+    "The Walk Home": {
+      "canonical_key": "A Major",
+      "tempo_bpm": 122
+    },
+    "Mind Over Matter": {
+      "canonical_key": "C Major",
+      "tempo_bpm": 78
+    }
+  }
+}

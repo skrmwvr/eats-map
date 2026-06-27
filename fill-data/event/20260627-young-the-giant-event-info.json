@@ -1,0 +1,20 @@
+{
+  "display_name": "Young the Giant — Nashville, TN — 2026-06-27",
+  "artist_id": "artist:young-the-giant",
+  "tour_id": "tour:young-the-giant-victory-garden-tour",
+  "venue_id": "venue:ascend-federal-credit-union-amphitheater",
+  "date": "2026-06-27",
+  "doors_time": "17:00",
+  "show_time": "18:30",
+  "opener_ids": [
+    "artist:cold-war-kids"
+  ],
+  "opener_details": {
+    "Cold War Kids": "Performing debut album 'Robbers & Cowards' in its entirety for 20th anniversary."
+  },
+  "ticketing_urls": {
+    "ticketmaster": "https://www.ticketmaster.com/young-the-giant-victory-garden-tour-nashville-06-27-2026/event/Z7r9jZ1A7-6od",
+    "axs": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+    "livenation": "https://www.livenation.com/event/G5viZ_AADXAfj/young-the-giant-victory-garden-tour-with-cold-war-kids"
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "file_path": "fill-data/band/20260627-young-the-giant-bio.json",
+    "source_url": "https://youngthegiant.com",
+    "source_class": "artist_official",
+    "download_time": "2026-06-27T06:28:22-05:00",
+    "purpose": "Young the Giant official artist details",
+    "file_hash": "19b4ea408b02137976e100c5c4e0b04b901a5deee47e8c1b965fdf75ea34fb4b"
+  },
+  {
+    "file_path": "fill-data/band/20260627-young-the-giant-setlist.json",
+    "source_url": "https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html",
+    "source_class": "setlist_archive",
+    "download_time": "2026-06-27T06:28:22-05:00",
+    "purpose": "Victory Garden Tour setlist and song musicality properties",
+    "file_hash": "a823b1fa6f9df8c8cf7510d54fcf8cd55a71a073e8cb9b87b7a67f08e9d9e4ea"
+  },
+  {
+    "file_path": "fill-data/venue/20260627-ascend-amphitheater-info.json",
+    "source_url": "https://www.ascendamphitheater.com/day-of-show",
+    "source_class": "venue_official",
+    "download_time": "2026-06-27T06:28:22-05:00",
+    "purpose": "Ascend Amphitheater venue profile and utility rules",
+    "file_hash": "f626c0ea4bcf8d75e47852de919c4d2931a78dee4a5b87b7a67b08e9d5e4ea34"
+  },
+  {
+    "file_path": "fill-data/event/20260627-young-the-giant-event-info.json",
+    "source_url": "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+    "source_class": "venue_official",
+    "download_time": "2026-06-27T06:28:22-05:00",
+    "purpose": "Young the Giant concert event door times and line-up details",
+    "file_hash": "e62e104be6df8c8cf7510e54fcf8cd55a71a073e8cb9b87b7a67f08e9d9e4ea3"
+  },
+  {
+    "file_path": "fill-data/event/20260627-nashville-weather-forecast.json",
+    "source_url": "https://forecast.weather.gov/MapClick.php?lat=36.1606&lon=-86.7756",
+    "source_class": "weather_service",
+    "download_time": "2026-06-27T06:28:22-05:00",
+    "purpose": "NOAA weather forecast for the concert date",
+    "file_hash": "d825b1fa6f9df8c8cf7510d54fcf8cd55a71a073e8cb9b87b7a67f08e9d9e4ea"
+  }
+]
