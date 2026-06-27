@@ -379,7 +379,56 @@ are an escalation trigger — do not auto-resolve.
 - `< 0.70` — low confidence, stub only, flag for review
 - Never assign `1.0`
 
-### 7.4 Forbidden Behaviors
+**Bundle Confidence Aggregation Algorithm:**
+*   **Bundle confidence = minimum confidence among critical-field claims only.**
+*   Non-critical enrichment claims do not factor into bundle confidence. They may be surfaced separately as `enrichment_confidence` if useful.
+*   If no critical claims have explicit confidence scores yet, bundle confidence inherits `null` — do not default to zero.
+*   Bundle confidence is `null` until at least one critical-field claim has a score. A bundle with `null` confidence is not eligible for `draft`.
+
+### 7.4 Critical Fields for Promotion
+
+To be promoted to `draft` or `stable`, an entity must have all of its designated **critical fields** populated with non-null values:
+
+| Entity | Critical Fields |
+|---|---|
+| Artist | `id`, `name`, `slug` |
+| Tour | `id`, `name`, `slug`, `artist_id`, `year` |
+| Venue | `id`, `name`, `slug`, `city`, `state` |
+| Event | `id`, `artist_id`, `tour_id`, `venue_id`, `date` |
+| Song | `id`, `name`, `slug`, `artist_id` |
+| PerformanceContext | `id`, `event_id`, `song_id`, `setlist_position` |
+| Source | `id`, `url`, `source_class`, `captured_at` |
+
+*   **Draft Gate**: All critical fields populated and confidence $\ge 0.70$. Everything else is enrichment-eligible and may be null.
+*   **Stable Gate**: All critical fields populated and confidence $\ge 0.90$.
+
+### 7.5 Real-Time Show-Day Execution Rules (Pass 4)
+
+These operational rules apply on the day of the show (2026-06-27):
+
+**Weather Update Ingestion Frequency:**
+*   **Pre-show** (now through 3 hours before doors): refresh every 2 hours.
+*   **Live show** (3 hours before doors through end of show): refresh every 30 minutes.
+*   **Rule**: Capture each refresh as a new timestamped snapshot on the event weather array, not an overwrite. The most recent entry is canonical; prior entries are preserved for history/provenance.
+
+**Post-Show Setlist Reconciliation (Conflict Resolution):**
+When fan/community sources (e.g., `setlist.fm`, Reddit, social posts) conflict with official sources, resolve according to this priority hierarchy:
+
+| Situation | Resolution Rule |
+|---|---|
+| Official setlist published | Official wins. Fan sources demoted to `supporting`. |
+| No official setlist; fan sources agree | Majority fan consensus promoted to `draft` (confidence $\le 0.80$). |
+| No official setlist; fan sources conflict | Each contested song gets a `contested` flag (confidence $\le 0.65$), escalate for manual review. |
+| Community source is the only source | Allowed at `draft` (confidence $\le 0.75$), flagged with `unverified_sole_source`. |
+
+*   **Song Order**: Follows the same setlist rules. Crossover or order conflicts receive `position_contested: true` on the `PerformanceContext` object, rather than a hard assignment.
+*   **Pass 4 Ingestion Timing**:
+    *   Open Pass 4 immediately after the show ends (estimated 10–11 PM CDT).
+    *   *First step*: capture setlist stubs from earliest available fan sources.
+    *   *Second step*: reconcile against official if available within 24 hours.
+    *   Do not promote setlist `PerformanceContext` objects to `stable` until the reconciliation window closes (48 hours post-show).
+
+### 7.6 Forbidden Behaviors
 
 Antigravity must never:
 - Hallucinate field values not derived from a captured source
