@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sun-map-v1';
+const CACHE_NAME = 'sun-map-v2';
 const ASSETS_TO_CACHE = [
   './index.html',
   './index.css',
