@@ -474,7 +474,8 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
           
           <div style="margin-top:14px; padding:10px; background:rgba(255,87,34,0.08); border-radius:6px; font-size:0.75rem;">
             <strong>🔌 About Sun Map:</strong>
-            <p style="margin:2px 0 0 0; line-height:1.3; color:#ff9f0a;">Offline concert companion guide. Contact the creators to make this app for your tour or band!</p>
+            <p style="margin:2px 0 4px 0; line-height:1.3; color:#ff9f0a;">Illuminating the live experience. An offline companion mapping the sound, lore, and venue to grow connection.</p>
+            <p style="margin:0; font-size:0.7rem; color:#aaa;">Developed by <a href="mailto:chozcunningham+sunmap@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:700;">C. Cunningham</a>. Contact us to build this for your tour, concert, or music event.</p>
           </div>
         </div>
       </div>
