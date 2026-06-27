@@ -42,6 +42,13 @@
       </button>
     </header>
 
+    <!-- VENUE SUB-HEADER ACTIONS (Hidden by default) -->
+    <div class="sub-header-venue" id="sub-header-venue" style="display: none;">
+      <button class="sub-venue-btn" id="btn-venue-car" aria-label="Mark Car Spot">🚗 Mark Car</button>
+      <button class="sub-venue-btn" id="btn-venue-fac" aria-label="Show Facilities Map">🚻 Facilities</button>
+      <button class="sub-venue-btn" id="btn-venue-help" aria-label="Call Event Help Security">📞 Call Help</button>
+    </div>
+
     <!-- LIVE STATUS / ALERT BANNER -->
     <div class="status-banner" id="alert-banner">
       <span class="alert-pulse"></span>
@@ -123,6 +130,12 @@
         <button class="modal-btn" id="btn-install-pwa">Install Web App</button>
       </div>
     </div>
+  </div>
+
+  <!-- FLOATING HELP BUBBLE (Pop-out page specific tooltip) -->
+  <div class="help-bubble" id="help-bubble">
+    <div class="help-bubble-icon">💡</div>
+    <div class="help-bubble-text" id="help-bubble-text">Long-press active!</div>
   </div>
 
   <script src="app.js"></script>
