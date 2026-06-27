@@ -178,6 +178,13 @@ function renderCurrentSong() {
     if (songSent) crowdNote = songSent.crowd_interaction;
   }
 
+  // Build options list for Track Jumplist
+  let optionsHTML = '';
+  state.songs.forEach((s, idx) => {
+    const isSelected = idx === state.activeSongIndex ? 'selected' : '';
+    optionsHTML += `<option value="${idx}" ${isSelected}>${idx + 1}. ${s.display_name}</option>`;
+  });
+
   const content = document.getElementById('viewport-content');
   content.innerHTML = `
     <div class="lyrics-view">
@@ -187,16 +194,25 @@ function renderCurrentSong() {
       </div>
       
       <div class="lyrics-body" id="lyrics-scroll">
-        <p class="lyrics-line active">🎵 Singalong Note: 🎵</p>
-        <p class="lyrics-line sing-along active">${crowdNote}</p>
-        <p class="lyrics-line">No offline lyrics available for this demo, listen to the stage!</p>
-        <p class="lyrics-line">Key: ${song.musicality?.canonical_key || 'Unknown'}</p>
-        <p class="lyrics-line">Tempo: ${song.musicality?.tempo_bpm || 'Unknown'} BPM</p>
+        <p class="lyrics-line active">🎵 Projected Live Note: 🎵</p>
+        <p class="lyrics-line sing-along active" style="font-size: 1.1rem; line-height: 1.4; margin: 8px 0;">"${crowdNote}"</p>
+        
+        <div style="margin-top: 20px; font-size: 0.8rem; font-family: 'Inter', sans-serif;">
+          <label for="track-select" style="display:block; margin-bottom:6px; text-transform:uppercase; font-weight:700; color:var(--text-secondary);">Select Active Song:</label>
+          <select id="track-select" style="width:100%; padding:10px; background:#222; border:1px solid #44; color:#fff; border-radius:6px; font-family:'Inter', sans-serif;">
+            ${optionsHTML}
+          </select>
+        </div>
+
+        <div style="margin-top: 24px; display:flex; flex-direction:column; gap:10px; font-size:0.8rem; font-family:'Inter', sans-serif;">
+          <a href="https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html" target="_blank" style="color:#ff5722; text-decoration:none; font-weight:700;">🌐 View All Known Live Songs ↗</a>
+          <button id="btn-share-trigger" style="background:transparent; border:1px dashed #666; color:#aaa; padding:8px; border-radius:6px; cursor:pointer;">📲 Share App (Show QR Code)</button>
+        </div>
       </div>
       
-      <div class="song-controller">
+      <div class="song-controller" style="justify-content: center; gap: 20px;">
         <button class="ctrl-btn" id="btn-prev-song">◀</button>
-        <span class="song-index">${state.activeSongIndex + 1} / ${state.songs.length}</span>
+        <span class="song-index" style="font-family:'Courier Prime', monospace;">${state.activeSongIndex + 1} / ${state.songs.length}</span>
         <button class="ctrl-btn" id="btn-next-song">▶</button>
       </div>
     </div>
@@ -210,6 +226,19 @@ function renderCurrentSong() {
   document.getElementById('btn-next-song').addEventListener('click', () => {
     state.activeSongIndex = (state.activeSongIndex + 1) % state.songs.length;
     triggerTransition(renderCurrentSong);
+  });
+
+  // Track Selector Change Event
+  document.getElementById('track-select').addEventListener('change', (e) => {
+    state.activeSongIndex = parseInt(e.target.value);
+    triggerTransition(renderCurrentSong);
+  });
+
+  // Share Dialog Event
+  document.getElementById('btn-share-trigger').addEventListener('click', () => {
+    const menuModal = document.getElementById('share-modal');
+    generateShareQRCode();
+    menuModal.classList.add('active');
   });
 }
 
@@ -361,12 +390,15 @@ document.getElementById('btn-tour').addEventListener('click', () => {
   });
 });
 
-// Render Companion Menu / QR Code Dialog Trigger
-document.getElementById('btn-menu').addEventListener('click', () => {
-  // Show Menu links in viewport, and open Share dialog
-  const menuModal = document.getElementById('share-modal');
-  generateShareQRCode();
-  menuModal.classList.add('active');
+// Reset Viewport back to main song lyrics when Sun Home is clicked
+document.getElementById('btn-home').addEventListener('click', () => {
+  triggerTransition(renderCurrentSong);
+});
+
+// Modal Dismiss Events
+document.getElementById('btn-close-share').addEventListener('click', () => {
+  document.getElementById('share-modal').classList.remove('active');
+  triggerTransition(renderCurrentSong);
 });
 
 // ----------------------------------------
