@@ -275,7 +275,7 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
     const content = document.getElementById('viewport-content');
     content.innerHTML = `
       <div class="details-view">
-        <h2>Show Timeline</h2>
+        <h2>Projected Program</h2>
         <div class="timeline-item">
           <div class="time-slot">17:00</div>
           <div class="event-details">
@@ -352,6 +352,8 @@ document.getElementById('btn-tour').addEventListener('click', () => {
         <h2>Victory Garden Tour</h2>
         <h3>Tour Creed & Charity</h3>
         <p>The 2026 Victory Garden Tour partners with local sustainability groups to offset concert emission footprints. Reusable cups are incentivized at the plazas.</p>
+        <h3>Event Creed & Cause</h3>
+        <p><strong>Local Watershed Protection:</strong> A portion of tonight's proceeds goes to the Cumberland River Compact to protect Tennessee's local water resources and natural habitats.</p>
         <h3>Duet & Guest Features</h3>
         <p>Prior shows featured a Darren Criss surprise duet in NYC. Watch the stage tonight for local guest features!</p>
       </div>
