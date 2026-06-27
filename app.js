@@ -574,17 +574,18 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
             <button id="btn-install-pwa-small" style="display:${installBtnDisplay}; background:rgba(255,255,255,0.05); border:1px solid #444; color:#ccc; padding:8px 12px; border-radius:6px; font-size:0.8rem; cursor:pointer; font-weight:700; font-family:'Segoe UI',sans-serif;">📲 Add to Home Screen</button>
           </div>
 
-          <!-- Quick access Shortcuts (No lore button) -->
-          <div style="margin-top: 20px; display:flex; flex-direction:column; gap:8px; font-size:0.8rem; font-family:'Segoe UI', sans-serif;">
-            <div style="display:flex; gap:8px;">
-              <button id="lnk-to-venue" style="background:transparent; border:1px solid #444; color:#fff; padding:10px; border-radius:6px; cursor:pointer; flex-grow:1; font-weight:700; font-family:'Segoe UI',sans-serif;">🗺️ Venue Policies</button>
-              <button id="lnk-to-food" style="background:transparent; border:1px solid #444; color:#aaa; padding:10px; border-radius:6px; cursor:pointer; flex-grow:1; font-weight:700; font-family:'Segoe UI',sans-serif;">🍔 Food & Drinks</button>
-            </div>
-            <button id="lnk-to-merch" style="background:transparent; border:1px solid #444; color:#aaa; padding:10px; border-radius:6px; cursor:pointer; font-weight:700; font-family:'Segoe UI',sans-serif; width:100%;">👕 Tour Merch (Static)</button>
+          <!-- Quick access Shortcuts (No openers lore button, shrunken styling) -->
+          <div style="margin-top: 16px; display:flex; gap:6px; font-size:0.75rem; font-family:'Segoe UI', sans-serif; justify-content:center;">
+            <button id="lnk-to-venue" style="background:transparent; border:1px solid #444; color:#fff; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:700; font-family:'Segoe UI',sans-serif; font-size:0.75rem;">🗺️ Policies</button>
+            <button id="lnk-to-food" style="background:transparent; border:1px solid #444; color:#ccc; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:700; font-family:'Segoe UI',sans-serif; font-size:0.75rem;">🍔 Food</button>
+            <button id="lnk-to-merch" style="background:transparent; border:1px solid #444; color:#ccc; padding:6px 10px; border-radius:4px; cursor:pointer; font-weight:700; font-family:'Segoe UI',sans-serif; font-size:0.75rem;">👕 Merch</button>
           </div>
 
-          <!-- About/Credits footer moved from Help Modal -->
-          <div style="border-top:1px dashed #444; padding-top:16px; margin-top:32px; text-align:left; font-family:'Segoe UI',sans-serif;">
+          <!-- Page space spacer before About footer -->
+          <div style="height: 60px;"></div>
+          
+          <!-- About/Credits footer -->
+          <div style="border-top:1px dashed #444; padding-top:16px; text-align:left; font-family:'Segoe UI',sans-serif; padding-bottom: 20px;">
             <h3 style="font-size:1.15rem; text-transform:uppercase; color:var(--accent); margin-bottom:6px; margin-top:0;">🔌 About Sun Map</h3>
             <p style="font-size:1rem; line-height:1.45; color:#ccc; margin-bottom:8px;">A new kind of light for the show. Mapping the stories, soundscapes, and paths that grow between the stage and the lawn.</p>
             <p style="font-size:0.9rem; color:#aaa; margin:0;">Developed by <a href="mailto:chozcunningham+sunmap@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:700;">C. Cunningham</a>. Contact us to build this for your tour, concert, or music event.</p>
@@ -758,12 +759,17 @@ document.getElementById('btn-tour').addEventListener('click', () => {
     content.innerHTML = `
       <div class="details-view">
         <h2>Victory Garden Tour</h2>
-        <h3>Tour Creed & REVERB</h3>
-        <p>The 2026 tour partners with <strong>REVERB</strong> to combat food insecurity and fund community-based carbon reduction. The album represents <em>"caring through chaos"</em> and treating hope as something to be planted, tended, and fought for.</p>
-        <h3>Event Creed & Cause</h3>
-        <p><strong>Local Watershed Protection:</strong> A portion of tonight's proceeds goes to the Cumberland River Compact to protect Tennessee's local water resources and natural habitats.</p>
-        <h3>Duet & Guest Features</h3>
-        <p>Prior shows featured a Darren Criss surprise duet in NYC. Watch the stage tonight for local guest features!</p>
+        
+        <h3>Tour Creed & Carbon Mitigation</h3>
+        <p>The 2026 tour partners with <strong>REVERB</strong> to design an eco-friendly concert footprint. Key goals include reducing single-use plastics, setting up local food-waste diversion systems, and investing in community-driven carbon reduction projects.</p>
+        <p style="margin-top:8px; margin-bottom:16px;"><a href="https://reverb.org" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none;">🌐 REVERB Music Climate Campaign ↗</a></p>
+
+        <h3>Cumberland Watershed Support</h3>
+        <p>A designated portion of tonight's concert proceeds is directed to the Cumberland River Compact. These funds help protect local waterways, restore soil health, and combat urban heat offsets around Middle Tennessee.</p>
+        <p style="margin-top:8px; margin-bottom:16px;"><a href="https://cumberlandrivercompact.org" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none;">🌐 Cumberland River Compact ↗</a></p>
+
+        <h3>Surprise NYC Duet Trivia</h3>
+        <p>During their Madison Square Garden performance, Darren Criss joined the band onstage for an unannounced acoustic duet of <em>"Superposition"</em>. Keep your eyes on the stage tonight for local guest appearances!</p>
       </div>
     `;
   });

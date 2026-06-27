@@ -345,8 +345,8 @@ body {
 
 .home-btn-container {
   position: relative;
-  height: 70px;
-  margin-top: -24px; /* apply the break upward to the container */
+  height: 74px;
+  margin-top: -28px; /* apply the break upward to the container */
   display: flex;
   justify-content: center;
   z-index: 5;
@@ -357,8 +357,10 @@ body {
   position: absolute;
   height: 38px;
   width: 38px;
-  background-color: transparent; /* transparent background removes visual rings */
-  border: none; /* remove outer borders and rings */
+  background: transparent !important; /* transparent background removes visual rings */
+  border: none !important; /* remove outer borders and rings */
+  box-shadow: none !important; /* force remove default shadows */
+  outline: none !important;
   color: #ccc;
   font-size: 1.35rem; /* larger and bolder text size */
   font-weight: 900;
@@ -371,13 +373,13 @@ body {
 }
 
 #btn-foot-restroom {
-  left: calc(50% - 66px); /* sits snugly sloped next to the enlarged Sun */
-  top: 14px;
+  left: calc(50% - 68px); /* sits snugly sloped next to the enlarged Sun */
+  top: 18px;
 }
 
 #btn-foot-help {
-  right: calc(50% - 66px); /* sits snugly sloped next to the enlarged Sun */
-  top: 14px;
+  right: calc(50% - 68px); /* sits snugly sloped next to the enlarged Sun */
+  top: 18px;
 }
 
 .tiny-foot-btn:active {
@@ -386,13 +388,15 @@ body {
 }
 
 #btn-home {
-  height: 70px;
-  width: 82px;
+  height: 74px;
+  width: 88px;
   border-radius: 50% 50% 8px 8px;
-  background-color: #2a1508;
+  background: radial-gradient(circle at center, #3d1c0a 0%, #2a1508 100%);
   border: 2px solid var(--accent);
-  outline: 1px solid rgba(255, 87, 34, 0.3); /* double border detail layer */
-  box-shadow: 0 -4px 16px rgba(255, 87, 34, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.1);
+  outline: 1.5px solid rgba(255, 87, 34, 0.45); /* double border detail layer */
+  box-shadow: 0 -6px 20px rgba(255, 87, 34, 0.65), 
+              inset 0 4px 12px rgba(255, 255, 255, 0.15),
+              inset 0 -4px 12px rgba(0, 0, 0, 0.8);
   z-index: 5;
   padding: 0;
   display: flex;
@@ -406,7 +410,7 @@ body {
 }
 
 #btn-home .btn-icon {
-  font-size: 2.35rem;
+  font-size: 2.5rem;
   margin-bottom: 0;
   line-height: 1;
 }
