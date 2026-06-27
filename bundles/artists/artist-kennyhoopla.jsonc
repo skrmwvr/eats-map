@@ -1,0 +1,25 @@
+// Normalized Artist entity for KennyHoopla (Conflict Safeguard)
+{
+  "id": "artist:kennyhoopla",
+  "type": "artist",
+  "name": "KennyHoopla",
+  "display_name": "KennyHoopla",
+  "slug": "kennyhoopla",
+  "origin_city": "Cleveland",
+  "origin_country": "US",
+  "active_since_year": 2016,
+  "genre_tags": [
+    "indie rock",
+    "pop punk",
+    "dance punk"
+  ],
+  "official_url": "https://kennyhoopla.com",
+  "social_urls": {
+    "instagram": "https://www.instagram.com/kennyhoopla/"
+  },
+  "sources": [
+    "source:songkick:conflict-data"
+  ],
+  "confidence": 0.3,
+  "lifecycle": "draft"
+}

@@ -20,19 +20,63 @@ const state = {
   transit: null,
   sentiment: null,
   tourHistory: null,
-  timelines: []
+  timelines: [],
+  dismissedAlertText: null
 };
 
-// Loading transition wrapper
+// Transition effects pool (Loops 5 unique vintage modes)
+const transitions = [
+  // 1. Analog TV Static (Default scanline glitch)
+  (overlay, content) => {
+    overlay.style.background = 'rgba(18, 18, 18, 0.95)';
+    content.style.filter = 'none';
+  },
+  // 2. Retro Pixel Blur
+  (overlay, content) => {
+    overlay.style.background = 'rgba(30, 20, 10, 0.85)';
+    content.style.filter = 'blur(15px) contrast(150%)';
+  },
+  // 3. Vertical CRT Shutter
+  (overlay, content) => {
+    overlay.style.background = 'rgba(5, 10, 20, 0.9)';
+    content.style.transform = 'translateY(80%)';
+  },
+  // 4. Glitch RGB Split
+  (overlay, content) => {
+    overlay.style.background = 'rgba(20, 20, 20, 0.9)';
+    content.style.filter = 'hue-rotate(90deg) saturate(200%)';
+  },
+  // 5. Minimal Zune Crossfade
+  (overlay, content) => {
+    overlay.style.background = 'rgba(15, 15, 15, 0.3)';
+    content.style.opacity = '0.1';
+  }
+];
+
+let activeTransitionIndex = 0;
+
 function triggerTransition(callback) {
   const overlay = document.getElementById('loading-overlay');
+  const content = document.getElementById('viewport-content');
+  
+  // Pick transition effect from loop
+  const effect = transitions[activeTransitionIndex];
+  activeTransitionIndex = (activeTransitionIndex + 1) % transitions.length;
+  
   overlay.classList.add('active');
+  effect(overlay, content);
+  
   setTimeout(() => {
     callback();
     setTimeout(() => {
       overlay.classList.remove('active');
-    }, 300); // fade out static
-  }, 600); // show static noise
+      // Reset inline styles
+      content.style.filter = 'none';
+      content.style.transform = 'none';
+      content.style.opacity = '1';
+      overlay.style.background = '';
+    }, 300);
+  }, 500);
 }
 
 // Load Core Data from bundles/ & fill-data/
@@ -126,7 +170,15 @@ function renderDashboardMetadata() {
   // Weather status & alerts
   if (state.event.weather) {
     document.getElementById('weather-status').textContent = `${state.event.weather.temp_f_high}°F / ${state.event.weather.conditions}`;
-    document.getElementById('alert-text').textContent = state.event.weather.forecast_summary;
+    const alertText = state.event.weather.forecast_summary;
+    document.getElementById('alert-text').textContent = alertText;
+    
+    // Only display alert banner if it hasn't been dismissed for this exact text
+    if (state.dismissedAlertText !== alertText) {
+      document.getElementById('alert-banner').style.display = 'flex';
+    } else {
+      document.getElementById('alert-banner').style.display = 'none';
+    }
   }
   
   // Timeline schedule text
@@ -252,12 +304,22 @@ document.getElementById('btn-weather').addEventListener('click', () => {
     const viewport = document.getElementById('main-viewport');
     viewport.className = 'viewport-square theme-utility';
 
+    const bannerState = document.getElementById('alert-banner').style.display === 'none' ? '' : 'checked';
+
     const content = document.getElementById('viewport-content');
     content.innerHTML = `
       <div class="details-view">
-        <h2>Weather Forecast</h2>
+        <h2>Weather & Risk Alerts</h2>
         <h3>NOAA Alert</h3>
-        <p style="color:#ff9f0a; font-weight:700;">⚠️ FLOOD WATCH active from 7:00 AM June 27 to 7:00 AM June 28.</p>
+        <p style="color:#ff9f0a; font-weight:700; margin-bottom:12px;">⚠️ FLOOD WATCH active from 7:00 AM June 27 to 7:00 AM June 28.</p>
+        
+        <div style="margin:14px 0; background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; font-size:0.8rem;">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" id="alert-banner-toggle" ${bannerState}>
+            <span>Show Alert Banner at top</span>
+          </label>
+        </div>
+
         <h3>Hourly Outlook</h3>
         <ul>
           <li><strong>High Forecast:</strong> ${state.event?.weather?.temp_f_high || 89}°F</li>
@@ -268,6 +330,16 @@ document.getElementById('btn-weather').addEventListener('click', () => {
         <p style="font-size:0.75rem; margin-top:14px; color:var(--text-secondary);">Source: NOAA point forecast mapclick</p>
       </div>
     `;
+
+    // Bind Toggle behavior
+    document.getElementById('alert-banner-toggle').addEventListener('change', (e) => {
+      document.getElementById('alert-banner').style.display = e.target.checked ? 'flex' : 'none';
+      if (!e.target.checked) {
+        state.dismissedAlertText = state.event?.weather?.forecast_summary || '';
+      } else {
+        state.dismissedAlertText = null;
+      }
+    });
   });
 });
 
@@ -280,18 +352,38 @@ document.getElementById('btn-venue').addEventListener('click', () => {
     const content = document.getElementById('viewport-content');
     content.innerHTML = `
       <div class="details-view">
-        <h2>Venue Policies & Transit</h2>
+        <h2>Venue Policies & Access</h2>
+        <div style="margin-bottom:14px; padding:10px; background:rgba(211,47,47,0.15); border-radius:6px; font-size:0.75rem; border-left:3px solid #d32f2f;">
+          <strong>⚠️ Same-Night Traffic Alert:</strong>
+          <p style="margin:2px 0 0 0; line-height:1.3; color:#ffb74d;">Alan Jackson's stadium concert is occurring at Nissan Stadium (Show 18:00). Expect intense congestion near the Pedestrian Bridge, parking lot R, and rideshare drops.</p>
+        </div>
+
         <h3>Bag Guidelines</h3>
         <ul>
           <li><strong>Clear Bags:</strong> Max dimensions 12" x 6" x 12"</li>
           <li><strong>Clutches (Non-clear):</strong> Max dimensions 6" x 9"</li>
         </ul>
-        <h3>Parking & Walking Route</h3>
-        <p><strong>Nissan Stadium Walkway:</strong> Park at Nissan Stadium East Bank Lot, walk ~0.6 miles over the Seigenthaler Pedestrian Bridge directly to the gates (~15 min walk).</p>
-        <h3>Restroom Points</h3>
-        <p>Main plazas on East and West flanks of the lawn. VIP restrooms behind stage left boxes.</p>
+        
+        <h3>ADA Access & Assistance</h3>
+        <p><strong>ADA Drop-off:</strong> Corner of Molloy St & 1st Ave S.</p>
+        <p><strong>Wheelchair Viewing:</strong> Elevated viewing platforms are situated at the East and West flanks of the lawn area.</p>
+        <p><strong>Coordination & Assistance:</strong> Call the venue ADA line at <a href="tel:6152585944" style="color:var(--accent); text-decoration:none; font-weight:700;">615-258-5944</a>.</p>
+
+        <h3>First Aid & Medical</h3>
+        <p><strong>Plaza Stations:</strong> First aid tents located on the East and West plazas. Permanent AED (Defibrillator) units are stationed inside both tents.</p>
+        <p><strong>EMT Epipens:</strong> EMT staff from WeGo/Metro Nashville carry Epipens inside first aid packs (shielded from outdoor summer heat degradation).</p>
+
+        <h3>Restrooms (Descriptive Locations)</h3>
+        <p>Restroom blocks are situated at the East and West flanks of the main lawn. Premium VIP restrooms are behind the stage-left box suites.</p>
+
+        <div style="margin-top:16px; border-top:1px dashed #444; padding-top:14px; display:flex; flex-direction:column; gap:10px;">
+          <button id="btn-show-emergency" style="background:#d32f2f; border:none; color:#fff; padding:10px; border-radius:6px; font-weight:700; cursor:pointer;">🚨 Life Safety & Evacuation Protocol</button>
+          <p style="font-size:0.75rem; color:var(--text-secondary); margin:0;">In partnership with Event Safety Alliance standards.</p>
+        </div>
       </div>
     `;
+
+    document.getElementById('btn-show-emergency').addEventListener('click', renderEmergencySafety);
   });
 });
 
@@ -305,69 +397,212 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
     content.innerHTML = `
       <div class="details-view">
         <h2>Projected Program</h2>
-        <div class="timeline-item">
-          <div class="time-slot">17:00</div>
+        
+        <div class="timeline-item" style="margin-bottom:12px; border-left:2px solid var(--accent); padding-left:10px;">
+          <div class="time-slot" style="font-weight:700; color:var(--accent);">17:00</div>
           <div class="event-details">
-            <strong>Gates & Doors Open</strong>
-            <p>Security clearance, clear bag checks start.</p>
+            <strong>Gates Open</strong>
+            <p style="font-size:0.8rem; margin:0;">Security clearance, bag checks begin.</p>
           </div>
         </div>
-        <div class="timeline-item">
-          <div class="time-slot">18:30</div>
+
+        <div class="timeline-item" style="margin-bottom:12px; border-left:2px solid #555; padding-left:10px;">
+          <div class="time-slot" style="font-weight:700;">18:00</div>
+          <div class="event-details">
+            <strong>almost monday Set</strong>
+            <p style="font-size:0.8rem; margin:0;">Opening performance (30 min set).</p>
+          </div>
+        </div>
+
+        <div class="timeline-item" style="margin-bottom:12px; border-left:2px solid #555; padding-left:10px;">
+          <div class="time-slot" style="font-weight:700;">18:45</div>
           <div class="event-details">
             <strong>Cold War Kids Set</strong>
-            <p>20th Anniversary performance of "Robbers & Cowards" in full.</p>
+            <p style="font-size:0.8rem; margin:0;">20th Anniversary performance of "Robbers & Cowards" in full.</p>
           </div>
         </div>
-        <div class="timeline-item">
-          <div class="time-slot">20:00</div>
+
+        <div class="timeline-item" style="margin-bottom:12px; border-left:2px solid #555; padding-left:10px;">
+          <div class="time-slot" style="font-weight:700;">20:15</div>
           <div class="event-details">
             <strong>Young the Giant Set</strong>
-            <p>Headline performance (Victory Garden Tour).</p>
+            <p style="font-size:0.8rem; margin:0;">Headline performance (Victory Garden Tour).</p>
           </div>
+        </div>
+
+        <div style="margin-top:16px; padding:10px; background:rgba(255,87,34,0.1); border-radius:6px; font-size:0.75rem; border-left:3px solid var(--accent);">
+          <strong>⚠️ Lineup Conflict Fallback:</strong>
+          <p style="margin:2px 0 0 0; line-height:1.3; color:#aaa;">Some aggregator lists (Songkick) show KennyHoopla instead. If the lineup changes on the fly, profiles for both acts are cached offline in this app.</p>
+        </div>
+
+        <div style="margin-top:16px; display:flex; gap:10px; font-size:0.8rem;">
+          <button id="lnk-to-venue" style="background:transparent; border:1px solid #444; color:#fff; padding:6px; border-radius:4px; cursor:pointer;">🗺️ Venue Restrooms</button>
+          <button id="lnk-to-band" style="background:transparent; border:1px solid #444; color:#fff; padding:6px; border-radius:4px; cursor:pointer;">🎸 Openers Lore</button>
         </div>
       </div>
     `;
+
+    // Bind Timeline shortcuts
+    document.getElementById('lnk-to-venue').addEventListener('click', () => {
+      document.getElementById('btn-venue').click();
+    });
+    document.getElementById('lnk-to-band').addEventListener('click', () => {
+      document.getElementById('btn-band').click();
+    });
   });
 });
 
-// Render Band Detail Card
+// Render Band Detail Card: The Lore Garden
 document.getElementById('btn-band').addEventListener('click', () => {
-  triggerTransition(async () => {
-    const viewport = document.getElementById('main-viewport');
-    const content = document.getElementById('viewport-content');
-    
-    if (state.activeArtistId === 'artist:young-the-giant') {
-      viewport.className = 'viewport-square theme-ytg';
-      content.innerHTML = `
-        <div class="details-view">
-          <h2>Young the Giant</h2>
-          <p><strong>Origin:</strong> Irvine, California (Active since 2004)</p>
-          <p><strong>Genre:</strong> Indie Rock, Alternative Rock</p>
-          <h3>Members & Gear Details</h3>
-          <ul>
-            <li><strong>Sameer Gadhia:</strong> Lead vocals, micro-KORG synth</li>
-            <li><strong>Jacob Tilley:</strong> Guitar, delay loop pedals</li>
-            <li><strong>Eric Cannata:</strong> Guitar, backing vocal harmonies</li>
-            <li><strong>Payam Doostzadeh:</strong> Bass guitar</li>
-            <li><strong>Francois Comtois:</strong> Drums, percussion pads</li>
-          </ul>
-        </div>
-      `;
-    } else {
-      viewport.className = 'viewport-square theme-cwk';
-      content.innerHTML = `
-        <div class="details-view">
-          <h2>Cold War Kids</h2>
-          <p><strong>Origin:</strong> Fullerton, California (Active since 2004)</p>
-          <p><strong>Genre:</strong> Blues-influenced Indie Rock</p>
-          <h3>20th Anniversary Details</h3>
-          <p>Performing their landmark debut album <em>Robbers & Cowards</em> in full, including "Hang Me Up to Dry" and "Hospital Beds".</p>
-        </div>
-      `;
-    }
-  });
+  triggerTransition(renderLoreGarden);
 });
+
+function renderLoreGarden() {
+  const viewport = document.getElementById('main-viewport');
+  viewport.className = 'viewport-square theme-tour'; // deep artsy purple
+
+  const content = document.getElementById('viewport-content');
+  content.innerHTML = `
+    <div class="details-view">
+      <h2>The Lore Garden</h2>
+      <p style="font-size:0.85rem; color:#aaa; margin-bottom:16px; font-style:italic;">"Tending the human connections behind the sound." Explore the lore, stories, and musicality of tonight's lineup.</p>
+      
+      <div style="display:grid; grid-template-columns:1fr; gap:10px; font-family:'Segoe UI', sans-serif;">
+        <button class="lore-node-btn" id="lore-sameer" style="text-align:left; background:rgba(255,255,255,0.04); border:1px solid #444; color:#fff; padding:12px; border-radius:6px; cursor:pointer;">
+          <strong>Sameer Gadhia &bull; Vocal Delivery</strong>
+          <div style="font-size:0.75rem; color:#ff9f0a; margin-top:2px;">Cultural duality, vocal presence, and the micro-KORG.</div>
+        </button>
+
+        <button class="lore-node-btn" id="lore-garden-origins" style="text-align:left; background:rgba(255,255,255,0.04); border:1px solid #444; color:#fff; padding:12px; border-radius:6px; cursor:pointer;">
+          <strong>Victory Garden Origins &bull; Themes</strong>
+          <div style="font-size:0.75rem; color:#ff9f0a; margin-top:2px;">"Caring through chaos" and planting radical empathy.</div>
+        </button>
+
+        <button class="lore-node-btn" id="lore-gear" style="text-align:left; background:rgba(255,255,255,0.04); border:1px solid #444; color:#fff; padding:12px; border-radius:6px; cursor:pointer;">
+          <strong>Guitar-Lore & Harmonies &bull; Sound</strong>
+          <div style="font-size:0.75rem; color:#ff9f0a; margin-top:2px;">Tilley's delay loop grids and Cannata's vocal lines.</div>
+        </button>
+
+        <button class="lore-node-btn" id="lore-cwk" style="text-align:left; background:rgba(255,255,255,0.04); border:1px solid #444; color:#fff; padding:12px; border-radius:6px; cursor:pointer;">
+          <strong>Cold War Kids &bull; Blues-Rock</strong>
+          <div style="font-size:0.75rem; color:#ff9f0a; margin-top:2px;">Robbers & Cowards debut album, and "Hang Me Up to Dry".</div>
+        </button>
+
+        <button class="lore-node-btn" id="lore-monday" style="text-align:left; background:rgba(255,255,255,0.04); border:1px solid #444; color:#fff; padding:12px; border-radius:6px; cursor:pointer;">
+          <strong>almost monday &bull; Surf Pop</strong>
+          <div style="font-size:0.75rem; color:#ff9f0a; margin-top:2px;">San Diego surf vibes, and wrapping the run tonight.</div>
+        </button>
+
+        <button class="lore-node-btn" id="lore-hoopla" style="text-align:left; background:rgba(255,255,255,0.04); border:1px dashed #666; color:#aaa; padding:12px; border-radius:6px; cursor:pointer;">
+          <strong>KennyHoopla &bull; Conflict Cache</strong>
+          <div style="font-size:0.75rem; color:#888; margin-top:2px;">Alternative support information saved offline just in case.</div>
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Bind Lore Links
+  document.getElementById('lore-sameer').addEventListener('click', () => {
+    renderLoreDetail("Sameer Gadhia", `
+      <p>Sameer Gadhia's voice serves as the melodic anchor of Young the Giant. His songwriting often addresses themes of cultural duality, immigration, and finding identity inside modern spaces.</p>
+      <p><strong>Stage Setup:</strong> Sameer runs lead vocals alongside a center-stage micro-KORG synthesizer which he uses to trigger ambient pads and synth offsets during transitions (most notably on "Superposition" and "Mind Over Matter").</p>
+    `);
+  });
+
+  document.getElementById('lore-garden-origins').addEventListener('click', () => {
+    renderLoreDetail("Victory Garden Origins", `
+      <p>The sixth studio album <em>Victory Garden</em> represents a massive shift towards active, community-based resilience. Rather than treating hope as a passive feeling, the band frames it as something that must be actively planted, tended, and fought for.</p>
+      <p>This "caring through chaos" ethos inspires the organic block-print sun logo, representing warm soil, roots, and collaborative survival in an increasingly digital and disconnected era.</p>
+    `);
+  });
+
+  document.getElementById('lore-gear').addEventListener('click', () => {
+    renderLoreDetail("Guitar-Lore & Harmonies", `
+      <p>The band's distinctive atmospheric soundscape relies on the tight interplay between Jacob Tilley and Eric Cannata.</p>
+      <p><strong>Jacob Tilley:</strong> Builds complex delay loop grids on the fly, creating a rhythmic and ethereal guitar layer that allows Sameer's vocals to float.</p>
+      <p><strong>Eric Cannata:</strong> Provides the crisp, tight harmony backing vocals that create the band's signature choir-like chorus elevations. His guitar work focuses on rhythmic counter-melodies.</p>
+    `);
+  });
+
+  document.getElementById('lore-cwk').addEventListener('click', () => {
+    renderLoreDetail("Cold War Kids", `
+      <p>Fullerton, California's Cold War Kids have been a force in alternative rock since 2004, known for blues-influenced indie rock driven by aggressive piano chords and soulful vocals.</p>
+      <p>On tonight's program, they perform their landmark debut album <em>Robbers & Cowards</em> in full, commemorating its 20th anniversary. Highlights include the frantic, bass-heavy hooks of "Hang Me Up to Dry" and the emotional, hospital-corridor weight of "Hospital Beds".</p>
+    `);
+  });
+
+  document.getElementById('lore-monday').addEventListener('click', () => {
+    renderLoreDetail("almost monday", `
+      <p>San Diego-based surf-pop trio almost monday brings sun-drenched indie pop and funky basslines to tonight's opening slot.</p>
+      <p>Confirmed by label releases (Hollywood Records), their summer tour run wraps tonight here in Nashville, making this performance a celebratory final show of their current support run.</p>
+    `);
+  });
+
+  document.getElementById('lore-hoopla').addEventListener('click', () => {
+    renderLoreDetail("KennyHoopla (Conflict Safeguard)", `
+      <p>KennyHoopla (Cleveland native Kenneth La'ron) is known for post-punk, dance-punk, and high-energy alternative rock. His breakout work includes collaborations with Travis Barker.</p>
+      <p><strong>Lineup Safeguard:</strong> Although official venue files show almost monday playing the opening slot, Songkick listed KennyHoopla. We keep his profile cached here so you have access to his bio and material if there's a surprise lineup swap on stage.</p>
+    `);
+  });
+}
+
+function renderLoreDetail(title, htmlContent) {
+  triggerTransition(() => {
+    const viewport = document.getElementById('main-viewport');
+    viewport.className = 'viewport-square theme-ytg';
+
+    const content = document.getElementById('viewport-content');
+    content.innerHTML = `
+      <div class="details-view">
+        <h2>${title}</h2>
+        <div style="font-size:0.9rem; line-height:1.6; color:rgba(255,255,255,0.9); margin-bottom:20px;">
+          ${htmlContent}
+        </div>
+        <button id="btn-back-garden" style="background:transparent; border:1px solid #ff5722; color:#ff5722; padding:10px 16px; border-radius:6px; cursor:pointer; font-weight:700;">&larr; Back to Lore Garden</button>
+      </div>
+    `;
+
+    document.getElementById('btn-back-garden').addEventListener('click', () => {
+      triggerTransition(renderLoreGarden);
+    });
+  });
+}
+
+function renderEmergencySafety() {
+  triggerTransition(() => {
+    const viewport = document.getElementById('main-viewport');
+    viewport.className = 'viewport-square theme-utility';
+
+    const content = document.getElementById('viewport-content');
+    content.innerHTML = `
+      <div class="details-view">
+        <h2>Life Safety & Evacuation</h2>
+        <p style="font-size:0.8rem; color:#aaa; font-style:italic; margin-bottom:12px;">Provided in compliance with Event Safety Alliance standards.</p>
+        
+        <h3 style="color:#d32f2f;">⚠️ SILENCE IS NOT A DRILL PROTOCOL</h3>
+        <p>If the stage performance suddenly goes silent and the stage lights go to a <strong>full white wash</strong> (no show colors or projection panels), it indicates an <strong>Official Show Hold</strong>. Please look to staff, and do not mistake it for a band intermission or encore delay.</p>
+
+        <h3>🌪️ Weather Evacuation & Shelter</h3>
+        <p>In case of severe storm warnings or active lightning: exit the venue and seek shelter inside your vehicle or the designated regional storm shelter zone at <strong>Nissan Stadium East Bank parking lots (Lot R)</strong>.</p>
+
+        <h3>🚶 Evacuation Routes</h3>
+        <ul>
+          <li><strong>Main Gate Exit:</strong> Exit south towards Molloy St. and walk east over the Pedestrian Bridge.</li>
+          <li><strong>Gate 2/4 Exit:</strong> Exit north towards Woodland St. for pedestrian pathways.</li>
+        </ul>
+
+        <h3>📞 Medical Emergency Contact</h3>
+        <p>Contact Venue Security dispatch: <a href="tel:6152585944" style="color:var(--accent); text-decoration:none; font-weight:700;">615-258-5944</a> or locate staff in reflective vests at the East/West plazas.</p>
+        
+        <button id="btn-back-venue" style="margin-top:16px; background:transparent; border:1px solid #d32f2f; color:#d32f2f; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:700;">&larr; Back to Venue Policies</button>
+      </div>
+    `;
+
+    document.getElementById('btn-back-venue').addEventListener('click', () => {
+      document.getElementById('btn-venue').click();
+    });
+  });
+}
 
 // Render Tour Ethos Card
 document.getElementById('btn-tour').addEventListener('click', () => {
@@ -487,6 +722,13 @@ document.getElementById('btn-install-pwa').addEventListener('click', async () =>
 // Initialize on Load
 window.addEventListener('DOMContentLoaded', () => {
   loadCorpusData();
+
+  // Dismiss Weather alert banner
+  document.getElementById('btn-close-alert').addEventListener('click', (e) => {
+    e.stopPropagation();
+    state.dismissedAlertText = state.event?.weather?.forecast_summary || '';
+    document.getElementById('alert-banner').style.display = 'none';
+  });
   
   // Register Service Worker for PWA
   if ('serviceWorker' in navigator) {

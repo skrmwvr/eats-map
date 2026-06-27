@@ -1,0 +1,1105 @@
+{
+  "blob_type": "high_trust_plus_variable_trust_lore_dump",
+  "intended_consumer": "Antigravity",
+  "purpose": "dense cross-confirmation payload for event/tour/venue/artist/support-act/weather/traffic/utility ingestion; includes high-trust and lower-trust links so AG can compare against what it already knows, score confidence, and detect duplicate low-quality evidence rather than silently reusing it",
+  "event_scope": {
+    "event_name_canonical": "Young the Giant - Victory Garden Tour with Cold War Kids",
+    "event_name_variants": [
+      "Young the Giant",
+      "Young the Giant with Cold War Kids and almost monday",
+      "Young the Giant - Victory Garden Tour with Cold War Kids and almost monday"
+    ],
+    "date": "2026-06-27",
+    "start_time_local": "6:30 PM",
+    "city": "Nashville",
+    "state": "TN",
+    "venue": "Ascend Federal Credit Union Amphitheater",
+    "venue_aliases": [
+      "Ascend Amphitheater",
+      "Ascend Federal Credit Union Amphitheater"
+    ],
+    "confidence": "high",
+    "support": [
+      {
+        "url": "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+        "trust_grade": "A",
+        "reason": "official venue event page; exact date/time and event title framing"
+      },
+      {
+        "url": "https://youngthegiant.com",
+        "trust_grade": "A",
+        "reason": "official artist site; lists the Nashville date with guests"
+      },
+      {
+        "url": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+        "trust_grade": "A-",
+        "reason": "ticketing page with venue/date/time linkage"
+      },
+      {
+        "url": "https://www.livenation.com/event/G5viZ_AADXAfj/young-the-giant-victory-garden-tour-with-cold-war-kids",
+        "trust_grade": "A-",
+        "reason": "promoter/distribution event page corroboration"
+      }
+    ]
+  },
+  "trust_model": {
+    "A": "official primary source directly controlling the entity or event",
+    "A-": "official distributor/promoter/ticketing source with direct event linkage",
+    "B": "credible secondary source or semi-official explanatory source",
+    "C": "useful aggregator or community-maintained source",
+    "D": "low-trust or likely mirrored/SEO/derivative source; useful mostly for overlap detection or gap-filling hypotheses"
+  },
+  "entity_vectors": {
+    "artist": {
+      "canonical_name": "Young the Giant",
+      "core_claims": [
+        {
+          "claim": "Young the Giant official site lists the Ascend Amphitheater date in Nashville on June 27, 2026 with special guests Cold War Kids and almost monday.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://youngthegiant.com",
+              "trust_grade": "A",
+              "notes": "official site tour listing"
+            }
+          ]
+        },
+        {
+          "claim": "The event is positioned as part of the Victory Garden Tour.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://youngthegiant.com",
+              "trust_grade": "A",
+              "notes": "official artist tour listing"
+            },
+            {
+              "url": "https://www.livenation.com/event/G5viZ_AADXAfj/young-the-giant-victory-garden-tour-with-cold-war-kids",
+              "trust_grade": "A-",
+              "notes": "promoter event naming"
+            },
+            {
+              "url": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+              "trust_grade": "A-",
+              "notes": "event page label"
+            }
+          ]
+        },
+        {
+          "claim": "Victory Garden is framed in official event copy as an ode to radical empathy.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+              "trust_grade": "A",
+              "notes": "official venue page text"
+            }
+          ]
+        },
+        {
+          "claim": "Secondary coverage reinforces that Victory Garden's thematic language centers on radical empathy and emotional/social resonance.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://fault-magazine.com/2026/05/young-the-giant-interview-and-photoshoot/",
+              "trust_grade": "B",
+              "notes": "interview framing; useful ethos corroboration"
+            },
+            {
+              "url": "https://grammymuseum.org/event/the-drop-young-the-giant/",
+              "trust_grade": "B",
+              "notes": "cultural institution event copy; useful secondary corroboration"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "url": "https://youngthegiant.com",
+          "trust_grade": "A",
+          "vector": "official_site",
+          "expected_value": "artist identity, tour listing, event linkage, VIP/ticket links"
+        },
+        {
+          "url": "https://www.facebook.com/youngthegiant/",
+          "trust_grade": "B",
+          "vector": "official_social",
+          "expected_value": "promotional phrasing, social announcement history"
+        },
+        {
+          "url": "https://www.instagram.com/p/DZ95hFmOfaA/",
+          "trust_grade": "B",
+          "vector": "social_promo",
+          "expected_value": "Nashville-specific promo phrasing mentioning Ascend and the bill"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=yAj77OQF0sU",
+          "trust_grade": "B",
+          "vector": "official_youtube",
+          "expected_value": "song/album outbound links and metadata trails"
+        }
+      ]
+    },
+    "tour": {
+      "canonical_name": "Victory Garden Tour",
+      "core_claims": [
+        {
+          "claim": "The Nashville date belongs to Young the Giant's Victory Garden Tour.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://youngthegiant.com",
+              "trust_grade": "A",
+              "notes": "official artist listing"
+            },
+            {
+              "url": "https://www.livenation.com/event/G5viZ_AADXAfj/young-the-giant-victory-garden-tour-with-cold-war-kids",
+              "trust_grade": "A-",
+              "notes": "promoter naming"
+            },
+            {
+              "url": "https://www.ticketmaster.com/young-the-giant-victory-garden-tour-nashville-06-27-2026/event/Z7r9jZ1A7-6od",
+              "trust_grade": "A-",
+              "notes": "ticketing naming"
+            }
+          ]
+        },
+        {
+          "claim": "Cold War Kids appear to be direct support on the tour, while almost monday appears as an opening act on at least this Nashville date.",
+          "confidence": "medium_high",
+          "sources": [
+            {
+              "url": "https://variety.com/2026/music/news/young-the-giant-victory-garden-tour-summer-1236665250/",
+              "trust_grade": "B",
+              "notes": "secondary reporting that Cold War Kids are direct support on the tour and additional opening acts vary"
+            },
+            {
+              "url": "https://youngthegiant.com",
+              "trust_grade": "A",
+              "notes": "official Nashville date listing with both guests"
+            },
+            {
+              "url": "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+              "trust_grade": "A",
+              "notes": "official venue listing with both guests"
+            }
+          ]
+        },
+        {
+          "claim": "Setlist.fm artist pages can provide recent active-song evidence for tour-context song likelihood, but are not primary truth.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html",
+              "trust_grade": "C",
+              "notes": "tour-context setlist trend source"
+            },
+            {
+              "url": "https://www.setlist.fm/setlists/cold-war-kids-3bd64840.html",
+              "trust_grade": "C",
+              "notes": "support-act setlist trend source"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "url": "https://www.ticketmaster.com/young-the-giant-tickets/artist/1482431",
+          "trust_grade": "A-",
+          "vector": "tour_dates_ticketing",
+          "expected_value": "tour routing, linked event nodes"
+        },
+        {
+          "url": "https://www.livenation.com/artist/K8vZ917GU-V/young-the-giant-events",
+          "trust_grade": "A-",
+          "vector": "tour_dates_promoter",
+          "expected_value": "tour routing and promoter-side structure"
+        },
+        {
+          "url": "https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html",
+          "trust_grade": "C",
+          "vector": "tour_context_setlists",
+          "expected_value": "recent active-song patterns"
+        },
+        {
+          "url": "https://variety.com/2026/music/news/young-the-giant-victory-garden-tour-summer-1236665250/",
+          "trust_grade": "B",
+          "vector": "secondary_tour_coverage",
+          "expected_value": "tour support-slot interpretation and broader run context"
+        },
+        {
+          "url": "https://www.victorygardentour.com",
+          "trust_grade": "D",
+          "vector": "seo_mirror_fanlike_tour_site",
+          "expected_value": "overlap detection only; not a preferred truth source"
+        }
+      ]
+    },
+    "venue": {
+      "canonical_name": "Ascend Federal Credit Union Amphitheater",
+      "aliases": [
+        "Ascend Amphitheater"
+      ],
+      "core_claims": [
+        {
+          "claim": "The venue address is 310 1st Avenue South, Nashville, TN.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+              "trust_grade": "A-",
+              "notes": "event ticketing page includes venue address"
+            },
+            {
+              "url": "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/",
+              "trust_grade": "B",
+              "notes": "secondary venue explainer repeats address"
+            }
+          ]
+        },
+        {
+          "claim": "Venue bag policy allows clear plastic, vinyl, or PVC tote bags up to 12 x 6 x 12 inches and/or small clutch bags up to 6 x 9 inches.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.ascendamphitheater.com/day-of-show",
+              "trust_grade": "A",
+              "notes": "official venue day-of-show page"
+            },
+            {
+              "url": "https://www.ascendamphitheater.com/visit",
+              "trust_grade": "A",
+              "notes": "official venue visit page"
+            },
+            {
+              "url": "https://www.ascendamphitheater.com",
+              "trust_grade": "A",
+              "notes": "official homepage FAQ repetition"
+            }
+          ],
+          "conflict_notes": [
+            {
+              "variant": "small clutch bags 4.5 x 6.5",
+              "source": "https://www.nashvilleamphitheater.net/rules/",
+              "trust_grade": "C/D",
+              "resolution": "prefer official venue size 6 x 9; treat 4.5 x 6.5 as older/unofficial or derivative wording"
+            }
+          ]
+        },
+        {
+          "claim": "The venue is non-smoking, with smokers directed to Gate 5 during events.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://www.nashvilleamphitheater.net/rules/",
+              "trust_grade": "C/D",
+              "notes": "secondary rules page; useful but not top-tier"
+            }
+          ]
+        },
+        {
+          "claim": "Questions and accessibility coordination may route through 615-258-5944.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/",
+              "trust_grade": "B",
+              "notes": "secondary explainer lists venue phone"
+            },
+            {
+              "url": "https://www.nashvilleamphitheater.net/rules/",
+              "trust_grade": "C/D",
+              "notes": "secondary rules page repeats phone and interpreter note"
+            }
+          ]
+        },
+        {
+          "claim": "Ticketed guests are commonly directed to Gate 1 near the box office, with VIP entrance left of the box office.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/",
+              "trust_grade": "B",
+              "notes": "secondary but concrete venue operations description"
+            }
+          ]
+        },
+        {
+          "claim": "Accessible drop-off is described at Molloy St. and 1st Avenue S.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/",
+              "trust_grade": "B",
+              "notes": "secondary accessibility logistics source"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "url": "https://www.ascendamphitheater.com",
+          "trust_grade": "A",
+          "vector": "official_homepage",
+          "expected_value": "venue identity and FAQ repeaters"
+        },
+        {
+          "url": "https://www.ascendamphitheater.com/visit",
+          "trust_grade": "A",
+          "vector": "official_visit",
+          "expected_value": "bag policy and visitor guidance"
+        },
+        {
+          "url": "https://www.ascendamphitheater.com/day-of-show",
+          "trust_grade": "A",
+          "vector": "official_day_of_show",
+          "expected_value": "day-of operational details"
+        },
+        {
+          "url": "https://www.ascendamphitheater.com/events",
+          "trust_grade": "A",
+          "vector": "official_events_index",
+          "expected_value": "venue-side event calendar context"
+        },
+        {
+          "url": "https://www.ascendamphitheater.com/events/filtered/2026/June",
+          "trust_grade": "A",
+          "vector": "official_month_index",
+          "expected_value": "month/date confirmation"
+        },
+        {
+          "url": "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/",
+          "trust_grade": "B",
+          "vector": "secondary_venue_guide",
+          "expected_value": "parking, gate, capacity, accessibility hints"
+        },
+        {
+          "url": "https://www.nashvilleamphitheater.net/rules/",
+          "trust_grade": "C/D",
+          "vector": "unofficial_rules_mirror",
+          "expected_value": "useful overlap detection and policy phrasing conflicts"
+        }
+      ]
+    },
+    "event": {
+      "canonical_identity": {
+        "headline_artist": "Young the Giant",
+        "support_acts": [
+          "Cold War Kids",
+          "almost monday"
+        ],
+        "venue": "Ascend Federal Credit Union Amphitheater",
+        "city": "Nashville",
+        "date": "2026-06-27",
+        "scheduled_start": "6:30 PM"
+      },
+      "core_claims": [
+        {
+          "claim": "Official venue event page names Young the Giant and lists the date/time as Saturday, June 27, 2026 at 6:30 PM.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+              "trust_grade": "A",
+              "notes": "primary event anchor"
+            }
+          ]
+        },
+        {
+          "claim": "The official venue events index and monthly June page both show the June 27, 2026 6:30 PM Young the Giant date.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.ascendamphitheater.com/events",
+              "trust_grade": "A",
+              "notes": "official event index"
+            },
+            {
+              "url": "https://www.ascendamphitheater.com/events/filtered/2026/June",
+              "trust_grade": "A",
+              "notes": "official June event index"
+            }
+          ]
+        },
+        {
+          "claim": "AXS ties the event to the same venue/date/time and explicitly mentions parking and the app-entry flow.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+              "trust_grade": "A-",
+              "notes": "ticketing confirmation"
+            }
+          ]
+        },
+        {
+          "claim": "Spotify's concert listing also reflects Young the Giant, Cold War Kids, and almost monday at Ascend on 6/27/2026 at 6:30 PM.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://open.spotify.com/concert/5MgExTAB4vo964HOZvBSLz",
+              "trust_grade": "C",
+              "notes": "aggregator/platform event confirmation"
+            }
+          ]
+        },
+        {
+          "claim": "SeatGeek lists the event as Young the Giant with Cold War Kids and Almost Monday at Ascend on Jun 27, 2026 at 6:30 PM.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://seatgeek.com/young-the-giant-tickets/nashville-tennessee-ascend-amphitheater-2026-06-27-6-30-pm/concert/18077267",
+              "trust_grade": "C",
+              "notes": "aggregator confirmation"
+            }
+          ]
+        },
+        {
+          "claim": "Songkick shows a conflicting or noisy support-act data point mentioning KennyHoopla with the event, which is likely stale or erroneous for this date and should be down-ranked.",
+          "confidence": "medium_high",
+          "sources": [
+            {
+              "url": "https://www.songkick.com/concerts/43052857-young-the-giant-at-ascend-federal-credit-union-amphitheater",
+              "trust_grade": "D",
+              "notes": "conflict detector rather than truth source"
+            }
+          ],
+          "resolution": "prefer official venue, official artist, AXS, and Live Nation over Songkick for lineup"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+          "trust_grade": "A",
+          "vector": "official_event_page",
+          "expected_value": "primary event identity"
+        },
+        {
+          "url": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+          "trust_grade": "A-",
+          "vector": "ticketing_event",
+          "expected_value": "transactional event confirmation"
+        },
+        {
+          "url": "https://www.livenation.com/event/G5viZ_AADXAfj/young-the-giant-victory-garden-tour-with-cold-war-kids",
+          "trust_grade": "A-",
+          "vector": "promoter_event",
+          "expected_value": "promoter-side wording"
+        },
+        {
+          "url": "https://www.ticketmaster.com/young-the-giant-victory-garden-tour-nashville-06-27-2026/event/Z7r9jZ1A7-6od",
+          "trust_grade": "A-",
+          "vector": "ticketmaster_event",
+          "expected_value": "event identity and start-time corroboration"
+        },
+        {
+          "url": "https://open.spotify.com/concert/5MgExTAB4vo964HOZvBSLz",
+          "trust_grade": "C",
+          "vector": "platform_concert_page",
+          "expected_value": "bill confirmation overlap"
+        },
+        {
+          "url": "https://seatgeek.com/young-the-giant-tickets/nashville-tennessee-ascend-amphitheater-2026-06-27-6-30-pm/concert/18077267",
+          "trust_grade": "C",
+          "vector": "aggregator_concert_page",
+          "expected_value": "redundant public-event confirmation"
+        },
+        {
+          "url": "https://www.songkick.com/concerts/43052857-young-the-giant-at-ascend-federal-credit-union-amphitheater",
+          "trust_grade": "D",
+          "vector": "conflict_source",
+          "expected_value": "lineup mismatch detection"
+        },
+        {
+          "url": "https://www.setlist.fm/show/2026-06-27/ascend-amphitheater-nashville-tn-6b8986ee.html?setlist=6b4b5642",
+          "trust_grade": "C",
+          "vector": "event_stub_postshow",
+          "expected_value": "post-show setlist and recap structure later"
+        }
+      ]
+    },
+    "weather": {
+      "core_claims": [
+        {
+          "claim": "The National Weather Service Nashville office says scattered thunderstorms are expected Saturday with a high chance for very heavy rain and a moderate chance for localized flash flooding.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.weather.gov/ohx/",
+              "trust_grade": "A",
+              "notes": "regional NWS office headline forecast/risk framing"
+            }
+          ]
+        },
+        {
+          "claim": "A Flood Watch is posted from 7 AM Saturday until 7 AM Sunday.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.weather.gov/ohx/",
+              "trust_grade": "A",
+              "notes": "official NWS risk timing"
+            }
+          ]
+        },
+        {
+          "claim": "The highest risk area is described around I-40 north, but heavy rain and gusty storms still matter for Nashville event planning.",
+          "confidence": "medium_high",
+          "sources": [
+            {
+              "url": "https://www.weather.gov/ohx/",
+              "trust_grade": "A",
+              "notes": "official risk framing"
+            }
+          ]
+        },
+        {
+          "claim": "AXS says amphitheater events are rain or shine and pushes users to venue social channels for dangerous-weather updates.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+              "trust_grade": "A-",
+              "notes": "event platform operational note"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "url": "https://www.weather.gov/ohx/",
+          "trust_grade": "A",
+          "vector": "nws_regional",
+          "expected_value": "official hazard/rain/flood framing"
+        },
+        {
+          "url": "https://forecast.weather.gov/MapClick.php?lat=36.1606&lon=-86.7756",
+          "trust_grade": "A",
+          "vector": "nws_point_forecast",
+          "expected_value": "venue-ish point forecast"
+        },
+        {
+          "url": "https://weather.com/weather/hourbyhour/l/Nashville+TN",
+          "trust_grade": "B",
+          "vector": "hourly_weather",
+          "expected_value": "hourly event-window refinement"
+        },
+        {
+          "url": "https://www.accuweather.com/en/us/nashville/37243/june-weather/351090",
+          "trust_grade": "C",
+          "vector": "monthly_context",
+          "expected_value": "seasonal background only"
+        }
+      ],
+      "operational_take": {
+        "summary": "Weather is not background flavor tonight; it is a first-class event risk variable.",
+        "bundle_impact": [
+          "elevate weather panel prominence",
+          "store flood watch text or summary",
+          "treat rain/flooding as operational utility, not just forecast decoration",
+          "bias toward links to live official weather sources"
+        ]
+      }
+    },
+    "traffic_and_congestion": {
+      "core_claims": [
+        {
+          "claim": "Alan Jackson's 'Last Call - The Finale' is also at Nissan Stadium on the same night, Saturday June 27, 2026.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://nissanstadium.com/event/alan-jackson-last-call-the-finale/",
+              "trust_grade": "A",
+              "notes": "official stadium event page"
+            },
+            {
+              "url": "https://holler.country/news/general/alan-jacksons-2026-nissan-stadium-show-in-nashville-tennessee-everything-you-need-to-know/",
+              "trust_grade": "B",
+              "notes": "secondary planning context"
+            }
+          ]
+        },
+        {
+          "claim": "The Nissan Stadium event lists doors at 4 PM and show start around 6 PM, suggesting overlapping inbound traffic and parking pressure with the Ascend event.",
+          "confidence": "high",
+          "sources": [
+            {
+              "url": "https://nissanstadium.com/event/alan-jackson-last-call-the-finale/",
+              "trust_grade": "A",
+              "notes": "official schedule context"
+            },
+            {
+              "url": "https://holler.country/news/general/alan-jacksons-2026-nissan-stadium-show-in-nashville-tennessee-everything-you-need-to-know/",
+              "trust_grade": "B",
+              "notes": "secondary but explicit parking/doors context"
+            }
+          ]
+        },
+        {
+          "claim": "This same-night stadium event materially raises the probability of heavier traffic, rideshare scarcity, and more crowded east-bank/downtown pedestrian flows.",
+          "confidence": "medium_high",
+          "sources": [
+            {
+              "url": "https://nissanstadium.com/event/alan-jackson-last-call-the-finale/",
+              "trust_grade": "A",
+              "notes": "official same-night event existence"
+            }
+          ],
+          "inference_type": "reasoned operational inference from co-located same-night major event"
+        }
+      ],
+      "links": [
+        {
+          "url": "https://nissanstadium.com/event/alan-jackson-last-call-the-finale/",
+          "trust_grade": "A",
+          "vector": "same_night_major_event_primary",
+          "expected_value": "hard confirmation of overlapping venue-scale traffic driver"
+        },
+        {
+          "url": "https://holler.country/news/general/alan-jacksons-2026-nissan-stadium-show-in-nashville-tennessee-everything-you-need-to-know/",
+          "trust_grade": "B",
+          "vector": "same_night_major_event_secondary",
+          "expected_value": "planning context"
+        },
+        {
+          "url": "https://www.eventticketscenter.com/alan-jackson-nashville-06-27-2026/7477649/t",
+          "trust_grade": "D",
+          "vector": "same_night_major_event_aggregator",
+          "expected_value": "overlap detection only"
+        }
+      ]
+    },
+    "parking_and_walkability": {
+      "core_claims": [
+        {
+          "claim": "AXS explicitly exposes parking for the event and ties it to the Ascend event page.",
+          "confidence": "medium_high",
+          "sources": [
+            {
+              "url": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+              "trust_grade": "A-",
+              "notes": "event page includes parking entry point"
+            }
+          ]
+        },
+        {
+          "claim": "Ticketmaster's Ascend explainer says VIP/Premier parking can be purchased, general parking may route through Nissan Stadium Lot R, and accessible drop-off is near Molloy St. and 1st Ave S.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/",
+              "trust_grade": "B",
+              "notes": "secondary but detailed venue operations explainer"
+            }
+          ]
+        },
+        {
+          "claim": "The John Seigenthaler Pedestrian Bridge is a known practical downtown/east-bank walking connector and can support a bridge-walk utility narrative, though stronger official distance mapping would still be useful.",
+          "confidence": "medium",
+          "sources": [
+            {
+              "url": "https://www.youtube.com/watch?v=-z9sfurG4Qk",
+              "trust_grade": "D",
+              "notes": "visual route clue only"
+            },
+            {
+              "url": "https://www.yelp.com/biz/john-seigenthaler-pedestrian-bridge-nashville-2",
+              "trust_grade": "C",
+              "notes": "public experiential description"
+            },
+            {
+              "url": "https://www.facebook.com/groups/nashvillevisitor/posts/2360810987627139/",
+              "trust_grade": "D",
+              "notes": "community confirmation that east-bank/downtown walking is common"
+            }
+          ]
+        }
+      ],
+      "links": [
+        {
+          "url": "https://www.axs.com/events/1333669/young-the-giant-tickets",
+          "trust_grade": "A-",
+          "vector": "parking_linked_event_page",
+          "expected_value": "primary event parking entry point"
+        },
+        {
+          "url": "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/",
+          "trust_grade": "B",
+          "vector": "parking_context_explainer",
+          "expected_value": "lot names, gate notes, accessible drop-off"
+        },
+        {
+          "url": "https://parking.com/nashville/events/9740983/young-the-giant-victory-garden-tour-with-cold-war-kids-6-27",
+          "trust_grade": "C",
+          "vector": "parking_discovery_page",
+          "expected_value": "public parking option discovery"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=-z9sfurG4Qk",
+          "trust_grade": "D",
+          "vector": "walkability_visual",
+          "expected_value": "route intuition only"
+        },
+        {
+          "url": "https://www.yelp.com/biz/john-seigenthaler-pedestrian-bridge-nashville-2",
+          "trust_grade": "C",
+          "vector": "walkability_experience",
+          "expected_value": "bridge usability texture"
+        }
+      ]
+    },
+    "support_acts": {
+      "cold_war_kids": {
+        "core_claims": [
+          {
+            "claim": "Cold War Kids are listed as support for the Ascend date on official artist and official venue pages.",
+            "confidence": "high",
+            "sources": [
+              {
+                "url": "https://youngthegiant.com",
+                "trust_grade": "A",
+                "notes": "official artist date listing"
+              },
+              {
+                "url": "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+                "trust_grade": "A",
+                "notes": "official venue event page"
+              }
+            ]
+          },
+          {
+            "claim": "Recent Cold War Kids setlist trends can be mined from Setlist.fm, but that data should be marked community-derived until native support is in place.",
+            "confidence": "medium",
+            "sources": [
+              {
+                "url": "https://www.setlist.fm/setlists/cold-war-kids-3bd64840.html",
+                "trust_grade": "C",
+                "notes": "touring song trend source"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "url": "https://www.instagram.com/coldwarkids/?hl=en",
+            "trust_grade": "B",
+            "vector": "official_social",
+            "expected_value": "social verification, current-tour cues"
+          },
+          {
+            "url": "https://www.setlist.fm/setlists/cold-war-kids-3bd64840.html",
+            "trust_grade": "C",
+            "vector": "setlist_trends",
+            "expected_value": "active song-likelihood support"
+          },
+          {
+            "url": "https://x.com/ColdWarKids?lang=en",
+            "trust_grade": "C",
+            "vector": "social_secondary",
+            "expected_value": "additional verification vector"
+          }
+        ]
+      },
+      "almost_monday": {
+        "core_claims": [
+          {
+            "claim": "almost monday are listed on the Young the Giant Nashville date by the official artist site.",
+            "confidence": "high",
+            "sources": [
+              {
+                "url": "https://youngthegiant.com",
+                "trust_grade": "A",
+                "notes": "official artist date listing"
+              }
+            ]
+          },
+          {
+            "claim": "The official venue event listings also name almost monday on the bill.",
+            "confidence": "high",
+            "sources": [
+              {
+                "url": "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+                "trust_grade": "A",
+                "notes": "official venue event page"
+              },
+              {
+                "url": "https://www.ascendamphitheater.com/events",
+                "trust_grade": "A",
+                "notes": "official event index"
+              }
+            ]
+          },
+          {
+            "claim": "almost monday's official live page includes Nashville, TN on Jun 27, confirming their date-level involvement.",
+            "confidence": "high",
+            "sources": [
+              {
+                "url": "http://almostmonday.com/live",
+                "trust_grade": "A",
+                "notes": "official band live page"
+              }
+            ]
+          },
+          {
+            "claim": "Hollywood Records' press page says the run wraps on June 27 in Nashville, adding label-side confirmation.",
+            "confidence": "medium_high",
+            "sources": [
+              {
+                "url": "https://www.hollywoodrecords.com/press/almostmonday/",
+                "trust_grade": "B",
+                "notes": "label press support"
+              }
+            ]
+          },
+          {
+            "claim": "There is enough evidence to justify a basic almost monday support-act bundle right now, even before deeper song-by-song enrichment.",
+            "confidence": "high",
+            "sources": [
+              {
+                "url": "http://almostmonday.com",
+                "trust_grade": "A",
+                "notes": "official site"
+              },
+              {
+                "url": "http://almostmonday.com/live",
+                "trust_grade": "A",
+                "notes": "official live page"
+              },
+              {
+                "url": "https://www.hollywoodrecords.com/press/almostmonday/",
+                "trust_grade": "B",
+                "notes": "label profile"
+              }
+            ]
+          }
+        ],
+        "links": [
+          {
+            "url": "http://almostmonday.com",
+            "trust_grade": "A",
+            "vector": "official_site",
+            "expected_value": "artist identity and links"
+          },
+          {
+            "url": "http://almostmonday.com/live",
+            "trust_grade": "A",
+            "vector": "official_live",
+            "expected_value": "date confirmation"
+          },
+          {
+            "url": "https://www.instagram.com/almostmonday/?hl=en",
+            "trust_grade": "B",
+            "vector": "official_social",
+            "expected_value": "tour cues and merch/energy language"
+          },
+          {
+            "url": "https://www.hollywoodrecords.com/press/almostmonday/",
+            "trust_grade": "B",
+            "vector": "label_press",
+            "expected_value": "bio and timeline support"
+          },
+          {
+            "url": "https://en.wikipedia.org/wiki/Almost_Monday",
+            "trust_grade": "C",
+            "vector": "background_reference",
+            "expected_value": "basic bio fallback"
+          }
+        ]
+      }
+    },
+    "setlist_and_song_support": {
+      "status": "partial_pre_native_support",
+      "notes": [
+        "setlist.fm native integration not yet live per operator note",
+        "still worth providing links so AG can compare its existing guesses against public community patterns"
+      ],
+      "links": [
+        {
+          "url": "https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html",
+          "trust_grade": "C",
+          "vector": "young_the_giant_recent_setlists",
+          "expected_value": "likely active songs and transitions"
+        },
+        {
+          "url": "https://www.setlist.fm/show/2026-06-27/ascend-amphitheater-nashville-tn-6b8986ee.html?setlist=6b4b5642",
+          "trust_grade": "C",
+          "vector": "event_stub",
+          "expected_value": "post-show event-specific setlist landing page"
+        },
+        {
+          "url": "https://www.setlist.fm/setlists/cold-war-kids-3bd64840.html",
+          "trust_grade": "C",
+          "vector": "cold_war_kids_recent_setlists",
+          "expected_value": "support-act likely songs"
+        }
+      ],
+      "inference_guidance": {
+        "do": [
+          "use for song-likelihood priors",
+          "compare against internal guesses",
+          "flag community-derived provenance"
+        ],
+        "dont": [
+          "treat as primary authoritative pre-show truth",
+          "collapse community patterns into canonical event facts before the show"
+        ]
+      }
+    },
+    "bathroom_and_map_gap": {
+      "status": "map_gap_exists",
+      "notes": [
+        "operator note says bathroom module lacks stored maps but has real descriptions",
+        "this means venue utility should distinguish spatial-confidence from textual-confidence",
+        "do not imply precise bathroom geometry if only prose descriptions exist"
+      ],
+      "recommended_modeling": {
+        "bathroom_descriptions": "allowed_high_text_confidence",
+        "bathroom_map_coordinates": "unknown_or_low_confidence_until_verified",
+        "ui_behavior": [
+          "show descriptive utility text",
+          "avoid fake map precision",
+          "flag as descriptive rather than mapped"
+        ]
+      }
+    },
+    "conflicts_and_noise": [
+      {
+        "topic": "small clutch bag dimensions",
+        "preferred_value": "6 x 9 inches",
+        "preferred_sources": [
+          "https://www.ascendamphitheater.com/day-of-show",
+          "https://www.ascendamphitheater.com/visit",
+          "https://www.ascendamphitheater.com"
+        ],
+        "conflicting_source": "https://www.nashvilleamphitheater.net/rules/",
+        "conflicting_value": "4.5 x 6.5 inches",
+        "resolution": "prefer official venue pages"
+      },
+      {
+        "topic": "support lineup conflict",
+        "preferred_value": [
+          "Cold War Kids",
+          "almost monday"
+        ],
+        "preferred_sources": [
+          "https://youngthegiant.com",
+          "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+          "https://www.axs.com/events/1333669/young-the-giant-tickets"
+        ],
+        "conflicting_source": "https://www.songkick.com/concerts/43052857-young-the-giant-at-ascend-federal-credit-union-amphitheater",
+        "conflicting_value": "mentions KennyHoopla in a noisy way",
+        "resolution": "down-rank Songkick for lineup truth"
+      },
+      {
+        "topic": "venue address formatting",
+        "preferred_value": "310 1st Avenue South, Nashville, TN 37201",
+        "variants": [
+          "310 1st Ave S",
+          "310 1st St"
+        ],
+        "resolution": "normalize to venue-preferred avenue-south format if possible, preserve alternates as aliases"
+      }
+    ],
+    "high_value_ingest_now": [
+      {
+        "priority": 1,
+        "item": "official event identity + lineup",
+        "links": [
+          "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+          "https://youngthegiant.com",
+          "https://www.axs.com/events/1333669/young-the-giant-tickets",
+          "https://www.livenation.com/event/G5viZ_AADXAfj/young-the-giant-victory-garden-tour-with-cold-war-kids"
+        ]
+      },
+      {
+        "priority": 2,
+        "item": "venue utility + bag rules + address",
+        "links": [
+          "https://www.ascendamphitheater.com/day-of-show",
+          "https://www.ascendamphitheater.com/visit",
+          "https://www.ascendamphitheater.com",
+          "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/"
+        ]
+      },
+      {
+        "priority": 3,
+        "item": "weather risk",
+        "links": [
+          "https://www.weather.gov/ohx/",
+          "https://forecast.weather.gov/MapClick.php?lat=36.1606&lon=-86.7756",
+          "https://www.axs.com/events/1333669/young-the-giant-tickets"
+        ]
+      },
+      {
+        "priority": 4,
+        "item": "same-night congestion warning",
+        "links": [
+          "https://nissanstadium.com/event/alan-jackson-last-call-the-finale/",
+          "https://holler.country/news/general/alan-jacksons-2026-nissan-stadium-show-in-nashville-tennessee-everything-you-need-to-know/"
+        ]
+      },
+      {
+        "priority": 5,
+        "item": "support-act confidence",
+        "links": [
+          "http://almostmonday.com/live",
+          "https://www.hollywoodrecords.com/press/almostmonday/",
+          "https://www.instagram.com/coldwarkids/?hl=en",
+          "https://www.setlist.fm/setlists/cold-war-kids-3bd64840.html"
+        ]
+      }
+    ],
+    "full_link_bank": [
+      "https://www.ascendamphitheater.com/event/2026-06-27-young-the-giant-1333669-at-6-30-pm",
+      "https://www.ascendamphitheater.com",
+      "https://www.ascendamphitheater.com/events",
+      "https://www.ascendamphitheater.com/events/filtered/2026/June",
+      "https://www.ascendamphitheater.com/day-of-show",
+      "https://www.ascendamphitheater.com/visit",
+      "https://youngthegiant.com",
+      "https://www.axs.com/events/1333669/young-the-giant-tickets",
+      "https://www.livenation.com/event/G5viZ_AADXAfj/young-the-giant-victory-garden-tour-with-cold-war-kids",
+      "https://www.ticketmaster.com/young-the-giant-victory-garden-tour-nashville-06-27-2026/event/Z7r9jZ1A7-6od",
+      "https://www.ticketmaster.com/young-the-giant-tickets/artist/1482431",
+      "https://www.livenation.com/artist/K8vZ917GU-V/young-the-giant-events",
+      "https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html",
+      "https://www.setlist.fm/show/2026-06-27/ascend-amphitheater-nashville-tn-6b8986ee.html?setlist=6b4b5642",
+      "https://www.setlist.fm/setlists/cold-war-kids-3bd64840.html",
+      "https://open.spotify.com/concert/5MgExTAB4vo964HOZvBSLz",
+      "https://seatgeek.com/young-the-giant-tickets/nashville-tennessee-ascend-amphitheater-2026-06-27-6-30-pm/concert/18077267",
+      "https://www.songkick.com/concerts/43052857-young-the-giant-at-ascend-federal-credit-union-amphitheater",
+      "https://www.weather.gov/ohx/",
+      "https://forecast.weather.gov/MapClick.php?lat=36.1606&lon=-86.7756",
+      "https://weather.com/weather/hourbyhour/l/Nashville+TN",
+      "https://www.accuweather.com/en/us/nashville/37243/june-weather/351090",
+      "https://nissanstadium.com/event/alan-jackson-last-call-the-finale/",
+      "https://holler.country/news/general/alan-jacksons-2026-nissan-stadium-show-in-nashville-tennessee-everything-you-need-to-know/",
+      "https://www.eventticketscenter.com/alan-jackson-nashville-06-27-2026/7477649/t",
+      "https://blog.ticketmaster.com/step-inside-ascend-amphitheater-nashville-tn/",
+      "https://parking.com/nashville/events/9740983/young-the-giant-victory-garden-tour-with-cold-war-kids-6-27",
+      "https://www.yelp.com/biz/john-seigenthaler-pedestrian-bridge-nashville-2",
+      "https://www.youtube.com/watch?v=-z9sfurG4Qk",
+      "https://www.facebook.com/groups/nashvillevisitor/posts/2360810987627139/",
+      "http://almostmonday.com",
+      "http://almostmonday.com/live",
+      "https://www.instagram.com/almostmonday/?hl=en",
+      "https://www.hollywoodrecords.com/press/almostmonday/",
+      "https://en.wikipedia.org/wiki/Almost_Monday",
+      "https://www.instagram.com/coldwarkids/?hl=en",
+      "https://x.com/ColdWarKids?lang=en",
+      "https://fault-magazine.com/2026/05/young-the-giant-interview-and-photoshoot/",
+      "https://grammymuseum.org/event/the-drop-young-the-giant/",
+      "https://variety.com/2026/music/news/young-the-giant-victory-garden-tour-summer-1236665250/",
+      "https://www.instagram.com/p/DZ95hFmOfaA/",
+      "https://www.instagram.com/p/DZP3KFtj6ka/",
+      "https://www.victorygardentour.com",
+      "https://www.nashvilleamphitheater.net/rules/"
+    ],
+    "last_operator_alignment_notes": [
+      "yes, enough evidence exists for an almost monday bundle",
+      "bathroom utility can be descriptive before it is mappable",
+      "lack of setlist.fm native support does not block using setlist links as community-prior evidence",
+      "tonight's weather and the simultaneous Nissan Stadium mega-event should both be treated as first-class operational context"
+    ]
+  }
+}

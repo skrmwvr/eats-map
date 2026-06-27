@@ -1,0 +1,26 @@
+// Normalized Artist entity for almost monday
+{
+  "id": "artist:almost-monday",
+  "type": "artist",
+  "name": "almost monday",
+  "display_name": "almost monday",
+  "slug": "almost-monday",
+  "origin_city": "San Diego",
+  "origin_country": "US",
+  "active_since_year": 2019,
+  "genre_tags": [
+    "indie pop",
+    "indie rock",
+    "surf pop"
+  ],
+  "official_url": "http://almostmonday.com",
+  "social_urls": {
+    "instagram": "https://www.instagram.com/almostmonday/",
+    "youtube": "https://www.youtube.com/channel/UCG0B2Q2T94FmP8w7T8Bw6Yw"
+  },
+  "sources": [
+    "source:artist_official:almost-monday-bio"
+  ],
+  "confidence": 0.9,
+  "lifecycle": "stable"
+}
