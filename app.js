@@ -16,10 +16,12 @@ const songLyricsDb = {
     "Magnets pull the iron, but we're pulling each other."
   ],
   "cough-syrup": [
-    "Life's a bore when you're cool in the suburbs.",
-    "One more medicine to bottle my head.",
-    "<strong>(Chorus!)</strong> If I could find a way to see this straight,",
-    "I'd run away, to some fortune that I should have found."
+    "Life's too short to even care at all, oh",
+    "I'm losing my mind, losing my mind, losing control",
+    "These feelings she can't shake, hot and cold, baby blue",
+    "A fish in the water is lost without dry land",
+    "One more spoon of cough syrup now, oh",
+    "A dark world aches for a splash of the sun"
   ],
   "my-body": [
     "My body tells me no, but I won't listen to it.",
@@ -125,40 +127,44 @@ function triggerTransition(callback) {
 
 // Load Core Data from bundles/ & fill-data/
 async function loadCorpusData() {
+  // Safe fetching netting fallbacks
   try {
     const venueRes = await fetch('bundles/venues/venue-ascend-federal-credit-union-amphitheater.jsonc');
-    const venueText = await venueRes.text();
-    state.venue = parseJSONC(venueText);
+    if (venueRes.ok) state.venue = parseJSONC(await venueRes.text());
+  } catch(e) { console.warn("Failed to load venue:", e); }
+  if (!state.venue) state.venue = { display_name: "Ascend Amphitheater" };
 
+  try {
     const eventRes = await fetch('bundles/events/event-young-the-giant-nashville-2026-06-27.jsonc');
-    const eventText = await eventRes.text();
-    state.event = parseJSONC(eventText);
+    if (eventRes.ok) state.event = parseJSONC(await eventRes.text());
+  } catch(e) { console.warn("Failed to load event:", e); }
+  if (!state.event) state.event = { doors_time: "17:00", weather: { temp_f_high: 89, temp_f_low: 74, conditions: "Rain", forecast_summary: "Storms expected." } };
 
+  try {
     const transitRes = await fetch('fill-data/venue/nashville-transit-parking-options.json');
-    state.transit = await transitRes.json();
+    if (transitRes.ok) state.transit = await transitRes.json();
+  } catch(e) { console.warn("Failed to load transit:", e); }
 
+  try {
     const tourRes = await fetch('fill-data/event/victory-garden-tour-history.json');
-    state.tourHistory = await tourRes.json();
+    if (tourRes.ok) state.tourHistory = await tourRes.json();
+  } catch(e) { console.warn("Failed to load tour history:", e); }
 
+  try {
     const sentimentRes = await fetch('fill-data/band/young-the-giant-song-sentiment.json');
-    state.sentiment = await sentimentRes.json();
+    if (sentimentRes.ok) state.sentiment = await sentimentRes.json();
+  } catch(e) { console.warn("Failed to load sentiment:", e); }
 
-    try {
-      const lyricsRes = await fetch('fill-data/band/setlist-lyrics-and-live-variations.json');
-      state.lyricsDb = await lyricsRes.json();
-    } catch(e) {
-      console.warn("Failed to pre-cache lyrics and variations database:", e);
-    }
+  try {
+    const lyricsRes = await fetch('fill-data/band/setlist-lyrics-and-live-variations.json');
+    if (lyricsRes.ok) state.lyricsDb = await lyricsRes.json();
+  } catch(e) { console.warn("Failed to pre-cache lyrics and variations database:", e); }
 
-    await loadArtistSonglist();
-    
-    renderDashboardMetadata();
-    renderCurrentSong();
-    startFactoidShuffler();
-
-  } catch (error) {
-    console.error("Error loading event corpus data:", error);
-  }
+  await loadArtistSonglist();
+  
+  renderDashboardMetadata();
+  renderCurrentSong();
+  startFactoidShuffler();
 }
 
 // Fetch and load song schemas for the active band
@@ -279,7 +285,6 @@ function renderCurrentSong() {
   }
 
   if (!lyricsArray) {
-    // Fallback search database
     const songSlug = song.slug;
     lyricsArray = songLyricsDb[songSlug] || [
       "No offline lyrics cached for this song yet.",
@@ -295,7 +300,7 @@ function renderCurrentSong() {
   if (liveVariants && liveVariants.length > 0) {
     const listHTML = liveVariants.map(v => `<li><strong>${v.type}:</strong> ${v.description}</li>`).join('');
     variationsHTML = `
-      <div style="margin-top: 14px; padding: 10px; background: rgba(255,159,10,0.08); border-radius: 6px; font-size: 0.75rem; border-left: 3px solid #ff9f0a; text-align: left; font-family:'Segoe UI', sans-serif;">
+      <div style="margin-top: 14px; padding: 12px; background: rgba(255,159,10,0.08); border-radius: 6px; font-size: 0.78rem; border-left: 3px solid #ff9f0a; text-align: left; font-family:'Segoe UI', sans-serif;">
         <strong style="color:#ff9f0a; display:block; margin-bottom:4px;">🎤 Tour Live Variations:</strong>
         <ul style="margin: 0; padding-left: 14px; color: #ddd; line-height: 1.35; display:flex; flex-direction:column; gap:4px;">
           ${listHTML}
@@ -444,18 +449,20 @@ function renderVenueMainView() {
   viewport.className = 'viewport-square theme-venue';
   const content = document.getElementById('viewport-content');
   content.innerHTML = `
-    <div class="details-view">
-      <h2>Venue General Policies</h2>
-      <h3>Bag Guidelines</h3>
-      <ul>
-        <li><strong>Clear Bags:</strong> Max dimensions 12" x 6" x 12"</li>
-        <li><strong>Clutches (Non-clear):</strong> Max dimensions 6" x 9"</li>
-      </ul>
-      <h3>Parking & Walking Route</h3>
-      <p><strong>Nissan Stadium Walkway:</strong> Park at Nissan Stadium East Bank Lot, walk ~0.6 miles over the Seigenthaler Pedestrian Bridge directly to the gates (~15 min walk).</p>
+    <div class="details-view" style="display:flex; flex-direction:column; justify-content:space-between; height:100%;">
+      <div>
+        <h2>Venue Policies & Access</h2>
+        <h3>Bag Guidelines</h3>
+        <ul>
+          <li><strong>Clear Bags:</strong> Max dimensions 12" x 6" x 12"</li>
+          <li><strong>Clutches (Non-clear):</strong> Max dimensions 6" x 9"</li>
+        </ul>
+        <h3>Parking & Walking Route</h3>
+        <p><strong>Nissan Stadium Walkway:</strong> Park at Nissan Stadium East Bank Lot, walk ~0.6 miles over the Seigenthaler Pedestrian Bridge directly to the gates (~15 min walk).</p>
+      </div>
       
-      <div id="shuffling-factoid" style="margin-top:20px; font-size:0.8rem; min-height:36px; padding:8px; background:rgba(255,255,255,0.03); border-radius:6px; color:#ff9f0a; transition: opacity 0.4s ease;">
-        💡 Loading trivia...
+      <div style="margin-top:16px; border-top:1px dashed #444; padding-top:12px;">
+        <p style="font-size:0.8rem; color:#aaa; margin-bottom:0;">Need ADA help? Click <strong>Facilities</strong> above or tap <strong>🚻</strong> below.</p>
       </div>
     </div>
   `;
@@ -506,6 +513,11 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
             </div>
           </div>
 
+          <!-- Auto-Shuffling Trivia (Moved from Venue to Program view) -->
+          <div id="shuffling-factoid" style="margin-top:14px; font-size:0.85rem; min-height:40px; padding:10px; background:rgba(255,255,255,0.03); border-radius:6px; color:#ff9f0a; transition: opacity 0.4s ease; border-left: 3px solid #ff9f0a;">
+            💡 Loading trivia...
+          </div>
+
           <div style="margin-top:14px; padding:10px; background:rgba(255,255,255,0.03); border-radius:6px; font-size:0.75rem; border:1px dashed #444;">
             <strong>📲 Add to Home Screen (PWA):</strong>
             <p style="margin:2px 0 0 0; line-height:1.3; color:#aaa;">Install app for 100% offline access to all lists and keys when cellular network grids clog.</p>
@@ -535,6 +547,8 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
         triggerTransition(renderActiveBandProfile);
       });
     });
+    
+    startFactoidShuffler();
   });
 });
 
@@ -555,7 +569,7 @@ function renderActiveBandProfile() {
   // Dropdown list HTML for bands
   let bandOptionsHTML = bandsList.map((b, idx) => {
     const isSelected = idx === state.activeBandIndex ? 'selected' : '';
-    return `<option value="${idx}" ${isSelected}>${b.display_name}</option>`;
+    return `<option value="${idx}" ${isSelected}>${idx + 1} / ${bandsList.length}</option>`;
   }).join('');
 
   // CSS aesthetic block/collage representation of the band
@@ -600,18 +614,19 @@ function renderActiveBandProfile() {
         <div style="margin: 16px 0; border-top: 1px dashed rgba(255,255,255,0.15); padding-top:12px;">
           ${linksHTML}
         </div>
-
-        <div style="margin-top: 14px; font-size: 0.75rem; font-family: 'Segoe UI', sans-serif;">
-          <label for="band-select" style="display:block; margin-bottom:4px; text-transform:uppercase; font-weight:700; color:var(--text-secondary);">Select active band profile:</label>
-          <select id="band-select" style="width:100%; padding:10px; background:#222; border:1px solid #444; color:#fff; border-radius:6px; font-family:'Segoe UI', sans-serif;">
-            ${bandOptionsHTML}
-          </select>
-        </div>
       </div>
 
-      <div class="song-controller" style="justify-content: center; gap: 20px; flex-shrink:0; margin-top:6px;">
+      <!-- Dropdown picker low inside port between navigation buttons -->
+      <div class="song-controller" style="justify-content: center; gap: 14px; flex-shrink:0; margin-top:6px; display:flex; align-items:center;">
         <button class="ctrl-btn" id="btn-prev-band">◀</button>
-        <span class="song-index" style="font-family:'Courier Prime', monospace;">${state.activeBandIndex + 1} / ${bandsList.length}</span>
+        
+        <div style="position:relative; display:inline-block;">
+          <select id="band-select" style="background:transparent; border:none; color:#fff; font-family:'Courier Prime', monospace; font-size:1.1rem; font-weight:700; cursor:pointer; appearance:none; -webkit-appearance:none; padding:4px 18px 4px 6px; text-align:center;">
+            ${bandOptionsHTML}
+          </select>
+          <span style="position:absolute; right:4px; top:50%; transform:translateY(-50%); pointer-events:none; font-size:0.6rem; color:#aaa;">▼</span>
+        </div>
+
         <button class="ctrl-btn" id="btn-next-band">▶</button>
       </div>
     </div>
@@ -711,7 +726,29 @@ document.getElementById('btn-venue-fac').addEventListener('click', () => {
 });
 
 document.getElementById('btn-venue-help').addEventListener('click', () => {
-  window.open('tel:6152585944');
+  // Confirm Dialogue inside Centerport
+  triggerTransition(() => {
+    const content = document.getElementById('viewport-content');
+    content.innerHTML = `
+      <div class="details-view" style="display:flex; flex-direction:column; justify-content:center; height:100%; text-align:center; padding:10px;">
+        <h2>Call Guest Services</h2>
+        <p style="font-size:1.1rem; margin-bottom:20px; line-height:1.4;">Are you sure you want to call Ascend Amphitheater Guest Services & ADA assistance line?</p>
+        <p style="color:var(--accent); font-weight:700; margin-bottom:24px; font-size:1.3rem;">📞 615-258-5944</p>
+        
+        <div style="display:flex; gap:16px; justify-content:center;">
+          <button id="btn-confirm-call" style="background:#ff5722; border:none; color:#fff; padding:12px 24px; border-radius:6px; font-weight:700; cursor:pointer; font-size:1rem; font-family:'Segoe UI',sans-serif;">Call Now</button>
+          <button id="btn-cancel-call" style="background:transparent; border:1px solid #555; color:#aaa; padding:12px 24px; border-radius:6px; font-weight:700; cursor:pointer; font-size:1rem; font-family:'Segoe UI',sans-serif;">Cancel</button>
+        </div>
+      </div>
+    `;
+    
+    document.getElementById('btn-confirm-call').addEventListener('click', () => {
+      window.open('tel:6152585944');
+    });
+    document.getElementById('btn-cancel-call').addEventListener('click', () => {
+      triggerTransition(renderVenueMainView);
+    });
+  });
 });
 
 // Reset Viewport back to main song lyrics when Sun Home is clicked
@@ -853,6 +890,21 @@ window.addEventListener('DOMContentLoaded', () => {
     e.stopPropagation();
     state.dismissedAlertText = state.event?.weather?.forecast_summary || '';
     document.getElementById('alert-banner').style.display = 'none';
+    
+    // Sync Weather checkbox if active on screen
+    const chk = document.getElementById('alert-banner-toggle');
+    if (chk) chk.checked = false;
+  });
+
+  // Bind new Footer Restroom and help shortcut buttons
+  document.getElementById('btn-foot-restroom').addEventListener('click', () => {
+    state.activeViewport = 'venue';
+    showVenueActionBar();
+    document.getElementById('btn-venue-fac').click();
+  });
+
+  document.getElementById('btn-foot-help').addEventListener('click', () => {
+    triggerPageHelp();
   });
 
   // Bind Long-Press handlers to main elements
@@ -861,7 +913,17 @@ window.addEventListener('DOMContentLoaded', () => {
   
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('Service Worker Registered successfully', reg))
+      .then(reg => {
+        // Check for updates to sw.js
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('New service worker available, reloading cache...');
+            }
+          });
+        });
+      })
       .catch(err => console.warn('Service Worker registration failed', err));
   }
 });
