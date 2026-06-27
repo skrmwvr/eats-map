@@ -1,0 +1,22 @@
+// Normalized Tour entity for Victory Garden Tour
+{
+  "id": "tour:young-the-giant-victory-garden-tour",
+  "type": "tour",
+  "name": "Victory Garden Tour",
+  "display_name": "Victory Garden Tour",
+  "slug": "victory-garden-tour",
+  "artist_id": "artist:young-the-giant",
+  "year": 2026,
+  "active": true,
+  "start_date": "2026-06-27",
+  "end_date": null,
+  "event_ids": [
+    "event:young-the-giant-nashville-2026-06-27"
+  ],
+  "sources": [
+    "source:setlist_archive:young-the-giant-setlist",
+    "source:venue_official:young-the-giant-event-info"
+  ],
+  "confidence": 0.95,
+  "lifecycle": "stable"
+}

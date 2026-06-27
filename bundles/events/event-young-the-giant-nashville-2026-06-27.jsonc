@@ -1,0 +1,36 @@
+// Normalized Event entity for Young the Giant at Ascend Amphitheater
+{
+  "id": "event:young-the-giant-nashville-2026-06-27",
+  "type": "event",
+  "display_name": "Young the Giant — Nashville, TN — 2026-06-27",
+  "artist_id": "artist:young-the-giant",
+  "tour_id": "tour:young-the-giant-victory-garden-tour",
+  "venue_id": "venue:ascend-federal-credit-union-amphitheater",
+  "date": "2026-06-27",
+  "doors_time": "17:00",
+  "show_time": "18:30",
+  "end_time": null,
+  "opener_ids": [
+    "artist:cold-war-kids"
+  ],
+  "setlist_id": null,
+  "weather": {
+    "forecast_summary": "Showers and thunderstorms likely, high near 89F, overnight low around 74F. Flood Watch in effect from 7:00 AM June 27 to 7:00 AM June 28.",
+    "temp_f_high": 89,
+    "temp_f_low": 74,
+    "precipitation_chance": 80,
+    "conditions": "Rain / Thunderstorms",
+    "source_url": "https://forecast.weather.gov/MapClick.php?lat=36.1606&lon=-86.7756",
+    "captured_at": "2026-06-27T06:28:22-05:00"
+  },
+  "actuals": {
+    "attendance": null,
+    "notes": []
+  },
+  "sources": [
+    "source:venue_official:young-the-giant-event-info",
+    "source:weather_service:nashville-weather-forecast"
+  ],
+  "confidence": 0.95,
+  "lifecycle": "stable"
+}

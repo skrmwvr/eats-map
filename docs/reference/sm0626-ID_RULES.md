@@ -38,13 +38,13 @@ This file defines first-pass identifier, slug, naming, and revision-pointer rule
 - keep slugs readable
 - avoid stopword over-cleaning if it harms recognition
 
-### Good examples
+## Good examples
 - `young-the-giant`
 - `victory-garden-2026`
 - `freedom-hill`
 - `summer-in-bloom`
 
-### Bad examples
+## Bad examples
 - `YoungTheGiant`
 - `young_the_giant`
 - `young the giant`

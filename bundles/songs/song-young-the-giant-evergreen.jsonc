@@ -1,0 +1,24 @@
+// Normalized Song entity for Evergreen
+{
+  "id": "song:young-the-giant-evergreen",
+  "type": "song",
+  "name": "Evergreen",
+  "display_name": "Evergreen",
+  "slug": "evergreen",
+  "artist_id": "artist:young-the-giant",
+  "album_id": null,
+  "release_year": null,
+  "track_number": null,
+  "musicality": {
+    "canonical_key": "D# Major",
+    "tempo_bpm": 93,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:young-the-giant-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

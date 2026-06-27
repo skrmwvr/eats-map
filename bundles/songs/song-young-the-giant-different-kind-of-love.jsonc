@@ -1,0 +1,24 @@
+// Normalized Song entity for Different Kind of Love
+{
+  "id": "song:young-the-giant-different-kind-of-love",
+  "type": "song",
+  "name": "Different Kind of Love",
+  "display_name": "Different Kind of Love",
+  "slug": "different-kind-of-love",
+  "artist_id": "artist:young-the-giant",
+  "album_id": null,
+  "release_year": null,
+  "track_number": null,
+  "musicality": {
+    "canonical_key": "C Major",
+    "tempo_bpm": 118,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:young-the-giant-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

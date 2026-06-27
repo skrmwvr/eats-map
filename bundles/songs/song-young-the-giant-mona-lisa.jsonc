@@ -1,0 +1,24 @@
+// Normalized Song entity for Mona Lisa
+{
+  "id": "song:young-the-giant-mona-lisa",
+  "type": "song",
+  "name": "Mona Lisa",
+  "display_name": "Mona Lisa",
+  "slug": "mona-lisa",
+  "artist_id": "artist:young-the-giant",
+  "album_id": null,
+  "release_year": null,
+  "track_number": null,
+  "musicality": {
+    "canonical_key": "E Major",
+    "tempo_bpm": 105,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:young-the-giant-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}
