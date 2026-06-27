@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Sun Map — Concert Companion</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#121212">
+  <link rel="stylesheet" href="index.css">
+  <!-- Modern clean typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;700;900&family=Courier+Prime&display=swap" rel="stylesheet">
+</head>
+<body class="theme-night">
+  <div class="app-container">
+    
+    <!-- TOP AREA: Weather & Venue (3 Task Groups Grid) -->
+    <header class="dashboard-top">
+      <button class="top-btn" id="btn-weather" aria-label="Weather Forecast">
+        <div class="btn-icon" id="weather-icon">🌧️</div>
+        <div class="btn-label">
+          <span class="btn-title">Weather</span>
+          <span class="btn-subtitle" id="weather-status">89°F / Storms</span>
+        </div>
+      </button>
+
+      <button class="top-btn" id="btn-venue" aria-label="Venue Guide">
+        <div class="btn-icon">🏟️</div>
+        <div class="btn-label">
+          <span class="btn-title">Ascend</span>
+          <span class="btn-subtitle" id="venue-status">Nashville, TN</span>
+        </div>
+      </button>
+
+      <button class="top-btn" id="btn-timeline" aria-label="Event Timeline">
+        <div class="btn-icon">⏰</div>
+        <div class="btn-label">
+          <span class="btn-title">Schedule</span>
+          <span class="btn-subtitle" id="timeline-status">Show: 18:30</span>
+        </div>
+      </button>
+    </header>
+
+    <!-- LIVE STATUS / ALERT BANNER -->
+    <div class="status-banner" id="alert-banner">
+      <span class="alert-pulse"></span>
+      <span class="banner-text" id="alert-text">Flood Watch active from 7:00 AM. Storms expected during set times.</span>
+    </div>
+
+    <!-- CENTER AREA: Artsy square screen (Zune / Karaoke style) -->
+    <main class="viewport-square" id="main-viewport">
+      <!-- Transition / Static overlay -->
+      <div class="static-overlay" id="loading-overlay">
+        <div class="screen-glitch"></div>
+        <div class="loading-text">RECALIBRATING RETRO BEAMS...</div>
+      </div>
+      
+      <!-- Main Content Panel -->
+      <div class="viewport-content" id="viewport-content">
+        <!-- Default State: Karaoke Song Player -->
+        <div class="lyrics-view" id="lyrics-panel">
+          <div class="song-header">
+            <h1 id="song-title">Superposition</h1>
+            <p id="song-artist">Young the Giant</p>
+          </div>
+          
+          <div class="lyrics-body" id="lyrics-scroll">
+            <!-- Populated dynamically via JS -->
+          </div>
+          
+          <div class="song-controller">
+            <button class="ctrl-btn" id="btn-prev-song" aria-label="Previous Song">◀</button>
+            <span class="song-index" id="song-index-display">02 / 20</span>
+            <button class="ctrl-btn" id="btn-next-song" aria-label="Next Song">▶</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- BOTTOM AREA: Band, Tour, and Show Menu (3 Task Groups Grid) -->
+    <footer class="dashboard-bottom">
+      <button class="bottom-btn" id="btn-band" aria-label="Band Info">
+        <div class="btn-icon" id="band-btn-icon">🎸</div>
+        <div class="btn-label">
+          <span class="btn-title" id="band-btn-title">Band Details</span>
+          <span class="btn-subtitle" id="band-btn-subtitle">Young the Giant</span>
+        </div>
+      </button>
+
+      <button class="bottom-btn" id="btn-tour" aria-label="Tour Information">
+        <div class="btn-icon">🌎</div>
+        <div class="btn-label">
+          <span class="btn-title">Victory Garden</span>
+          <span class="btn-subtitle">Ethos & Dates</span>
+        </div>
+      </button>
+
+      <button class="bottom-btn" id="btn-menu" aria-label="Companion Menu">
+        <div class="btn-icon">⚡</div>
+        <div class="btn-label">
+          <span class="btn-title">Show Mode</span>
+          <span class="btn-subtitle">App Menu & Share</span>
+        </div>
+      </button>
+    </footer>
+
+  </div>
+
+  <!-- OFFLINE SHARE MODAL (QR Code Generator Built In) -->
+  <div class="modal-overlay" id="share-modal">
+    <div class="modal-card">
+      <h2>Share Sun Map</h2>
+      <p>Scan this QR code with another phone to instantly share the offline-capable guide.</p>
+      
+      <div class="qr-container">
+        <canvas id="qr-canvas"></canvas>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn outline" id="btn-close-share">Dismiss</button>
+        <button class="modal-btn" id="btn-install-pwa">Install Web App</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
