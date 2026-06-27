@@ -1,0 +1,216 @@
+{
+  "tour_name": "Victory Garden Tour",
+  "year": 2026,
+  "headliner": "Young the Giant",
+  "supporting_acts": [
+    {
+      "name": "Cold War Kids",
+      "role": "direct_support",
+      "notes": "Performing debut album 'Robbers & Cowards' in its entirety for its 20th anniversary."
+    },
+    {
+      "name": "almost monday",
+      "role": "opener",
+      "legs": [
+        "East Coast",
+        "Southern"
+      ]
+    },
+    {
+      "name": "KennyHoopla",
+      "role": "opener",
+      "legs": [
+        "Texas",
+        "West Coast",
+        "Mountain",
+        "Midwest"
+      ]
+    }
+  ],
+  "show_run_times": {
+    "doors": "17:00 or 17:30",
+    "opener_start": "18:30 (e.g. almost monday)",
+    "support_start": "19:30 (Cold War Kids)",
+    "headliner_start": "21:00 (Young the Giant)",
+    "headliner_duration_minutes": 90,
+    "typical_curfew": "22:30 or 23:00"
+  },
+  "previous_stops": [
+    {
+      "date": "2026-05-24",
+      "city": "Las Vegas",
+      "state": "NV",
+      "venue": "Pearl Concert Theater at Palms Casino Resort",
+      "openers": [
+        "Cold War Kids",
+        "KennyHoopla"
+      ]
+    },
+    {
+      "date": "2026-05-27",
+      "city": "Cleveland",
+      "state": "OH",
+      "venue": "Jacobs Pavilion",
+      "openers": [
+        "Cold War Kids",
+        "KennyHoopla"
+      ]
+    },
+    {
+      "date": "2026-05-29",
+      "city": "Richmond",
+      "state": "VA",
+      "venue": "Allianz Amphitheater at Riverfront",
+      "openers": [
+        "Cold War Kids",
+        "almost monday"
+      ]
+    },
+    {
+      "date": "2026-05-30",
+      "city": "Raleigh",
+      "state": "NC",
+      "venue": "Red Hat Amphitheater",
+      "openers": [
+        "Cold War Kids",
+        "almost monday"
+      ]
+    },
+    {
+      "date": "2026-05-31",
+      "city": "Charlotte",
+      "state": "NC",
+      "venue": "PNC Music Pavilion",
+      "openers": [
+        "Cold War Kids",
+        "almost monday"
+      ]
+    },
+    {
+      "date": "2026-06-04",
+      "city": "Fort Lauderdale",
+      "state": "FL",
+      "venue": "War Memorial Auditorium",
+      "openers": [
+        "Cold War Kids",
+        "almost monday"
+      ]
+    },
+    {
+      "date": "2026-06-18",
+      "city": "New York",
+      "state": "NY",
+      "venue": "The Rooftop at Pier 17",
+      "openers": [
+        "Cold War Kids",
+        "almost monday"
+      ],
+      "special_guests": [
+        {
+          "name": "Darren Criss",
+          "details": "Joined Sameer Gadhia on stage for a duet performance of 'Cough Syrup' (which Criss famously covered on Glee)."
+        }
+      ]
+    },
+    {
+      "date": "2026-06-19",
+      "city": "New York",
+      "state": "NY",
+      "venue": "The Rooftop at Pier 17",
+      "openers": [
+        "Cold War Kids",
+        "almost monday"
+      ]
+    },
+    {
+      "date": "2026-06-23",
+      "city": "Pittsburgh",
+      "state": "PA",
+      "venue": "Stage AE",
+      "openers": [
+        "Cold War Kids",
+        "KennyHoopla"
+      ]
+    },
+    {
+      "date": "2026-06-25",
+      "city": "Sterling Heights",
+      "state": "MI",
+      "venue": "Michigan Lottery Amphitheatre at Freedom Hill",
+      "openers": [
+        "Cold War Kids",
+        "KennyHoopla"
+      ]
+    },
+    {
+      "date": "2026-06-26",
+      "city": "Columbus",
+      "state": "OH",
+      "venue": "KEMBA Live!",
+      "openers": [
+        "Cold War Kids",
+        "KennyHoopla"
+      ]
+    }
+  ],
+  "setlist_variations": {
+    "headliner": {
+      "core_songs": [
+        "Evergreen",
+        "Superposition",
+        "Bitter Fruit",
+        "Apartment",
+        "My Body",
+        "Cough Syrup",
+        "Mind Over Matter",
+        "Something to Believe In",
+        "Teachers",
+        "Garands",
+        "Already There"
+      ],
+      "new_album_rotation": [
+        "Evergreen",
+        "Bitter Fruit",
+        "Different Kind of Love",
+        "Ships Passing",
+        "Dancing in the Rain"
+      ]
+    },
+    "openers": {
+      "Cold War Kids": {
+        "theme": "20th Anniversary of 'Robbers & Cowards' played in its entirety",
+        "typical_setlist": [
+          "We Used to Vacation",
+          "Hang Me Up to Dry",
+          "Tell Me in the Morning",
+          "Hair Down",
+          "Pass the Baby",
+          "Hospital Beds",
+          "Saint John",
+          "Red Wine, Success!",
+          "God, Makeish",
+          "Rubidoux"
+        ]
+      },
+      "almost monday": {
+        "style": "Indie Pop",
+        "typical_songs": [
+          "sunburn",
+          "cough drops",
+          "life2.0",
+          "only wanna dance",
+          "sweet & sour"
+        ]
+      },
+      "KennyHoopla": {
+        "style": "Pop Punk / Indie Rock",
+        "typical_songs": [
+          "how will i rest in peace if i'm buried by a highway?",
+          "estella//",
+          "lost cause//",
+          "smoke break//"
+        ]
+      }
+    }
+  }
+}

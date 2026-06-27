@@ -1,0 +1,24 @@
+// Normalized Song entity for Love Is Mystical
+{
+  "id": "song:cold-war-kids-love-is-mystical",
+  "type": "song",
+  "name": "Love Is Mystical",
+  "display_name": "Love Is Mystical",
+  "slug": "love-is-mystical",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": 2017,
+  "track_number": 2,
+  "musicality": {
+    "canonical_key": "G Minor",
+    "tempo_bpm": 106,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

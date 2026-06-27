@@ -1,0 +1,24 @@
+// Normalized Song entity for First
+{
+  "id": "song:cold-war-kids-first",
+  "type": "song",
+  "name": "First",
+  "display_name": "First",
+  "slug": "first",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": 2014,
+  "track_number": 3,
+  "musicality": {
+    "canonical_key": "D Major",
+    "tempo_bpm": 78,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

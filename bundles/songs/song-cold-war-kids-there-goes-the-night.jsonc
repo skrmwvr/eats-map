@@ -1,0 +1,24 @@
+// Normalized Song entity for There Goes the Night
+{
+  "id": "song:cold-war-kids-there-goes-the-night",
+  "type": "song",
+  "name": "There Goes the Night",
+  "display_name": "There Goes the Night",
+  "slug": "there-goes-the-night",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": null,
+  "track_number": null,
+  "musicality": {
+    "canonical_key": "D Major",
+    "tempo_bpm": 115,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

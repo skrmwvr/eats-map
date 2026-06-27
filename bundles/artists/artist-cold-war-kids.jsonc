@@ -1,0 +1,29 @@
+// Normalized Artist entity for Cold War Kids
+{
+  "id": "artist:cold-war-kids",
+  "type": "artist",
+  "name": "Cold War Kids",
+  "display_name": "Cold War Kids",
+  "slug": "cold-war-kids",
+  "origin_city": "Fullerton",
+  "origin_country": "US",
+  "active_since_year": 2004,
+  "genre_tags": [
+    "indie rock",
+    "alternative rock",
+    "indie pop",
+    "blues rock",
+    "soul"
+  ],
+  "official_url": "https://www.coldwarkids.com",
+  "social_urls": {
+    "facebook": "https://www.facebook.com/coldwarkids",
+    "instagram": "https://www.instagram.com/coldwarkids",
+    "youtube": "https://www.youtube.com/@coldwarkidsvideos"
+  },
+  "sources": [
+    "source:artist_official:cold-war-kids-bio"
+  ],
+  "confidence": 0.95,
+  "lifecycle": "stable"
+}

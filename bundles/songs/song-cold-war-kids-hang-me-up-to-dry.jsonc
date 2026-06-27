@@ -1,0 +1,24 @@
+// Normalized Song entity for Hang Me Up to Dry
+{
+  "id": "song:cold-war-kids-hang-me-up-to-dry",
+  "type": "song",
+  "name": "Hang Me Up to Dry",
+  "display_name": "Hang Me Up to Dry",
+  "slug": "hang-me-up-to-dry",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": 2006,
+  "track_number": 2,
+  "musicality": {
+    "canonical_key": "A Minor",
+    "tempo_bpm": 92,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

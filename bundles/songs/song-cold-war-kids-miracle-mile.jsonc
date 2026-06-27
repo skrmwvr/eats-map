@@ -1,0 +1,24 @@
+// Normalized Song entity for Miracle Mile
+{
+  "id": "song:cold-war-kids-miracle-mile",
+  "type": "song",
+  "name": "Miracle Mile",
+  "display_name": "Miracle Mile",
+  "slug": "miracle-mile",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": 2013,
+  "track_number": 1,
+  "musicality": {
+    "canonical_key": "D Major",
+    "tempo_bpm": 143,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

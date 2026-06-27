@@ -1,0 +1,24 @@
+// Normalized Song entity for Run Away With Me
+{
+  "id": "song:cold-war-kids-run-away-with-me",
+  "type": "song",
+  "name": "Run Away With Me",
+  "display_name": "Run Away With Me",
+  "slug": "run-away-with-me",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": null,
+  "track_number": null,
+  "musicality": {
+    "canonical_key": "E Minor",
+    "tempo_bpm": 128,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

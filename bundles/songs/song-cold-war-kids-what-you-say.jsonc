@@ -1,0 +1,24 @@
+// Normalized Song entity for What You Say
+{
+  "id": "song:cold-war-kids-what-you-say",
+  "type": "song",
+  "name": "What You Say",
+  "display_name": "What You Say",
+  "slug": "what-you-say",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": null,
+  "track_number": null,
+  "musicality": {
+    "canonical_key": "C Major",
+    "tempo_bpm": 136,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

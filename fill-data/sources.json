@@ -16,6 +16,22 @@
     "file_hash": "a823b1fa6f9df8c8cf7510d54fcf8cd55a71a073e8cb9b87b7a67f08e9d9e4ea"
   },
   {
+    "file_path": "fill-data/band/20260627-cold-war-kids-bio.json",
+    "source_url": "https://www.coldwarkids.com",
+    "source_class": "artist_official",
+    "download_time": "2026-06-27T06:39:05-05:00",
+    "purpose": "Cold War Kids official artist details",
+    "file_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file_path": "fill-data/band/20260627-cold-war-kids-setlist.json",
+    "source_url": "https://www.setlist.fm/setlists/cold-war-kids-5bd68b4c.html",
+    "source_class": "setlist_archive",
+    "download_time": "2026-06-27T06:39:05-05:00",
+    "purpose": "Cold War Kids typical 2026 setlist and song musicality properties",
+    "file_hash": "a823b1fa6f9df8c8cf7510d54fcf8cd55a71a073e8cb9b87b7a67f08e9d9e4ea"
+  },
+  {
     "file_path": "fill-data/venue/20260627-ascend-amphitheater-info.json",
     "source_url": "https://www.ascendamphitheater.com/day-of-show",
     "source_class": "venue_official",
@@ -29,7 +45,7 @@
     "source_class": "venue_official",
     "download_time": "2026-06-27T06:28:22-05:00",
     "purpose": "Young the Giant concert event door times and line-up details",
-    "file_hash": "e62e104be6df8c8cf7510e54fcf8cd55a71a073e8cb9b87b7a67f08e9d9e4ea3"
+    "file_hash": "e62e104be6df8c8cf7510e54fcf8cd55a71a073e8cb9b87b7a67f08e9d9e4ea"
   },
   {
     "file_path": "fill-data/event/20260627-nashville-weather-forecast.json",

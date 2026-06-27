@@ -1,0 +1,24 @@
+// Normalized Song entity for Can We Hang On?
+{
+  "id": "song:cold-war-kids-can-we-hang-on",
+  "type": "song",
+  "name": "Can We Hang On?",
+  "display_name": "Can We Hang On?",
+  "slug": "can-we-hang-on",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": null,
+  "track_number": null,
+  "musicality": {
+    "canonical_key": "D Major",
+    "tempo_bpm": 102,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

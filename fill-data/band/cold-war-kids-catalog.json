@@ -1,0 +1,167 @@
+{
+  "artist": "Cold War Kids",
+  "active_since_year": 2004,
+  "origin_city": "Long Beach",
+  "origin_state": "CA",
+  "origin_country": "US",
+  "genre_tags": [
+    "indie rock",
+    "alternative rock",
+    "blues rock",
+    "soul-punk"
+  ],
+  "catalog": [
+    {
+      "title": "We Used to Vacation",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 1,
+      "canonical_key": "C Major",
+      "tempo_bpm": 96
+    },
+    {
+      "title": "Hang Me Up to Dry",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 2,
+      "canonical_key": "A Minor",
+      "tempo_bpm": 92
+    },
+    {
+      "title": "Tell Me in the Morning",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 3,
+      "canonical_key": "F Major",
+      "tempo_bpm": 119
+    },
+    {
+      "title": "Hair Down",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 4,
+      "canonical_key": "A Major",
+      "tempo_bpm": 101
+    },
+    {
+      "title": "Passing the Hat",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 5,
+      "canonical_key": "B Minor",
+      "tempo_bpm": 99
+    },
+    {
+      "title": "Saint John",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 6,
+      "canonical_key": "E Major",
+      "tempo_bpm": 174
+    },
+    {
+      "title": "Robbers",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 7,
+      "canonical_key": "E Major",
+      "tempo_bpm": 88
+    },
+    {
+      "title": "Hospital Beds",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 8,
+      "canonical_key": "A Major",
+      "tempo_bpm": 96
+    },
+    {
+      "title": "Pregnant",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 9,
+      "canonical_key": "C Major",
+      "tempo_bpm": 145
+    },
+    {
+      "title": "Red Wine, Success!",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 10,
+      "canonical_key": "F Major",
+      "tempo_bpm": 105
+    },
+    {
+      "title": "God, Make Up Your Mind",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 11,
+      "canonical_key": "A Minor",
+      "tempo_bpm": 136
+    },
+    {
+      "title": "Rubidoux",
+      "album": "Robbers & Cowards",
+      "release_year": 2006,
+      "track_number": 12,
+      "canonical_key": "A Major",
+      "tempo_bpm": 105
+    },
+    {
+      "title": "First",
+      "album": "Hold My Home",
+      "release_year": 2014,
+      "track_number": 3,
+      "canonical_key": "D Major",
+      "tempo_bpm": 78
+    },
+    {
+      "title": "Miracle Mile",
+      "album": "Dear Miss Lonelyhearts",
+      "release_year": 2013,
+      "track_number": 1,
+      "canonical_key": "D Major",
+      "tempo_bpm": 143
+    },
+    {
+      "title": "Love Is Mystical",
+      "album": "LA Divine",
+      "release_year": 2017,
+      "track_number": 2,
+      "canonical_key": "G Minor",
+      "tempo_bpm": 106
+    },
+    {
+      "title": "Complainer",
+      "album": "New Age Norms 1",
+      "release_year": 2019,
+      "track_number": 1,
+      "canonical_key": "F# Major",
+      "tempo_bpm": 100
+    },
+    {
+      "title": "So Tied Up",
+      "album": "LA Divine",
+      "release_year": 2017,
+      "track_number": 4,
+      "canonical_key": "C Minor",
+      "tempo_bpm": 105
+    },
+    {
+      "title": "Something Is Not Right with Me",
+      "album": "Loyalty to Loyalty",
+      "release_year": 2008,
+      "track_number": 3,
+      "canonical_key": "A Major",
+      "tempo_bpm": 121
+    },
+    {
+      "title": "Louder Than Ever",
+      "album": "Mine Is Yours",
+      "release_year": 2011,
+      "track_number": 2,
+      "canonical_key": "E Major",
+      "tempo_bpm": 147
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "venue": {
+    "name": "Ascend Federal Credit Union Amphitheater",
+    "address": "310 First Avenue South, Nashville, TN 37201"
+  },
+  "pedestrian_routes_and_bridges": [
+    {
+      "name": "John Seigenthaler Pedestrian Bridge Walk",
+      "description": "Scenic pedestrian-only link crossing the Cumberland River, connecting the East Bank (near Nissan Stadium) to Downtown Nashville (near 3rd Avenue). Highly popular for low-cost stadium parking walkovers and skyline views.",
+      "distance_miles": 0.5,
+      "approximate_walking_time_minutes": 10,
+      "total_distance_from_nissan_stadium_to_ascend_miles": 0.6,
+      "total_walking_time_from_nissan_stadium_to_ascend_minutes": 15,
+      "accessibility": {
+        "is_wheelchair_accessible": true,
+        "features": [
+          "Pedestrian-only car-free path",
+          "ADA-compliant elevator on 2nd Avenue S for bridge deck access"
+        ]
+      }
+    },
+    {
+      "name": "Cumberland River Greenway Walkway",
+      "description": "Reconnects the greenway over the Ascend Amphitheater grounds, allowing for pedestrian and bicycle flow. Access may be restricted to ticket holders during events.",
+      "accessibility": {
+        "is_wheelchair_accessible": true
+      }
+    }
+  ],
+  "rideshare": {
+    "pickup_and_dropoff_zones": [
+      {
+        "description": "Designated drop-off and pickup zone for rideshare (Uber/Lyft) and taxis.",
+        "locations": [
+          "Gate 1",
+          "Gate 2"
+        ],
+        "post_show_preferred_pickup": "Gate 2"
+      }
+    ]
+  },
+  "alternative_parking_garages": [
+    {
+      "name": "Symphony Place Garage",
+      "address": "150 3rd Ave S, Nashville, TN 37201",
+      "approximate_distance_feet": 300,
+      "approximate_walking_time_minutes": 2,
+      "notes": "Very close to the venue, reservation recommended via parking apps."
+    },
+    {
+      "name": "222 Second Avenue Garage",
+      "address": "222 2nd Ave S, Nashville, TN 37201",
+      "approximate_distance_feet": 412,
+      "approximate_walking_time_minutes": 2,
+      "notes": "Directly across from the venue."
+    },
+    {
+      "name": "SoBro Tower Garage",
+      "address": "206 3rd Ave S, Nashville, TN 37201",
+      "approximate_distance_feet": 255,
+      "approximate_walking_time_minutes": 2,
+      "notes": "Excellent proximity to the venue."
+    },
+    {
+      "name": "Hilton Nashville Downtown Garage",
+      "address": "161 4th Ave S, Nashville, TN 37201",
+      "approximate_distance_feet": 450,
+      "approximate_walking_time_minutes": 3,
+      "notes": "Convenient downtown garage."
+    },
+    {
+      "name": "Omni Nashville Garage",
+      "address": "250 Rep. John Lewis Way S, Nashville, TN 37203",
+      "approximate_distance_miles": 0.2,
+      "approximate_walking_time_minutes": 5,
+      "notes": "Located at the Omni Hotel."
+    },
+    {
+      "name": "Music City Center Garage",
+      "address": "201 Rep. John Lewis Way S, Nashville, TN 37203",
+      "approximate_distance_miles": 0.5,
+      "approximate_walking_time_minutes": 10,
+      "notes": "Large municipal garage with competitive event parking rates."
+    },
+    {
+      "name": "Nissan Stadium Lots (East Bank)",
+      "address": "1 Titans Way, Nashville, TN 37213",
+      "approximate_distance_miles": 0.6,
+      "approximate_walking_time_minutes": 15,
+      "notes": "Park at Nissan Stadium lots (when available, often $10 or free during non-stadium events) and walk across the John Seigenthaler Pedestrian Bridge."
+    }
+  ],
+  "accessibility_routes_and_features": {
+    "accessible_dropoff": {
+      "location": "Corner of Molloy Street and 1st Avenue South",
+      "notes": "Designated ADA drop-off point near the venue entrance."
+    },
+    "accessible_gates": [
+      "Main Gate",
+      "Gate 2",
+      "Gate 4",
+      "VIP Club Entrance"
+    ],
+    "facilities": {
+      "restrooms": "All venue restrooms are ADA accessible. A single-user accessible restroom is located next to Gate 4 in Building C.",
+      "concessions_and_merchandise": "All concession and merchandise stands are fully accessible.",
+      "seating": "ADA-accessible seating is available in the pavilion, ADA Lawn, and ADA Box areas. Reservation in advance is highly recommended."
+    }
+  },
+  "public_transit": {
+    "wego_star_commuter_rail": {
+      "station": "Riverfront Station",
+      "address": "108 1st Ave S, Nashville, TN 37201",
+      "approximate_distance_miles": 0.5,
+      "approximate_walking_time_minutes": 10,
+      "notes": "Commuter train service operating primarily during weekday commute hours. Walk directly south along 1st Ave S to reach the venue."
+    },
+    "wego_bus_routes": {
+      "nearby_stations": [
+        {
+          "name": "Fulton Station",
+          "approximate_distance_minutes": 4
+        }
+      ],
+      "recommended_routes": [
+        "6",
+        "23",
+        "52",
+        "55",
+        "86"
+      ],
+      "notes": "Direct bus routes serving downtown Nashville. Use the WeGo Trip Planner or real-time transit apps to verify scheduling on event nights."
+    }
+  }
+}

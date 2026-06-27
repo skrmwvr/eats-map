@@ -1,0 +1,83 @@
+{
+  "tour": "Victory Garden Tour",
+  "year": 2026,
+  "setlist": [
+    "So Tied Up",
+    "Miracle Mile",
+    "Who's Gonna Love Me Now",
+    "Can We Hang On?",
+    "What You Say",
+    "Push My Luck",
+    "Love Is Mystical",
+    "Run Away With Me",
+    "There Goes the Night",
+    "We Used to Vacation",
+    "Hospital Beds",
+    "Hang Me Up to Dry",
+    "Something Is Not Right With Me",
+    "All This Could Be Yours",
+    "First"
+  ],
+  "musicality": {
+    "So Tied Up": {
+      "canonical_key": "D Minor",
+      "tempo_bpm": 122
+    },
+    "Miracle Mile": {
+      "canonical_key": "A Major",
+      "tempo_bpm": 158
+    },
+    "Who's Gonna Love Me Now": {
+      "canonical_key": "B Minor",
+      "tempo_bpm": 114
+    },
+    "Can We Hang On?": {
+      "canonical_key": "D Major",
+      "tempo_bpm": 102
+    },
+    "What You Say": {
+      "canonical_key": "C Major",
+      "tempo_bpm": 136
+    },
+    "Push My Luck": {
+      "canonical_key": "A Major",
+      "tempo_bpm": 104
+    },
+    "Love Is Mystical": {
+      "canonical_key": "G Major",
+      "tempo_bpm": 118
+    },
+    "Run Away With Me": {
+      "canonical_key": "E Minor",
+      "tempo_bpm": 128
+    },
+    "There Goes the Night": {
+      "canonical_key": "D Major",
+      "tempo_bpm": 115
+    },
+    "We Used to Vacation": {
+      "canonical_key": "G Major",
+      "tempo_bpm": 96
+    },
+    "Hospital Beds": {
+      "canonical_key": "F# Minor",
+      "tempo_bpm": 108
+    },
+    "Hang Me Up to Dry": {
+      "canonical_key": "A Minor",
+      "tempo_bpm": 92
+    },
+    "Something Is Not Right With Me": {
+      "canonical_key": "B Minor",
+      "tempo_bpm": 140
+    },
+    "All This Could Be Yours": {
+      "canonical_key": "E Minor",
+      "tempo_bpm": 116
+    },
+    "First": {
+      "canonical_key": "G Major",
+      "tempo_bpm": 78
+    }
+  }
+}

@@ -135,9 +135,75 @@ nashville_weather = {
     }
 }
 
+# 6. Cold War Kids Bio Info
+cold_war_kids_bio = {
+    "artist": "Cold War Kids",
+    "display_name": "Cold War Kids",
+    "slug": "cold-war-kids",
+    "origin_city": "Fullerton",
+    "origin_state": "CA",
+    "origin_country": "US",
+    "active_since_year": 2004,
+    "genre_tags": [
+        "indie rock",
+        "alternative rock",
+        "indie pop",
+        "blues rock",
+        "soul"
+    ],
+    "official_url": "https://www.coldwarkids.com",
+    "social_urls": {
+        "facebook": "https://www.facebook.com/coldwarkids",
+        "instagram": "https://www.instagram.com/coldwarkids",
+        "youtube": "https://www.youtube.com/@coldwarkidsvideos"
+    }
+}
+
+# 7. Cold War Kids Typical Setlist Info
+cold_war_kids_songs = {
+    "tour": "Victory Garden Tour",
+    "year": 2026,
+    "setlist": [
+        "So Tied Up",
+        "Miracle Mile",
+        "Who's Gonna Love Me Now",
+        "Can We Hang On?",
+        "What You Say",
+        "Push My Luck",
+        "Love Is Mystical",
+        "Run Away With Me",
+        "There Goes the Night",
+        "We Used to Vacation",
+        "Hospital Beds",
+        "Hang Me Up to Dry",
+        "Something Is Not Right With Me",
+        "All This Could Be Yours",
+        "First"
+    ],
+    "musicality": {
+        "So Tied Up": {"canonical_key": "D Minor", "tempo_bpm": 122},
+        "Miracle Mile": {"canonical_key": "A Major", "tempo_bpm": 158},
+        "Who's Gonna Love Me Now": {"canonical_key": "B Minor", "tempo_bpm": 114},
+        "Can We Hang On?": {"canonical_key": "D Major", "tempo_bpm": 102},
+        "What You Say": {"canonical_key": "C Major", "tempo_bpm": 136},
+        "Push My Luck": {"canonical_key": "A Major", "tempo_bpm": 104},
+        "Love Is Mystical": {"canonical_key": "G Major", "tempo_bpm": 118},
+        "Run Away With Me": {"canonical_key": "E Minor", "tempo_bpm": 128},
+        "There Goes the Night": {"canonical_key": "D Major", "tempo_bpm": 115},
+        "We Used to Vacation": {"canonical_key": "G Major", "tempo_bpm": 96},
+        "Hospital Beds": {"canonical_key": "F# Minor", "tempo_bpm": 108},
+        "Hang Me Up to Dry": {"canonical_key": "A Minor", "tempo_bpm": 92},
+        "Something Is Not Right With Me": {"canonical_key": "B Minor", "tempo_bpm": 140},
+        "All This Could Be Yours": {"canonical_key": "E Minor", "tempo_bpm": 116},
+        "First": {"canonical_key": "G Major", "tempo_bpm": 78}
+    }
+}
+
 files_to_write = {
     "band/20260627-young-the-giant-bio.json": young_the_giant_bio,
     "band/20260627-young-the-giant-setlist.json": young_the_giant_songs,
+    "band/20260627-cold-war-kids-bio.json": cold_war_kids_bio,
+    "band/20260627-cold-war-kids-setlist.json": cold_war_kids_songs,
     "venue/20260627-ascend-amphitheater-info.json": ascend_venue_info,
     "event/20260627-young-the-giant-event-info.json": ygt_event_info,
     "event/20260627-nashville-weather-forecast.json": nashville_weather
@@ -159,13 +225,23 @@ for rel_path, data in files_to_write.items():
         
     # Map sources and URL based on what file it is
     if "bio" in rel_path:
-        url = "https://youngthegiant.com"
-        purpose = "Young the Giant official artist details"
-        source_class = "artist_official"
+        if "cold-war-kids" in rel_path:
+            url = "https://www.coldwarkids.com"
+            purpose = "Cold War Kids official artist details"
+            source_class = "artist_official"
+        else:
+            url = "https://youngthegiant.com"
+            purpose = "Young the Giant official artist details"
+            source_class = "artist_official"
     elif "setlist" in rel_path:
-        url = "https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html"
-        purpose = "Victory Garden Tour setlist and song musicality properties"
-        source_class = "setlist_archive"
+        if "cold-war-kids" in rel_path:
+            url = "https://www.setlist.fm/setlists/cold-war-kids-5bd68b4c.html"
+            purpose = "Cold War Kids typical 2026 setlist and song musicality properties"
+            source_class = "setlist_archive"
+        else:
+            url = "https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html"
+            purpose = "Victory Garden Tour setlist and song musicality properties"
+            source_class = "setlist_archive"
     elif "venue" in rel_path:
         url = "https://www.ascendamphitheater.com/day-of-show"
         purpose = "Ascend Amphitheater venue profile and utility rules"
@@ -183,7 +259,7 @@ for rel_path, data in files_to_write.items():
         "file_path": f"fill-data/{rel_path}",
         "source_url": url,
         "source_class": source_class,
-        "download_time": "2026-06-27T06:28:22-05:00",
+        "download_time": "2026-06-27T06:39:05-05:00" if "cold-war" in rel_path else "2026-06-27T06:28:22-05:00",
         "purpose": purpose,
         "file_hash": file_hash
     })
@@ -193,3 +269,4 @@ with open(os.path.join(fill_data_dir, "sources.json"), "w", encoding="utf-8") as
     json.dump(sources_log, f, indent=2)
 
 print("Successfully wrote all raw data files and generated sources.json!")
+

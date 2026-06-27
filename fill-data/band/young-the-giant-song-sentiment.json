@@ -1,0 +1,106 @@
+[
+  {
+    "song_id": "song:young-the-giant-cough-syrup",
+    "song_name": "Cough Syrup",
+    "meaning": "Written while the band was unsigned and struggling with suburban monotony. The lyrics act as a cry for help against life's stagnation and feelings of being trapped, with 'cough syrup' functioning as a metaphor for a coping mechanism or escape from day-to-day misery.",
+    "crowd_reaction": "Consistently the most anticipated and nostalgic sing-along of the night. The crowd responds with absolute vocal unison, high energy, and emotional release.",
+    "audience_behavior": "Belting out every lyric, swaying, jumping during the chorus, and waving phone lights.",
+    "references": [
+      {
+        "source_name": "Wikipedia - Cough Syrup",
+        "url": "https://en.wikipedia.org/wiki/Cough_Syrup_(song)",
+        "source_class": "press"
+      },
+      {
+        "source_name": "Setlist.fm Young the Giant",
+        "url": "https://www.setlist.fm/setlists/young-the-giant-7bd2cea0.html",
+        "source_class": "setlist_archive"
+      }
+    ]
+  },
+  {
+    "song_id": "song:young-the-giant-my-body",
+    "song_name": "My Body",
+    "meaning": "Written out of frustration to release tension, featuring raw energy. The song is an anthem of endurance, resilience, and pushing through physical or mental boundaries to achieve liberation.",
+    "crowd_reaction": "Serves as the high-octane climax of the set, typically the final song or encore closer. The energy in the room reaches its peak with intense jumping, dancing, and shouting.",
+    "audience_behavior": "Aggressive dancing, group jumping, fist-pumping, shouting the hook 'My body tells me no, but I won't give up'.",
+    "references": [
+      {
+        "source_name": "Wikipedia - My Body",
+        "url": "https://en.wikipedia.org/wiki/My_Body_(Young_the_Giant_song)",
+        "source_class": "press"
+      },
+      {
+        "source_name": "Songfacts - My Body",
+        "url": "https://www.songfacts.com/facts/young-the-giant/my-body",
+        "source_class": "press"
+      }
+    ]
+  },
+  {
+    "song_id": "song:young-the-giant-superposition",
+    "song_name": "Superposition",
+    "meaning": "An atmospheric love song exploring quantum mechanics metaphors (like superposition and dark stars) to describe the invisible, fated connection between people, suggesting that love brings clarity to a complicated world.",
+    "crowd_reaction": "A groovy, vibey high point where the crowd is captivated by Sameer Gadhia's falsetto. It creates a spacey, hypnotic atmosphere.",
+    "audience_behavior": "Rhythmic swaying, singing along to the falsetto hooks, dancing, and highly engaged listening.",
+    "references": [
+      {
+        "source_name": "Wikipedia - Superposition",
+        "url": "https://en.wikipedia.org/wiki/Superposition_(song)",
+        "source_class": "press"
+      },
+      {
+        "source_name": "Atwood Magazine - Mirror Master Review",
+        "url": "https://atwoodmagazine.com/",
+        "source_class": "press"
+      }
+    ]
+  },
+  {
+    "song_id": "song:young-the-giant-mind-over-matter",
+    "song_name": "Mind Over Matter",
+    "meaning": "Focuses on resilience, youth struggles, and relational devotion. It asks a partner to stay committed through trials and personal evolution, contrasting mental determination with physical reality.",
+    "crowd_reaction": "Deeply emotional and vulnerable response. It serves as an introspective high point of the night, prompting crowds to feel entranced, reflective, or moved to tears.",
+    "audience_behavior": "Slow swaying, waving glowing phone screens/lights, couples holding onto each other, singing the anthemic chorus softly or passionately.",
+    "references": [
+      {
+        "source_name": "Scribd - Mind Over Matter Context",
+        "url": "https://www.scribd.com",
+        "source_class": "press"
+      },
+      {
+        "source_name": "Nylon - Young the Giant Interview",
+        "url": "https://www.nylon.com",
+        "source_class": "press"
+      }
+    ]
+  },
+  {
+    "song_id": "song:young-the-giant-something-to-believe-in",
+    "song_name": "Something to Believe In",
+    "meaning": "An anthem questioning authority and defying others' expectations. It represents Gadhia's own choice to pursue music and serves as a dialogue about searching for identity and truth.",
+    "crowd_reaction": "Strong rock-oriented energy. The crowd gets fired up by the heavy guitar riff and Gadhia's intense, powerful vocal delivery.",
+    "audience_behavior": "Pumping fists, headbanging, and shouting the chorus 'Give me something to believe in!' in a highly passionate manner.",
+    "references": [
+      {
+        "source_name": "Wikipedia - Something to Believe In",
+        "url": "https://en.wikipedia.org/wiki/Something_to_Believe_In_(Young_the_Giant_song)",
+        "source_class": "press"
+      }
+    ]
+  },
+  {
+    "song_id": "song:young-the-giant-apartment",
+    "song_name": "Apartment",
+    "meaning": "Captures the bittersweet complexity and uncertainty of young love and early adulthood. It touches on themes of nostalgia, escapism, and the comfort of establishing one's own space.",
+    "crowd_reaction": "Deeply nostalgic and beloved by long-time fans. It generates a warm, celebratory, and intimate response.",
+    "audience_behavior": "Singing along with smiles, light swaying, cheering intensely when the opening notes are played.",
+    "references": [
+      {
+        "source_name": "Songfacts - Apartment",
+        "url": "https://www.songfacts.com/facts/young-the-giant/apartment",
+        "source_class": "press"
+      }
+    ]
+  }
+]

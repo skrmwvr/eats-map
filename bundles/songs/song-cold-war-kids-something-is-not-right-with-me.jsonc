@@ -1,0 +1,24 @@
+// Normalized Song entity for Something Is Not Right With Me
+{
+  "id": "song:cold-war-kids-something-is-not-right-with-me",
+  "type": "song",
+  "name": "Something Is Not Right With Me",
+  "display_name": "Something Is Not Right With Me",
+  "slug": "something-is-not-right-with-me",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": 2008,
+  "track_number": 3,
+  "musicality": {
+    "canonical_key": "A Major",
+    "tempo_bpm": 121,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

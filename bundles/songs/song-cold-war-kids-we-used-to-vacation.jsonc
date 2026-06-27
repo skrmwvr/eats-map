@@ -1,0 +1,24 @@
+// Normalized Song entity for We Used to Vacation
+{
+  "id": "song:cold-war-kids-we-used-to-vacation",
+  "type": "song",
+  "name": "We Used to Vacation",
+  "display_name": "We Used to Vacation",
+  "slug": "we-used-to-vacation",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": 2006,
+  "track_number": 1,
+  "musicality": {
+    "canonical_key": "C Major",
+    "tempo_bpm": 96,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

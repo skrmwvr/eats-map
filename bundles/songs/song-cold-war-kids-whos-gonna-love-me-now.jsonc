@@ -1,0 +1,24 @@
+// Normalized Song entity for Who's Gonna Love Me Now
+{
+  "id": "song:cold-war-kids-whos-gonna-love-me-now",
+  "type": "song",
+  "name": "Who's Gonna Love Me Now",
+  "display_name": "Who's Gonna Love Me Now",
+  "slug": "whos-gonna-love-me-now",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": null,
+  "track_number": null,
+  "musicality": {
+    "canonical_key": "B Minor",
+    "tempo_bpm": 114,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}

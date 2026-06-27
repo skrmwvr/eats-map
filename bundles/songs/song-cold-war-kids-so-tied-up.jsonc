@@ -1,0 +1,24 @@
+// Normalized Song entity for So Tied Up
+{
+  "id": "song:cold-war-kids-so-tied-up",
+  "type": "song",
+  "name": "So Tied Up",
+  "display_name": "So Tied Up",
+  "slug": "so-tied-up",
+  "artist_id": "artist:cold-war-kids",
+  "album_id": null,
+  "release_year": 2017,
+  "track_number": 4,
+  "musicality": {
+    "canonical_key": "C Minor",
+    "tempo_bpm": 105,
+    "time_signature": null,
+    "primary_genre": "indie rock"
+  },
+  "micro_summary": null,
+  "sources": [
+    "source:setlist_archive:cold-war-kids-setlist"
+  ],
+  "confidence": 0.75,
+  "lifecycle": "draft"
+}
