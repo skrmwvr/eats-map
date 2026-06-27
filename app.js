@@ -71,7 +71,8 @@ const state = {
   sentiment: null,
   tourHistory: null,
   dismissedAlertText: null,
-  activeViewport: 'lyrics' // 'lyrics', 'weather', 'venue', 'timeline', 'band'
+  activeViewport: 'lyrics', // 'lyrics', 'weather', 'venue', 'timeline', 'band'
+  lyricsDb: null
 };
 
 // Transition effects pool (Loops 5 unique vintage modes)
@@ -141,6 +142,13 @@ async function loadCorpusData() {
 
     const sentimentRes = await fetch('fill-data/band/young-the-giant-song-sentiment.json');
     state.sentiment = await sentimentRes.json();
+
+    try {
+      const lyricsRes = await fetch('fill-data/band/setlist-lyrics-and-live-variations.json');
+      state.lyricsDb = await lyricsRes.json();
+    } catch(e) {
+      console.warn("Failed to pre-cache lyrics and variations database:", e);
+    }
 
     await loadArtistSonglist();
     
@@ -257,15 +265,40 @@ function renderCurrentSong() {
   const activeBand = bandsList[state.activeBandIndex];
   viewport.classList.add(activeBand.theme);
 
-  // Song lyrics selector
-  const songSlug = song.slug;
-  const lyricsArray = songLyricsDb[songSlug] || [
-    "No offline lyrics cached for this demo.",
-    "Listen carefully to the stage!",
-    `Key: ${song.musicality?.canonical_key || 'C Major'} &bull; Tempo: ${song.musicality?.tempo_bpm || 110} BPM`
-  ];
+  // Song lyrics & live variations selector
+  let lyricsArray = null;
+  let liveVariants = null;
+
+  if (state.lyricsDb && state.lyricsDb.bands[activeBand.name] && state.lyricsDb.bands[activeBand.name].songs[song.display_name]) {
+    lyricsArray = state.lyricsDb.bands[activeBand.name].songs[song.display_name].lyrics;
+    liveVariants = state.lyricsDb.bands[activeBand.name].songs[song.display_name].live_variations;
+  }
+
+  if (!lyricsArray) {
+    // Fallback search database
+    const songSlug = song.slug;
+    lyricsArray = songLyricsDb[songSlug] || [
+      "No offline lyrics cached for this song yet.",
+      "Listen closely to the stage!",
+      `Key: ${song.musicality?.canonical_key || 'C Major'} &bull; Tempo: ${song.musicality?.tempo_bpm || 110} BPM`
+    ];
+  }
 
   let lyricsHTML = lyricsArray.map(line => `<p class="lyrics-line active">${line}</p>`).join('');
+
+  // Generate live variations details if available
+  let variationsHTML = '';
+  if (liveVariants && liveVariants.length > 0) {
+    const listHTML = liveVariants.map(v => `<li><strong>${v.type}:</strong> ${v.description}</li>`).join('');
+    variationsHTML = `
+      <div style="margin-top: 14px; padding: 10px; background: rgba(255,159,10,0.08); border-radius: 6px; font-size: 0.75rem; border-left: 3px solid #ff9f0a; text-align: left; font-family:'Segoe UI', sans-serif;">
+        <strong style="color:#ff9f0a; display:block; margin-bottom:4px;">🎤 Tour Live Variations:</strong>
+        <ul style="margin: 0; padding-left: 14px; color: #ddd; line-height: 1.35; display:flex; flex-direction:column; gap:4px;">
+          ${listHTML}
+        </ul>
+      </div>
+    `;
+  }
 
   // Dropdown list HTML
   let optionsHTML = state.songs.map((s, idx) => {
@@ -275,15 +308,17 @@ function renderCurrentSong() {
 
   const content = document.getElementById('viewport-content');
   content.innerHTML = `
-    <div class="lyrics-view">
+    <div class="lyrics-view" style="display:flex; flex-direction:column; height:100%;">
       <div class="song-header">
         <h1>${song.display_name}</h1>
         <p>${activeBand.display_name} &bull; ${song.musicality?.canonical_key || 'C Major'} &bull; ${song.musicality?.tempo_bpm || 110} BPM</p>
       </div>
       
-      <div class="lyrics-body" id="lyrics-scroll" style="display:flex; flex-direction:column; justify-content:center;">
+      <div class="lyrics-body" id="lyrics-scroll" style="flex-grow:1; overflow-y:auto; padding:10px 0;">
         ${lyricsHTML}
         
+        ${variationsHTML}
+
         <div style="margin-top: 18px; font-size: 0.75rem; font-family: 'Segoe UI', sans-serif; text-align: left;">
           <label for="track-select" style="display:block; margin-bottom:4px; text-transform:uppercase; font-weight:700; color:var(--text-secondary);">Projected Set Playlist:</label>
           <select id="track-select" style="width:100%; padding:10px; background:#222; border:1px solid #444; color:#fff; border-radius:6px; font-family:'Segoe UI', sans-serif;">
@@ -297,7 +332,7 @@ function renderCurrentSong() {
         </div>
       </div>
       
-      <div class="song-controller" style="justify-content: center; gap: 20px;">
+      <div class="song-controller" style="justify-content: center; gap: 20px; flex-shrink:0; margin-top:6px;">
         <button class="ctrl-btn" id="btn-prev-song">◀</button>
         <span class="song-index" style="font-family:'Courier Prime', monospace;">${state.activeSongIndex + 1} / ${state.songs.length}</span>
         <button class="ctrl-btn" id="btn-next-song">▶</button>
@@ -474,7 +509,7 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
           
           <div style="margin-top:14px; padding:10px; background:rgba(255,87,34,0.08); border-radius:6px; font-size:0.75rem;">
             <strong>🔌 About Sun Map:</strong>
-            <p style="margin:2px 0 4px 0; line-height:1.3; color:#ff9f0a;">Illuminating the live experience. An offline companion mapping the sound, lore, and venue to grow connection.</p>
+            <p style="margin:2px 0 4px 0; line-height:1.3; color:#ff9f0a;">A new kind of light for the show. Mapping the stories, soundscapes, and paths that grow between the stage and the lawn.</p>
             <p style="margin:0; font-size:0.7rem; color:#aaa;">Developed by <a href="mailto:chozcunningham+sunmap@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:700;">C. Cunningham</a>. Contact us to build this for your tour, concert, or music event.</p>
           </div>
         </div>
