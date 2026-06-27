@@ -247,8 +247,11 @@ function renderDashboardMetadata() {
   document.getElementById('timeline-status').textContent = `Doors: ${state.event.doors_time}`;
 }
 
-// Auto-Shuffling Idle Text Animation
+// Auto-Shuffling Idle Text Animation with Cooldown (Alternates text & empty slots)
 let factoidInterval = null;
+let unusedFactoids = [];
+let showTextState = true; // toggles displaying text vs blank space
+
 function startFactoidShuffler() {
   if (factoidInterval) clearInterval(factoidInterval);
   
@@ -256,14 +259,30 @@ function startFactoidShuffler() {
     const bubbleText = document.getElementById('shuffling-factoid');
     if (!bubbleText) return;
     
-    bubbleText.style.opacity = 0;
-    setTimeout(() => {
-      const idx = Math.floor(Math.random() * factoids.length);
-      bubbleText.innerHTML = `💡 <em>${factoids[idx]}</em>`;
-      bubbleText.style.opacity = 1;
-    }, 400);
+    if (showTextState) {
+      // Pick unique index to prevent repeat
+      if (unusedFactoids.length === 0) {
+        unusedFactoids = [...Array(factoids.length).keys()];
+      }
+      const randIdx = Math.floor(Math.random() * unusedFactoids.length);
+      const factoidIndex = unusedFactoids.splice(randIdx, 1)[0];
+
+      bubbleText.style.opacity = 0;
+      setTimeout(() => {
+        bubbleText.innerHTML = `💡 <em>${factoids[factoidIndex]}</em>`;
+        bubbleText.style.opacity = 1;
+      }, 450);
+    } else {
+      // Cooldown State: fade out and leave empty/blank space
+      bubbleText.style.opacity = 0;
+      setTimeout(() => {
+        bubbleText.innerHTML = ``;
+      }, 450);
+    }
+    showTextState = !showTextState;
   };
 
+  // Switch state every 7 seconds
   factoidInterval = setInterval(updateText, 7000);
 }
 
@@ -433,6 +452,7 @@ document.getElementById('btn-weather').addEventListener('click', () => {
         <h3>NOAA Alert</h3>
         <p style="color:#ff9f0a; font-weight:700; margin-bottom:12px;">⚠️ FLOOD WATCH active from 7:00 AM June 27 to 7:00 AM June 28.</p>
         
+        <!-- TEACHING COMMENT: The checkbox state is bound directly to the alert banner's layout display state. Checking it triggers alert-banner to show, unchecking hides it and flags alertText to prevent immediate re-pops. -->
         <div style="margin:14px 0; background:rgba(255,255,255,0.05); padding:10px; border-radius:6px; font-size:0.8rem;">
           <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
             <input type="checkbox" id="alert-banner-toggle" ${bannerState}>
@@ -496,6 +516,9 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
     const viewport = document.getElementById('main-viewport');
     viewport.className = 'viewport-square theme-utility';
 
+    // Show small button only if install prompt is queued
+    const installBtnDisplay = deferredPrompt ? 'inline-block' : 'none';
+
     const content = document.getElementById('viewport-content');
     content.innerHTML = `
       <div class="details-view" style="display:flex; flex-direction:column; height:100%;">
@@ -541,19 +564,30 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
             </label>
           </div>
 
-          <!-- Auto-Shuffling Trivia (Moved from Venue to Program view) -->
+          <!-- Auto-Shuffling Trivia (with intermittent blank cooldown) -->
           <div id="shuffling-factoid" style="margin-top:14px; font-size:0.85rem; min-height:40px; padding:10px; background:rgba(255,255,255,0.03); border-radius:6px; color:#ff9f0a; transition: opacity 0.4s ease; border-left: 3px solid #ff9f0a;">
             💡 Loading trivia...
           </div>
 
-          <div style="margin-top:14px; padding:10px; background:rgba(255,255,255,0.03); border-radius:6px; font-size:0.75rem; border:1px dashed #444;">
-            <strong>📲 Add to Home Screen (PWA):</strong>
-            <p style="margin:2px 0 0 0; line-height:1.3; color:#aaa;">Install app for 100% offline access to all lists and keys when cellular network grids clog.</p>
+          <!-- Mini PWA Install button -->
+          <div style="margin-top: 14px; text-align: center;">
+            <button id="btn-install-pwa-small" style="display:${installBtnDisplay}; background:rgba(255,255,255,0.05); border:1px solid #444; color:#ccc; padding:8px 12px; border-radius:6px; font-size:0.8rem; cursor:pointer; font-weight:700; font-family:'Segoe UI',sans-serif;">📲 Add to Home Screen</button>
           </div>
 
-          <div style="margin-top: 18px; display:flex; gap:10px; font-size:0.8rem; font-family:'Segoe UI', sans-serif;">
-            <button id="lnk-to-venue" style="background:transparent; border:1px solid #444; color:#fff; padding:10px; border-radius:6px; cursor:pointer; flex-grow:1; font-weight:700; font-family:'Segoe UI',sans-serif;">🗺️ Venue Policies</button>
-            <button id="lnk-to-band" style="background:transparent; border:1px solid #444; color:#fff; padding:10px; border-radius:6px; cursor:pointer; flex-grow:1; font-weight:700; font-family:'Segoe UI',sans-serif;">🎸 Openers Lore</button>
+          <!-- Quick access Shortcuts (No lore button) -->
+          <div style="margin-top: 20px; display:flex; flex-direction:column; gap:8px; font-size:0.8rem; font-family:'Segoe UI', sans-serif;">
+            <div style="display:flex; gap:8px;">
+              <button id="lnk-to-venue" style="background:transparent; border:1px solid #444; color:#fff; padding:10px; border-radius:6px; cursor:pointer; flex-grow:1; font-weight:700; font-family:'Segoe UI',sans-serif;">🗺️ Venue Policies</button>
+              <button id="lnk-to-food" style="background:transparent; border:1px solid #444; color:#aaa; padding:10px; border-radius:6px; cursor:pointer; flex-grow:1; font-weight:700; font-family:'Segoe UI',sans-serif;">🍔 Food & Drinks</button>
+            </div>
+            <button id="lnk-to-merch" style="background:transparent; border:1px solid #444; color:#aaa; padding:10px; border-radius:6px; cursor:pointer; font-weight:700; font-family:'Segoe UI',sans-serif; width:100%;">👕 Tour Merch (Static)</button>
+          </div>
+
+          <!-- About/Credits footer moved from Help Modal -->
+          <div style="border-top:1px dashed #444; padding-top:16px; margin-top:32px; text-align:left; font-family:'Segoe UI',sans-serif;">
+            <h3 style="font-size:1.15rem; text-transform:uppercase; color:var(--accent); margin-bottom:6px; margin-top:0;">🔌 About Sun Map</h3>
+            <p style="font-size:1rem; line-height:1.45; color:#ccc; margin-bottom:8px;">A new kind of light for the show. Mapping the stories, soundscapes, and paths that grow between the stage and the lawn.</p>
+            <p style="font-size:0.9rem; color:#aaa; margin:0;">Developed by <a href="mailto:chozcunningham+sunmap@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:700;">C. Cunningham</a>. Contact us to build this for your tour, concert, or music event.</p>
           </div>
         </div>
       </div>
@@ -563,16 +597,26 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
     document.getElementById('lnk-to-venue').addEventListener('click', () => {
       document.getElementById('btn-venue').click();
     });
-    document.getElementById('lnk-to-band').addEventListener('click', () => {
-      state.activeBandIndex = 0; // almost monday
-      loadArtistSonglist().then(() => {
-        triggerTransition(renderActiveBandProfile);
-      });
+    
+    document.getElementById('lnk-to-food').addEventListener('click', () => {
+      showHelpBubble("🍔 Food concession stands sit on both main East & West plazas.");
+    });
+    document.getElementById('lnk-to-merch').addEventListener('click', () => {
+      showHelpBubble("👕 Main Merch trailers are located directly inside Gate 1 entrance.");
     });
 
     document.getElementById('spoiler-toggle').addEventListener('change', (e) => {
       state.hideSpoilers = e.target.checked;
       localStorage.setItem('hideSpoilers', state.hideSpoilers ? 'true' : 'false');
+    });
+
+    document.getElementById('btn-install-pwa-small').addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        document.getElementById('btn-install-pwa-small').style.display = 'none';
+      }
     });
     
     startFactoidShuffler();
@@ -601,16 +645,36 @@ function renderActiveBandProfile() {
 
   // CSS aesthetic block/collage representation of the band
   let bandArtStyle = '';
+  let logoSVG = '';
   let linksHTML = '';
   
   if (activeBand.id === 'artist:almost-monday') {
     bandArtStyle = `background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);`; // Surf sun pastel gradient
+    logoSVG = `
+      <svg viewBox="0 0 200 45" style="width:170px; height:auto;">
+        <circle cx="35" cy="22" r="12" fill="#ff9f0a" opacity="0.8"/>
+        <path d="M 55,25 Q 65,15 75,25 T 95,25" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <text x="140" y="28" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="900" letter-spacing="0.05em" text-anchor="middle">almost monday</text>
+      </svg>
+    `;
     linksHTML = `<a href="https://almostmonday.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 surf pop wraps era</a>`;
   } else if (activeBand.id === 'artist:cold-war-kids') {
     bandArtStyle = `background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);`; // Deep classic blue
+    logoSVG = `
+      <svg viewBox="0 0 200 45" style="width:170px; height:auto;">
+        <rect x="15" y="6" width="170" height="32" fill="none" stroke="#fff" stroke-width="2.5" />
+        <text x="100" y="27" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="900" letter-spacing="0.1em" text-anchor="middle">COLD WAR KIDS</text>
+      </svg>
+    `;
     linksHTML = `<a href="https://coldwarkids.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 20 years of robbers & cowards</a>`;
   } else if (activeBand.id === 'artist:young-the-giant') {
     bandArtStyle = `background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);`; // Warm woodcut soil green/yellow
+    logoSVG = `
+      <svg viewBox="0 0 200 45" style="width:170px; height:auto;">
+        <text x="100" y="32" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" letter-spacing="0.2em" text-anchor="middle">Y.T.G</text>
+        <line x1="45" y1="37" x2="155" y2="37" stroke="var(--accent)" stroke-width="2"/>
+      </svg>
+    `;
     linksHTML = `
       <div style="display:flex; gap:12px;">
         <a href="https://youngthegiant.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 victory garden tour</a>
@@ -619,6 +683,7 @@ function renderActiveBandProfile() {
     `;
   } else {
     bandArtStyle = `background: linear-gradient(135deg, #ed213a 0%, #93291e 100%);`; // Punk deep red
+    logoSVG = `<span style="font-family:'Segoe UI', sans-serif; font-weight:900; font-size:1.1rem; color:#fff;">KennyHoopla</span>`;
     linksHTML = `<a href="https://kennyhoopla.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 alternative punk sound</a>`;
   }
 
@@ -630,9 +695,9 @@ function renderActiveBandProfile() {
         <p>${activeBand.genre} &bull; ${activeBand.origin}</p>
       </div>
 
-      <!-- Band Aesthetic Collage Banner -->
+      <!-- Graphical Band Logo/Art Banner -->
       <div style="width:100%; height:75px; ${bandArtStyle} border-radius:8px; display:flex; justify-content:center; align-items:center; box-shadow:inset 0 0 15px rgba(0,0,0,0.2); margin-bottom:12px;">
-        <span style="font-family:'Segoe UI', sans-serif; font-weight:900; font-size:1.1rem; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.3); text-transform:uppercase; letter-spacing:0.1em;">${activeBand.name}</span>
+        ${logoSVG}
       </div>
 
       <div class="lyrics-body" style="flex-grow:1; overflow-y:auto; padding:10px 0; text-align:left; font-family:'Segoe UI', sans-serif;">
@@ -739,8 +804,30 @@ document.getElementById('btn-venue-fac').addEventListener('click', () => {
   triggerTransition(() => {
     const content = document.getElementById('viewport-content');
     content.innerHTML = `
-      <div class="details-view">
-        <h2>Venue Facilities & Accessibility</h2>
+      <div class="details-view" style="display:flex; flex-direction:column; height:100%;">
+        <h2>Facilities & Interior Map</h2>
+        
+        <!-- STRETCH GOAL: SVG Seating & Stage Layout Map with Pulsing You Are Here Pin -->
+        <svg viewBox="0 0 320 180" style="width:100%; height:auto; background:#181818; border-radius:6px; border:1px solid #333; margin:8px 0; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+          <rect x="100" y="10" width="120" height="20" rx="3" fill="#ff5722" />
+          <text x="160" y="23" fill="#fff" font-size="8" font-family="'Segoe UI',sans-serif;" font-weight="bold" text-anchor="middle">STAGE</text>
+          
+          <path d="M 80,42 A 90,90 0 0,0 240,42 L 260,70 A 130,130 0 0,1 60,70 Z" fill="#2a2a2a" stroke="#444" stroke-width="1"/>
+          <text x="160" y="58" fill="#aaa" font-size="8" font-family="'Segoe UI',sans-serif;" text-anchor="middle">RESERVED SEATING / PIT</text>
+          
+          <path d="M 50,80 A 150,150 0 0,0 270,80 L 295,130 A 210,210 0 0,1 25,130 Z" fill="#1b3318" stroke="#333" stroke-width="1"/>
+          <text x="160" y="108" fill="#88b083" font-size="9" font-family="'Segoe UI',sans-serif;" font-weight="bold" text-anchor="middle">THE LAWN</text>
+          
+          <circle cx="160" cy="90" r="4" fill="#ff9f0a" />
+          <circle cx="160" cy="90" r="8" fill="none" stroke="#ff9f0a" stroke-width="1.5">
+            <animate attributeName="r" values="4;10;4" dur="2.5s" repeatCount="indefinite" />
+          </circle>
+          <text x="160" y="83" fill="#ff9f0a" font-size="7" font-family="'Segoe UI',sans-serif;" font-weight="bold" text-anchor="middle">📍 YOU ARE HERE (Lawn Front)</text>
+          
+          <text x="30" y="160" fill="#ccc" font-size="7" font-family="'Segoe UI',sans-serif;">🚻 Restrooms (East/West Plaza)</text>
+          <text x="210" y="160" fill="#ccc" font-size="7" font-family="'Segoe UI',sans-serif;">🍔 Concessions / Gate 1</text>
+        </svg>
+
         <h3>🚻 Restroom Facilities</h3>
         <p>Main restrooms are situated on the East and West plazas. Elevated ADA restrooms are nearby.</p>
         <h3>♿ Accessibility Ramps</h3>
@@ -933,18 +1020,9 @@ let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  document.getElementById('btn-install-pwa').style.display = 'block';
-});
-
-document.getElementById('btn-install-pwa').addEventListener('click', async () => {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === 'accepted') {
-      console.log('User installed Sun Map PWA');
-    }
-    deferredPrompt = null;
-  }
+  // Update small button display state if timeline is active
+  const btn = document.getElementById('btn-install-pwa-small');
+  if (btn) btn.style.display = 'inline-block';
 });
 
 // Initialize on Load

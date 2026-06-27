@@ -345,8 +345,8 @@ body {
 
 .home-btn-container {
   position: relative;
-  height: 64px;
-  margin-top: -18px; /* apply the break upward to the container */
+  height: 70px;
+  margin-top: -24px; /* apply the break upward to the container */
   display: flex;
   justify-content: center;
   z-index: 5;
@@ -355,44 +355,44 @@ body {
 
 .tiny-foot-btn {
   position: absolute;
-  height: 32px;
-  width: 32px;
-  border-radius: 50%;
-  background-color: #2a1508; /* match Sun background */
-  border: 1.5px solid var(--accent); /* match Sun accent border */
-  color: var(--text-primary);
-  font-size: 0.95rem;
+  height: 38px;
+  width: 38px;
+  background-color: transparent; /* transparent background removes visual rings */
+  border: none; /* remove outer borders and rings */
+  color: #ccc;
+  font-size: 1.35rem; /* larger and bolder text size */
+  font-weight: 900;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   z-index: 6;
-  box-shadow: 0 -2px 8px rgba(255, 87, 34, 0.3); /* match Sun orange glow */
   transition: all 0.15s ease;
 }
 
 #btn-foot-restroom {
-  left: calc(50% - 68px); /* visually dovetails into the left rounded shoulder nook */
-  top: -4px;
+  left: calc(50% - 66px); /* sits snugly sloped next to the enlarged Sun */
+  top: 14px;
 }
 
 #btn-foot-help {
-  right: calc(50% - 68px); /* visually dovetails into the right rounded shoulder nook */
-  top: -4px;
+  right: calc(50% - 66px); /* sits snugly sloped next to the enlarged Sun */
+  top: 14px;
 }
 
 .tiny-foot-btn:active {
-  background-color: var(--accent);
+  color: var(--accent);
   transform: scale(0.9);
 }
 
 #btn-home {
-  height: 64px;
-  width: 76px;
+  height: 70px;
+  width: 82px;
   border-radius: 50% 50% 8px 8px;
   background-color: #2a1508;
   border: 2px solid var(--accent);
-  box-shadow: 0 -4px 12px rgba(255, 87, 34, 0.4);
+  outline: 1px solid rgba(255, 87, 34, 0.3); /* double border detail layer */
+  box-shadow: 0 -4px 16px rgba(255, 87, 34, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.1);
   z-index: 5;
   padding: 0;
   display: flex;
@@ -406,7 +406,7 @@ body {
 }
 
 #btn-home .btn-icon {
-  font-size: 2.2rem;
+  font-size: 2.35rem;
   margin-bottom: 0;
   line-height: 1;
 }
