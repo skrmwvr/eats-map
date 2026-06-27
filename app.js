@@ -432,8 +432,54 @@ function updateCarButtonUI() {
 }
 
 // ----------------------------------------
-// BUTTON CLICK PANEL RENDERINGS
+// BUTTON CLICK PANEL RENDERINGS  (all inside DOMContentLoaded)
 // ----------------------------------------
+window.addEventListener('DOMContentLoaded', () => {
+
+// Load data and init
+loadCorpusData();
+
+// Dismiss Weather alert banner
+document.getElementById('btn-close-alert').addEventListener('click', (e) => {
+  e.stopPropagation();
+  state.dismissedAlertText = state.event?.weather?.forecast_summary || '';
+  document.getElementById('alert-banner').style.display = 'none';
+  const chk = document.getElementById('alert-banner-toggle');
+  if (chk) chk.checked = false;
+});
+
+// Bind Footer Restroom and Help buttons
+document.getElementById('btn-foot-restroom').addEventListener('click', () => {
+  state.activeViewport = 'venue';
+  showVenueActionBar();
+  document.getElementById('btn-venue-fac').click();
+});
+document.getElementById('btn-foot-help').addEventListener('click', () => {
+  triggerPageHelp();
+});
+document.getElementById('btn-close-help-modal').addEventListener('click', () => {
+  document.getElementById('help-modal').classList.remove('active');
+});
+
+// Long-press bindings
+bindLongPress(document.getElementById('btn-home'));
+bindLongPress(document.getElementById('viewport-content'));
+
+// Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js')
+    .then(reg => {
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            console.log('New service worker available.');
+          }
+        });
+      });
+    })
+    .catch(err => console.warn('SW registration failed', err));
+}
 
 // Render Weather
 document.getElementById('btn-weather').addEventListener('click', () => {
@@ -882,6 +928,8 @@ document.getElementById('btn-close-share').addEventListener('click', () => {
   triggerTransition(renderCurrentSong);
 });
 
+}); // END DOMContentLoaded
+
 // ----------------------------------------
 // CONTEXT-SENSITIVE LONG-PRESS HELP TOOLTIP
 // ----------------------------------------
@@ -1031,53 +1079,5 @@ window.addEventListener('beforeinstallprompt', (e) => {
   if (btn) btn.style.display = 'inline-block';
 });
 
-// Initialize on Load
-window.addEventListener('DOMContentLoaded', () => {
-  loadCorpusData();
 
-  // Dismiss Weather alert banner
-  document.getElementById('btn-close-alert').addEventListener('click', (e) => {
-    e.stopPropagation();
-    state.dismissedAlertText = state.event?.weather?.forecast_summary || '';
-    document.getElementById('alert-banner').style.display = 'none';
-    
-    // Sync Weather checkbox if active on screen
-    const chk = document.getElementById('alert-banner-toggle');
-    if (chk) chk.checked = false;
-  });
 
-  // Bind new Footer Restroom and help shortcut buttons
-  document.getElementById('btn-foot-restroom').addEventListener('click', () => {
-    state.activeViewport = 'venue';
-    showVenueActionBar();
-    document.getElementById('btn-venue-fac').click();
-  });
-
-  document.getElementById('btn-foot-help').addEventListener('click', () => {
-    triggerPageHelp();
-  });
-
-  document.getElementById('btn-close-help-modal').addEventListener('click', () => {
-    document.getElementById('help-modal').classList.remove('active');
-  });
-
-  // Bind Long-Press handlers to main elements
-  bindLongPress(document.getElementById('btn-home'));
-  bindLongPress(document.getElementById('viewport-content'));
-  
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => {
-        // Check for updates to sw.js
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.log('New service worker available, reloading cache...');
-            }
-          });
-        });
-      })
-      .catch(err => console.warn('Service Worker registration failed', err));
-  }
-});
