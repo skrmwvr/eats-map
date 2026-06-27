@@ -380,6 +380,258 @@
               "description": "The outro section is often extended live, with Willett delivering soulful, improvised vocal ad-libs, repeating the key lines with increasing emotional intensity over a building wall of sound from the band."
             }
           ]
+        },
+        "We Used to Vacation": {
+          "lyrics": [
+            "I kissed the kids at noon",
+            "Then stumbled out the room",
+            "I caught a cab, ran up a tab",
+            "On 7th and Flower",
+            "Best recital, I had to run",
+            "Missed my son's graduation",
+            "Still, things could be much worse",
+            "Natural disasters on the evening news",
+            "We still got our health",
+            "My paycheck in the mail",
+            "I promised to my wife and children",
+            "I'd never touch another drink as long as I live",
+            "But even then it sounds so soothing",
+            "This will blow over in time",
+            "This will all blow over in time",
+            "I'm just an honest man",
+            "Provide for me and mine",
+            "Two weeks paid vacation",
+            "Won't heal the damage done"
+          ],
+          "live_variations": [
+            {
+              "type": "Solo Piano Intro",
+              "description": "Often opens with Nathan Willett performing a solo piano intro before the band joins. This sparse beginning heightens the narrative storytelling quality of the verses."
+            },
+            {
+              "type": "Extended Instrumental Outro",
+              "description": "A landmark of their live sets. The song is frequently stretched beyond studio length with an improvised, blues-inflected instrumental jam. Willett occasionally plays maracas while the rhythm section drives the groove."
+            },
+            {
+              "type": "20th Anniversary Tour Feature",
+              "description": "Spotlighted on the Robbers & Cowards 20th anniversary set, this song receives extended treatment as a centerpiece. Crowd sing-along of the chorus is very common with longtime fans."
+            }
+          ]
+        },
+        "Miracle Mile": {
+          "lyrics": [
+            "I was supposed to do great things",
+            "I know the road was long",
+            "But I wasn't raised to shoot for fame",
+            "I had the safety on",
+            "I cut my ties, I sold my rings",
+            "I wanted none of this",
+            "If you start from scratch and have to sing",
+            "Just for the fun of it",
+            "I'll be alright, if I could just see you",
+            "Come up for air, come up for air",
+            "A miracle mile where does it lead to?",
+            "Come up for air, come up for air",
+            "I feel the air upon my face, forget the mess I'm in",
+            "Hold me again, don't count mistakes, I lost track of them",
+            "I was in the mud, I was in the dirt",
+            "Went underground and I thought what I was worth",
+            "All alone and I know I can't stay, but",
+            "We're walking up and down the streets to stay awake"
+          ],
+          "live_variations": [
+            {
+              "type": "Soaring Vocal Delivery",
+              "description": "Nathan Willett's delivery escalates dramatically through the song. He often lets his voice crack or strain intentionally on 'come up for air' to communicate emotional urgency, stretching the note further than the studio version."
+            },
+            {
+              "type": "Crowd Call-and-Response",
+              "description": "The 'come up for air' refrain is ideally structured for audience participation. Willett frequently sings the lead line and points the mic to the crowd to answer, especially in the extended bridge/outro."
+            }
+          ]
+        },
+        "Something Is Not Right With Me": {
+          "lyrics": [
+            "Something is not right with me",
+            "How was I supposed to know?",
+            "Something is not right with me",
+            "Trying not to let it show",
+            "I tried to call you collect",
+            "You said you would not accept",
+            "Your friends are laughing",
+            "'Cause nobody uses pay phones",
+            "Gave me quarters to select",
+            "Song on the jukebox that gets people dancing",
+            "Should have never chose 'Girlfriend'",
+            "You said you like old cars",
+            "I bought a beat up brown Dodge it was smoking black",
+            "And died in your front yard",
+            "You follow who's dating who",
+            "But when it comes to you",
+            "One is pulled a dozen different ways in the mind"
+          ],
+          "live_variations": [
+            {
+              "type": "Repetitive Chant Energy",
+              "description": "The relentlessly repeated chorus hook becomes almost trance-like live. Willett often performs it with increasing intensity each repetition, turning it into a kind of communal confession."
+            },
+            {
+              "type": "Crowd Call-and-Response",
+              "description": "Willett sometimes divides the crowd, having one section echo 'Something is not right with me' while the other responds with 'Trying not to let it show.'"
+            }
+          ]
+        }
+      }
+    },
+    "almost monday": {
+      "songs": {
+        "sunsets": {
+          "lyrics": [
+            "California",
+            "Heat waves on ya",
+            "Think we knew that it would go there",
+            "Catching magic out of thin air",
+            "Warmer weather, nothing better",
+            "'Til we stumble into nightfall",
+            "And you end it with a phone call",
+            "Why'd I give you my everything",
+            "Just to watch us spiral down the drain?",
+            "The days we spent were temporary",
+            "But you'll always be that sunburn on me",
+            "An ice cold shower can't help, baby",
+            "'Cause you'll always be that sunburn on me",
+            "Aloe vera over my skin",
+            "Took you to places that you never been",
+            "Why you gotta say goodbye?",
+            "Burn up in flames like the Fourth of July"
+          ],
+          "live_variations": [
+            {
+              "type": "Title Note",
+              "description": "This song is officially titled 'sunburn' on the Endless Summer EP (2022). It is catalogued here under the user-requested key 'sunsets' for setlist reference compatibility."
+            },
+            {
+              "type": "Dreamy Opener Energy",
+              "description": "Often used early in the set to establish the band's warm California aesthetic. Dawson Daugherty delivers it with airy, breathy vocals paired with golden/orange lighting."
+            },
+            {
+              "type": "Crowd Sing-Along",
+              "description": "The chorus is short, punchy, and highly singable. Crowds often come in strong on 'you'll always be that sunburn on me.'"
+            }
+          ]
+        },
+        "what i say vs what i mean": {
+          "lyrics": [
+            "Somber mood, on the roof",
+            "I can tell something's not right",
+            "Said you're 'feeling rough'",
+            "Like you're 'not enough'",
+            "But you're perfect in my eyes",
+            "So darling, don't you change a thing",
+            "'Cause you've already got what you need",
+            "Just don't say you're ordinary",
+            "So hard on yourself, it's bad for your health",
+            "You could be imaginary",
+            "All that you are, is my favorite part",
+            "Just the way, the way you are",
+            "I like the way, the way you are"
+          ],
+          "live_variations": [
+            {
+              "type": "Title Note",
+              "description": "This song is officially titled 'don't say you're ordinary' (2020). Catalogued here under user key 'what i say vs what i mean' for setlist reference compatibility."
+            },
+            {
+              "type": "Direct Crowd Moment",
+              "description": "Frontman Dawson Daugherty delivers this as a sincere message to the crowd, often pointing to individual audience members during the chorus."
+            }
+          ]
+        },
+        "parking lot": {
+          "lyrics": [
+            "Man, I just slept on a couch",
+            "Wake up to heat in the south",
+            "And I got a long night ahead",
+            "Sharing a room with my friends",
+            "Shower then head to the pool",
+            "Wonder what they doing at school",
+            "I hope that they think that I'm cool",
+            "Seattle to New York City",
+            "I know that something is missing",
+            "It's just another hotel room without you",
+            "My hotel room, parking lot view",
+            "This California King needs a queen",
+            "Baby, that's you",
+            "Check out my parking lot view"
+          ],
+          "live_variations": [
+            {
+              "type": "Title Note",
+              "description": "This song is officially titled 'parking lot view' (2020 EP). Catalogued here under user key 'parking lot' for setlist reference compatibility."
+            },
+            {
+              "type": "Fan Favorite",
+              "description": "One of the most consistent crowd-pleasers in their set. Fans often sing along to the entire verse, not just the chorus. The 'parking lot view' refrain frequently gets chanted back."
+            }
+          ]
+        },
+        "broken people": {
+          "lyrics": [
+            "I'm wondering how long I can get by",
+            "Seems so wrong but I know I'll be alright",
+            "Only been down for a minute",
+            "So caught up, I've got my back against the wall",
+            "Losing hope, I'm broke with no one else to call",
+            "'Cause we're all just broken people, and we don't know why",
+            "But we're keeping it together 'cause we gotta try",
+            "Put me back together, put me back together",
+            "1 to 99 years old",
+            "Yeah, we all cry, and we all hold on",
+            "To what we can before it's gone",
+            "You gotta understand, you gotta love the world",
+            "We gotta work together and make each other whole"
+          ],
+          "live_variations": [
+            {
+              "type": "Communal Anthem",
+              "description": "Their biggest crowd-connection song. Audiences tend to sing every word. Daugherty often pauses to let the crowd sing the chorus alone — a ritual the fanbase has come to expect."
+            },
+            {
+              "type": "Emotional Bridge",
+              "description": "The bridge '1 to 99 years old / Yeah, we all cry...' is performed with genuine vulnerability, often slowing slightly before building back to full energy."
+            }
+          ]
+        },
+        "another day in paradise": {
+          "lyrics": [
+            "Yeah, I hopped up on my bike for a cruise around the town",
+            "When I saw a cute couple, they were sitting, making out",
+            "My girlfriend has that jacket, so I stopped and turned around",
+            "I'm sad now",
+            "But the sun keeps on shining",
+            "Yeah, the sun keeps on shining",
+            "When I got back to my car, tryna blow off all the steam",
+            "I was diggin' through my pockets, and I couldn't find the keys",
+            "Then I saw a parking ticket, it was staring back at me",
+            "I'm broke now",
+            "But the sun keeps on shining",
+            "And the car keeps on driving",
+            "You can sit at home or you can take a ride",
+            "You can get a tan or stay inside",
+            "But the sun keeps on shining",
+            "The days are getting harder, but I'm still alive",
+            "And the sun keeps on shining"
+          ],
+          "live_variations": [
+            {
+              "type": "Title Note",
+              "description": "This song is officially titled 'sun keeps on shining' (2022, Endless Summer EP). Catalogued here under user key 'another day in paradise' for setlist reference compatibility."
+            },
+            {
+              "type": "Feel-Good Crowd Moment",
+              "description": "Performed as a euphoric crowd moment. The relentlessly positive hook contrasts with the litany of small disasters in the verses. Daugherty extends the outro live with the crowd chanting 'sun keeps on shining' while the band vampes."
+            }
+          ]
         }
       }
     }
