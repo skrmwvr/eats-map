@@ -340,6 +340,7 @@ body {
   gap: 8px;
   border-top: 1px solid var(--border-color);
   align-items: end; /* align other buttons to bottom */
+  overflow: visible; /* prevents clipping of sloped shoulder buttons */
 }
 
 .home-btn-container {
@@ -357,32 +358,31 @@ body {
   height: 32px;
   width: 32px;
   border-radius: 50%;
-  background-color: #1e1e1e;
-  border: 1px solid rgba(255, 87, 34, 0.4);
+  background-color: #2a1508; /* match Sun background */
+  border: 1.5px solid var(--accent); /* match Sun accent border */
   color: var(--text-primary);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   z-index: 6;
-  box-shadow: 0 -2px 6px rgba(0,0,0,0.5);
+  box-shadow: 0 -2px 8px rgba(255, 87, 34, 0.3); /* match Sun orange glow */
   transition: all 0.15s ease;
 }
 
 #btn-foot-restroom {
-  left: calc(50% - 56px); /* sits beautifully to the left of the sun */
-  top: 10px;
+  left: calc(50% - 68px); /* visually dovetails into the left rounded shoulder nook */
+  top: -4px;
 }
 
 #btn-foot-help {
-  right: calc(50% - 56px); /* sits beautifully to the right of the sun */
-  top: 10px;
+  right: calc(50% - 68px); /* visually dovetails into the right rounded shoulder nook */
+  top: -4px;
 }
 
 .tiny-foot-btn:active {
   background-color: var(--accent);
-  border-color: var(--accent);
   transform: scale(0.9);
 }
 
@@ -419,45 +419,47 @@ body {
 .details-view {
   font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 .details-view h2 {
   font-family: "Segoe UI", sans-serif;
   font-weight: 700;
-  font-size: 1.5rem;
-  margin-bottom: 12px;
+  font-size: 1.6rem;
+  margin-bottom: 16px;
   border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
 .details-view h3 {
   font-family: "Segoe UI", sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-top: 14px;
+  margin-top: 20px;
+  margin-bottom: 8px;
   color: var(--accent);
 }
 
 .details-view p {
-  font-size: 1.05rem;
-  margin-bottom: 10px;
+  font-size: 1.15rem;
+  margin-bottom: 14px;
   color: rgba(255, 255, 255, 0.95);
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 .details-view ul {
   list-style: none;
-  font-size: 1.05rem;
-  margin-top: 4px;
+  font-size: 1.15rem;
+  margin-top: 8px;
+  margin-bottom: 14px;
 }
 
 .details-view li {
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   position: relative;
-  padding-left: 14px;
-  line-height: 1.4;
+  padding-left: 16px;
+  line-height: 1.6;
 }
 
 .details-view li::before {
@@ -466,7 +468,7 @@ body {
   font-size: 0.6rem;
   position: absolute;
   left: 0;
-  top: 4px;
+  top: 6px;
 }
 
 /* MODALS */
