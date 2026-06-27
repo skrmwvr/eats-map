@@ -567,7 +567,27 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
 
     const content = document.getElementById('viewport-content');
     content.innerHTML = `
-      <div class="details-view" style="display:flex; flex-direction:column; height:100%;">
+      <div class="details-view" style="display:flex; flex-direction:column; height:100%; position:relative;">
+
+        <!-- Sun logo watermark — fixed decorative art for this page -->
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none; z-index:0; opacity:0.05;">
+          <svg viewBox="0 0 200 200" width="240" height="240" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="38" fill="#ff5722"/>
+            <g stroke="#ff5722" stroke-width="5" stroke-linecap="round">
+              <line x1="100" y1="20" x2="100" y2="48"/>
+              <line x1="100" y1="152" x2="100" y2="180"/>
+              <line x1="20" y1="100" x2="48" y2="100"/>
+              <line x1="152" y1="100" x2="180" y2="100"/>
+              <line x1="43" y1="43" x2="63" y2="63"/>
+              <line x1="137" y1="137" x2="157" y2="157"/>
+              <line x1="157" y1="43" x2="137" y2="63"/>
+              <line x1="63" y1="137" x2="43" y2="157"/>
+            </g>
+            <circle cx="100" cy="100" r="26" fill="none" stroke="#ff5722" stroke-width="2" stroke-dasharray="4 4"/>
+          </svg>
+        </div>
+
+        <div style="position:relative; z-index:1; display:flex; flex-direction:column; height:100%;">
         <h2>Projected Program</h2>
         
         <div style="flex-grow:1; overflow-y:auto; padding-right:4px;">
@@ -638,6 +658,7 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
           </div>
         </div>
       </div>
+    </div>
     `;
 
     // Bind shortcuts
@@ -876,6 +897,18 @@ function renderBandLoreContent(activeBand, lore) {
         <div style="margin-bottom:16px;">
           <div style="font-size:0.7rem; text-transform:uppercase; font-weight:800; letter-spacing:0.1em; color:${vis.accentColor}; margin-bottom:8px;">Discography</div>
           ${albumsHTML}
+        </div>` : ''}
+
+        <!-- Gear -->
+        ${(data.equipment || []).length ? `
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.7rem; text-transform:uppercase; font-weight:800; letter-spacing:0.1em; color:${vis.accentColor}; margin-bottom:8px;">Gear & Equipment</div>
+          ${(data.equipment || []).map(e => `
+            <div style="margin-bottom:7px; font-size:0.8rem; line-height:1.45;">
+              <span style="color:${vis.accentColor}; font-weight:700;">${e.member}:</span>
+              <span style="color:#bbb;"> ${e.gear}</span>
+            </div>
+          `).join('')}
         </div>` : ''}
 
         <!-- Influences -->

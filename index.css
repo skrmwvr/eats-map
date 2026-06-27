@@ -374,12 +374,12 @@ body {
 
 #btn-foot-restroom {
   left: calc(50% - 68px); /* sits snugly sloped next to the enlarged Sun */
-  top: 18px;
+  top: 6px;
 }
 
 #btn-foot-help {
   right: calc(50% - 68px); /* sits snugly sloped next to the enlarged Sun */
-  top: 18px;
+  top: 6px;
 }
 
 .tiny-foot-btn:active {
