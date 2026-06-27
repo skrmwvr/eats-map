@@ -379,8 +379,8 @@ document.getElementById('btn-tour').addEventListener('click', () => {
     content.innerHTML = `
       <div class="details-view">
         <h2>Victory Garden Tour</h2>
-        <h3>Tour Creed & Charity</h3>
-        <p>The 2026 Victory Garden Tour partners with local sustainability groups to offset concert emission footprints. Reusable cups are incentivized at the plazas.</p>
+        <h3>Tour Creed & REVERB</h3>
+        <p>The 2026 tour partners with <strong>REVERB</strong> to combat food insecurity and fund community-based carbon reduction. The album represents <em>"caring through chaos"</em> and treating hope as something to be planted, tended, and fought for.</p>
         <h3>Event Creed & Cause</h3>
         <p><strong>Local Watershed Protection:</strong> A portion of tonight's proceeds goes to the Cumberland River Compact to protect Tennessee's local water resources and natural habitats.</p>
         <h3>Duet & Guest Features</h3>
