@@ -31,4 +31,11 @@ Use the table below to log current ingestion status of files stored in this fold
 | 2026-06-27 | [20260627-ascend-amphitheater-info.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/venue/20260627-ascend-amphitheater-info.json) | `Venue` | `captured` | Capacity, rules, parking, bag rules |
 | 2026-06-27 | [20260627-young-the-giant-event-info.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/event/20260627-young-the-giant-event-info.json) | `Event` | `captured` | Schedule, lineups, AXS ticketing details |
 | 2026-06-27 | [20260627-nashville-weather-forecast.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/event/20260627-nashville-weather-forecast.json) | `Event.weather` | `captured` | NOAA forecast (flood watch, storms) |
+| 2026-06-27 | [20260627-cold-war-kids-bio.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/band/20260627-cold-war-kids-bio.json) | `Artist` | `normalized` | Cold War Kids official bio details |
+| 2026-06-27 | [20260627-cold-war-kids-setlist.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/band/20260627-cold-war-kids-setlist.json) | `Song`, `PerformanceContext` | `normalized` | Cold War Kids setlist and key metadata |
+| 2026-06-27 | [cold-war-kids-catalog.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/band/cold-war-kids-catalog.json) | `Song` | `normalized` | Robbers & Cowards full album key/BPM specs |
+| 2026-06-27 | [young-the-giant-song-sentiment.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/band/young-the-giant-song-sentiment.json) | `Song.sentiment` | `captured` | Qualitative crowd behaviors & song meanings |
+| 2026-06-27 | [victory-garden-tour-history.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/event/victory-garden-tour-history.json) | `Event` | `captured` | Timings & setlist changes on prior tour stops |
+| 2026-06-27 | [nashville-transit-parking-options.json](file:///c:/dev/sun-map%20-%20a%20performance%20and%20event%20guide/fill-data/venue/nashville-transit-parking-options.json) | `Venue.utility` | `captured` | Pedestrian bridge walkthroughs, rideshare, and WeGo Star public transit info |
+
 
