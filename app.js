@@ -684,112 +684,242 @@ function renderActiveBandProfile() {
   viewport.className = 'viewport-square'; 
   viewport.classList.add(activeBand.theme);
 
-  // Dropdown list HTML for bands (limiting to switcherBandsCount = 3 to hide KennyHoopla)
+  // Try loading rich lore JSON; fall back to hardcoded data
+  const slug = activeBand.id.split(':')[1];
+  fetch(`fill-data/band/band-lore-${slug}.json`)
+    .then(r => r.ok ? r.json() : null)
+    .catch(() => null)
+    .then(lore => renderBandLoreContent(activeBand, lore));
+}
+
+// Hardcoded rich lore fallback data per band
+const bandLoreFallback = {
+  'artist:young-the-giant': {
+    tagline: 'Caring through chaos. Planting hope in the dirt.',
+    philosophy_quote: '"The garden is the metaphor — you tend to things even when you don't know if they'll grow." — Sameer Gadhia',
+    biography: `Young the Giant formed in Irvine, California in 2004 under the name The Jakes, before becoming Young the Giant in 2009. Five friends from the UC Irvine scene — Sameer Gadhia, Jacob Tilley, Eric Cannata, Payam Doostzadeh, and Francois Comtois — built a sound rooted in anthemic guitar work, dynamic rhythm, and Gadhia's soaring, emotionally precise vocals.\n\nTheir 2010 self-titled debut introduced "Cough Syrup" and "My Body" to a national audience, establishing them as a band capable of both introspective depth and stadium-scale energy. Mirror Master (2019) pushed into cinematic territory, exploring themes of isolation and duality through layered production and extended song structures.\n\nThe Victory Garden album (2026) represents their most intentional artistic statement: a full-band meditation on radical empathy, community resilience, and hope as active labor. Recorded largely in a converted greenhouse studio in the San Gabriel Valley, the album's sonic palette draws on field recordings, analog warmth, and the band's now 20-year chemistry.`,
+    members: [
+      { name: 'Sameer Gadhia', role: 'Lead Vocals', instrument: 'Vocals', background: 'Born in Cupertino, CA to Indian-American parents. Studied Biology at UC Irvine before the band took off. Known for his four-octave range and kinetic stage presence.', known_for: 'Soaring falsetto, crowd intimacy' },
+      { name: 'Jacob Tilley', role: 'Lead Guitar', instrument: 'Guitar', background: 'Primary riff architect of the band. Builds delay loop pedals by hand under an unreleased brand. Studied classical composition before turning to indie rock.', known_for: 'Layered delay work, clean-to-distortion swells' },
+      { name: 'Eric Cannata', role: 'Rhythm Guitar / Keys', instrument: 'Guitar, Keys', background: 'The harmonic glue of the band. Contributes keyboard textures and rhythm guitar parts that define the Victory Garden album\'s lush midrange.', known_for: 'Keyboard pads, rhythm foundation' },
+      { name: 'Payam Doostzadeh', role: 'Bass', instrument: 'Bass Guitar', background: 'Studied jazz bass at USC before joining the band. His melodic, walking bass lines on tracks like "Mind Over Matter" give the band unusual harmonic depth for the genre.', known_for: 'Melodic jazz-influenced bass lines' },
+      { name: 'Francois Comtois', role: 'Drums', instrument: 'Drum Kit', background: 'Montreal-born drummer with a background in Afrobeat and funk. Brings a loose-but-locked pocket feel that gives YTG live performances their particular energy.', known_for: 'Pocket groove, Afrobeat influence' }
+    ],
+    influences: ['Radiohead', 'Beck', 'U2', 'Vampire Weekend', 'The War on Drugs', 'Thom Yorke', 'Paul Simon'],
+    key_albums: [
+      { title: 'Young the Giant', year: 2010, significance: 'Debut — Cough Syrup, My Body launched them nationally', url: 'https://open.spotify.com/album/6oVmTkuDIRMlhMIYlbMZJN' },
+      { title: 'Mind Over Matter', year: 2014, significance: 'Commercial peak — Strings, Anagram', url: 'https://open.spotify.com/album/1ZoRjzBVqOCMeIFSEyUMXG' },
+      { title: 'Mirror Master', year: 2019, significance: 'Cinematic exploration of duality and identity', url: 'https://open.spotify.com/album/4dLp3JhFXlcXUAA1TLFPoW' },
+      { title: 'Victory Garden', year: 2026, significance: 'Tonight\'s tour — radical empathy, caring through chaos', url: 'https://open.spotify.com/artist/4j56EQDQu5XnL7R3E9iFJT' }
+    ],
+    tonight: 'Headlining the Victory Garden Tour. Expect the full new album alongside fan favorites. Watch for Sameer\'s crowd walks and a potential acoustic spotlight moment.',
+    links: [
+      { label: '🌐 youngthegiant.com', url: 'https://youngthegiant.com' },
+      { label: '🎵 Spotify', url: 'https://open.spotify.com/artist/4j56EQDQu5XnL7R3E9iFJT' },
+      { label: '📺 YouTube', url: 'https://www.youtube.com/@YoungtheGiant' },
+      { label: '📸 Instagram', url: 'https://www.instagram.com/youngthegiant/' }
+    ]
+  },
+  'artist:cold-war-kids': {
+    tagline: 'Gospel-stained blues rock from the Fullerton underground.',
+    philosophy_quote: '"We\'ve always been interested in the morality of every story — the complicated people, the ones trying." — Nathan Willett',
+    biography: `Cold War Kids were born from the DIY Fullerton, California scene in 2004. Nathan Willett (vocals/piano), Matt Maust (bass), Jonnie Russell (guitar), and Matthew Aveiro (drums) initially self-released music through art galleries and local shows before Robbers & Cowards (2006) introduced them to a national audience.\n\nRobbers & Cowards remains one of the most distinctive debut albums in indie rock — a gospelized, vaguely Southern sound built on Willett's locomotive piano style and his instinct for moral storytelling. Songs like "Hang Me Up to Dry," "We Used to Vacation," and "Hospital Beds" read like short fiction set to urgent, bluesy rock.\n\nIn 2026, the band returns to the road celebrating 20 years of Robbers & Cowards with an expanded edition of the album and a support slot on the Young the Giant Victory Garden Tour. Brandon Paksa joined the band in recent years on guitar and additional production.`,
+    members: [
+      { name: 'Nathan Willett', role: 'Lead Vocals / Piano', instrument: 'Piano, Vocals', background: 'The creative and visual centerpiece of the band. His theatrical, locomotive piano style defines the CWK sound. Grew up listening to gospel, Joni Mitchell, and Tom Waits.', known_for: 'Piano-driven gospel rock, moral storytelling' },
+      { name: 'Matt Maust', role: 'Bass', instrument: 'Bass Guitar', background: 'One of the founding members and the band\'s visual artist — most of CWK\'s album artwork and visual identity is his work. Studied fine arts before joining Willett\'s early projects.', known_for: 'Album artwork, bass foundation' },
+      { name: 'Jonnie Russell', role: 'Guitar', instrument: 'Guitar', background: 'Atmospheric lead guitar player whose Southern-tinged licks give CWK their dusty, cinematic quality. Longtime collaborator of Willett\'s from the Fullerton scene.', known_for: 'Cinematic Southern guitar tone' },
+      { name: 'Matthew Aveiro', role: 'Drums', instrument: 'Drum Kit', background: 'Founding drummer whose loose, accented style bridges jazz and rock. His drumming on early CWK recordings has influenced a generation of indie rock percussionists.', known_for: 'Jazz-influenced indie rock drumming' }
+    ],
+    influences: ['Tom Waits', 'Joni Mitchell', 'The National', 'Solomon Burke', 'Van Morrison', 'Bob Dylan'],
+    key_albums: [
+      { title: 'Robbers & Cowards', year: 2006, significance: 'The debut — tonight\'s 20th anniversary set. Hang Me Up to Dry, Hospital Beds.', url: 'https://open.spotify.com/album/4gCTjKTEwpM5HOFn6swg3Z' },
+      { title: 'Loyalty to Loyalty', year: 2008, significance: 'Sophomore expansion — I\'ve Seen Enough, Something Is Not Right With Me', url: 'https://open.spotify.com/album/0nHoI9cI5Y7k1vPwAYxGAq' },
+      { title: 'Dear Miss Lonelyhearts', year: 2013, significance: 'Commercial peak — Miracle Mile, Lust, Luck Love', url: 'https://open.spotify.com/album/35K1yHzQWXVw9yI6OqVWc7' }
+    ],
+    tonight: '20th Anniversary celebration of Robbers & Cowards. Expect a debut album–heavy set with deep cuts, extended piano jams on We Used to Vacation, and raw emotional intensity.',
+    links: [
+      { label: '🌐 coldwarkids.com', url: 'https://coldwarkids.com' },
+      { label: '🎵 Spotify', url: 'https://open.spotify.com/artist/6Y0P6UMdPNHhN8bq9CKhPj' },
+      { label: '📺 YouTube', url: 'https://www.youtube.com/@ColdWarKids' },
+      { label: '📸 Instagram', url: 'https://www.instagram.com/coldwarkids/' }
+    ]
+  },
+  'artist:almost-monday': {
+    tagline: 'Surf pop for people still figuring it out.',
+    philosophy_quote: '"We just want people to feel like they can take a breath." — Dawson Daugherty',
+    biography: `almost monday is a San Diego-based surf pop trio: Dawson Daugherty (vocals/guitar), Cole Clisby (guitar), and Luke Fabry (bass/keys). The band formed in 2018 from the San Diego college scene and spent years building a devoted following through relentless touring and an instinct for melodies that feel immediate and lived-in.\n\nSigned to Hollywood Records, their debut EP Don't Say You're Ordinary (2020) introduced "parking lot view" and "broken people" — songs that trade in the small disasters and unexpected joys of early adulthood. Their sound pulls from 90s California guitar pop, Vampire Weekend's buoyancy, and the kind of hooks that stay with you on a commute.\n\nThe Endless Summer EP (2022) deepened their palette, adding more texture and emotional range while keeping the sun-drenched aesthetic intact. Tonight marks their Nashville debut on the Victory Garden Tour, playing to the largest audiences of their career.`,
+    members: [
+      { name: 'Dawson Daugherty', role: 'Lead Vocals / Guitar', instrument: 'Guitar, Vocals', background: 'San Diego native whose karate-inspired stage presence and direct crowd connection have made him one of the most watchable performers in the indie pop world. Writes most of the band\'s melodies.', known_for: 'Crowd intimacy, karate dance moves' },
+      { name: 'Cole Clisby', role: 'Guitar', instrument: 'Guitar', background: 'The textural guitarist whose spring-reverb and tremolo-heavy parts define the band\'s surf aesthetic. Uses vintage Fender amps to achieve the warm, slightly wobbly tone on their records.', known_for: 'Spring reverb surf guitar tone' },
+      { name: 'Luke Fabry', role: 'Bass / Keys', instrument: 'Bass, Keys', background: 'Multi-instrumentalist who anchors the band\'s grooves and adds keyboard layering that gives their studio recordings more depth than a typical three-piece.', known_for: 'Bass groove, keyboard texture' }
+    ],
+    influences: ['Vampire Weekend', 'Mac DeMarco', 'The Strokes', 'Weezer', 'Best Coast', 'Rostam'],
+    key_albums: [
+      { title: "Don't Say You're Ordinary", year: 2020, significance: 'Debut EP — parking lot view, broken people', url: 'https://open.spotify.com/album/4uf98N7UzROFCzH0DLB5X7' },
+      { title: 'Endless Summer', year: 2022, significance: 'Second EP — sunburn, sun keeps on shining', url: 'https://open.spotify.com/album/2tR5lZBTcF7PvDPzjfmDfN' }
+    ],
+    tonight: 'First major amphitheater shows. Opening set is tight and high-energy. Dawson will work the crowd hard — get there early.',
+    links: [
+      { label: '🌐 almostmonday.com', url: 'https://almostmonday.com' },
+      { label: '🎵 Spotify', url: 'https://open.spotify.com/artist/5JevtnR8TRkdwdWfNKFfxj' },
+      { label: '📺 YouTube', url: 'https://www.youtube.com/@almostmonday' },
+      { label: '📸 Instagram', url: 'https://www.instagram.com/almostmonday/' }
+    ]
+  }
+};
+
+function renderBandLoreContent(activeBand, lore) {
+  // Merge loaded JSON with fallback
+  const data = lore || bandLoreFallback[activeBand.id] || {};
+
+  // Per-band visual identity
+  const bandVisuals = {
+    'artist:almost-monday': {
+      gradient: 'linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)',
+      accentColor: '#a6c1ee',
+      logoSVG: `<svg viewBox="0 0 200 45" style="width:160px; height:auto;"><circle cx="30" cy="22" r="11" fill="#ff9f0a" opacity="0.85"/><path d="M 48,25 Q 58,14 68,25 T 88,25" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><text x="145" y="29" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="900" letter-spacing="0.04em" text-anchor="middle">almost monday</text></svg>`
+    },
+    'artist:cold-war-kids': {
+      gradient: 'linear-gradient(135deg, #1a2a4a 0%, #2a5298 100%)',
+      accentColor: '#7ea8e0',
+      logoSVG: `<svg viewBox="0 0 200 45" style="width:160px; height:auto;"><rect x="12" y="5" width="176" height="34" fill="none" stroke="#fff" stroke-width="2.5"/><rect x="16" y="9" width="168" height="26" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><text x="100" y="27" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="900" letter-spacing="0.15em" text-anchor="middle">COLD WAR KIDS</text></svg>`
+    },
+    'artist:young-the-giant': {
+      gradient: 'linear-gradient(135deg, #2d5a27 0%, #7ab648 50%, #d4fc79 100%)',
+      accentColor: '#96e6a1',
+      logoSVG: `<svg viewBox="0 0 200 50" style="width:160px; height:auto;"><text x="100" y="26" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="11" font-weight="900" letter-spacing="0.35em" text-anchor="middle">YOUNG THE GIANT</text><line x1="30" y1="33" x2="170" y2="33" stroke="rgba(255,255,255,0.5)" stroke-width="1"/><text x="100" y="44" fill="rgba(255,255,255,0.6)" font-family="'Segoe UI', sans-serif" font-size="8" letter-spacing="0.2em" text-anchor="middle">VICTORY GARDEN TOUR 2026</text></svg>`
+    }
+  };
+
+  const vis = bandVisuals[activeBand.id] || { gradient: 'linear-gradient(135deg, #333, #555)', accentColor: '#ff9f0a', logoSVG: `<span style="color:#fff; font-weight:900;">${activeBand.name}</span>` };
+
+  // Build members HTML
+  const membersHTML = (data.members || []).map(m => `
+    <div style="background:rgba(255,255,255,0.04); border-radius:8px; padding:10px 12px; margin-bottom:8px; border-left:3px solid ${vis.accentColor};">
+      <div style="font-weight:800; font-size:0.95rem; color:#fff; margin-bottom:2px;">${m.name}</div>
+      <div style="font-size:0.75rem; color:${vis.accentColor}; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:4px;">${m.role} · ${m.instrument}</div>
+      <div style="font-size:0.82rem; line-height:1.45; color:#ccc;">${m.background}</div>
+      <div style="font-size:0.72rem; color:#888; margin-top:4px; font-style:italic;">Known for: ${m.known_for}</div>
+    </div>
+  `).join('');
+
+  // Build influences chips
+  const influencesHTML = (data.influences || []).map(i =>
+    `<span style="display:inline-block; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.15); border-radius:20px; padding:3px 10px; font-size:0.72rem; margin:2px; color:#ddd;">${i}</span>`
+  ).join('');
+
+  // Build albums list
+  const albumsHTML = (data.key_albums || []).map(a => `
+    <div style="display:flex; align-items:flex-start; gap:8px; margin-bottom:8px;">
+      <div style="flex-shrink:0; width:36px; text-align:center; font-size:0.7rem; color:${vis.accentColor}; font-weight:800; padding-top:2px;">${a.year}</div>
+      <div style="flex-grow:1;">
+        ${a.url ? `<a href="${a.url}" target="_blank" style="color:#fff; font-weight:700; font-size:0.88rem; text-decoration:none;">${a.title} ↗</a>` : `<span style="color:#fff; font-weight:700; font-size:0.88rem;">${a.title}</span>`}
+        <div style="font-size:0.75rem; color:#aaa; margin-top:1px;">${a.significance}</div>
+      </div>
+    </div>
+  `).join('');
+
+  // Build links row
+  const linksHTML = (data.links || []).map(l =>
+    `<a href="${l.url}" target="_blank" style="color:${vis.accentColor}; font-weight:700; text-decoration:none; font-size:0.8rem; white-space:nowrap;">${l.label}</a>`
+  ).join('<span style="color:#555; margin:0 4px;">·</span>');
+
+  // Biography paragraphs
+  const bioHTML = (data.biography || activeBand.bio || '').split('\n').filter(p => p.trim()).map(p =>
+    `<p style="font-size:0.92rem; line-height:1.6; color:rgba(255,255,255,0.88); margin-bottom:10px;">${p.trim()}</p>`
+  ).join('');
+
+  // Band switcher dropdown options
   let bandOptionsHTML = bandsList.slice(0, switcherBandsCount).map((b, idx) => {
     const isSelected = idx === state.activeBandIndex ? 'selected' : '';
     return `<option value="${idx}" ${isSelected}>${idx + 1} / ${switcherBandsCount}</option>`;
   }).join('');
 
-  // CSS aesthetic block/collage representation of the band
-  let bandArtStyle = '';
-  let logoSVG = '';
-  let linksHTML = '';
-  
-  if (activeBand.id === 'artist:almost-monday') {
-    bandArtStyle = `background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);`; // Surf sun pastel gradient
-    logoSVG = `
-      <svg viewBox="0 0 200 45" style="width:170px; height:auto;">
-        <circle cx="35" cy="22" r="12" fill="#ff9f0a" opacity="0.8"/>
-        <path d="M 55,25 Q 65,15 75,25 T 95,25" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-        <text x="140" y="28" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="12" font-weight="900" letter-spacing="0.05em" text-anchor="middle">almost monday</text>
-      </svg>
-    `;
-    linksHTML = `<a href="https://almostmonday.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 surf pop wraps era</a>`;
-  } else if (activeBand.id === 'artist:cold-war-kids') {
-    bandArtStyle = `background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);`; // Deep classic blue
-    logoSVG = `
-      <svg viewBox="0 0 200 45" style="width:170px; height:auto;">
-        <rect x="15" y="6" width="170" height="32" fill="none" stroke="#fff" stroke-width="2.5" />
-        <text x="100" y="27" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="900" letter-spacing="0.1em" text-anchor="middle">COLD WAR KIDS</text>
-      </svg>
-    `;
-    linksHTML = `<a href="https://coldwarkids.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 20 years of robbers & cowards</a>`;
-  } else if (activeBand.id === 'artist:young-the-giant') {
-    bandArtStyle = `background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);`; // Warm woodcut soil green/yellow
-    logoSVG = `
-      <svg viewBox="0 0 200 45" style="width:170px; height:auto;">
-        <text x="100" y="32" fill="#fff" font-family="'Segoe UI', sans-serif" font-size="16" font-weight="900" letter-spacing="0.2em" text-anchor="middle">Y.T.G</text>
-        <line x1="45" y1="37" x2="155" y2="37" stroke="var(--accent)" stroke-width="2"/>
-      </svg>
-    `;
-    linksHTML = `
-      <div style="display:flex; gap:12px;">
-        <a href="https://youngthegiant.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 victory garden tour</a>
-        <a href="https://youngthegiant.com/music" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 mirror master</a>
-      </div>
-    `;
-  } else {
-    bandArtStyle = `background: linear-gradient(135deg, #ed213a 0%, #93291e 100%);`; // Punk deep red
-    logoSVG = `<span style="font-family:'Segoe UI', sans-serif; font-weight:900; font-size:1.1rem; color:#fff;">KennyHoopla</span>`;
-    linksHTML = `<a href="https://kennyhoopla.com" target="_blank" style="color:var(--accent); font-weight:700; text-decoration:none; font-size:0.9rem;">🌐 alternative punk sound</a>`;
-  }
-
   const content = document.getElementById('viewport-content');
   content.innerHTML = `
-    <div class="lyrics-view" style="display:flex; flex-direction:column; height:100%; justify-content:space-between;">
-      <div class="song-header">
-        <h1>${activeBand.name}</h1>
-        <p>${activeBand.genre} &bull; ${activeBand.origin}</p>
+    <div style="display:flex; flex-direction:column; height:100%;">
+      
+      <!-- Logo / Art Banner -->
+      <div style="width:100%; height:68px; background:${vis.gradient}; border-radius:8px; display:flex; justify-content:center; align-items:center; box-shadow:inset 0 0 20px rgba(0,0,0,0.25); flex-shrink:0; margin-bottom:10px;">
+        ${vis.logoSVG}
       </div>
 
-      <!-- Graphical Band Logo/Art Banner -->
-      <div style="width:100%; height:75px; ${bandArtStyle} border-radius:8px; display:flex; justify-content:center; align-items:center; box-shadow:inset 0 0 15px rgba(0,0,0,0.2); margin-bottom:12px;">
-        ${logoSVG}
-      </div>
+      <!-- Scrollable lore body -->
+      <div style="flex-grow:1; overflow-y:auto; padding-right:4px; font-family:'Segoe UI', -apple-system, sans-serif; text-align:left;">
 
-      <div class="lyrics-body" style="flex-grow:1; overflow-y:auto; padding:10px 0; text-align:left; font-family:'Segoe UI', sans-serif;">
-        <p style="font-size:1.05rem; line-height:1.55; color:rgba(255,255,255,0.95); margin-bottom:14px;">${activeBand.bio}</p>
-        
-        <div style="margin: 16px 0; border-top: 1px dashed rgba(255,255,255,0.15); padding-top:12px;">
-          ${linksHTML}
+        <!-- Tagline + Philosophy Quote -->
+        ${data.tagline ? `<div style="font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:${vis.accentColor}; margin-bottom:6px;">${data.tagline}</div>` : ''}
+        ${data.philosophy_quote ? `<blockquote style="border-left:3px solid ${vis.accentColor}; margin:0 0 14px 0; padding:8px 12px; background:rgba(255,255,255,0.04); border-radius:0 6px 6px 0; font-size:0.85rem; line-height:1.5; color:#e0e0e0; font-style:italic;">${data.philosophy_quote}</blockquote>` : ''}
+
+        <!-- Biography -->
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.7rem; text-transform:uppercase; font-weight:800; letter-spacing:0.1em; color:${vis.accentColor}; margin-bottom:8px;">The Story</div>
+          ${bioHTML}
         </div>
+
+        <!-- Members -->
+        ${membersHTML ? `
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.7rem; text-transform:uppercase; font-weight:800; letter-spacing:0.1em; color:${vis.accentColor}; margin-bottom:8px;">The Band</div>
+          ${membersHTML}
+        </div>` : ''}
+
+        <!-- Tonight -->
+        ${data.tonight ? `
+        <div style="margin-bottom:16px; padding:10px 12px; background:rgba(255,255,255,0.06); border-radius:8px; border:1px solid rgba(255,255,255,0.1);">
+          <div style="font-size:0.7rem; text-transform:uppercase; font-weight:800; letter-spacing:0.1em; color:${vis.accentColor}; margin-bottom:6px;">🎟️ Tonight</div>
+          <p style="font-size:0.88rem; line-height:1.5; color:#e0e0e0; margin:0;">${data.tonight}</p>
+        </div>` : ''}
+
+        <!-- Discography -->
+        ${albumsHTML ? `
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.7rem; text-transform:uppercase; font-weight:800; letter-spacing:0.1em; color:${vis.accentColor}; margin-bottom:8px;">Discography</div>
+          ${albumsHTML}
+        </div>` : ''}
+
+        <!-- Influences -->
+        ${influencesHTML ? `
+        <div style="margin-bottom:16px;">
+          <div style="font-size:0.7rem; text-transform:uppercase; font-weight:800; letter-spacing:0.1em; color:${vis.accentColor}; margin-bottom:8px;">Sounds Like / Influenced By</div>
+          <div>${influencesHTML}</div>
+        </div>` : ''}
+
+        <!-- Links -->
+        ${linksHTML ? `
+        <div style="margin-bottom:24px; padding-top:10px; border-top:1px dashed rgba(255,255,255,0.1);">
+          <div style="font-size:0.7rem; text-transform:uppercase; font-weight:800; letter-spacing:0.1em; color:${vis.accentColor}; margin-bottom:8px;">Find Them</div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">${linksHTML}</div>
+        </div>` : ''}
+
       </div>
 
-      <!-- Dropdown picker low inside port between navigation buttons (limits to 3 performer slides) -->
-      <div class="song-controller" style="justify-content: center; gap: 14px; flex-shrink:0; margin-top:6px; display:flex; align-items:center;">
+      <!-- Band Switcher Transport -->
+      <div class="song-controller" style="justify-content:center; gap:14px; flex-shrink:0; margin-top:6px; display:flex; align-items:center;">
         <button class="ctrl-btn" id="btn-prev-band">◀</button>
-        
         <div style="position:relative; display:inline-block;">
           <select id="band-select" style="background:transparent; border:none; color:#fff; font-family:'Courier Prime', monospace; font-size:1.1rem; font-weight:700; cursor:pointer; appearance:none; -webkit-appearance:none; padding:4px 18px 4px 6px; text-align:center;">
             ${bandOptionsHTML}
           </select>
           <span style="position:absolute; right:4px; top:50%; transform:translateY(-50%); pointer-events:none; font-size:0.6rem; color:#aaa;">▼</span>
         </div>
-
         <button class="ctrl-btn" id="btn-next-band">▶</button>
       </div>
     </div>
   `;
 
-  // Bind controls (Cycling within the bounds of switcherBandsCount = 3)
+  // Bind controls
   document.getElementById('btn-prev-band').addEventListener('click', () => {
     state.activeBandIndex = (state.activeBandIndex - 1 + switcherBandsCount) % switcherBandsCount;
-    loadArtistSonglist().then(() => {
-      triggerTransition(renderActiveBandProfile);
-    });
+    loadArtistSonglist().then(() => triggerTransition(renderActiveBandProfile));
   });
   document.getElementById('btn-next-band').addEventListener('click', () => {
     state.activeBandIndex = (state.activeBandIndex + 1) % switcherBandsCount;
-    loadArtistSonglist().then(() => {
-      triggerTransition(renderActiveBandProfile);
-    });
+    loadArtistSonglist().then(() => triggerTransition(renderActiveBandProfile));
   });
-
   document.getElementById('band-select').addEventListener('change', (e) => {
     state.activeBandIndex = parseInt(e.target.value);
-    loadArtistSonglist().then(() => {
-      triggerTransition(renderActiveBandProfile);
-    });
+    loadArtistSonglist().then(() => triggerTransition(renderActiveBandProfile));
   });
 }
 
