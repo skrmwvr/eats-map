@@ -410,9 +410,10 @@ body {
 }
 
 #btn-home .btn-icon {
-  font-size: 2.5rem;
+  font-size: 2.625rem;
   margin-bottom: 0;
   line-height: 1;
+  text-shadow: 0 0 12px rgba(255, 193, 7, 0.6), 0 0 24px rgba(255, 87, 34, 0.4);
 }
 
 #btn-home .btn-label {

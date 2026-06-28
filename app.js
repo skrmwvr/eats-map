@@ -247,43 +247,49 @@ function renderDashboardMetadata() {
   document.getElementById('timeline-status').textContent = `Doors: ${state.event.doors_time}`;
 }
 
-// Auto-Shuffling Idle Text Animation with Cooldown (Alternates text & empty slots)
-let factoidInterval = null;
+// Auto-Shuffling Idle Text Animation with Dynamic Cooldown
+let factoidTimeout = null;
 let unusedFactoids = [];
-let showTextState = true; // toggles displaying text vs blank space
 
 function startFactoidShuffler() {
-  if (factoidInterval) clearInterval(factoidInterval);
+  if (factoidTimeout) clearTimeout(factoidTimeout);
   
-  const updateText = () => {
+  const showNextFactoid = () => {
     const bubbleText = document.getElementById('shuffling-factoid');
     if (!bubbleText) return;
     
-    if (showTextState) {
-      // Pick unique index to prevent repeat
-      if (unusedFactoids.length === 0) {
-        unusedFactoids = [...Array(factoids.length).keys()];
-      }
-      const randIdx = Math.floor(Math.random() * unusedFactoids.length);
-      const factoidIndex = unusedFactoids.splice(randIdx, 1)[0];
-
-      bubbleText.style.opacity = 0;
-      setTimeout(() => {
-        bubbleText.innerHTML = `💡 <em>${factoids[factoidIndex]}</em>`;
-        bubbleText.style.opacity = 1;
-      }, 450);
-    } else {
-      // Cooldown State: fade out and leave empty/blank space
-      bubbleText.style.opacity = 0;
-      setTimeout(() => {
-        bubbleText.innerHTML = ``;
-      }, 450);
+    // Pick unique index to prevent repeat
+    if (unusedFactoids.length === 0) {
+      unusedFactoids = [...Array(factoids.length).keys()];
     }
-    showTextState = !showTextState;
+    const randIdx = Math.floor(Math.random() * unusedFactoids.length);
+    const factoidIndex = unusedFactoids.splice(randIdx, 1)[0];
+    const text = factoids[factoidIndex];
+
+    // Calculate duration based on text length (approx 80ms per char, min 4s)
+    const displayDuration = Math.max(4000, text.length * 80);
+    
+    // Show text
+    bubbleText.style.opacity = 0;
+    setTimeout(() => {
+      bubbleText.innerHTML = `💡 <em>${text}</em>`;
+      bubbleText.style.opacity = 1;
+    }, 450);
+
+    // After display duration, hide it and start the empty cooldown
+    factoidTimeout = setTimeout(() => {
+      bubbleText.style.opacity = 0;
+      
+      // Cooldown phase: leave empty for exactly as many seconds as it was displayed
+      factoidTimeout = setTimeout(() => {
+        showNextFactoid();
+      }, displayDuration);
+      
+    }, displayDuration);
   };
 
-  // Switch state every 7 seconds
-  factoidInterval = setInterval(updateText, 7000);
+  // Start the first one immediately
+  showNextFactoid();
 }
 
 // Render Zune Lyrics and Song selector Jumplist
