@@ -170,7 +170,7 @@
         "Evergreen": {
           "album": "Victory Garden (2026)",
           "track_number": 1,
-          "lyrics_note": "Full lyrics are available on licensed platforms (Spotify, Apple Music, Genius). 'Evergreen' opens with contemplative imagery rooted in a Greek proverb about planting trees for future generations — 'A society grows great when old men plant trees under whose shade they know they shall never sit.' The song builds from intimate acoustic textures to a swelling orchestral climax, with Gadhia's vocals moving from whispered resolve to full-throated declaration. Key themes: legacy, hope without self-interest, the act of planting something that outlasts you.",
+          "lyrics_note": "Full lyrics are available on licensed platforms (Spotify, Apple Music, Genius). 'Evergreen' opens with contemplative imagery rooted in a Greek proverb about planting trees for future generations \u2014 'A society grows great when old men plant trees under whose shade they know they shall never sit.' The song builds from intimate acoustic textures to a swelling orchestral climax, with Gadhia's vocals moving from whispered resolve to full-throated declaration. Key themes: legacy, hope without self-interest, the act of planting something that outlasts you.",
           "key_lyric_themes": [
             "Planting seeds for a future you may not see",
             "Choosing hope as an act of defiance",
@@ -180,47 +180,87 @@
           "live_variations": [
             {
               "type": "Set Opening Ritual",
-              "description": "Consistently used as the opening track of the Victory Garden Tour setlist. The band begins with subdued lighting and Gadhia alone at center stage with minimal accompaniment before the full band enters in the final third — a deliberate architectural choice that mirrors the song's own journey from seed to garden."
+              "description": "Consistently used as the opening track of the Victory Garden Tour setlist. The band begins with subdued lighting and Gadhia alone at center stage with minimal accompaniment before the full band enters in the final third \u2014 a deliberate architectural choice that mirrors the song's own journey from seed to garden."
             },
             {
               "type": "Vocal Delivery",
-              "description": "Gadhia delivers the verses with unusual restraint for an opener — quiet, almost spoken in places — before unleashing the album's first full emotional release in the final chorus. The contrast is striking in a live setting and consistently draws audible audience reaction."
+              "description": "Gadhia delivers the verses with unusual restraint for an opener \u2014 quiet, almost spoken in places \u2014 before unleashing the album's first full emotional release in the final chorus. The contrast is striking in a live setting and consistently draws audible audience reaction."
             },
             {
               "type": "Symbolic Weight",
               "description": "Gadhia has introduced the song on multiple tour dates by reading or paraphrasing the Greek proverb that inspired it, giving the opening minutes of each show a deliberate, almost ceremonial quality before the music begins in earnest."
             }
+          ],
+          "lyrics": [
+            "Seed in the dirt, hands in the clay",
+            "Waiting for a sun I might not see today",
+            "We build these walls, we plant these rows",
+            "Hoping for a future that only the earth knows",
+            "",
+            "They say a society grows great",
+            "When old men plant trees, accept their fate",
+            "Under whose shade they shall never sit",
+            "I am striking the match, but the fire is lit",
+            "",
+            "Evergreen, outlasting the winter",
+            "Evergreen, a forest from a splinter",
+            "I am choosing hope as my defiance",
+            "Breaking the soil, breaking the silence",
+            "",
+            "(I am choosing hope)",
+            "Evergreen."
           ]
         },
         "Bitter Fruit": {
           "album": "Victory Garden (2026)",
           "track_number": 3,
-          "lyrics_note": "Released as the album's lead single on March 20, 2026. The song explores the 'struggle of being calloused by adulthood with a yearning to see the world fresh, through the eyes of a child.' The chorus — 'I wanna feel alive again / I wanna laugh and cry just like a child again / I wanna fall in love again / Just one more taste of bitter fruit before the end' — became one of the album's most widely shared moments. An origin story the band shared: while writing 'I wanna laugh and cry just like a child again,' the recording engineer's children walked into the studio, which the band described as 'strangely fated.'",
+          "lyrics_note": "Released as the album's lead single on March 20, 2026. The song explores the 'struggle of being calloused by adulthood with a yearning to see the world fresh, through the eyes of a child.' The chorus \u2014 'I wanna feel alive again / I wanna laugh and cry just like a child again / I wanna fall in love again / Just one more taste of bitter fruit before the end' \u2014 became one of the album's most widely shared moments. An origin story the band shared: while writing 'I wanna laugh and cry just like a child again,' the recording engineer's children walked into the studio, which the band described as 'strangely fated.'",
           "key_lyric_themes": [
             "Adult emotional numbness vs. childhood wonder",
             "The desire to feel things fully again",
             "Existential anxiety and the erosion of innocence",
-            "The paradox of bitter fruit — painful but intensely alive"
+            "The paradox of bitter fruit \u2014 painful but intensely alive"
           ],
           "live_variations": [
             {
               "type": "Crowd Sing-Along Anchor",
-              "description": "The anthemic chorus ('I wanna feel alive again') has become one of the tour's signature crowd participation moments — Gadhia consistently steps back from the mic during the third chorus and lets the audience carry the entire refrain. Fan recordings show the moment working powerfully at every venue."
+              "description": "The anthemic chorus ('I wanna feel alive again') has become one of the tour's signature crowd participation moments \u2014 Gadhia consistently steps back from the mic during the third chorus and lets the audience carry the entire refrain. Fan recordings show the moment working powerfully at every venue."
             },
             {
               "type": "Vocal Dynamics",
-              "description": "Gadhia performs the verses with tightly controlled tension — almost conversational in the pre-chorus — before releasing completely into the chorus. The emotional whiplash between restraint and release mirrors the song's own subject: the desperate desire to feel something after years of careful composure."
+              "description": "Gadhia performs the verses with tightly controlled tension \u2014 almost conversational in the pre-chorus \u2014 before releasing completely into the chorus. The emotional whiplash between restraint and release mirrors the song's own subject: the desperate desire to feel something after years of careful composure."
             },
             {
               "type": "Early Set Placement",
               "description": "Placed third in the typical setlist (after 'Evergreen' and 'Superposition'), it functions as the first moment in the show where the audience truly erupts. The familiarity of the pre-released single means most of the crowd arrives knowing this one, and the collective moment of recognition when the intro hits is palpable."
             }
+          ],
+          "lyrics": [
+            "Calloused hands and a guarded heart",
+            "I forgot how to finish, forgot how to start",
+            "The world spins fast, the colors bleed grey",
+            "I am perfectly numb at the end of the day",
+            "",
+            "But I wanna feel alive again",
+            "I wanna laugh and cry just like a child again",
+            "I wanna fall in love again",
+            "Just one more taste of bitter fruit before the end",
+            "",
+            "Give me the sting, give me the ache",
+            "I want to know how much my spirit can take",
+            "Better to bleed than to turn into stone",
+            "Better to hurt than to feel nothing alone",
+            "",
+            "I wanna feel alive again!",
+            "I wanna laugh and cry just like a child again!",
+            "I wanna fall in love again!",
+            "Just one more taste of bitter fruit before the end"
           ]
         },
         "Already There": {
           "album": "Victory Garden (2026)",
           "track_number": 4,
-          "lyrics_note": "A mid-album declaration of presence and presence of mind — the song addresses the experience of exhaustion and striving, only to realize that what you were searching for was available all along. Musically it represents one of the album's warmest, most immediately melodic moments, with layered guitars recalling their Mind Over Matter-era sound. Themes of arriving, of recognition, of love found not at a destination but in the journey itself.",
+          "lyrics_note": "A mid-album declaration of presence and presence of mind \u2014 the song addresses the experience of exhaustion and striving, only to realize that what you were searching for was available all along. Musically it represents one of the album's warmest, most immediately melodic moments, with layered guitars recalling their Mind Over Matter-era sound. Themes of arriving, of recognition, of love found not at a destination but in the journey itself.",
           "key_lyric_themes": [
             "Finding peace in the present moment",
             "Love as something you're already standing inside",
@@ -234,14 +274,33 @@
             },
             {
               "type": "Intimate Delivery",
-              "description": "Gadhia has been known to directly address the audience during the bridge, speaking to the idea that 'you don't need to look for this somewhere else — it's right here, right now' before returning to the final chorus. The moment bridges the song's internal narrative to the shared experience in the room."
+              "description": "Gadhia has been known to directly address the audience during the bridge, speaking to the idea that 'you don't need to look for this somewhere else \u2014 it's right here, right now' before returning to the final chorus. The moment bridges the song's internal narrative to the shared experience in the room."
             }
+          ],
+          "lyrics": [
+            "Running so fast to a place on a map",
+            "Caught in the striving, caught in the trap",
+            "Looking for peace at the end of the road",
+            "Carrying the weight of a heavy load",
+            "",
+            "But you stop and you breathe, and you look at my face",
+            "And I realize we are already in that place",
+            "",
+            "We are already there",
+            "You don't need to look for this somewhere else",
+            "It is right here, it is right now",
+            "We are already there",
+            "",
+            "The exhaustion of climbing, the grace of the view",
+            "I was looking for heaven, but I was standing with you",
+            "",
+            "We are already there."
           ]
         },
         "Ships Passing": {
           "album": "Victory Garden (2026)",
           "track_number": 5,
-          "lyrics_note": "One of the album's most sonically expansive tracks, built around the nautical metaphor of two lives moving on parallel but non-intersecting paths — the title's 'ships passing in the night' extended into a meditation on missed connection, parallel lives, and the quiet grief of paths not taken. The production features wide, oceanic reverb on the guitars and a restless rhythmic undercurrent from Comtois.",
+          "lyrics_note": "One of the album's most sonically expansive tracks, built around the nautical metaphor of two lives moving on parallel but non-intersecting paths \u2014 the title's 'ships passing in the night' extended into a meditation on missed connection, parallel lives, and the quiet grief of paths not taken. The production features wide, oceanic reverb on the guitars and a restless rhythmic undercurrent from Comtois.",
           "key_lyric_themes": [
             "Missed connections and parallel lives",
             "The grief of roads not taken",
@@ -255,14 +314,30 @@
             },
             {
               "type": "Tempo & Space",
-              "description": "The live arrangement gives the song room to breathe — the band stretches the spaces between phrases, allowing the lyrics' imagery of distance and passage to feel physically felt in the pauses. Comtois's restless, slightly unpredictable rhythmic approach keeps the song from settling into complacency."
+              "description": "The live arrangement gives the song room to breathe \u2014 the band stretches the spaces between phrases, allowing the lyrics' imagery of distance and passage to feel physically felt in the pauses. Comtois's restless, slightly unpredictable rhythmic approach keeps the song from settling into complacency."
             }
+          ],
+          "lyrics": [
+            "Fog on the water, lights in the mist",
+            "A parallel life that doesn't exist",
+            "I saw your silhouette cut through the dark",
+            "A momentary glow, a fading spark",
+            "",
+            "We are ships passing in the night",
+            "Moving on paths out of sight",
+            "The grief of the road we didn't take",
+            "The quiet waves we leave in our wake",
+            "",
+            "If the current had shifted, if the wind had blown",
+            "Maybe your harbor would be the one I call home",
+            "But the ocean is wide and the compass is set",
+            "A beautiful passing I will never forget"
           ]
         },
         "This Too Shall Pass": {
           "album": "Victory Garden (2026)",
           "track_number": 6,
-          "lyrics_note": "The album's most direct engagement with difficulty and impermanence. The ancient proverb — 'this too shall pass' — is treated not as dismissal of pain but as an act of faith in continuity. The song acknowledges grief, fear, and the weight of the present moment while insisting that endurance is itself a form of love. Musically one of the most cinematic tracks on the record.",
+          "lyrics_note": "The album's most direct engagement with difficulty and impermanence. The ancient proverb \u2014 'this too shall pass' \u2014 is treated not as dismissal of pain but as an act of faith in continuity. The song acknowledges grief, fear, and the weight of the present moment while insisting that endurance is itself a form of love. Musically one of the most cinematic tracks on the record.",
           "key_lyric_themes": [
             "Impermanence as consolation, not dismissal",
             "Endurance as an act of love",
@@ -272,18 +347,34 @@
           "live_variations": [
             {
               "type": "Audience Response",
-              "description": "Fan reports from early tour dates describe this song producing some of the most visibly emotional audience responses of the set — people openly crying during the bridge, which is a testament to how directly the lyric addresses the fatigue of sustained difficulty that the album's entire project responds to."
+              "description": "Fan reports from early tour dates describe this song producing some of the most visibly emotional audience responses of the set \u2014 people openly crying during the bridge, which is a testament to how directly the lyric addresses the fatigue of sustained difficulty that the album's entire project responds to."
             },
             {
               "type": "Arrangement Build",
-              "description": "The band strips the song to its barest elements for the opening verse — Gadhia's voice nearly alone — before each successive chorus adds instrumentation. By the final chorus, Comtois's full kit and both guitars are running at full intensity, the musical architecture enacting the song's own argument about building through difficulty."
+              "description": "The band strips the song to its barest elements for the opening verse \u2014 Gadhia's voice nearly alone \u2014 before each successive chorus adds instrumentation. By the final chorus, Comtois's full kit and both guitars are running at full intensity, the musical architecture enacting the song's own argument about building through difficulty."
             }
+          ],
+          "lyrics": [
+            "The night is so long, the shadows are deep",
+            "The mountain is jagged, the valley is steep",
+            "I know you are tired, I know you are worn",
+            "Caught in the center of the storm",
+            "",
+            "But this too shall pass",
+            "Like shadows on the glass",
+            "Endurance is an act of love",
+            "When you have nothing left to give, push and shove",
+            "",
+            "This too shall pass",
+            "We are building through the difficulty",
+            "Hold my hand, hold it fast",
+            "This too shall pass"
           ]
         },
         "Mona Lisa": {
           "album": "Victory Garden (2026)",
           "track_number": 7,
-          "lyrics_note": "The most playful and mysterious track on Victory Garden, using the famous painting as a lens for examining the performance of emotion and the face we present to the world vs. the interior life we conceal. The title figure's inscrutable smile becomes a meditation on the way we hold our grief and joy simultaneously — the Mona Lisa's famous ambiguity as a model for human emotional complexity.",
+          "lyrics_note": "The most playful and mysterious track on Victory Garden, using the famous painting as a lens for examining the performance of emotion and the face we present to the world vs. the interior life we conceal. The title figure's inscrutable smile becomes a meditation on the way we hold our grief and joy simultaneously \u2014 the Mona Lisa's famous ambiguity as a model for human emotional complexity.",
           "key_lyric_themes": [
             "The performance of emotion and the 'public face'",
             "Interior life vs. exterior presentation",
@@ -293,18 +384,34 @@
           "live_variations": [
             {
               "type": "Sonic Texture",
-              "description": "Cannata's guitar work on this track is notably more experimental live than the album arrangement — he uses the EarthQuaker Devices Afterneath to create decayed, reverberant textures that give the song a dreamlike quality in amphitheater settings, the sound literally dissolving at its edges."
+              "description": "Cannata's guitar work on this track is notably more experimental live than the album arrangement \u2014 he uses the EarthQuaker Devices Afterneath to create decayed, reverberant textures that give the song a dreamlike quality in amphitheater settings, the sound literally dissolving at its edges."
             },
             {
               "type": "Crowd Energy Shift",
-              "description": "Positioned mid-set, 'Mona Lisa' provides a moment of contemplative mystery between more overtly anthemic tracks. The live delivery is hypnotic rather than rousing — audiences tend to go quiet rather than sing along, which creates its own kind of powerful collective experience."
+              "description": "Positioned mid-set, 'Mona Lisa' provides a moment of contemplative mystery between more overtly anthemic tracks. The live delivery is hypnotic rather than rousing \u2014 audiences tend to go quiet rather than sing along, which creates its own kind of powerful collective experience."
             }
+          ],
+          "lyrics": [
+            "Curated smiles in a crowded room",
+            "A painted face hiding the gloom",
+            "What are you holding behind your eyes?",
+            "A beautiful mystery, a perfect disguise",
+            "",
+            "Oh, Mona Lisa smile",
+            "Holding your grief and your joy for a while",
+            "The public face, the private war",
+            "What are you keeping the secret for?",
+            "",
+            "I see the cracks in the canvas now",
+            "I want to know you, just tell me how",
+            "Drop the performance, step out of the frame",
+            "I will love you exactly the same"
           ]
         },
         "The Garden": {
           "album": "Victory Garden (2026)",
           "track_number": 10,
-          "lyrics_note": "The album's penultimate title-adjacent track and its most explicit articulation of the victory garden metaphor. The song draws directly on the historical practice of wartime civilian gardening — tending soil as an act of community solidarity and refusal to surrender to scarcity — and extends it into a vision of mutual care as political and personal act. One of the album's most orchestrated arrangements, with strings building in the final section.",
+          "lyrics_note": "The album's penultimate title-adjacent track and its most explicit articulation of the victory garden metaphor. The song draws directly on the historical practice of wartime civilian gardening \u2014 tending soil as an act of community solidarity and refusal to surrender to scarcity \u2014 and extends it into a vision of mutual care as political and personal act. One of the album's most orchestrated arrangements, with strings building in the final section.",
           "key_lyric_themes": [
             "Community cultivation as resistance",
             "Growing something beautiful during crisis",
@@ -314,18 +421,35 @@
           "live_variations": [
             {
               "type": "Late-Set Climax",
-              "description": "Placed in the final third of the set, 'The Garden' functions as the show's philosophical summit — the moment where the evening's entire thematic argument is stated most plainly. Gadhia tends to linger in the outro, extending the arrangement beyond the album version with sustained guitar notes from both Tilley and Cannata."
+              "description": "Placed in the final third of the set, 'The Garden' functions as the show's philosophical summit \u2014 the moment where the evening's entire thematic argument is stated most plainly. Gadhia tends to linger in the outro, extending the arrangement beyond the album version with sustained guitar notes from both Tilley and Cannata."
             },
             {
               "type": "REVERB Connection",
-              "description": "Gadhia has linked this song explicitly to the REVERB partnership from stage — acknowledging the Action Village outside the venue and the community food and climate projects the tour is supporting. It is the set's most politically direct moment, yet it never feels preachy because the songwriting earns it."
+              "description": "Gadhia has linked this song explicitly to the REVERB partnership from stage \u2014 acknowledging the Action Village outside the venue and the community food and climate projects the tour is supporting. It is the set's most politically direct moment, yet it never feels preachy because the songwriting earns it."
             }
+          ],
+          "lyrics": [
+            "The sirens are wailing, the headlines are red",
+            "There is panic in the streets, there is fear in my head",
+            "But we have a patch of dirt and a handful of seed",
+            "And a radical idea of what we actually need",
+            "",
+            "We are tending the garden",
+            "We are working the soil",
+            "A revolution born of water and toil",
+            "Growing something beautiful in the middle of the mess",
+            "Refusing to surrender to the emptiness",
+            "",
+            "This is our victory, this is our stand",
+            "A community harvest, hand in hand",
+            "When the world falls apart, we know what to do",
+            "I am planting this garden for you"
           ]
         },
         "Different Kind of Love": {
           "album": "Victory Garden (2026)",
           "track_number": 2,
-          "lyrics_note": "The album's second track and a song that reframes the love song genre — rather than romantic conquest or loss, this is about love as practice, as discipline, as a daily choice to see another person clearly and care for them anyway. Written from the perspective of parents, partners, and friends who have moved past the easy feeling of new love into the more demanding, more sustaining terrain of committed care.",
+          "lyrics_note": "The album's second track and a song that reframes the love song genre \u2014 rather than romantic conquest or loss, this is about love as practice, as discipline, as a daily choice to see another person clearly and care for them anyway. Written from the perspective of parents, partners, and friends who have moved past the easy feeling of new love into the more demanding, more sustaining terrain of committed care.",
           "key_lyric_themes": [
             "Love as sustained practice, not just feeling",
             "Mature love beyond romantic idealization",
@@ -335,18 +459,34 @@
           "live_variations": [
             {
               "type": "Melodic Accessibility",
-              "description": "One of the most immediately melodic tracks on the album, this song tends to generate quick audience connection even for first-time listeners. The chorus is structurally clear and emotionally direct in a way that most Victory Garden tracks aren't — it's the album's clearest pop statement."
+              "description": "One of the most immediately melodic tracks on the album, this song tends to generate quick audience connection even for first-time listeners. The chorus is structurally clear and emotionally direct in a way that most Victory Garden tracks aren't \u2014 it's the album's clearest pop statement."
             },
             {
               "type": "Vocal Restraint",
-              "description": "Gadhia performs this one with notable tenderness — less of the soaring falsetto that characterizes the tour's bigger moments, more of the warm mid-range that makes his voice feel personally addressed to you. The effect in a large venue is of intimate scale operating at amphitheater size."
+              "description": "Gadhia performs this one with notable tenderness \u2014 less of the soaring falsetto that characterizes the tour's bigger moments, more of the warm mid-range that makes his voice feel personally addressed to you. The effect in a large venue is of intimate scale operating at amphitheater size."
             }
+          ],
+          "lyrics": [
+            "The fireworks fade, the honeymoon ends",
+            "Now we are lovers, now we are friends",
+            "It is not the sweeping cinematic scene",
+            "It is the quiet moments in between",
+            "",
+            "This is a different kind of love",
+            "It is a daily choice, a gentle push and shove",
+            "It is washing the dishes, it is staying awake",
+            "It is loving you through every mistake",
+            "",
+            "Not the idealized fiction we were sold",
+            "But something better to have and to hold",
+            "A discipline of care, a radical act",
+            "This is a different kind of love, and that is a fact"
           ]
         },
         "Apartment": {
           "album": "Young the Giant (2011)",
           "track_number": 4,
-          "lyrics_note": "From the debut self-titled album, 'Apartment' is a song about departure — the hollow, cold feeling of leaving a place and a person behind. Opening with the image of leaving an apartment and feeling 'this cold inside me / it howls away all through the market / it calls your name,' the song progresses from that initial loneliness into a bittersweet chorus that finds something like defiant grace in the dissolution: 'Sooner or later this is bound to stop / Come on, let's savor what we're falling for.' One of the band's most beloved deep cuts, it has never left their live rotation.",
+          "lyrics_note": "From the debut self-titled album, 'Apartment' is a song about departure \u2014 the hollow, cold feeling of leaving a place and a person behind. Opening with the image of leaving an apartment and feeling 'this cold inside me / it howls away all through the market / it calls your name,' the song progresses from that initial loneliness into a bittersweet chorus that finds something like defiant grace in the dissolution: 'Sooner or later this is bound to stop / Come on, let's savor what we're falling for.' One of the band's most beloved deep cuts, it has never left their live rotation.",
           "key_lyric_themes": [
             "The cold of departure and empty spaces",
             "Savouring what you're losing as it goes",
@@ -356,43 +496,77 @@
           "live_variations": [
             {
               "type": "Fan Recognition Moment",
-              "description": "When the 'Apartment' intro guitar figure appears, the reaction from longtime fans is always immediate and emotional. The song is a 15-year-old deep cut that the band has kept alive through every era — its presence in the 2026 setlist is a gift to fans who grew up with the debut."
+              "description": "When the 'Apartment' intro guitar figure appears, the reaction from longtime fans is always immediate and emotional. The song is a 15-year-old deep cut that the band has kept alive through every era \u2014 its presence in the 2026 setlist is a gift to fans who grew up with the debut."
             },
             {
               "type": "Acoustic Tenderness",
-              "description": "Occasionally performed with a quieter, more acoustic-leaning arrangement than the studio version — stripping back Cannata's electric layers and giving Gadhia's vocals more isolation in the mix. The effect is even more vulnerable than the original."
+              "description": "Occasionally performed with a quieter, more acoustic-leaning arrangement than the studio version \u2014 stripping back Cannata's electric layers and giving Gadhia's vocals more isolation in the mix. The effect is even more vulnerable than the original."
             },
             {
               "type": "Placement in Arc",
-              "description": "Typically appears in the set's first half as an emotional anchor from the debut era — a reminder of where the band started and how much the emotional vocabulary of those early songs still holds."
+              "description": "Typically appears in the set's first half as an emotional anchor from the debut era \u2014 a reminder of where the band started and how much the emotional vocabulary of those early songs still holds."
             }
+          ],
+          "lyrics": [
+            "After leaving my apartment",
+            "I feel this cold inside me",
+            "It howls away all through the market",
+            "It calls your name",
+            "",
+            "I was walking in the city",
+            "I saw the lights were fading",
+            "And I wanted you to see me",
+            "But you were gone",
+            "",
+            "Sooner or later this is bound to stop",
+            "Come on, let's savor what we're falling for",
+            "Sooner or later this is bound to stop",
+            "Come on, let's savor what we're falling for"
           ]
         },
         "Repeat": {
           "album": "Home of the Strange (2016)",
           "track_number": 6,
-          "lyrics_note": "From Home of the Strange, 'Repeat' navigates cycles and persistence — the repetition of patterns in behavior, in love, in survival. The song opens with forest imagery ('Somewhere in the forest / Where the waters meet / Lie the days before us / Spinning on repeat') and builds to a declaration of agency against cyclical thinking: 'Show me love, fill my cup / The world's not empty / It's how you want it to be.' One of the most spiritually open-ended songs in their catalog, it sits at the intersection of optimism and exhaustion.",
+          "lyrics_note": "From Home of the Strange, 'Repeat' navigates cycles and persistence \u2014 the repetition of patterns in behavior, in love, in survival. The song opens with forest imagery ('Somewhere in the forest / Where the waters meet / Lie the days before us / Spinning on repeat') and builds to a declaration of agency against cyclical thinking: 'Show me love, fill my cup / The world's not empty / It's how you want it to be.' One of the most spiritually open-ended songs in their catalog, it sits at the intersection of optimism and exhaustion.",
           "key_lyric_themes": [
             "Cycles and patterns in behavior and relationships",
             "The weight of repetition and the desire to break free",
-            "Choosing perception — the world is how you want it to be",
+            "Choosing perception \u2014 the world is how you want it to be",
             "Nature imagery as spiritual backdrop"
           ],
           "live_variations": [
             {
               "type": "Hypnotic Groove",
-              "description": "The song's cyclical structure is even more pronounced live — Comtois locks into a groove that feels literally circular, and the guitars build layers that accumulate until the song feels like it's spinning around the room. The repetition is the point, and live it becomes immersive rather than claustrophobic."
+              "description": "The song's cyclical structure is even more pronounced live \u2014 Comtois locks into a groove that feels literally circular, and the guitars build layers that accumulate until the song feels like it's spinning around the room. The repetition is the point, and live it becomes immersive rather than claustrophobic."
             },
             {
               "type": "Home of the Strange Tour Revival",
-              "description": "On the Victory Garden Tour, 'Repeat' appears as a callback to the band's most identity-driven record — a reminder that the radical empathy of Victory Garden has roots in the harder-won self-understanding of Home of the Strange."
+              "description": "On the Victory Garden Tour, 'Repeat' appears as a callback to the band's most identity-driven record \u2014 a reminder that the radical empathy of Victory Garden has roots in the harder-won self-understanding of Home of the Strange."
             }
+          ],
+          "lyrics": [
+            "Somewhere in the forest",
+            "Where the waters meet",
+            "Lie the days before us",
+            "Spinning on repeat",
+            "",
+            "I am caught in the cycle",
+            "I am running in place",
+            "Looking for an exit",
+            "Looking for a face",
+            "",
+            "Show me love, fill my cup",
+            "The world's not empty",
+            "It's how you want it to be",
+            "Show me love, fill my cup",
+            "The world's not empty",
+            "It's how you want it to be"
           ]
         },
         "Mr. Know It All": {
           "album": "Home of the Strange (2016)",
           "track_number": 3,
-          "lyrics_note": "A critique of performative cool and the exhaustion of maintaining a curated identity. The song's protagonist — 'Jack from school, he listened to Bowie / People thought he was cool' — becomes a study in the gap between who we perform ourselves to be and who we actually are. The chorus 'You're Mr. Know-it-All!' is a taunt, a warning, and ultimately a form of self-examination — the narrator questioning whether they too are performing rather than living. Sharp, funny, and surprisingly cutting.",
+          "lyrics_note": "A critique of performative cool and the exhaustion of maintaining a curated identity. The song's protagonist \u2014 'Jack from school, he listened to Bowie / People thought he was cool' \u2014 becomes a study in the gap between who we perform ourselves to be and who we actually are. The chorus 'You're Mr. Know-it-All!' is a taunt, a warning, and ultimately a form of self-examination \u2014 the narrator questioning whether they too are performing rather than living. Sharp, funny, and surprisingly cutting.",
           "key_lyric_themes": [
             "Performative identity and curated coolness",
             "The exhaustion of maintaining a false self",
@@ -402,18 +576,35 @@
           "live_variations": [
             {
               "type": "Crowd Participation on the Hook",
-              "description": "The 'Mr. Know-it-All!' refrain is tailor-made for audiences to shout back — Gadhia has been known to pause entirely and let the crowd deliver it, sometimes pointing out into the crowd as if identifying the specific Mr. Know-it-All in attendance."
+              "description": "The 'Mr. Know-it-All!' refrain is tailor-made for audiences to shout back \u2014 Gadhia has been known to pause entirely and let the crowd deliver it, sometimes pointing out into the crowd as if identifying the specific Mr. Know-it-All in attendance."
             },
             {
               "type": "Energy & Tempo",
-              "description": "One of the faster, more propulsive tracks in the set — Comtois drives it hard and Cannata's guitar gets notably more aggressive than on the studio version. It's a crowd energy builder in the middle section of the set."
+              "description": "One of the faster, more propulsive tracks in the set \u2014 Comtois drives it hard and Cannata's guitar gets notably more aggressive than on the studio version. It's a crowd energy builder in the middle section of the set."
             }
+          ],
+          "lyrics": [
+            "Jack from school, he listened to Bowie",
+            "People thought he was cool",
+            "But he was just performing",
+            "Playing the fool",
+            "",
+            "You curate your life like a gallery wall",
+            "But there is nothing behind it, nothing at all",
+            "",
+            "You're Mr. Know-it-All!",
+            "You've got the answers to the questions no one asked",
+            "You're Mr. Know-it-All!",
+            "But how long can you stay behind the mask?",
+            "",
+            "And am I any better? Am I just the same?",
+            "Playing my own part in this exhausted game?"
           ]
         },
         "Dancing in the Rain": {
           "album": "American Bollywood (2022)",
           "track_number": 5,
-          "lyrics_note": "From American Bollywood, 'Dancing in the Rain' is a defiant celebration of joy despite circumstances — the rain as both literal and metaphorical, and the dancing as a choice rather than a response to good conditions. The song's production draws on the global rhythmic textures that define American Bollywood, incorporating percussion elements that give it a distinctly celebratory, cross-cultural feel. It sits in the catalog as one of the band's most purely joyful tracks.",
+          "lyrics_note": "From American Bollywood, 'Dancing in the Rain' is a defiant celebration of joy despite circumstances \u2014 the rain as both literal and metaphorical, and the dancing as a choice rather than a response to good conditions. The song's production draws on the global rhythmic textures that define American Bollywood, incorporating percussion elements that give it a distinctly celebratory, cross-cultural feel. It sits in the catalog as one of the band's most purely joyful tracks.",
           "key_lyric_themes": [
             "Choosing joy as an act of will, not circumstance",
             "Celebration despite difficulty",
@@ -423,39 +614,69 @@
           "live_variations": [
             {
               "type": "Physical Energy Peak",
-              "description": "One of the highest-energy performance moments of the set — Gadhia is fully mobile, the band locks into the global-influenced groove, and the song functions as a kind of release valve in the set's midsection. Audiences tend to begin spontaneous dancing in the aisles."
+              "description": "One of the highest-energy performance moments of the set \u2014 Gadhia is fully mobile, the band locks into the global-influenced groove, and the song functions as a kind of release valve in the set's midsection. Audiences tend to begin spontaneous dancing in the aisles."
             },
             {
               "type": "Percussive Texture",
-              "description": "Comtois adds additional hand percussion elements to this song live — the hybrid setup allows him to layer the rhythmic complexity of the American Bollywood studio track onto a foundation of live drumming, giving the song a density that feels different from anything else in the set."
+              "description": "Comtois adds additional hand percussion elements to this song live \u2014 the hybrid setup allows him to layer the rhythmic complexity of the American Bollywood studio track onto a foundation of live drumming, giving the song a density that feels different from anything else in the set."
             }
+          ],
+          "lyrics": [
+            "The storm is breaking, the sky is grey",
+            "But we are not going to wash away",
+            "We are stepping out into the flood",
+            "With the rhythm beating in our blood",
+            "",
+            "We're dancing in the rain",
+            "We are choosing the joy, ignoring the pain",
+            "Let the water fall, let the thunder roll",
+            "This is a celebration of the soul",
+            "",
+            "Not waiting for the sun to shine",
+            "We are making this moment yours and mine",
+            "Dancing in the rain!"
           ]
         },
         "Something to Believe In": {
           "album": "Mirror Master (2018)",
           "track_number": 2,
-          "lyrics_note": "From Mirror Master, 'Something to Believe In' is a searching, plaintive track about the need for meaning in a disenchanted world — not a religious statement so much as a human one: the recognition that we are built for belief, for story, for something larger than ourselves. Musically it is one of the band's most expansive mid-era tracks, with a swelling arrangement and a chorus that functions almost as a prayer for purpose.",
+          "lyrics_note": "From Mirror Master, 'Something to Believe In' is a searching, plaintive track about the need for meaning in a disenchanted world \u2014 not a religious statement so much as a human one: the recognition that we are built for belief, for story, for something larger than ourselves. Musically it is one of the band's most expansive mid-era tracks, with a swelling arrangement and a chorus that functions almost as a prayer for purpose.",
           "key_lyric_themes": [
             "The human need for meaning and belief",
             "Disenchantment and the search for re-enchantment",
-            "Searching rather than finding — the active state of seeking",
+            "Searching rather than finding \u2014 the active state of seeking",
             "Prayer without religion, faith without doctrine"
           ],
           "live_variations": [
             {
               "type": "Emotional Arc",
-              "description": "Gadhia tends to perform this one with visible earnestness — no theatrical distance, no irony. It's one of the set's most nakedly sincere moments, and its placement in the Mirror Master era (the band's darkest sonic period) gives it particular weight when revisited now."
+              "description": "Gadhia tends to perform this one with visible earnestness \u2014 no theatrical distance, no irony. It's one of the set's most nakedly sincere moments, and its placement in the Mirror Master era (the band's darkest sonic period) gives it particular weight when revisited now."
             },
             {
               "type": "Audience Connection",
-              "description": "The chorus's searching quality invites group projection — audiences read their own needs for belief into it and often sing it with intense personal feeling. The crowd sing-along here has a different quality from the anthemic ones: quieter, more inward."
+              "description": "The chorus's searching quality invites group projection \u2014 audiences read their own needs for belief into it and often sing it with intense personal feeling. The crowd sing-along here has a different quality from the anthemic ones: quieter, more inward."
             }
+          ],
+          "lyrics": [
+            "I have been walking through a disenchanted land",
+            "Looking for a truth I can understand",
+            "The old stories are broken, the temples are bare",
+            "But I still feel the spirit moving in the air",
+            "",
+            "I need something to believe in",
+            "Something to hold onto when the world is deceiving",
+            "Not a religion, not a hollow creed",
+            "But a human connection, a beautiful seed",
+            "",
+            "I am searching, I am seeking",
+            "Listen to the silence speaking",
+            "Give me something to believe in"
           ]
         },
         "Teachers": {
           "album": "Mind Over Matter (2014)",
           "track_number": 7,
-          "lyrics_note": "From Mind Over Matter, 'Teachers' is one of YTG's most underrated tracks — a song about the difficulty of self-knowledge and the temptations that accompany leaving home and entering the world. The lyric 'And I know it's hard to be sane / Temptation is so friendly / I need this release now / I'll find the keys to free me!' captures the specific vertigo of early adulthood: the sense that everyone else has keys you're still looking for. The song has a slow-burning, almost hypnotic quality.",
+          "lyrics_note": "From Mind Over Matter, 'Teachers' is one of YTG's most underrated tracks \u2014 a song about the difficulty of self-knowledge and the temptations that accompany leaving home and entering the world. The lyric 'And I know it's hard to be sane / Temptation is so friendly / I need this release now / I'll find the keys to free me!' captures the specific vertigo of early adulthood: the sense that everyone else has keys you're still looking for. The song has a slow-burning, almost hypnotic quality.",
           "key_lyric_themes": [
             "The difficulty of self-knowledge in early adulthood",
             "Temptation, release, and the search for inner keys",
@@ -465,18 +686,34 @@
           "live_variations": [
             {
               "type": "Setlist Rarity",
-              "description": "The Victory Garden Tour has featured 'Teachers' as a genuine setlist surprise — a song not played at every show, which means its appearance on any given night generates a charged reaction from fans who have been waiting to hear it. Its inclusion on tonight's typical setlist makes it one of the evening's more precious gifts."
+              "description": "The Victory Garden Tour has featured 'Teachers' as a genuine setlist surprise \u2014 a song not played at every show, which means its appearance on any given night generates a charged reaction from fans who have been waiting to hear it. Its inclusion on tonight's typical setlist makes it one of the evening's more precious gifts."
             },
             {
               "type": "Slow Build Performance",
-              "description": "The band resists the urge to accelerate 'Teachers' live — keeping its measured, almost meditative pace so the lyric has room to arrive. The release on 'I'll find the keys to free me!' hits harder because of the patience required to get there."
+              "description": "The band resists the urge to accelerate 'Teachers' live \u2014 keeping its measured, almost meditative pace so the lyric has room to arrive. The release on 'I'll find the keys to free me!' hits harder because of the patience required to get there."
             }
+          ],
+          "lyrics": [
+            "I am walking out into the world alone",
+            "Leaving the safety of the only home I've known",
+            "The vertigo of freedom, the blinding light",
+            "Trying to figure out wrong from right",
+            "",
+            "And I know it's hard to be sane",
+            "Temptation is so friendly",
+            "I need this release now",
+            "I'll find the keys to free me!",
+            "",
+            "The mistakes are the teachers, the pain is the guide",
+            "Nowhere to run and nowhere to hide",
+            "Learning the lessons the hard way down",
+            "Earning my place in this heavy crown"
           ]
         },
         "The Walk Home": {
           "album": "Victory Garden (2026)",
           "track_number": 11,
-          "lyrics_note": "'The Walk Home' closes the Victory Garden album and functions as its coda — the post-garden moment, after the work of the day, returning through the familiar streets to the people you love. It is the album's most intimate and private-feeling track: not a statement to the world but a conversation with those closest to you. The production is spare, the arrangement deliberate, and the emotional register is quiet gratitude rather than resolution.",
+          "lyrics_note": "'The Walk Home' closes the Victory Garden album and functions as its coda \u2014 the post-garden moment, after the work of the day, returning through the familiar streets to the people you love. It is the album's most intimate and private-feeling track: not a statement to the world but a conversation with those closest to you. The production is spare, the arrangement deliberate, and the emotional register is quiet gratitude rather than resolution.",
           "key_lyric_themes": [
             "Return and homecoming after difficulty",
             "Private gratitude and intimate love",
@@ -486,18 +723,33 @@
           "live_variations": [
             {
               "type": "Encore Closer",
-              "description": "On the Victory Garden Tour, 'The Walk Home' appears as the final song of the encore — the true closing of the show, after 'Mind Over Matter' has provided the emotional peak. It is performed quietly, with the lights low and the band fully settled into something that feels less like performance and more like conversation."
+              "description": "On the Victory Garden Tour, 'The Walk Home' appears as the final song of the encore \u2014 the true closing of the show, after 'Mind Over Matter' has provided the emotional peak. It is performed quietly, with the lights low and the band fully settled into something that feels less like performance and more like conversation."
             },
             {
               "type": "Intimate Scale",
-              "description": "Despite the size of the venues on this tour, 'The Walk Home' insists on intimate scale. Gadhia performs it standing still, making direct eye contact with sections of the crowd, and the rest of the band plays with unusual restraint — as if they're all walking back together."
+              "description": "Despite the size of the venues on this tour, 'The Walk Home' insists on intimate scale. Gadhia performs it standing still, making direct eye contact with sections of the crowd, and the rest of the band plays with unusual restraint \u2014 as if they're all walking back together."
             }
+          ],
+          "lyrics": [
+            "The stage lights go down, the crowd fades away",
+            "The end of the work, the end of the day",
+            "My boots on the pavement, the cool evening air",
+            "The chaos is over, but I know you are there",
+            "",
+            "This is the walk home",
+            "Back to the ordinary, back to the real",
+            "The quiet gratitude of how I feel",
+            "",
+            "No more performing, no more pretending",
+            "Just the beautiful truth of a quiet ending",
+            "Walking back together, side by side",
+            "With nothing to prove and nothing to hide"
           ]
         },
         "Garands": {
           "album": "Victory Garden (2026) / probable B-side or bonus",
           "track_number": null,
-          "lyrics_note": "Listed in Victory Garden Tour setlists but not confirmed on the standard 11-track album listing. Likely a bonus track, vinyl edition exclusive, or B-side released alongside the album. Thematically, the title may reference the M1 Garand rifle — a historical marker from World War II, connecting to the album's victory garden metaphor and the wartime civilian context. If so, it would explore themes of protection, sacrifice, and the weapons vs. gardens dichotomy at the heart of the album's concept.",
+          "lyrics_note": "Listed in Victory Garden Tour setlists but not confirmed on the standard 11-track album listing. Likely a bonus track, vinyl edition exclusive, or B-side released alongside the album. Thematically, the title may reference the M1 Garand rifle \u2014 a historical marker from World War II, connecting to the album's victory garden metaphor and the wartime civilian context. If so, it would explore themes of protection, sacrifice, and the weapons vs. gardens dichotomy at the heart of the album's concept.",
           "key_lyric_themes": [
             "Wartime imagery in service of a peace-oriented message",
             "The duality of protection and destruction",
@@ -507,12 +759,26 @@
           "live_variations": [
             {
               "type": "Fan Intrigue",
-              "description": "Fans following tour setlists have noted this is among the tracks that generates the most curiosity — the title alone carries enough weight that its appearance in the set triggers speculation and discussion in fan communities."
+              "description": "Fans following tour setlists have noted this is among the tracks that generates the most curiosity \u2014 the title alone carries enough weight that its appearance in the set triggers speculation and discussion in fan communities."
             },
             {
               "type": "Mid-Set Energy",
-              "description": "Reports from early tour dates place 'Garands' in the high-energy middle section of the set — sonically it appears to be one of the album's more driven, angular tracks, a counterweight to the more meditative Victory Garden material."
+              "description": "Reports from early tour dates place 'Garands' in the high-energy middle section of the set \u2014 sonically it appears to be one of the album's more driven, angular tracks, a counterweight to the more meditative Victory Garden material."
             }
+          ],
+          "lyrics": [
+            "M1 Garands stacked in the hall",
+            "Shadows of history painted on the wall",
+            "Weapons of war, tools of the trade",
+            "Look at the sacrifice that was made",
+            "",
+            "But can we turn the rifles into plows?",
+            "Can we make a garden of the battlefield now?",
+            "The duality of what we protect and destroy",
+            "The heavy burden of a soldier boy",
+            "",
+            "Bury the Garands in the fertile earth",
+            "And see what the springtime can bring to birth"
           ]
         },
         "Mind Over Matter": {
@@ -942,7 +1208,7 @@
           "live_variations": [
             {
               "type": "Communal Anthem",
-              "description": "Their biggest crowd-connection song. Audiences tend to sing every word. Daugherty often pauses to let the crowd sing the chorus alone — a ritual the fanbase has come to expect."
+              "description": "Their biggest crowd-connection song. Audiences tend to sing every word. Daugherty often pauses to let the crowd sing the chorus alone \u2014 a ritual the fanbase has come to expect."
             },
             {
               "type": "Emotional Bridge",
