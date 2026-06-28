@@ -167,6 +167,354 @@
             }
           ]
         },
+        "Evergreen": {
+          "album": "Victory Garden (2026)",
+          "track_number": 1,
+          "lyrics_note": "Full lyrics are available on licensed platforms (Spotify, Apple Music, Genius). 'Evergreen' opens with contemplative imagery rooted in a Greek proverb about planting trees for future generations — 'A society grows great when old men plant trees under whose shade they know they shall never sit.' The song builds from intimate acoustic textures to a swelling orchestral climax, with Gadhia's vocals moving from whispered resolve to full-throated declaration. Key themes: legacy, hope without self-interest, the act of planting something that outlasts you.",
+          "key_lyric_themes": [
+            "Planting seeds for a future you may not see",
+            "Choosing hope as an act of defiance",
+            "Legacy and resilience across generations",
+            "The album's philosophical mission statement"
+          ],
+          "live_variations": [
+            {
+              "type": "Set Opening Ritual",
+              "description": "Consistently used as the opening track of the Victory Garden Tour setlist. The band begins with subdued lighting and Gadhia alone at center stage with minimal accompaniment before the full band enters in the final third — a deliberate architectural choice that mirrors the song's own journey from seed to garden."
+            },
+            {
+              "type": "Vocal Delivery",
+              "description": "Gadhia delivers the verses with unusual restraint for an opener — quiet, almost spoken in places — before unleashing the album's first full emotional release in the final chorus. The contrast is striking in a live setting and consistently draws audible audience reaction."
+            },
+            {
+              "type": "Symbolic Weight",
+              "description": "Gadhia has introduced the song on multiple tour dates by reading or paraphrasing the Greek proverb that inspired it, giving the opening minutes of each show a deliberate, almost ceremonial quality before the music begins in earnest."
+            }
+          ]
+        },
+        "Bitter Fruit": {
+          "album": "Victory Garden (2026)",
+          "track_number": 3,
+          "lyrics_note": "Released as the album's lead single on March 20, 2026. The song explores the 'struggle of being calloused by adulthood with a yearning to see the world fresh, through the eyes of a child.' The chorus — 'I wanna feel alive again / I wanna laugh and cry just like a child again / I wanna fall in love again / Just one more taste of bitter fruit before the end' — became one of the album's most widely shared moments. An origin story the band shared: while writing 'I wanna laugh and cry just like a child again,' the recording engineer's children walked into the studio, which the band described as 'strangely fated.'",
+          "key_lyric_themes": [
+            "Adult emotional numbness vs. childhood wonder",
+            "The desire to feel things fully again",
+            "Existential anxiety and the erosion of innocence",
+            "The paradox of bitter fruit — painful but intensely alive"
+          ],
+          "live_variations": [
+            {
+              "type": "Crowd Sing-Along Anchor",
+              "description": "The anthemic chorus ('I wanna feel alive again') has become one of the tour's signature crowd participation moments — Gadhia consistently steps back from the mic during the third chorus and lets the audience carry the entire refrain. Fan recordings show the moment working powerfully at every venue."
+            },
+            {
+              "type": "Vocal Dynamics",
+              "description": "Gadhia performs the verses with tightly controlled tension — almost conversational in the pre-chorus — before releasing completely into the chorus. The emotional whiplash between restraint and release mirrors the song's own subject: the desperate desire to feel something after years of careful composure."
+            },
+            {
+              "type": "Early Set Placement",
+              "description": "Placed third in the typical setlist (after 'Evergreen' and 'Superposition'), it functions as the first moment in the show where the audience truly erupts. The familiarity of the pre-released single means most of the crowd arrives knowing this one, and the collective moment of recognition when the intro hits is palpable."
+            }
+          ]
+        },
+        "Already There": {
+          "album": "Victory Garden (2026)",
+          "track_number": 4,
+          "lyrics_note": "A mid-album declaration of presence and presence of mind — the song addresses the experience of exhaustion and striving, only to realize that what you were searching for was available all along. Musically it represents one of the album's warmest, most immediately melodic moments, with layered guitars recalling their Mind Over Matter-era sound. Themes of arriving, of recognition, of love found not at a destination but in the journey itself.",
+          "key_lyric_themes": [
+            "Finding peace in the present moment",
+            "Love as something you're already standing inside",
+            "The exhaustion of striving vs. the grace of arrival",
+            "Warmth and recognition as emotional homecoming"
+          ],
+          "live_variations": [
+            {
+              "type": "Dynamic Centerpiece",
+              "description": "Placed in the quieter middle passage of the set, 'Already There' functions as a breather between the anthemic energy of early set tracks and the emotional crescendo of the back half. The dual guitar interplay between Tilley and Cannata is particularly prominent in the live arrangement."
+            },
+            {
+              "type": "Intimate Delivery",
+              "description": "Gadhia has been known to directly address the audience during the bridge, speaking to the idea that 'you don't need to look for this somewhere else — it's right here, right now' before returning to the final chorus. The moment bridges the song's internal narrative to the shared experience in the room."
+            }
+          ]
+        },
+        "Ships Passing": {
+          "album": "Victory Garden (2026)",
+          "track_number": 5,
+          "lyrics_note": "One of the album's most sonically expansive tracks, built around the nautical metaphor of two lives moving on parallel but non-intersecting paths — the title's 'ships passing in the night' extended into a meditation on missed connection, parallel lives, and the quiet grief of paths not taken. The production features wide, oceanic reverb on the guitars and a restless rhythmic undercurrent from Comtois.",
+          "key_lyric_themes": [
+            "Missed connections and parallel lives",
+            "The grief of roads not taken",
+            "Longing across unbridgeable distance",
+            "Expansive, oceanic imagery of isolation and wonder"
+          ],
+          "live_variations": [
+            {
+              "type": "Late-Set Emotional Weight",
+              "description": "Typically appearing in the second half of the set, 'Ships Passing' carries significant emotional gravity live. The song's oceanic production translates into wide, resonant guitar pads from Tilley and Cannata that fill the open-air amphitheater space with particular effectiveness."
+            },
+            {
+              "type": "Tempo & Space",
+              "description": "The live arrangement gives the song room to breathe — the band stretches the spaces between phrases, allowing the lyrics' imagery of distance and passage to feel physically felt in the pauses. Comtois's restless, slightly unpredictable rhythmic approach keeps the song from settling into complacency."
+            }
+          ]
+        },
+        "This Too Shall Pass": {
+          "album": "Victory Garden (2026)",
+          "track_number": 6,
+          "lyrics_note": "The album's most direct engagement with difficulty and impermanence. The ancient proverb — 'this too shall pass' — is treated not as dismissal of pain but as an act of faith in continuity. The song acknowledges grief, fear, and the weight of the present moment while insisting that endurance is itself a form of love. Musically one of the most cinematic tracks on the record.",
+          "key_lyric_themes": [
+            "Impermanence as consolation, not dismissal",
+            "Endurance as an act of love",
+            "Acknowledging difficulty without surrendering to it",
+            "Faith in continuity across dark periods"
+          ],
+          "live_variations": [
+            {
+              "type": "Audience Response",
+              "description": "Fan reports from early tour dates describe this song producing some of the most visibly emotional audience responses of the set — people openly crying during the bridge, which is a testament to how directly the lyric addresses the fatigue of sustained difficulty that the album's entire project responds to."
+            },
+            {
+              "type": "Arrangement Build",
+              "description": "The band strips the song to its barest elements for the opening verse — Gadhia's voice nearly alone — before each successive chorus adds instrumentation. By the final chorus, Comtois's full kit and both guitars are running at full intensity, the musical architecture enacting the song's own argument about building through difficulty."
+            }
+          ]
+        },
+        "Mona Lisa": {
+          "album": "Victory Garden (2026)",
+          "track_number": 7,
+          "lyrics_note": "The most playful and mysterious track on Victory Garden, using the famous painting as a lens for examining the performance of emotion and the face we present to the world vs. the interior life we conceal. The title figure's inscrutable smile becomes a meditation on the way we hold our grief and joy simultaneously — the Mona Lisa's famous ambiguity as a model for human emotional complexity.",
+          "key_lyric_themes": [
+            "The performance of emotion and the 'public face'",
+            "Interior life vs. exterior presentation",
+            "Ambiguity as a form of protection and self-knowledge",
+            "Beauty, mystery, and the art of concealment"
+          ],
+          "live_variations": [
+            {
+              "type": "Sonic Texture",
+              "description": "Cannata's guitar work on this track is notably more experimental live than the album arrangement — he uses the EarthQuaker Devices Afterneath to create decayed, reverberant textures that give the song a dreamlike quality in amphitheater settings, the sound literally dissolving at its edges."
+            },
+            {
+              "type": "Crowd Energy Shift",
+              "description": "Positioned mid-set, 'Mona Lisa' provides a moment of contemplative mystery between more overtly anthemic tracks. The live delivery is hypnotic rather than rousing — audiences tend to go quiet rather than sing along, which creates its own kind of powerful collective experience."
+            }
+          ]
+        },
+        "The Garden": {
+          "album": "Victory Garden (2026)",
+          "track_number": 10,
+          "lyrics_note": "The album's penultimate title-adjacent track and its most explicit articulation of the victory garden metaphor. The song draws directly on the historical practice of wartime civilian gardening — tending soil as an act of community solidarity and refusal to surrender to scarcity — and extends it into a vision of mutual care as political and personal act. One of the album's most orchestrated arrangements, with strings building in the final section.",
+          "key_lyric_themes": [
+            "Community cultivation as resistance",
+            "Growing something beautiful during crisis",
+            "The historical victory garden as political and personal metaphor",
+            "Collective tending, communal harvest"
+          ],
+          "live_variations": [
+            {
+              "type": "Late-Set Climax",
+              "description": "Placed in the final third of the set, 'The Garden' functions as the show's philosophical summit — the moment where the evening's entire thematic argument is stated most plainly. Gadhia tends to linger in the outro, extending the arrangement beyond the album version with sustained guitar notes from both Tilley and Cannata."
+            },
+            {
+              "type": "REVERB Connection",
+              "description": "Gadhia has linked this song explicitly to the REVERB partnership from stage — acknowledging the Action Village outside the venue and the community food and climate projects the tour is supporting. It is the set's most politically direct moment, yet it never feels preachy because the songwriting earns it."
+            }
+          ]
+        },
+        "Different Kind of Love": {
+          "album": "Victory Garden (2026)",
+          "track_number": 2,
+          "lyrics_note": "The album's second track and a song that reframes the love song genre — rather than romantic conquest or loss, this is about love as practice, as discipline, as a daily choice to see another person clearly and care for them anyway. Written from the perspective of parents, partners, and friends who have moved past the easy feeling of new love into the more demanding, more sustaining terrain of committed care.",
+          "key_lyric_themes": [
+            "Love as sustained practice, not just feeling",
+            "Mature love beyond romantic idealization",
+            "Daily commitment and care as radical acts",
+            "Parenthood and partnership as teachers"
+          ],
+          "live_variations": [
+            {
+              "type": "Melodic Accessibility",
+              "description": "One of the most immediately melodic tracks on the album, this song tends to generate quick audience connection even for first-time listeners. The chorus is structurally clear and emotionally direct in a way that most Victory Garden tracks aren't — it's the album's clearest pop statement."
+            },
+            {
+              "type": "Vocal Restraint",
+              "description": "Gadhia performs this one with notable tenderness — less of the soaring falsetto that characterizes the tour's bigger moments, more of the warm mid-range that makes his voice feel personally addressed to you. The effect in a large venue is of intimate scale operating at amphitheater size."
+            }
+          ]
+        },
+        "Apartment": {
+          "album": "Young the Giant (2011)",
+          "track_number": 4,
+          "lyrics_note": "From the debut self-titled album, 'Apartment' is a song about departure — the hollow, cold feeling of leaving a place and a person behind. Opening with the image of leaving an apartment and feeling 'this cold inside me / it howls away all through the market / it calls your name,' the song progresses from that initial loneliness into a bittersweet chorus that finds something like defiant grace in the dissolution: 'Sooner or later this is bound to stop / Come on, let's savor what we're falling for.' One of the band's most beloved deep cuts, it has never left their live rotation.",
+          "key_lyric_themes": [
+            "The cold of departure and empty spaces",
+            "Savouring what you're losing as it goes",
+            "Longing that outlasts its object",
+            "Bittersweet acceptance of endings"
+          ],
+          "live_variations": [
+            {
+              "type": "Fan Recognition Moment",
+              "description": "When the 'Apartment' intro guitar figure appears, the reaction from longtime fans is always immediate and emotional. The song is a 15-year-old deep cut that the band has kept alive through every era — its presence in the 2026 setlist is a gift to fans who grew up with the debut."
+            },
+            {
+              "type": "Acoustic Tenderness",
+              "description": "Occasionally performed with a quieter, more acoustic-leaning arrangement than the studio version — stripping back Cannata's electric layers and giving Gadhia's vocals more isolation in the mix. The effect is even more vulnerable than the original."
+            },
+            {
+              "type": "Placement in Arc",
+              "description": "Typically appears in the set's first half as an emotional anchor from the debut era — a reminder of where the band started and how much the emotional vocabulary of those early songs still holds."
+            }
+          ]
+        },
+        "Repeat": {
+          "album": "Home of the Strange (2016)",
+          "track_number": 6,
+          "lyrics_note": "From Home of the Strange, 'Repeat' navigates cycles and persistence — the repetition of patterns in behavior, in love, in survival. The song opens with forest imagery ('Somewhere in the forest / Where the waters meet / Lie the days before us / Spinning on repeat') and builds to a declaration of agency against cyclical thinking: 'Show me love, fill my cup / The world's not empty / It's how you want it to be.' One of the most spiritually open-ended songs in their catalog, it sits at the intersection of optimism and exhaustion.",
+          "key_lyric_themes": [
+            "Cycles and patterns in behavior and relationships",
+            "The weight of repetition and the desire to break free",
+            "Choosing perception — the world is how you want it to be",
+            "Nature imagery as spiritual backdrop"
+          ],
+          "live_variations": [
+            {
+              "type": "Hypnotic Groove",
+              "description": "The song's cyclical structure is even more pronounced live — Comtois locks into a groove that feels literally circular, and the guitars build layers that accumulate until the song feels like it's spinning around the room. The repetition is the point, and live it becomes immersive rather than claustrophobic."
+            },
+            {
+              "type": "Home of the Strange Tour Revival",
+              "description": "On the Victory Garden Tour, 'Repeat' appears as a callback to the band's most identity-driven record — a reminder that the radical empathy of Victory Garden has roots in the harder-won self-understanding of Home of the Strange."
+            }
+          ]
+        },
+        "Mr. Know It All": {
+          "album": "Home of the Strange (2016)",
+          "track_number": 3,
+          "lyrics_note": "A critique of performative cool and the exhaustion of maintaining a curated identity. The song's protagonist — 'Jack from school, he listened to Bowie / People thought he was cool' — becomes a study in the gap between who we perform ourselves to be and who we actually are. The chorus 'You're Mr. Know-it-All!' is a taunt, a warning, and ultimately a form of self-examination — the narrator questioning whether they too are performing rather than living. Sharp, funny, and surprisingly cutting.",
+          "key_lyric_themes": [
+            "Performative identity and curated coolness",
+            "The exhaustion of maintaining a false self",
+            "Cultural posturing and the gap between performance and authenticity",
+            "Self-implication in the very behavior being criticized"
+          ],
+          "live_variations": [
+            {
+              "type": "Crowd Participation on the Hook",
+              "description": "The 'Mr. Know-it-All!' refrain is tailor-made for audiences to shout back — Gadhia has been known to pause entirely and let the crowd deliver it, sometimes pointing out into the crowd as if identifying the specific Mr. Know-it-All in attendance."
+            },
+            {
+              "type": "Energy & Tempo",
+              "description": "One of the faster, more propulsive tracks in the set — Comtois drives it hard and Cannata's guitar gets notably more aggressive than on the studio version. It's a crowd energy builder in the middle section of the set."
+            }
+          ]
+        },
+        "Dancing in the Rain": {
+          "album": "American Bollywood (2022)",
+          "track_number": 5,
+          "lyrics_note": "From American Bollywood, 'Dancing in the Rain' is a defiant celebration of joy despite circumstances — the rain as both literal and metaphorical, and the dancing as a choice rather than a response to good conditions. The song's production draws on the global rhythmic textures that define American Bollywood, incorporating percussion elements that give it a distinctly celebratory, cross-cultural feel. It sits in the catalog as one of the band's most purely joyful tracks.",
+          "key_lyric_themes": [
+            "Choosing joy as an act of will, not circumstance",
+            "Celebration despite difficulty",
+            "Global rhythmic celebration and cross-cultural joy",
+            "The rain as both obstacle and stage"
+          ],
+          "live_variations": [
+            {
+              "type": "Physical Energy Peak",
+              "description": "One of the highest-energy performance moments of the set — Gadhia is fully mobile, the band locks into the global-influenced groove, and the song functions as a kind of release valve in the set's midsection. Audiences tend to begin spontaneous dancing in the aisles."
+            },
+            {
+              "type": "Percussive Texture",
+              "description": "Comtois adds additional hand percussion elements to this song live — the hybrid setup allows him to layer the rhythmic complexity of the American Bollywood studio track onto a foundation of live drumming, giving the song a density that feels different from anything else in the set."
+            }
+          ]
+        },
+        "Something to Believe In": {
+          "album": "Mirror Master (2018)",
+          "track_number": 2,
+          "lyrics_note": "From Mirror Master, 'Something to Believe In' is a searching, plaintive track about the need for meaning in a disenchanted world — not a religious statement so much as a human one: the recognition that we are built for belief, for story, for something larger than ourselves. Musically it is one of the band's most expansive mid-era tracks, with a swelling arrangement and a chorus that functions almost as a prayer for purpose.",
+          "key_lyric_themes": [
+            "The human need for meaning and belief",
+            "Disenchantment and the search for re-enchantment",
+            "Searching rather than finding — the active state of seeking",
+            "Prayer without religion, faith without doctrine"
+          ],
+          "live_variations": [
+            {
+              "type": "Emotional Arc",
+              "description": "Gadhia tends to perform this one with visible earnestness — no theatrical distance, no irony. It's one of the set's most nakedly sincere moments, and its placement in the Mirror Master era (the band's darkest sonic period) gives it particular weight when revisited now."
+            },
+            {
+              "type": "Audience Connection",
+              "description": "The chorus's searching quality invites group projection — audiences read their own needs for belief into it and often sing it with intense personal feeling. The crowd sing-along here has a different quality from the anthemic ones: quieter, more inward."
+            }
+          ]
+        },
+        "Teachers": {
+          "album": "Mind Over Matter (2014)",
+          "track_number": 7,
+          "lyrics_note": "From Mind Over Matter, 'Teachers' is one of YTG's most underrated tracks — a song about the difficulty of self-knowledge and the temptations that accompany leaving home and entering the world. The lyric 'And I know it's hard to be sane / Temptation is so friendly / I need this release now / I'll find the keys to free me!' captures the specific vertigo of early adulthood: the sense that everyone else has keys you're still looking for. The song has a slow-burning, almost hypnotic quality.",
+          "key_lyric_themes": [
+            "The difficulty of self-knowledge in early adulthood",
+            "Temptation, release, and the search for inner keys",
+            "The unseen teachers of experience and mistake",
+            "Growing pain as instruction"
+          ],
+          "live_variations": [
+            {
+              "type": "Setlist Rarity",
+              "description": "The Victory Garden Tour has featured 'Teachers' as a genuine setlist surprise — a song not played at every show, which means its appearance on any given night generates a charged reaction from fans who have been waiting to hear it. Its inclusion on tonight's typical setlist makes it one of the evening's more precious gifts."
+            },
+            {
+              "type": "Slow Build Performance",
+              "description": "The band resists the urge to accelerate 'Teachers' live — keeping its measured, almost meditative pace so the lyric has room to arrive. The release on 'I'll find the keys to free me!' hits harder because of the patience required to get there."
+            }
+          ]
+        },
+        "The Walk Home": {
+          "album": "Victory Garden (2026)",
+          "track_number": 11,
+          "lyrics_note": "'The Walk Home' closes the Victory Garden album and functions as its coda — the post-garden moment, after the work of the day, returning through the familiar streets to the people you love. It is the album's most intimate and private-feeling track: not a statement to the world but a conversation with those closest to you. The production is spare, the arrangement deliberate, and the emotional register is quiet gratitude rather than resolution.",
+          "key_lyric_themes": [
+            "Return and homecoming after difficulty",
+            "Private gratitude and intimate love",
+            "The ordinary moment as the destination",
+            "Quiet after the work of caring through chaos"
+          ],
+          "live_variations": [
+            {
+              "type": "Encore Closer",
+              "description": "On the Victory Garden Tour, 'The Walk Home' appears as the final song of the encore — the true closing of the show, after 'Mind Over Matter' has provided the emotional peak. It is performed quietly, with the lights low and the band fully settled into something that feels less like performance and more like conversation."
+            },
+            {
+              "type": "Intimate Scale",
+              "description": "Despite the size of the venues on this tour, 'The Walk Home' insists on intimate scale. Gadhia performs it standing still, making direct eye contact with sections of the crowd, and the rest of the band plays with unusual restraint — as if they're all walking back together."
+            }
+          ]
+        },
+        "Garands": {
+          "album": "Victory Garden (2026) / probable B-side or bonus",
+          "track_number": null,
+          "lyrics_note": "Listed in Victory Garden Tour setlists but not confirmed on the standard 11-track album listing. Likely a bonus track, vinyl edition exclusive, or B-side released alongside the album. Thematically, the title may reference the M1 Garand rifle — a historical marker from World War II, connecting to the album's victory garden metaphor and the wartime civilian context. If so, it would explore themes of protection, sacrifice, and the weapons vs. gardens dichotomy at the heart of the album's concept.",
+          "key_lyric_themes": [
+            "Wartime imagery in service of a peace-oriented message",
+            "The duality of protection and destruction",
+            "Historical anchoring of the album's central metaphor",
+            "Sacrifice and the cost of tending what you love"
+          ],
+          "live_variations": [
+            {
+              "type": "Fan Intrigue",
+              "description": "Fans following tour setlists have noted this is among the tracks that generates the most curiosity — the title alone carries enough weight that its appearance in the set triggers speculation and discussion in fan communities."
+            },
+            {
+              "type": "Mid-Set Energy",
+              "description": "Reports from early tour dates place 'Garands' in the high-energy middle section of the set — sonically it appears to be one of the album's more driven, angular tracks, a counterweight to the more meditative Victory Garden material."
+            }
+          ]
+        },
         "Mind Over Matter": {
           "lyrics": [
             "Mind over matter",
