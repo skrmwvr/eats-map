@@ -659,13 +659,22 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
           <!-- About/Credits footer -->
           <div style="border-top:1px dashed #444; padding-top:16px; text-align:left; font-family:'Segoe UI',sans-serif; padding-bottom: 20px;">
             <h3 style="font-size:1.15rem; text-transform:uppercase; color:var(--accent); margin-bottom:6px; margin-top:0;">🔌 About Sun Map</h3>
-            <p style="font-size:1rem; line-height:1.45; color:#ccc; margin-bottom:8px;">A new kind of light for the show. Mapping the stories, soundscapes, and paths that grow between the stage and the lawn.</p>
+            <p style="font-size:1rem; line-height:1.45; color:#ccc; margin-bottom:12px;">A new kind of light for the show. Mapping the stories, soundscapes, and paths that grow between the stage and the lawn.</p>
+            
+            <div style="background: #fff; padding: 12px; border-radius: 8px; display: inline-block; margin-bottom: 16px;">
+              <canvas id="qr-canvas-footer"></canvas>
+              <div style="color: #121212; font-weight: 800; font-size: 0.8rem; text-align: center; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px;">Scan to Share</div>
+            </div>
+
             <p style="font-size:0.9rem; color:#aaa; margin:0;">Developed by <a href="mailto:chozcunningham+sunmap@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:700;">C. Cunningham</a>. Contact us to build this for your tour, concert, or music event.</p>
           </div>
         </div>
       </div>
     </div>
     `;
+
+    // Generate QR for footer
+    generateShareQRCode('qr-canvas-footer');
 
     // Bind shortcuts
     document.getElementById('lnk-to-venue').addEventListener('click', () => {
@@ -1194,8 +1203,9 @@ function showHelpBubble(text) {
 }
 
 // QR Code Canvas generator
-function generateShareQRCode() {
-  const canvas = document.getElementById('qr-canvas');
+function generateShareQRCode(canvasId = 'qr-canvas') {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
   const size = 180;
   canvas.width = size;
