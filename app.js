@@ -234,10 +234,23 @@ function renderDashboardMetadata() {
   
   if (state.event.weather) {
     document.getElementById('weather-status').textContent = `${state.event.weather.temp_f_high}°F / ${state.event.weather.conditions}`;
-    const alertText = state.event.weather.forecast_summary;
+    
+    // Add offline context and timestamp to alert banner
+    let alertText = state.event.weather.forecast_summary;
+    const now = new Date();
+    const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    
+    if (!navigator.onLine) {
+      alertText = `[OFFLINE - Data may be stale. Rely on venue staff.] ` + alertText;
+      document.getElementById('alert-banner').style.background = 'rgba(100, 100, 100, 0.85)';
+    } else {
+      alertText = `[Updated ${timeString}] ` + alertText;
+      document.getElementById('alert-banner').style.background = 'rgba(180, 40, 20, 0.85)';
+    }
+    
     document.getElementById('alert-text').textContent = alertText;
     
-    if (state.dismissedAlertText !== alertText) {
+    if (state.dismissedAlertText !== state.event.weather.forecast_summary) {
       document.getElementById('alert-banner').style.display = 'flex';
     } else {
       document.getElementById('alert-banner').style.display = 'none';
@@ -246,6 +259,9 @@ function renderDashboardMetadata() {
   
   document.getElementById('timeline-status').textContent = `Doors: ${state.event.doors_time}`;
 }
+
+window.addEventListener('online', renderDashboardMetadata);
+window.addEventListener('offline', renderDashboardMetadata);
 
 // Auto-Shuffling Idle Text Animation with Dynamic Cooldown
 let factoidTimeout = null;
@@ -272,7 +288,7 @@ function startFactoidShuffler() {
     // Show text
     bubbleText.style.opacity = 0;
     setTimeout(() => {
-      bubbleText.innerHTML = `💡 <em>${text}</em>`;
+      bubbleText.innerHTML = DOMPurify.sanitize(`💡 <em>${text}</em>`);
       bubbleText.style.opacity = 1;
     }, 450);
 
@@ -361,7 +377,7 @@ function renderCurrentSong() {
   const displaySongName = (state.hideSpoilers && state.activeSongIndex > 0) ? `Track ${state.activeSongIndex + 1}` : song.display_name;
 
   const content = document.getElementById('viewport-content');
-  content.innerHTML = `
+  content.innerHTML = DOMPurify.sanitize(`
     <div class="lyrics-view" style="display:flex; flex-direction:column; height:100%;">
       <div class="song-header">
         <h1>${displaySongName}</h1>
@@ -392,7 +408,7 @@ function renderCurrentSong() {
         <button class="ctrl-btn" id="btn-next-song">▶</button>
       </div>
     </div>
-  `;
+  `);
 
   // Bind controls
   document.getElementById('btn-prev-song').addEventListener('click', () => {
@@ -498,7 +514,7 @@ document.getElementById('btn-weather').addEventListener('click', () => {
     const bannerState = document.getElementById('alert-banner').style.display === 'none' ? '' : 'checked';
 
     const content = document.getElementById('viewport-content');
-    content.innerHTML = `
+    content.innerHTML = DOMPurify.sanitize(`
       <div class="details-view">
         <h2>Weather & Risk Alerts</h2>
         <h3>NOAA Alert</h3>
@@ -520,7 +536,7 @@ document.getElementById('btn-weather').addEventListener('click', () => {
         </ul>
         <p style="font-size:0.75rem; margin-top:14px; color:var(--text-secondary);">Source: NOAA point forecast mapclick</p>
       </div>
-    `;
+    `);
 
     document.getElementById('alert-banner-toggle').addEventListener('change', (e) => {
       document.getElementById('alert-banner').style.display = e.target.checked ? 'flex' : 'none';
@@ -540,7 +556,7 @@ function renderVenueMainView() {
   const viewport = document.getElementById('main-viewport');
   viewport.className = 'viewport-square theme-venue';
   const content = document.getElementById('viewport-content');
-  content.innerHTML = `
+  content.innerHTML = DOMPurify.sanitize(`
     <div class="details-view" style="display:flex; flex-direction:column; justify-content:space-between; height:100%;">
       <div>
         <h2>Venue Policies & Access</h2>
@@ -557,7 +573,7 @@ function renderVenueMainView() {
         <p style="font-size:0.8rem; color:#aaa; margin-bottom:0;">Need ADA help? Click <strong>Facilities</strong> above or tap <strong>🚻</strong> below.</p>
       </div>
     </div>
-  `;
+  `);
 }
 
 // Render Timeline Program
@@ -572,7 +588,7 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
     const installBtnDisplay = deferredPrompt ? 'inline-block' : 'none';
 
     const content = document.getElementById('viewport-content');
-    content.innerHTML = `
+    content.innerHTML = DOMPurify.sanitize(`
       <div class="details-view" style="display:flex; flex-direction:column; height:100%; position:relative;">
 
         <!-- Sun logo watermark — fixed decorative art for this page -->
@@ -671,7 +687,7 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
         </div>
       </div>
     </div>
-    `;
+    `);
 
     // Generate QR for footer
     generateShareQRCode('qr-canvas-footer');
@@ -872,7 +888,7 @@ function renderBandLoreContent(activeBand, lore) {
   }).join('');
 
   const content = document.getElementById('viewport-content');
-  content.innerHTML = `
+  content.innerHTML = DOMPurify.sanitize(`
     <div style="display:flex; flex-direction:column; height:100%;">
       
       <!-- Logo / Art Banner -->
@@ -954,7 +970,7 @@ function renderBandLoreContent(activeBand, lore) {
         <button class="ctrl-btn" id="btn-next-band">▶</button>
       </div>
     </div>
-  `;
+  `);
 
   // Bind controls
   document.getElementById('btn-prev-band').addEventListener('click', () => {
@@ -980,7 +996,7 @@ document.getElementById('btn-tour').addEventListener('click', () => {
     viewport.className = 'viewport-square theme-tour';
 
     const content = document.getElementById('viewport-content');
-    content.innerHTML = `
+    content.innerHTML = DOMPurify.sanitize(`
       <div class="details-view">
         <h2>Victory Garden Tour</h2>
         
@@ -995,7 +1011,7 @@ document.getElementById('btn-tour').addEventListener('click', () => {
         <h3>Surprise NYC Duet Trivia</h3>
         <p>During their Madison Square Garden performance, Darren Criss joined the band onstage for an unannounced acoustic duet of <em>"Superposition"</em>. Keep your eyes on the stage tonight for local guest appearances!</p>
       </div>
-    `;
+    `);
   });
 });
 
@@ -1010,7 +1026,7 @@ document.getElementById('btn-venue-car').addEventListener('click', () => {
     // Show walking path directions back to marked car
     triggerTransition(() => {
       const content = document.getElementById('viewport-content');
-      content.innerHTML = `
+      content.innerHTML = DOMPurify.sanitize(`
         <div class="details-view">
           <h2>Find My Car</h2>
           <p><strong>Marked Location:</strong> Nissan Stadium East Bank Lot R</p>
@@ -1019,7 +1035,7 @@ document.getElementById('btn-venue-car').addEventListener('click', () => {
           
           <button id="btn-clear-car" style="background:#d32f2f; border:none; color:#fff; padding:8px 12px; border-radius:4px; font-weight:700; cursor:pointer; margin-top:14px;">🗑️ Clear Marked Spot</button>
         </div>
-      `;
+      `);
       document.getElementById('btn-clear-car').addEventListener('click', () => {
         localStorage.removeItem('carParked');
         updateCarButtonUI();
@@ -1033,7 +1049,7 @@ document.getElementById('btn-venue-car').addEventListener('click', () => {
 document.getElementById('btn-venue-fac').addEventListener('click', () => {
   triggerTransition(() => {
     const content = document.getElementById('viewport-content');
-    content.innerHTML = `
+    content.innerHTML = DOMPurify.sanitize(`
       <div class="details-view" style="display:flex; flex-direction:column; height:100%;">
         <h2>Facilities & Interior Map</h2>
         
@@ -1065,7 +1081,7 @@ document.getElementById('btn-venue-fac').addEventListener('click', () => {
         <h3>🚑 Medical Services</h3>
         <p>First aid tent with permanent AED defibrillators is located next to the West plaza concession area. Metro EMT staff carry cooling first aid bags containing Epipens.</p>
       </div>
-    `;
+    `);
   });
 });
 
@@ -1073,7 +1089,7 @@ document.getElementById('btn-venue-help').addEventListener('click', () => {
   // Confirm Dialogue inside Centerport
   triggerTransition(() => {
     const content = document.getElementById('viewport-content');
-    content.innerHTML = `
+    content.innerHTML = DOMPurify.sanitize(`
       <div class="details-view" style="display:flex; flex-direction:column; justify-content:center; height:100%; text-align:center; padding:10px;">
         <h2>Call Guest Services</h2>
         <p style="font-size:1.1rem; margin-bottom:20px; line-height:1.4;">Are you sure you want to call Ascend Amphitheater Guest Services & ADA assistance line?</p>
@@ -1084,7 +1100,7 @@ document.getElementById('btn-venue-help').addEventListener('click', () => {
           <button id="btn-cancel-call" style="background:transparent; border:1px solid #555; color:#aaa; padding:12px 24px; border-radius:6px; font-weight:700; cursor:pointer; font-size:1rem; font-family:'Segoe UI',sans-serif;">Cancel</button>
         </div>
       </div>
-    `;
+    `);
     
     document.getElementById('btn-confirm-call').addEventListener('click', () => {
       window.open('tel:6152585944');
@@ -1184,7 +1200,7 @@ function triggerPageHelp() {
   const modal = document.getElementById('help-modal');
   const context = document.getElementById('help-modal-context');
   if (modal && context) {
-    context.innerHTML = tip;
+    context.innerHTML = DOMPurify.sanitize(tip);
     modal.classList.add('active');
   }
 }
@@ -1194,7 +1210,7 @@ function showHelpBubble(text) {
   const bubbleText = document.getElementById('help-bubble-text');
   if (!bubble || !bubbleText) return;
   
-  bubbleText.innerHTML = text;
+  bubbleText.innerHTML = DOMPurify.sanitize(text);
   bubble.classList.add('active');
   
   setTimeout(() => {
@@ -1260,3 +1276,47 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 
 
+
+
+// Offline Safety: Call Help Intercept
+document.addEventListener('DOMContentLoaded', () => {
+  const btnHelp = document.getElementById('btn-venue-help');
+  if (btnHelp) {
+    // Override any existing listener by cloning and replacing
+    const newBtnHelp = btnHelp.cloneNode(true);
+    btnHelp.parentNode.replaceChild(newBtnHelp, btnHelp);
+    
+    newBtnHelp.addEventListener('click', () => {
+      if (!navigator.onLine) {
+        showHelpBubble("⚠️ You are OFFLINE. 'Call Help' requires a cellular connection. Please locate yellow-jacket security personnel immediately.");
+      } else {
+        // Mock call help action
+        showHelpBubble("Calling Event Security... (Mock)");
+        setTimeout(() => { window.location.href = "tel:911"; }, 1500);
+      }
+    });
+  }
+});
+
+
+// First-Launch Disclaimer Modal
+document.addEventListener('DOMContentLoaded', () => {
+  if (!localStorage.getItem('sunMapDisclaimerAccepted')) {
+    const disclaimerHTML = `
+      <div class="modal-overlay active" id="disclaimer-modal" style="z-index: 10000; display: flex;">
+        <div class="modal-card" style="text-align: left;">
+          <h2>Welcome to Sun Map</h2>
+          <p style="font-size:0.95rem; line-height:1.5; color:#ccc; margin-bottom:12px;">This is an experimental offline-first event guide designed to help you navigate the show and explore the music.</p>
+          <p style="font-size:0.95rem; line-height:1.5; color:#ff9f0a; font-weight:bold; margin-bottom:16px;">Please Note: Sun Map is for informational purposes only. Do not rely on this app for live emergency directions or life safety, as data may become stale if you lose cell service.</p>
+          <button class="modal-btn" id="btn-accept-disclaimer" style="width: 100%;">I Understand, Let's Go</button>
+        </div>
+      </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', disclaimerHTML);
+    
+    document.getElementById('btn-accept-disclaimer').addEventListener('click', () => {
+      localStorage.setItem('sunMapDisclaimerAccepted', 'true');
+      document.getElementById('disclaimer-modal').remove();
+    });
+  }
+});
