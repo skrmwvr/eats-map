@@ -165,6 +165,21 @@ async function loadCorpusData() {
     if (lyricsRes.ok) state.lyricsDb = await lyricsRes.json();
   } catch(e) { console.warn("Failed to pre-cache lyrics and variations database:", e); }
 
+
+  try {
+    const wrapRes = await fetch('fill-data/event/20260627-young-the-giant-wrap.json');
+    if (wrapRes.ok) state.wrapData = await wrapRes.json();
+  } catch(e) { console.warn("Failed to load wrap data:", e); }
+  
+  // Set default mode
+  const eventDateStr = state.event.date || '2026-06-27';
+  const eventEndDate = new Date(eventDateStr + 'T23:59:59');
+  if (Date.now() > eventEndDate.getTime()) {
+    state.mode = 'wrap';
+  } else {
+    state.mode = 'live';
+  }
+
   await loadArtistSonglist();
   
   renderDashboardMetadata();
@@ -196,7 +211,17 @@ async function loadArtistSonglist() {
       return null;
     });
     const loaded = await Promise.all(promises);
-    state.songs = loaded.filter(s => s !== null);
+    state.liveSongs = loaded.filter(s => s !== null);
+    if (state.wrapData && state.wrapData.actual_setlist_slugs) {
+       state.wrapSongs = [];
+       state.wrapData.actual_setlist_slugs.forEach(slug => {
+         const found = state.liveSongs.find(s => s.slug === slug);
+         if (found) state.wrapSongs.push(found);
+       });
+    } else {
+       state.wrapSongs = state.liveSongs;
+    }
+    state.songs = state.mode === 'wrap' ? state.wrapSongs : state.liveSongs;
   } else if (activeSlug === 'cold-war-kids') {
     const songlist = [
       "all-this-could-be-yours", "can-we-hang-on", "first", "hang-me-up-to-dry",
@@ -215,7 +240,17 @@ async function loadArtistSonglist() {
       return null;
     });
     const loaded = await Promise.all(promises);
-    state.songs = loaded.filter(s => s !== null);
+    state.liveSongs = loaded.filter(s => s !== null);
+    if (state.wrapData && state.wrapData.actual_setlist_slugs) {
+       state.wrapSongs = [];
+       state.wrapData.actual_setlist_slugs.forEach(slug => {
+         const found = state.liveSongs.find(s => s.slug === slug);
+         if (found) state.wrapSongs.push(found);
+       });
+    } else {
+       state.wrapSongs = state.liveSongs;
+    }
+    state.songs = state.mode === 'wrap' ? state.wrapSongs : state.liveSongs;
   } else {
     // almost monday or KennyHoopla fallback mock songs
     state.songs = [
@@ -233,10 +268,16 @@ function renderDashboardMetadata() {
   document.getElementById('venue-status').textContent = state.venue.display_name;
   
   if (state.event.weather) {
-    document.getElementById('weather-status').textContent = `${state.event.weather.temp_f_high}°F / ${state.event.weather.conditions}`;
+    let weatherCond = `${state.event.weather.temp_f_high}°F / ${state.event.weather.conditions}`;
+    let alertText = state.event.weather.forecast_summary;
+    if (state.mode === 'wrap' && state.wrapData && state.wrapData.historical_weather) {
+      weatherCond = `${state.wrapData.historical_weather.temp_f_high}°F / ${state.wrapData.historical_weather.conditions}`;
+      alertText = state.wrapData.historical_weather.forecast_summary;
+    }
+    
+    document.getElementById('weather-status').textContent = weatherCond;
     
     // Add offline context and timestamp to alert banner
-    let alertText = state.event.weather.forecast_summary;
     const now = new Date();
     const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     
@@ -683,6 +724,12 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
             </div>
 
             <p style="font-size:0.9rem; color:#aaa; margin:0;">Developed by <a href="mailto:chozcunningham+sunmap@gmail.com" style="color:var(--accent); text-decoration:none; font-weight:700;">C. Cunningham</a>. Contact us to build this for your tour, concert, or music event.</p>
+            <div style="margin-top: 16px;">
+              <button id="dev-toggle-mode" style="background:#333; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-size:0.8rem;">
+                DEV: Switch to ${state.mode === 'wrap' ? 'Live' : 'Wrap'}
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -691,6 +738,22 @@ document.getElementById('btn-timeline').addEventListener('click', () => {
 
     // Generate QR for footer
     generateShareQRCode('qr-canvas-footer');
+
+    // Bind Dev Toggle
+    const devBtn = document.getElementById('dev-toggle-mode');
+    if (devBtn) {
+      devBtn.addEventListener('click', () => {
+        state.mode = state.mode === 'wrap' ? 'live' : 'wrap';
+        if(state.mode === 'wrap' && state.wrapData) {
+          state.songs = state.wrapSongs || state.liveSongs;
+        } else {
+          state.songs = state.liveSongs;
+        }
+        state.activeSongIndex = 0;
+        renderDashboardMetadata();
+        document.getElementById('btn-venue').click(); // re-render timeline
+      });
+    }
 
     // Bind shortcuts
     document.getElementById('lnk-to-venue').addEventListener('click', () => {

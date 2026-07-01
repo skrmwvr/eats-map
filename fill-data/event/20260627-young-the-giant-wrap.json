@@ -1,0 +1,24 @@
+{
+  "display_name": "Young the Giant — Nashville, TN — 2026-06-27 (Post-Show Wrap)",
+  "historical_weather": {
+    "temp_f_high": 89,
+    "conditions": "Scattered Storms",
+    "forecast_summary": "As expected, a light thunderstorm rolled through during the opener, but cleared up beautifully for the headline set. Thanks for weathering the storm!"
+  },
+  "wrap_features": {
+    "timeline_message": "The Victory Garden tour stop in Nashville has concluded! Thank you for exploring the Sun Map.",
+    "links": [
+      { "title": "📸 View Official Photo Gallery", "url": "https://youngthegiant.com/photos/nashville-2026" },
+      { "title": "👕 Shop Tour Leftovers (Merch)", "url": "https://youngthegiant.com/store" }
+    ]
+  },
+  "actual_setlist_slugs": [
+    "jungle-youth",
+    "the-walk-home",
+    "cough-syrup",
+    "mind-over-matter",
+    "superposition",
+    "silvertongue",
+    "my-body"
+  ]
+}

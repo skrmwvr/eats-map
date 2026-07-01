@@ -1,0 +1,128 @@
+{
+  "name": "Young the Giant",
+  "tagline": "Five lifelong friends who turned Southern California wonder into anthems for the human condition.",
+  "formation_year": 2004,
+  "origin": "Irvine, California",
+  "genre": ["Alternative Rock", "Indie Pop", "Art Rock"],
+  "philosophy_quote": "We wanted to make an album that was an act of radical empathy — the idea that caring for one another is itself a form of resistance. That's what a victory garden is: growing something beautiful precisely because the world is asking you not to.",
+  "philosophy_text": "Young the Giant operates from the belief that music's highest purpose is to close the distance between people — between the audience and the stage, between a listener and their own buried feelings. The band approaches every record as an act of radical empathy, treating vulnerability not as weakness but as the bravest thing a person can offer. Their 2026 album Victory Garden crystallizes this ethos: it is an intentional antidote to cynicism and disconnection, rooted in the conviction that wonder, love, and community are not naive ideals but urgent necessities in a fractured world.",
+  "biography": "Young the Giant began in 2004 in Irvine, California, as a high school project among a group of friends who would eventually become one of the most critically respected indie rock acts of their generation. Originally called The Jakes — a name drawn from the first initials of the founding members — they spent their formative years navigating different schools, rehearsing across Southern California, and discovering a musical chemistry that felt almost accidental in its precision. By 2008, the lineup had crystallized around Sameer Gadhia, Jacob Tilley, Eric Cannata, Payam Doostzadeh, and François Comtois, and the band's dual-guitar orchestrations and Gadhia's soaring falsetto began drawing serious attention on the indie circuit.\n\nIn 2009 the band signed with Roadrunner Records and officially adopted the name Young the Giant in early 2010, releasing their self-titled debut album that same year. The record produced 'Cough Syrup,' a slow-burning anthem that became a cultural touchstone after prominent placements in television and a deeply felt viral moment, and 'My Body,' a propulsive, stadium-ready declaration of resilience. The debut established their signature: richly layered guitars, melodically adventurous songwriting, and lyrics that felt both confessional and universal. Mind Over Matter (2014) expanded their sonic palette with lush production, while Home of the Strange (2016) represented their most explicitly identity-driven work — Gadhia, of Indian heritage, wrestling with questions of belonging and cultural duality in a way that resonated far beyond their existing fanbase.\n\nMirror Master (2018) and American Bollywood (2022) demonstrated a band unafraid of reinvention, incorporating synth-forward textures, global rhythms, and a commitment to emotional scale that kept them vital across two decades. Throughout every era, the five members remained remarkably unchanged in their dynamic: a genuinely democratic creative partnership where every voice shapes the final work. By the time they founded their own label, Jungle Youth Music (licensed to Fearless Records), they had built the infrastructure to make music entirely on their terms.\n\nVictory Garden (2026), released May 1st, is the culmination of that independence and of twenty-plus years of friendship. Shaped by the members' experiences as parents and as citizens navigating a world in upheaval, the album is a deliberate act of hope — eleven tracks that refuse despair without pretending the difficulty isn't real. The Victory Garden Tour, which arrives at Nashville's Ascend Amphitheater tonight, carries a REVERB partnership focused on sustainability and community impact, with Action Villages at each venue where fans can engage with local food-security and climate initiatives. It is a band behaving like a victory garden: growing something essential, together, for whoever needs it.",
+  "members": [
+    {
+      "name": "Sameer Gadhia",
+      "role": "Lead Vocals, Percussion",
+      "instrument": "Vocals, Percussion, Acoustic Guitar, Keys",
+      "background": "Born in the Bay Area and raised in Irvine, Gadhia is of Indian heritage and has spoken candidly about navigating dual cultural identities — an experience that became the explicit subject of Home of the Strange. He studied human biology at Stanford before taking a leave of absence to commit fully to the band, making him one of the few frontmen who can credibly speak about both the neuroscience of emotion and the feeling of a song at the same time.",
+      "known_for": "A four-octave vocal range that moves from intimate whisper to arena-filling falsetto in the same breath"
+    },
+    {
+      "name": "Jacob Tilley",
+      "role": "Guitar",
+      "instrument": "Electric Guitar, Acoustic Guitar",
+      "background": "A founding member whose melodic sensibility and atmospheric guitar work define the band's sonic architecture. Tilley has cited the interplay between himself and Cannata as the creative engine of the band — two guitarists who think rhythmically and harmonically in complementary ways, rarely competing and always serving the song.",
+      "known_for": "Expansive, effects-laden guitar landscapes that give YTG songs their cinematic width"
+    },
+    {
+      "name": "Eric Cannata",
+      "role": "Guitar",
+      "instrument": "Electric Guitar, Slide Guitar",
+      "background": "A Southern California native, Cannata joined the band during its formative period and brings a more aggressive, rhythmic counterpoint to Tilley's melodic approach. His use of boutique effects and unconventional guitar textures is a constant source of the band's sonic surprises, from the abrasive interludes of Mirror Master to the warm pastoral tones of Victory Garden.",
+      "known_for": "Gritty rhythmic counterpoint and experimental use of effects pedals"
+    },
+    {
+      "name": "Payam Doostzadeh",
+      "role": "Bass Guitar",
+      "instrument": "Bass Guitar",
+      "background": "The band's harmonic anchor, Doostzadeh plays with a melodic inventiveness that makes his bass lines feel like a third guitar rather than a rhythm instrument. Of Iranian heritage, he and Gadhia have spoken about sharing a particular experience of growing up Iranian-American in post-9/11 Southern California, and how that shaped their view of music as a bridge-building art form.",
+      "known_for": "Melodic bass lines that function as compositional countermelodies"
+    },
+    {
+      "name": "François Comtois",
+      "role": "Drums, Percussion",
+      "instrument": "Drums, Electronic Percussion",
+      "background": "A Canadian-born drummer who joined the band around 2008 and has since become one of the most technically precise and emotionally responsive rhythm players in indie rock. His hybrid live setup — combining acoustic kit with electronic triggering via Native Instruments Maschine — allows the band to reproduce the textural complexity of their studio records with full fidelity live.",
+      "known_for": "Hybrid acoustic-electronic drum setup that bridges studio precision and live spontaneity"
+    }
+  ],
+  "equipment": [
+    {
+      "member": "Sameer Gadhia",
+      "gear": "Shure KSM9 HS handheld condenser for primary vocals; TC Helicon vocal processor for select effected parts; Martin 000-18 acoustic guitar (1952 vintage) for acoustic moments; Shure Beta 56A for percussion reinforcement"
+    },
+    {
+      "member": "Jacob Tilley",
+      "gear": "Gibson CS-336 semi-hollow electric; Fender American Vintage '52 Telecaster; Fender '59 Bassman reissue amp; EarthQuaker Devices Afterneath reverb, Organizer polyphonic organ emulator, The Depths V2 optical vibe; Chase Bliss Audio Warped Vinyl mkII"
+    },
+    {
+      "member": "Eric Cannata",
+      "gear": "Fender Classic Player Jaguar Special; Gibson CS-336; Fender '68 Custom Princeton Reverb amp; EarthQuaker Devices Bit Commander analog synth/octave, Afterneath; Chase Bliss Audio Tonal Recall analog delay; Moog Minifooger MF Delay v2"
+    },
+    {
+      "member": "Payam Doostzadeh",
+      "gear": "Fender Precision Bass (primary); Fender Jazz Bass (secondary); Ampeg SVT-VR all-tube bass head for the warm, punchy tone that anchors the band's live sound"
+    },
+    {
+      "member": "François Comtois",
+      "gear": "Acoustic kit with Zildjian cymbals: 14\" A New Beat Hi-Hats, 18\" K Custom Session Crash, 20\" K Constantinople Bounce Ride (used as crash/ride), 20\" A Ping Ride; Native Instruments Maschine MKII for electronic triggering and sample playback; Shure Beta 57A on snare and toms"
+    }
+  ],
+  "influences": [
+    "Radiohead",
+    "U2",
+    "Beck",
+    "TV on the Radio",
+    "Tame Impala",
+    "Fleetwood Mac",
+    "Led Zeppelin",
+    "Vampire Weekend",
+    "Arcade Fire",
+    "A.R. Rahman"
+  ],
+  "key_albums": [
+    {
+      "title": "Young the Giant",
+      "year": 2010,
+      "significance": "Debut album that launched 'Cough Syrup' and 'My Body' into the cultural mainstream and established the band's signature of soaring vocals over layered dual-guitar architecture.",
+      "spotify_url": "https://open.spotify.com/album/5MbNeQbGTCIKDKMoroRF0M"
+    },
+    {
+      "title": "Mind Over Matter",
+      "year": 2014,
+      "significance": "A sonic leap forward into lush, orchestrated indie pop, featuring 'Mind Over Matter' and 'Crystallized,' and cementing the band's reputation for ambitious, emotionally layered songwriting.",
+      "spotify_url": "https://open.spotify.com/album/6LNDMdWa0n8K1W1KsJJH5o"
+    },
+    {
+      "title": "Home of the Strange",
+      "year": 2016,
+      "significance": "Their most autobiographical record, exploring Gadhia's Indian-American identity and cultural dislocation through a bold mix of electronic production and global instrumentation — a landmark in identity-driven indie rock.",
+      "spotify_url": "https://open.spotify.com/album/6i2PTqnRXdNoGarBPGfr0a"
+    },
+    {
+      "title": "Mirror Master",
+      "year": 2018,
+      "significance": "A darker, more experimental collection exploring ego and self-deception, marked by dramatic production shifts and some of the band's most challenging and rewarding arrangements.",
+      "spotify_url": "https://open.spotify.com/album/2TyCxlWlPSQ3o3FehNLeSx"
+    },
+    {
+      "title": "American Bollywood",
+      "year": 2022,
+      "significance": "A sweeping, cross-cultural concept album celebrating plurality and belonging, drawing on South Asian musical traditions and produced with full creative independence on their own Jungle Youth Music imprint.",
+      "spotify_url": "https://open.spotify.com/album/0P9VBqQjXblJfGOxNIVJFb"
+    },
+    {
+      "title": "Victory Garden",
+      "year": 2026,
+      "significance": "Their sixth studio album and the artistic statement of a band in full maturity — eleven tracks of radical empathy, written by parents and friends who believe that caring through chaos is the most revolutionary act possible.",
+      "spotify_url": "https://open.spotify.com/artist/4j56EQDQu5XnL7R3E9iFJT"
+    }
+  ],
+  "touring_notes": "Young the Giant's live show is a masterclass in emotional calibration — they build from intimate, almost vulnerable openings to stadium-scale catharsis and back again with complete control. Gadhia is a gifted live frontman who moves between storytelling, direct audience address, and full physical commitment to the music. The dual-guitar interplay between Tilley and Cannata creates a wall of sound that fills amphitheater spaces without losing its textural complexity. Comtois's hybrid drum setup allows them to reproduce the studio's electronic elements live while maintaining a driving human pulse. The Victory Garden Tour features an REVERB Action Village outside each venue, and the band regularly acknowledges their sustainability commitments and community partners from the stage. Set lengths average 90 minutes across a career-spanning 20–22 song set, with Victory Garden material anchoring the first half before a classics-heavy second half designed for collective catharsis.",
+  "links": [
+    { "label": "Official Site", "url": "https://youngthegiant.com" },
+    { "label": "Spotify", "url": "https://open.spotify.com/artist/4j56EQDQu5XnL7R3E9iFJT" },
+    { "label": "Instagram", "url": "https://www.instagram.com/youngthegiant/" },
+    { "label": "YouTube", "url": "https://www.youtube.com/channel/UCG0B2Q2T94FmP8w7T8Bw6Yw" },
+    { "label": "REVERB Partnership", "url": "https://reverb.org" }
+  ],
+  "tonight_context": "Tonight at Ascend Amphitheater is the Nashville stop of the Victory Garden Tour — a show that represents the full arc of a band twenty-two years into a friendship that has never stopped surprising them. The setlist pulls from every era, but Victory Garden is the emotional center of gravity: an album that Gadhia has described as being written in direct response to the exhaustion and fragmentation of modern life, a love letter to radical empathy as a survival strategy. For a band that grew up together, found their sound together, and built their own label together, this tour is proof that the garden they've been tending since Irvine in 2004 is still very much in bloom."
+}

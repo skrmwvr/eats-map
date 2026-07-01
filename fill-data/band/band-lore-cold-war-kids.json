@@ -1,0 +1,121 @@
+{
+  "name": "Cold War Kids",
+  "tagline": "Barroom confessionals built from gospel bones — the sound of a soul refusing to go quietly.",
+  "formation_year": 2004,
+  "origin": "Fullerton, California",
+  "genre": ["Indie Rock", "Blues Rock", "Gospel Soul", "Alternative Rock"],
+  "philosophy_quote": "Every song is a character study. We're trying to find the humanity in the person at their worst moment — not to excuse them, but to understand them. That's what gospel does. That's what the blues does.",
+  "philosophy_text": "Cold War Kids approach songwriting as a form of moral portraiture — painting characters in extremity and finding compassion for them anyway. Nathan Willett draws directly from the confessional traditions of American gospel and Southern blues, treating the piano not as an accompaniment instrument but as a co-narrator, percussive and emotive in equal measure. The result is music that feels both ancient and urgent, rooted in liturgical structure but filled with contemporary moral anxiety and the specific textures of the American West Coast.",
+  "biography": "Cold War Kids formed in 2004 among students at Biola University in Fullerton, California. Nathan Willett (vocals, piano, guitar) and Matt Maust (bass) became the creative core of the band, their partnership built on a shared appetite for blues, gospel, and literary storytelling. With guitarist Jonnie Russell and drummer Matt Aveiro, they began writing in Russell's apartment above a restaurant called Mulberry Street — a name they eventually gave to one of their early EPs. From the beginning, the band treated the song as a short story: each track a character study, a moral drama, a snapshot of someone at a crossroads.\n\nTheir 2006 debut, Robbers & Cowards, was an immediate critical sensation. Produced with raw urgency and centered on Willett's piano-driven narratives and strained, soulful vocals, it was immediately recognized as something distinct from the indie rock landscape of its moment. Where contemporaries were chasing sonic experimentation, Cold War Kids were reaching backward toward gospel barrelhouses and prison songs while writing about alcoholism, hospitalization, and moral failure with literary precision. 'Hang Me Up to Dry' became their signature, its laundry-line metaphor for emotional exhaustion still one of the most economical images in modern indie rock. 'Hospital Beds' and 'We Used to Vacation' confirmed that the debut was not a fluke but a fully formed artistic vision.\n\nOver the following two decades the band navigated lineup changes with remarkable resilience, Willett and Maust remaining the constant while the rhythm section and guitar roles evolved. By 2016 the lineup solidified around the five-piece that would carry them into their most commercially successful period: Willett, Maust, guitarist David Quon, multi-instrumentalist Matthew Schwartz, and drummer Joe Plummer. 'First' (2014) became one of the band's biggest radio hits, demonstrating their ability to write arena-sized choruses without losing their bluesy, confessional soul. The band continued releasing records throughout the 2010s and into the 2020s, each one finding new angles on their core preoccupation: the human heart in failure and the possibility of grace.\n\nIn 2026, Cold War Kids are marking the twentieth anniversary of Robbers & Cowards with an expanded edition that includes 'There Goes The Night,' a newly completed track from the original album's sessions. The anniversary tour has them supporting Young the Giant on the Victory Garden Tour — a fitting pairing, both bands having grown from Southern California college friendships into career-long artistic commitments. Tonight's set at Ascend Amphitheater draws on twenty years of material, with particular weight given to the debut album that started everything: a reminder that some seeds grow into something that lasts.",
+  "members": [
+    {
+      "name": "Nathan Willett",
+      "role": "Lead Vocals, Piano, Guitar",
+      "instrument": "Piano, Guitar, Vocals",
+      "background": "The band's principal songwriter and frontman, Willett studied literature at Biola University and brings a novelist's sense of character and scene to his lyrics. His vocal style — nasal, strained, vibrato-heavy — draws directly from gospel and Southern soul traditions, and his piano playing treats the instrument as a rhythmic and emotional weapon rather than a melodic backdrop.",
+      "known_for": "Dissonant, percussive barroom piano and a voice that sounds like it's testifying from the edge"
+    },
+    {
+      "name": "Matt Maust",
+      "role": "Bass Guitar",
+      "instrument": "Bass Guitar",
+      "background": "Co-founder and the harmonic anchor of Cold War Kids, Maust has been the band's visual artist and bassist since the beginning, designing much of the band's artwork alongside his bass duties. His melodic bass approach — more in conversation with the piano than locked to the drums — is central to the band's distinctive sound.",
+      "known_for": "Melodic, piano-forward bass lines and visual artistry for the band's visual identity"
+    },
+    {
+      "name": "David Quon",
+      "role": "Guitar, Backing Vocals",
+      "instrument": "Electric Guitar, Acoustic Guitar",
+      "background": "Joined the band's stable lineup around 2016 and brought a clean, textured guitar approach that complements Willett's piano without competing. Quon's playing tends toward sustained lines and harmonic color rather than flash, making him an ideal sonic fit for the band's emotionally precise sound.",
+      "known_for": "Clean, emotionally resonant guitar lines that serve the song's narrative"
+    },
+    {
+      "name": "Matthew Schwartz",
+      "role": "Keyboards, Guitar, Backing Vocals, Percussion",
+      "instrument": "Keys, Guitar, Percussion",
+      "background": "The band's most versatile member, Schwartz fills the sonic space between Willett's piano and the guitar section with a range of keyboard tones, additional percussion, and rhythmic guitar work. His presence gives the live band a depth that allows them to reproduce their studio complexity with fidelity.",
+      "known_for": "Multi-instrumental versatility that gives the live band its orchestral depth"
+    },
+    {
+      "name": "Joe Plummer",
+      "role": "Drums, Percussion",
+      "instrument": "Drums, Percussion",
+      "background": "Former member of Modest Mouse who joined Cold War Kids around 2016, Plummer brings a rolling, blues-inflected rhythmic sensibility that locks with the band's gospel influences. His drumming never overpowers the piano — it frames it, creating space for Willett's narratives to breathe and hit.",
+      "known_for": "Blues-inflected, dynamically sensitive drumming that serves the song's story above all"
+    }
+  ],
+  "equipment": [
+    {
+      "member": "Nathan Willett",
+      "gear": "Yamaha CP88 stage piano for live performances — chosen for its weighted action and tonal authenticity to vintage upright and grand piano sounds; Gibson ES-335 for guitar parts; various vintage Fender and Vox amplifiers depending on venue size; Shure SM58 for primary vocals"
+    },
+    {
+      "member": "Matt Maust",
+      "gear": "Fender Jazz Bass (primary); Fender Precision Bass (secondary); Ampeg SVT-CL head with 8x10 cabinet for the deep, warm bass tone characteristic of their recordings; DR Strings Lo-Rider Nickel series"
+    },
+    {
+      "member": "David Quon",
+      "gear": "Fender Telecaster and Gibson ES-335 as primary guitars; Fender Princeton Reverb and Deluxe Reverb amps; Strymon Timeline delay and BigSky reverb; Boss TU-3 Chromatic Tuner"
+    },
+    {
+      "member": "Matthew Schwartz",
+      "gear": "Nord Stage 3 for keys and organ sounds; secondary Fender Stratocaster for guitar parts; Roland SPD series electronic percussion pad; Line 6 Helix for amp modeling on guitar"
+    },
+    {
+      "member": "Joe Plummer",
+      "gear": "Pearl Masters Premium series drums; Zildjian A Custom cymbals including hi-hats, crashes, and ride; Evans Hydraulic drumheads for warm, dampened studio-style tones; DW 9000 series hardware"
+    }
+  ],
+  "influences": [
+    "Otis Redding",
+    "Sam Cooke",
+    "Tom Waits",
+    "Nick Cave",
+    "Howlin' Wolf",
+    "The Velvet Underground",
+    "Radiohead",
+    "Bob Dylan",
+    "Gillian Welch",
+    "Fats Domino"
+  ],
+  "key_albums": [
+    {
+      "title": "Robbers & Cowards",
+      "year": 2006,
+      "significance": "Their landmark debut — a gospel-inflected, piano-driven portrait of human failure and redemption that still sounds unlike anything before or since. The 20th Anniversary expanded edition (2026) adds completed tracks from the original sessions.",
+      "spotify_url": "https://open.spotify.com/album/7jMFzAhYajrWz4ue1DjK6B"
+    },
+    {
+      "title": "Loyalty to Loyalty",
+      "year": 2008,
+      "significance": "Darker and more experimental than the debut, with extended song structures and a theatrical quality that pushed the band's storytelling ambitions further.",
+      "spotify_url": "https://open.spotify.com/album/4RFGPqoAlQ0JWb1bQR1Swt"
+    },
+    {
+      "title": "Mine Is Yours",
+      "year": 2011,
+      "significance": "A cleaner, more radio-accessible collection that found the band broadening their sound without abandoning their blues foundations — 'Sensitive Kid' became a fan staple.",
+      "spotify_url": "https://open.spotify.com/album/6u5tFDtL8JUFkbCsaI3o9Q"
+    },
+    {
+      "title": "Hold My Home",
+      "year": 2014,
+      "significance": "Spawned 'First,' their biggest commercial hit and a showcase for how the band had learned to write for arenas without losing their soul.",
+      "spotify_url": "https://open.spotify.com/album/2KvHC9z14GSl4YpkNMX384"
+    },
+    {
+      "title": "New Age Norms (1, 2, 3)",
+      "year": "2019–2020",
+      "significance": "An ambitious three-part release cycle that saw the band releasing music in smaller batches, exploring modern themes of disconnection and identity across a trilogy of interconnected EPs.",
+      "spotify_url": "https://open.spotify.com/artist/7lOPHT4lzRVVVSFEJ7MDYc"
+    }
+  ],
+  "touring_notes": "Cold War Kids' live shows are exercises in controlled chaos — Willett is one of the most physically committed frontmen in indie rock, hammering piano keys, circling the stage, and turning each song into a one-man revival meeting. The band's gospel-blues DNA means their live arrangements breathe differently from the studio versions: tempos flex, piano lines improvise freely, and songs regularly end in extended instrumental passages or unplanned choral moments with the audience. Their Robbers & Cowards anniversary sets give particular attention to the debut's narrative tracks, with Willett often stepping off the piano bench entirely to deliver verses with raw, unaccompanied vocal intensity before the full band crashes back in.",
+  "links": [
+    { "label": "Official Site", "url": "https://www.coldwarkids.com" },
+    { "label": "Spotify", "url": "https://open.spotify.com/artist/7lOPHT4lzRVVVSFEJ7MDYc" },
+    { "label": "Instagram", "url": "https://www.instagram.com/coldwarkids" },
+    { "label": "YouTube", "url": "https://www.youtube.com/@coldwarkidsvideos" }
+  ],
+  "tonight_context": "Tonight Cold War Kids perform as direct support for Young the Giant, carrying the full weight of a twenty-year anniversary. Robbers & Cowards — the album that made them — turns twenty this year, and the band has been playing expanded sets that honor it alongside current material. The expanded edition's first new track 'There Goes The Night' has been a highlight of recent shows, giving longtime fans a gift from the past while pointing toward whatever comes next. For fans who discovered them through 'Hang Me Up to Dry' on a teenage playlist, or through 'First' on a college road trip, tonight is an opportunity to hear a band that has never stopped believing in the redemptive power of a good piano and an honest lyric."
+}

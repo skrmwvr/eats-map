@@ -1,0 +1,91 @@
+{
+  "name": "almost monday",
+  "tagline": "Three surfers from San Diego who found that the best cure for a bad week is a song that sounds like the first warm day of summer.",
+  "formation_year": 2015,
+  "origin": "San Diego, California",
+  "genre": ["Indie Pop", "Surf Pop", "Alternative Pop", "Sunshine Rock"],
+  "philosophy_quote": "We want people to feel something real — even if that feeling is just pure happiness. Joy is underrated as an artistic goal. A song that makes someone feel genuinely good is not less serious than a song that makes them feel bad.",
+  "philosophy_text": "almost monday operate from the conviction that optimism is not naivety — it is a discipline. Their songwriting is built around the belief that the most honest thing a California band can offer the world is the specific feeling of sunshine on your face when everything else is going wrong. They write songs about longing, distance, and the small disasters of modern life, but they frame them inside melodies and textures so warmly inviting that the emotional effect is closer to a hug than a confession. This is pop music as an act of genuine generosity.",
+  "biography": "almost monday formed in San Diego in 2015 when three friends who had spent their lives surfing, skateboarding, and soaking in Southern California's particular brand of golden-hour optimism decided to put all of that into songs. Dawson Daugherty and Luke Fabry had known each other since childhood; Daugherty met Cole Clisby through their shared surf life in San Diego, and the trio's chemistry was immediate. They started playing wherever anyone would have them — shows in the back of a local surf shop, a set in an airplane hangar, the kinds of venues that feel more like hanging out than performing — and began developing a sound that was inseparable from the light and warmth of where they grew up.\n\nTheir breakthrough came through an act of deliberate boldness: the band cold-emailed producer Mark Needham, whose credits included landmark albums by The Killers and Fleetwood Mac. Needham was charmed enough to become a mentor and to connect them with producer Simon Oscroft, and the professional relationship that followed transformed their DIY California pop into something market-ready without bleaching out what made it special. The band signed with Hollywood Records in early 2019 and began releasing the EP series that would build their audience: don't say you're ordinary (2020) introduced them to the wider world with 'broken people,' a song that became their calling card — a communal anthem about imperfection and mutual care that landed on playlists and soundtracks and found its way into the hearts of the kind of listeners who need a song that tells them it's okay to not have it all together.\n\nThe til the end of time EP (2021) deepened the catalog, and the 2022 single 'sun keeps on shining' distilled their entire philosophy into three minutes of irresistible sunlit pop. Their 2024 debut full-length, Dive, was the moment the band fully arrived: lead single 'can't slow down' reached number one on the Billboard Alternative Airplay chart and announced them as one of the most joyfully distinctive voices in contemporary alternative pop. The album demonstrated their range — melancholy verses giving way to euphoric choruses, specific California imagery anchoring universal feelings of longing and connection.\n\nTonight at Ascend Amphitheater, almost monday open for Young the Giant as a band whose star is still rising but whose identity is already fully formed. They are the rare opening act who earns a room before the headliner has even touched a stage — audiences that have never heard of them tend to leave as fans, because the band plays with the infectious enthusiasm of people who cannot quite believe they get to do this for a living and have decided to be grateful about it every single night.",
+  "members": [
+    {
+      "name": "Dawson Daugherty",
+      "role": "Lead Vocals, Guitar",
+      "instrument": "Vocals, Guitar",
+      "background": "The band's frontman and principal emotional conduit, Daugherty grew up in San Diego with Luke Fabry and came to music through surf culture, skate videos, and the kind of California childhood where the radio is always on. His vocal style is warm, conversational, and genuinely joyful — he sounds like he means every word, which is the hardest thing to fake.",
+      "known_for": "Effortless sunny charisma that makes every live show feel like a reunion with old friends"
+    },
+    {
+      "name": "Cole Clisby",
+      "role": "Guitar",
+      "instrument": "Electric Guitar, Acoustic Guitar",
+      "background": "Daugherty's surf buddy turned bandmate, Clisby grew up at blink-182 and Foo Fighters shows and built his guitar style from the melodic clarity of post-punk and power pop. His guitar work is clean and inventive, favoring Telecaster chime over distorted flash, and his harmonics give the band's live sound its crystalline shimmer.",
+      "known_for": "Telecaster-bright melodic guitar lines that cut through the mix with California clarity"
+    },
+    {
+      "name": "Luke Fabry",
+      "role": "Bass, Keys",
+      "instrument": "Bass Guitar, Keys",
+      "background": "Childhood friends with Dawson and raised on The Beatles, Fabry brings a melodic bass sensibility shaped by classic pop songcraft. He doubles on keys live, filling out the band's harmonic palette and giving their trio-sized live sound a four-piece density. His Beatles-rooted melodic instincts are the reason almost monday's bass lines feel like songs within songs.",
+      "known_for": "Beatles-influenced melodic bass playing that makes every arrangement feel complete"
+    }
+  ],
+  "equipment": [
+    {
+      "member": "Dawson Daugherty",
+      "gear": "Nash Telecaster T63 as primary electric guitar; Fender Stratocaster as secondary; Kemper Profiler Stage Floorboard for amp modeling; Elixir 10-gauge NanoWeb strings; Dunlop Jazz III 1.38mm picks; AKG WMS Wireless system"
+    },
+    {
+      "member": "Cole Clisby",
+      "gear": "Fender Telecaster Deluxe and Fender Chris Shiflett Signature Telecaster Deluxe; Kemper Profiler Stage Floorboard; Boss TU-3 Chromatic Tuner; Boss LS-2 Line Selector for A/B channel switching; Elixir NanoWeb 10-46 strings; Dunlop Jazz III 1.14mm picks; Ultimate Ears UE 7 in-ear monitors"
+    },
+    {
+      "member": "Luke Fabry",
+      "gear": "Fender Jazz Bass (primary) for the warm, melodic tone that underlies their recordings; Ampeg BA-210 combo amp for smaller venues; Nord Electro 6D for keys and organ sounds live; Ernie Ball Regular Slinky bass strings"
+    }
+  ],
+  "influences": [
+    "The Beach Boys",
+    "The Beatles",
+    "Blink-182",
+    "Foo Fighters",
+    "The 1975",
+    "Coldplay",
+    "Oasis",
+    "David Bowie",
+    "Prince",
+    "Frank Ocean",
+    "Gorillaz",
+    "The Smiths",
+    "U2",
+    "Justice"
+  ],
+  "key_albums": [
+    {
+      "title": "don't say you're ordinary",
+      "year": 2020,
+      "significance": "The EP that introduced them to the world, built around 'broken people' — a communal anthem that became their calling card and established their signature of warm lyrics inside irresistible pop architecture.",
+      "spotify_url": "https://open.spotify.com/album/4MnjEVEYzKEUEKqhJ6qFDX"
+    },
+    {
+      "title": "til the end of time",
+      "year": 2021,
+      "significance": "Their second EP, deepening the catalog with more sophisticated arrangements while maintaining the effortless California warmth that defines their sound.",
+      "spotify_url": "https://open.spotify.com/artist/5JbEn6bOB4LzSHJJyaqxjY"
+    },
+    {
+      "title": "Dive",
+      "year": 2024,
+      "significance": "Their debut full-length album and commercial breakthrough — 'can't slow down' hit number one on Billboard Alternative Airplay, confirming their status as one of alternative pop's most joyfully singular voices.",
+      "spotify_url": "https://open.spotify.com/artist/5JbEn6bOB4LzSHJJyaqxjY"
+    }
+  ],
+  "touring_notes": "almost monday are a genuinely great live band hiding behind a reputation as a 'fun opener.' Daugherty is a natural frontman — warm, funny, and utterly without pretension — and the trio's tight arrangements punch well above their size. Sets run 25–35 minutes in support slots but cover the full emotional range of their catalog: euphoric crowd moments built around 'broken people' and 'can't slow down,' quieter, more intimate passages that show the band's range, and a consistent thread of genuine happiness that proves infectious without feeling manufactured. They are the kind of band you arrive early for.",
+  "links": [
+    { "label": "Official Site", "url": "https://almostmonday.com" },
+    { "label": "Spotify", "url": "https://open.spotify.com/artist/5JbEn6bOB4LzSHJJyaqxjY" },
+    { "label": "Instagram", "url": "https://www.instagram.com/almostmonday" },
+    { "label": "Hollywood Records", "url": "https://www.hollywoodrecords.com" }
+  ],
+  "tonight_context": "Tonight almost monday open the Ascend Amphitheater show as a band in the middle of their own trajectory — past the hustle of the DIY years, past the early label period of building credibility, and now confidently in the stretch where every show adds to a growing body of believers. Their energy will set the tone for the evening: optimistic, generous, kinetic. The band that cold-emailed a Grammy-winning producer on a long shot and turned San Diego surf culture into something the whole country wanted to sing along to is now playing amphitheaters, and they have not forgotten what it felt like to play airplane hangars. That memory shows in how they play."
+}
