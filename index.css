@@ -485,6 +485,27 @@ body {
   transform: translateX(-2px);
 }
 
+/* CENTER PANEL: SQUARE VIEWPORT */
+.viewport-square {
+  flex: 1 1 0;
+  min-height: 0;
+  width: 100%;
+  border-bottom: 2px solid var(--border-color);
+  position: relative;
+  background-color: #10121a;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Ensure Leaflet controls and map tiles stay beneath header dropdowns */
+#leaflet-map {
+  z-index: 1 !important;
+}
+
+.leaflet-pane, .leaflet-top, .leaflet-bottom {
+  z-index: 10 !important;
+}
+
 /* Clickable Day Forecast Cards (Tapping jumps to that day's Program view) */
 .forecast-day-card {
   padding: 10px 12px;
