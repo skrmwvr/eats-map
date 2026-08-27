@@ -930,8 +930,6 @@ class EatsMapApp {
   toggleTempUnit() {
     this.tempUnit = this.tempUnit === 'F' ? 'C' : 'F';
     localStorage.setItem('eatsmap_temp_unit', this.tempUnit);
-    const btn = document.getElementById('btn-temp-unit');
-    if (btn) btn.textContent = `°${this.tempUnit}`;
     this.updateTopBarStatus();
     if (this.activeViewport === 'weather') {
       this.renderWeatherView(document.getElementById('viewport-content'));
@@ -946,13 +944,29 @@ class EatsMapApp {
     return `${f}°F`;
   }
 
+  getWeatherIcon(conditions = '') {
+    const c = conditions.toLowerCase();
+    if (c.includes('sunny')) return '☀️';
+    if (c.includes('clear')) return '✨';
+    if (c.includes('rain') || c.includes('shower')) return '🌧️';
+    if (c.includes('thunder') || c.includes('storm')) return '⛈️';
+    if (c.includes('cloud')) return '⛅';
+    if (c.includes('wind') || c.includes('breezy')) return '💨';
+    return '🌤️';
+  }
+
   renderWeatherView(container) {
     const days = (this.venue && this.venue.days) ? this.venue.days : [];
     container.innerHTML = `
       <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px;">
-        <h2 style="color: #fff; font-size: 1.45rem; font-weight: 900; font-family: 'Outfit'; margin-bottom: 4px; letter-spacing: -0.01em;">
-          🌤️ FoodieLand 3-Day Forecast
-        </h2>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
+          <h2 style="color: #fff; font-size: 1.4rem; font-weight: 900; font-family: 'Outfit'; margin: 0; letter-spacing: -0.01em;">
+            🌤️ FoodieLand 3-Day Forecast
+          </h2>
+          <button class="temp-unit-toggle" onclick="window.app.toggleTempUnit()" title="Click to switch between Fahrenheit and Celsius">
+            °${this.tempUnit}
+          </button>
+        </div>
         <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 14px;">
           Nashville Superspeedway • Lebanon, TN
         </p>
@@ -961,18 +975,19 @@ class EatsMapApp {
           const afternoonF = d.temp_afternoon_f || 84;
           const eveningF = d.temp_evening_f || 74;
           const cond = d.conditions || d.weather.split('•')[1]?.trim() || 'Clear';
+          const icon = this.getWeatherIcon(cond);
           return `
             <div style="padding: 10px 12px; background: var(--bg-surface); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border-color);">
               <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
-                <strong style="color: var(--fl-orange); font-size: 0.95rem;">${d.date_str}</strong>
-                <span style="color: var(--fl-yellow); font-size: 0.8rem; font-weight: 600;">${cond}</span>
+                <strong style="color: var(--fl-orange); font-size: 0.92rem;">${d.date_str}</strong>
+                <span style="color: var(--fl-yellow); font-size: 0.78rem; font-weight: 600;">${icon} ${cond}</span>
               </div>
-              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem;">
-                <span style="color: var(--text-secondary);">Hours: ${d.hours}</span>
-                <span style="color: #fff; font-weight: 700;">
-                  <span style="color: var(--fl-yellow);">☀️ Afternoon: ${this.formatTemp(afternoonF)}</span>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem;">
+                <span style="color: var(--text-secondary); font-size: 0.72rem;">${d.hours}</span>
+                <span style="font-weight: 800; font-size: 0.8rem; white-space: nowrap;">
+                  <span style="color: var(--fl-yellow);">${this.formatTemp(afternoonF)} day</span>
                   <span style="color: var(--text-muted); margin: 0 4px;">•</span>
-                  <span style="color: var(--fl-teal);">🌙 Evening: ${this.formatTemp(eveningF)}</span>
+                  <span style="color: var(--fl-teal);">${this.formatTemp(eveningF)} eve</span>
                 </span>
               </div>
             </div>
@@ -980,7 +995,7 @@ class EatsMapApp {
         }).join('')}
         
         <!-- Plain English Hydration & Safe Spot Map Focus Actions -->
-        <div style="margin-top: 14px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; font-size: 0.8rem; line-height: 1.5; color: #e2e8f0;">
+        <div style="margin-top: 14px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; font-size: 0.78rem; line-height: 1.5; color: #e2e8f0;">
           <p style="margin-bottom: 8px;">
             💧 <strong>Stay Hydrated:</strong> Free refill stations are stationed across the grounds. 
             <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('water')" style="color: var(--fl-teal); font-weight: 700; text-decoration: underline; margin-left: 4px;">
