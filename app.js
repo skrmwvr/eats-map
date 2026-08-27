@@ -5,7 +5,7 @@ class EatsMapApp {
     this.vendors = window.EMBEDDED_VENDORS || [];
     this.venue = window.EMBEDDED_VENUE || null;
     this.activeViewport = 'home';
-    this.homeDisplayMode = 'deck'; // 'deck', 'list', or 'map'
+    this.homeDisplayMode = 'list'; // 'list' or 'map'
     this.activeDayIndex = 0; // 0: Fri Aug 28, 1: Sat Aug 29, 2: Sun Aug 30
     this.activeDishIndex = 0;
     this.allFeaturedDishes = [];
