@@ -39,9 +39,10 @@ delivery purpose. Bundles are not the source of truth — entities are.
 | Artist | `artist:{kebab-slug}` | A performing artist or band |
 | Tour | `tour:{artist-slug}-{tour-slug}` | A named tour by an artist |
 | Venue | `venue:{kebab-slug}` | A physical performance venue |
-| Event | `event:{artist-slug}-{city-slug}-{date}` | A single dated show |
+| Festival | `festival:{festival-slug}-{year}` | A multi-day event wrapper pointing to daily Events |
+| Event | `event:{slug}-{date}` | A single dated show (or a single day of a festival) |
 | Song | `song:{artist-slug}-{song-slug}` | A canonical song in the artist catalog |
-| PerformanceContext | `perf-ctx:{event-id}-{song-slug}` | Live arrangement details for a song at a specific event |
+| PerformanceContext | `perf-ctx:{event-id}-{artist-slug}-{song-slug}` | Live arrangement details for a song at a specific event |
 | Source | `source:{type}-{slug}` | A provenance-tracked web or document source |
 | Bundle | `bundle:{verb}-{noun}` | A derived view assembled for rendering or AI delivery |
 
@@ -134,6 +135,7 @@ delivery purpose. Bundles are not the source of truth — entities are.
     "accessibility_url": null,
     "gates_open_offset_minutes": null,
     "clear_bag_required": null,
+    "stage_navigation": null, // Guidance on confusing stage names (e.g., "Stage Blue Moon")
     "notes": []
   },
 
@@ -144,7 +146,31 @@ delivery purpose. Bundles are not the source of truth — entities are.
 }
 ```
 
-### 4.4 Event
+### 4.4 Festival (Multi-Day Wrapper)
+
+```jsonc
+{
+  "id": "festival:lollapalooza-2026",
+  "type": "festival",
+  "display_name": "Lollapalooza 2026",
+  
+  "venue_id": "venue:grant-park",
+  "year": 2026,
+  
+  "start_date": null,
+  "end_date": null,
+  
+  // Festival bundles just point to the daily Events to keep loads lightweight
+  "daily_event_ids": [],
+  "prior_day_recap_bundle_ids": [], // For quick access to prior day wraps
+
+  "sources": [],
+  "confidence": null,
+  "lifecycle": "stub"
+}
+```
+
+### 4.5 Event
 
 ```jsonc
 {
@@ -152,7 +178,7 @@ delivery purpose. Bundles are not the source of truth — entities are.
   "type": "event",
   "display_name": "Young the Giant — Nashville, TN — 2026-06-27",
 
-  "artist_id": "artist:young-the-giant",
+  "festival_id": null, // If part of a festival wrapper
   "tour_id": "tour:young-the-giant-victory-garden-tour",
   "venue_id": "venue:ascend-federal-credit-union-amphitheater",
   "date": "2026-06-27",
@@ -162,7 +188,11 @@ delivery purpose. Bundles are not the source of truth — entities are.
   "show_time": null,
   "end_time": null,
 
-  "opener_ids": [],
+  // Complex Lineups
+  "headliner_ids": ["artist:young-the-giant"],
+  "support_ids": [],
+  "special_guest_ids": [],
+  
   "setlist_id": null,
 
   // Weather snapshot — captured at ingest, updated at event
@@ -188,7 +218,7 @@ delivery purpose. Bundles are not the source of truth — entities are.
 }
 ```
 
-### 4.5 Song
+### 4.6 Song
 
 ```jsonc
 {
@@ -220,7 +250,7 @@ delivery purpose. Bundles are not the source of truth — entities are.
 }
 ```
 
-### 4.6 PerformanceContext
+### 4.7 PerformanceContext
 
 ```jsonc
 {
@@ -229,8 +259,10 @@ delivery purpose. Bundles are not the source of truth — entities are.
   "type": "performance_context",
 
   "event_id": "event:young-the-giant-nashville-2026-06-27",
+  "artist_id": "artist:young-the-giant",
   "song_id": "song:young-the-giant-mind-over-matter",
 
+  "stage_name": null, // Essential for multi-stage festivals
   "setlist_position": null,
   "set_number": null,
   "is_opener": false,
@@ -249,7 +281,7 @@ delivery purpose. Bundles are not the source of truth — entities are.
 }
 ```
 
-### 4.7 Source (Provenance)
+### 4.8 Source (Provenance)
 
 Modeled after a simplified Wikidata/W3C PROV hybrid. The goal is
 standard-inspired provenance, custom domain schema.
@@ -394,9 +426,10 @@ To be promoted to `draft` or `stable`, an entity must have all of its designated
 | Artist | `id`, `name`, `slug` |
 | Tour | `id`, `name`, `slug`, `artist_id`, `year` |
 | Venue | `id`, `name`, `slug`, `city`, `state` |
-| Event | `id`, `artist_id`, `tour_id`, `venue_id`, `date` |
+| Festival | `id`, `name`, `slug`, `venue_id`, `year` |
+| Event | `id`, `venue_id`, `date` (and at least one of `headliner_ids` or `festival_id`) |
 | Song | `id`, `name`, `slug`, `artist_id` |
-| PerformanceContext | `id`, `event_id`, `song_id`, `setlist_position` |
+| PerformanceContext | `id`, `event_id`, `artist_id`, `song_id`, `setlist_position` |
 | Source | `id`, `url`, `source_class`, `captured_at` |
 
 *   **Draft Gate**: All critical fields populated and confidence $\ge 0.70$. Everything else is enrichment-eligible and may be null.

@@ -1,0 +1,40 @@
+﻿{
+  "id": "venue:nashville-superspeedway",
+  "type": "venue",
+  "name": "Nashville Superspeedway",
+  "display_name": "Nashville Superspeedway (Lebanon, TN)",
+  "slug": "nashville-superspeedway",
+  "address": "400 Victory Ln Dr, Lebanon, TN 37090",
+  "city": "Lebanon",
+  "state": "TN",
+  "country": "US",
+  "coordinates": {
+    "lat": 36.0465,
+    "lng": -86.4172
+  },
+  "bounds": {
+    "north": 36.0510,
+    "south": 36.0420,
+    "east": -86.4110,
+    "west": -86.4230
+  },
+  "is_outdoor": true,
+  "utility": {
+    "parking_info": "Free general parking on-site. ADA parking available near main festival entrance.",
+    "ticket_policy": "Tickets must be purchased online in advance. No tickets sold at the gate.",
+    "bag_policy": "Clear bags strongly recommended. Bags subject to search at security check.",
+    "pet_policy": "Service animals only.",
+    "amenities": [
+      { "type": "wellness", "name": "First Aid & Medical Tent", "location": "Near Gate 1 Main Concourse", "lat": 36.0472, "lng": -86.4168 },
+      { "type": "restroom", "name": "Restroom Bank North", "location": "North Infield Pavilions", "lat": 36.0485, "lng": -86.4175 },
+      { "type": "restroom", "name": "Restroom Bank South", "location": "South Grandstand Concourse", "lat": 36.0448, "lng": -86.4170 },
+      { "type": "water", "name": "Free Hydration & Water Station", "location": "Central Hub Plaza", "lat": 36.0467, "lng": -86.4171 },
+      { "type": "info", "name": "Information & Lost & Found", "location": "Main Entrance Gate A", "lat": 36.0461, "lng": -86.4158 }
+    ]
+  },
+  "schedule": [
+    { "day": "Friday, Aug 28", "hours": "3:00 PM – 10:00 PM", "label": "Opening Night" },
+    { "day": "Saturday, Aug 29", "hours": "1:00 PM – 10:00 PM", "label": "Main Festival Day 1" },
+    { "day": "Sunday, Aug 30", "hours": "1:00 PM – 10:00 PM", "label": "Main Festival Day 2" }
+  ]
+}

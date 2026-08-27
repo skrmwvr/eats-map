@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Navigation Prototype</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Base Neutral Theme (Light) - National Park Vibes */
+            --bg-color: #f4f1ea;
+            --text-color: #2c3e2e;
+            --surface-color: #ffffff;
+            --border-color: #e0dcd3;
+            --map-pattern: repeating-radial-gradient( circle at 0 0, transparent 0, var(--bg-color) 40px ), repeating-linear-gradient( #e6e2d855, #e6e2d855 );
+            
+            /* Dynamic Band Accent */
+            --accent-color: #e65100; /* Default: fiery orange */
+            --accent-color-transparent: rgba(230, 81, 0, 0.2);
+            
+            /* System Colors */
+            --emergency-color: #d32f2f;
+        }
+
+        [data-theme="dark"] {
+            /* Base Neutral Theme (Dark) */
+            --bg-color: #1a2421;
+            --text-color: #e0e0e0;
+            --surface-color: #24302c;
+            --border-color: #2f3e39;
+            --map-pattern: repeating-radial-gradient( circle at 0 0, transparent 0, var(--bg-color) 40px ), repeating-linear-gradient( #2a383355, #2a383355 );
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Mock Map Background with Topo Vibe */
+        .map-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            background-image: var(--map-pattern);
+            z-index: 0;
+        }
+
+        /* Mock Route Line */
+        .mock-route {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            width: 150px;
+            height: 100px;
+            border-left: 6px dashed var(--accent-color);
+            border-bottom: 6px dashed var(--accent-color);
+            border-bottom-left-radius: 20px;
+            transform: translate(-50%, -50%);
+            opacity: 0.8;
+            filter: drop-shadow(0 0 4px var(--accent-color-transparent));
+            transition: border-color 0.3s, filter 0.3s;
+        }
+
+        /* Mock Markers */
+        .marker {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: var(--surface-color);
+            border: 3px solid var(--text-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .marker.user {
+            top: 50%;
+            left: 50%;
+            background-color: var(--accent-color);
+            border-color: #fff;
+            width: 20px;
+            height: 20px;
+            box-shadow: 0 0 0 10px var(--accent-color-transparent);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .marker.destination {
+            top: 30%;
+            left: 35%;
+            background-color: var(--surface-color);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            width: 32px;
+            height: 32px;
+            font-size: 16px;
+            transition: border-color 0.3s, color 0.3s;
+        }
+
+        /* Top Bar Controls */
+        .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 10;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-bar {
+            flex: 1;
+            background-color: var(--surface-color);
+            padding: 14px 20px;
+            border-radius: 100px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            font-weight: 500;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .control-btn {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            cursor: pointer;
+            font-size: 20px;
+            transition: transform 0.1s, background-color 0.3s;
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Settings Panel for Prototype */
+        .dev-panel {
+            position: absolute;
+            top: 80px;
+            right: 20px;
+            background-color: var(--surface-color);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 10;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .dev-panel h3 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .color-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .color-dot.active {
+            border-color: var(--text-color);
+        }
+
+        /* Bottom Sheet */
+        .bottom-sheet {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--surface-color);
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            z-index: 10;
+            padding: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .sheet-handle {
+            width: 40px;
+            height: 5px;
+            background-color: var(--border-color);
+            border-radius: 5px;
+            margin: 0 auto 20px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .category-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.2s;
+        }
+
+        .category-item:hover .category-icon,
+        .category-item.active .category-icon {
+            background-color: var(--accent-color-transparent);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+        
+        .category-item.emergency .category-icon {
+            color: var(--emergency-color);
+            border-color: rgba(211, 47, 47, 0.3);
+        }
+
+        .category-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .nav-action {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        .nav-action:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="map-container">
+        <!-- Mock Topographic Elements would go here -->
+        <div class="mock-route"></div>
+        <div class="marker destination">🍔</div>
+        <div class="marker user"></div>
+    </div>
+
+    <div class="top-bar">
+        <div class="search-bar">
+            <span>🔍</span>
+            <span>Where to?</span>
+        </div>
+        <button class="control-btn" id="theme-btn" title="Toggle Theme">🌓</button>
+    </div>
+
+    <div class="dev-panel">
+        <h3>Band Accent</h3>
+        <div class="color-options">
+            <div class="color-dot active" style="background-color: #e65100;" data-color="#e65100"></div>
+            <div class="color-dot" style="background-color: #1e88e5;" data-color="#1e88e5"></div>
+            <div class="color-dot" style="background-color: #8e24aa;" data-color="#8e24aa"></div>
+            <div class="color-dot" style="background-color: #43a047;" data-color="#43a047"></div>
+        </div>
+    </div>
+
+    <div class="bottom-sheet">
+        <div class="sheet-handle"></div>
+        
+        <div class="categories">
+            <div class="category-item active">
+                <div class="category-icon">🍔</div>
+                <div class="category-label">Vendors</div>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🚽</div>
+                <div class="category-label">Potties</div>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🚗</div>
+                <div class="category-label">Car Finder</div>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">👯</div>
+                <div class="category-label">Friend Finder</div>
+            </div>
+            <div class="category-item">
+                <div class="category-icon">🚪</div>
+                <div class="category-label">Exits</div>
+            </div>
+            <div class="category-item emergency">
+                <div class="category-icon">🚨</div>
+                <div class="category-label">Emergency</div>
+            </div>
+        </div>
+
+        <button class="nav-action">
+            <span>📍</span>
+            Start Navigation
+        </button>
+    </div>
+
+    <script>
+        // Theme Toggle Logic
+        const themeBtn = document.getElementById('theme-btn');
+        themeBtn.addEventListener('click', () => {
+            const isDark = document.body.getAttribute('data-theme') === 'dark';
+            document.body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        });
+
+        // Accent Color Logic
+        const colorDots = document.querySelectorAll('.color-dot');
+        const root = document.documentElement;
+
+        // Function to convert hex to rgb for transparent variants
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '0,0,0';
+        }
+
+        colorDots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                colorDots.forEach(d => d.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                const newColor = e.target.getAttribute('data-color');
+                const rgb = hexToRgb(newColor);
+                
+                root.style.setProperty('--accent-color', newColor);
+                root.style.setProperty('--accent-color-transparent', `rgba(${rgb}, 0.2)`);
+            });
+        });
+
+        // Category Selection Logic
+        const categories = document.querySelectorAll('.category-item');
+        const destMarker = document.querySelector('.marker.destination');
+
+        categories.forEach(cat => {
+            cat.addEventListener('click', () => {
+                categories.forEach(c => c.classList.remove('active'));
+                cat.classList.add('active');
+                
+                // Update map marker icon to match
+                const icon = cat.querySelector('.category-icon').innerText;
+                destMarker.innerText = icon;
+                
+                // If it's emergency, style the marker red
+                if(cat.classList.contains('emergency')) {
+                    destMarker.style.borderColor = 'var(--emergency-color)';
+                    destMarker.style.color = 'var(--emergency-color)';
+                } else {
+                    destMarker.style.borderColor = 'var(--accent-color)';
+                    destMarker.style.color = 'var(--accent-color)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

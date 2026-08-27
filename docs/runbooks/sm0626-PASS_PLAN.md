@@ -16,8 +16,9 @@ The pipeline is organized into four passes. Each pass has a clear job, expected 
 
 ### Typical work
 - create seed entities
-- collect official pages
-- collect key secondary pages
+- collect official pages (hard backup)
+- collect smart community sources (Clashfinder, Reddit) first for timetables
+- run sub-pass for minor acts/openers: scrape past tour history to establish context for tricky nobodies
 - capture source metadata
 - store raw snippets or downloaded artifacts
 
@@ -129,6 +130,7 @@ The pipeline is organized into four passes. Each pass has a clear job, expected 
 ### Typical work
 - add actual weather
 - add setlist or recap details
+- compile prior day wraps and link them to the festival wrapper (if applicable)
 - add attendee-relevant after-action notes
 - promote improved revisions
 - supersede stale bundles

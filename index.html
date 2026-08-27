@@ -1,168 +1,131 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Sun Map — Concert Companion</title>
+  <title>Eats Map — FoodieLand Nashville 2026</title>
   <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#121212">
+  <meta name="theme-color" content="#0b0c10">
   <link rel="stylesheet" href="index.css">
-  <!-- Modern clean typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@400;700;900&family=Courier+Prime&display=swap" rel="stylesheet">
-  <!-- XSS Mitigation -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 </head>
-<body class="theme-night">
+<body>
   <div class="app-container">
     
-    <!-- TOP AREA: Weather & Venue (3 Task Groups Grid) -->
+    <!-- TOP AREA: Weather, Venue, and Program (Sun Map 3-Button Grid) -->
     <header class="dashboard-top">
       <button class="top-btn" id="btn-weather" aria-label="Weather Forecast">
-        <div class="btn-icon" id="weather-icon">🌧️</div>
+        <div class="btn-icon" id="weather-icon">🌤️</div>
         <div class="btn-label">
           <span class="btn-title">Weather</span>
-          <span class="btn-subtitle" id="weather-status">89°F / Storms</span>
+          <span class="btn-subtitle" id="weather-status">84°F / Warm</span>
         </div>
       </button>
 
       <button class="top-btn" id="btn-venue" aria-label="Venue Guide">
         <div class="btn-icon">🏟️</div>
         <div class="btn-label">
-          <span class="btn-title">Ascend</span>
-          <span class="btn-subtitle" id="venue-status">Nashville, TN</span>
+          <span class="btn-title">Speedway</span>
+          <span class="btn-subtitle" id="venue-status">Lebanon, TN</span>
         </div>
       </button>
 
-      <button class="top-btn" id="btn-timeline" aria-label="Event Timeline">
+      <button class="top-btn" id="btn-timeline" aria-label="Event Program">
         <div class="btn-icon">⏰</div>
         <div class="btn-label">
           <span class="btn-title">Program</span>
-          <span class="btn-subtitle" id="timeline-status">Show: 18:30</span>
+          <span class="btn-subtitle" id="timeline-status">Fri 8/28</span>
         </div>
       </button>
     </header>
 
-    <!-- VENUE SUB-HEADER ACTIONS (Hidden by default) -->
+    <!-- VENUE SUB-HEADER ACTIONS (Collapsible) -->
     <div class="sub-header-venue" id="sub-header-venue" style="display: none;">
-      <button class="sub-venue-btn" id="btn-venue-car" aria-label="Mark Car Spot">🚗 Mark Car</button>
-      <button class="sub-venue-btn" id="btn-venue-fac" aria-label="Show Facilities Map">🚻 Facilities</button>
-      <button class="sub-venue-btn" id="btn-venue-help" aria-label="Call Event Help Security">📞 Call Help</button>
+      <button class="sub-venue-btn" id="btn-venue-car" aria-label="Mark or Find Car Spot">🚗 <span id="btn-car-text">Mark my car</span></button>
+      <button class="sub-venue-btn" id="btn-venue-fac" aria-label="Show Grounds Map">🗺️ Grounds Map</button>
+      <button class="sub-venue-btn" id="btn-venue-help" aria-label="Call Medical Help">🏥 First Aid</button>
     </div>
 
     <!-- LIVE STATUS / ALERT BANNER -->
     <div class="status-banner" id="alert-banner">
       <span class="alert-pulse"></span>
-      <span class="banner-text" id="alert-text">Flood Watch active from 7:00 AM. Storms expected during set times.</span>
-      <button id="btn-close-alert" style="margin-left: auto; background: transparent; border: none; color: inherit; font-size: 1rem; cursor: pointer; padding: 2px 8px; line-height: 1;" aria-label="Dismiss Alert">×</button>
+      <span class="banner-text" id="alert-text">FoodieLand Nashville • 200+ Global Flavors & Night Market</span>
     </div>
 
-    <!-- CENTER AREA: Artsy square screen (Zune / Karaoke style) -->
-    <main class="viewport-square" id="main-viewport">
-      <!-- Transition / Static overlay -->
-      <div class="static-overlay" id="loading-overlay">
-        <div class="screen-glitch"></div>
-        <div class="loading-text"></div>
+    <!-- ALLERGEN & INTOLERANCE FLAG TRAY -->
+    <div class="allergen-pref-bar">
+      <div class="allergen-header">
+        <span>⚠️ Flag My Allergens / Aversions:</span>
+        <span id="active-avoid-count" style="color: var(--fl-yellow); font-weight: 700;">0 flagged</span>
       </div>
-      
-      <!-- Main Content Panel -->
+      <div class="allergen-chips" id="allergen-chips-tray">
+        <button class="chip-btn" data-allergen="Cilantro">🌿 Cilantro</button>
+        <button class="chip-btn" data-allergen="Peanuts">🥜 Peanuts</button>
+        <button class="chip-btn" data-allergen="Tree Nuts">🌰 Tree/Pine Nuts</button>
+        <button class="chip-btn" data-allergen="Pork / Bacon">🥓 Pork / Bacon</button>
+        <button class="chip-btn" data-allergen="Dairy">🧀 Dairy</button>
+        <button class="chip-btn" data-allergen="Gluten/Wheat">🌾 Gluten</button>
+        <button class="chip-btn" data-allergen="Shellfish">🦐 Shellfish</button>
+        <button class="chip-btn" data-allergen="Fennel / Anise">🌱 Fennel/Anise</button>
+        <button class="chip-btn" data-allergen="Mayo">🥚 Mayo</button>
+        <button class="chip-btn" data-allergen="Sesame">✨ Sesame</button>
+      </div>
+    </div>
+
+    <!-- CENTER AREA: Sun Map Square Viewport -->
+    <main class="viewport-square" id="main-viewport">
       <div class="viewport-content" id="viewport-content">
-        <!-- Default State: Karaoke Song Player -->
-        <div class="lyrics-view" id="lyrics-panel">
-          <div class="song-header">
-            <h1 id="song-title">Superposition</h1>
-            <p id="song-artist">Young the Giant</p>
-          </div>
-          
-          <div class="lyrics-body" id="lyrics-scroll">
-            <!-- Populated dynamically via JS -->
-          </div>
-          
-          <div class="song-controller">
-            <button class="ctrl-btn" id="btn-prev-song" aria-label="Previous Song">◀</button>
-            <span class="song-index" id="song-index-display">02 / 20</span>
-            <button class="ctrl-btn" id="btn-next-song" aria-label="Next Song">▶</button>
-          </div>
-        </div>
+        <!-- Injected via JavaScript -->
       </div>
     </main>
 
-    <!-- FLOATING HELP BUBBLE (Pop-out page specific tooltip) -->
-    <div class="help-bubble" id="help-bubble">
-      <div class="help-bubble-icon">💡</div>
-      <div class="help-bubble-text" id="help-bubble-text">Long-press active!</div>
-    </div>
-
-    <!-- BOTTOM AREA: Band, Sun Home, and Tour (3 Columns Grid) -->
+    <!-- BOTTOM AREA: Authentic Sun Map 3 Columns + 2 Dove-tailed Buttons -->
     <footer class="dashboard-bottom">
-      <button class="bottom-btn" id="btn-band" aria-label="Band Info">
-        <div class="btn-icon" id="band-btn-icon">🎸</div>
+      <button class="bottom-btn" id="btn-booths" aria-label="Menu of Places">
+        <div class="btn-icon">🥢</div>
         <div class="btn-label">
-          <span class="btn-title" id="band-btn-title">Band Details</span>
-          <span class="btn-subtitle" id="band-btn-subtitle">Young the Giant</span>
+          <span class="btn-title">Menu</span>
+          <span class="btn-subtitle" id="booth-sub-label">All Booths</span>
         </div>
       </button>
 
-      <!-- Center container wraps Sun Home and visually dovetails tiny buttons in the corners -->
+      <!-- Center Container: Fork Icon Home + Tucked Shoulder Buttons (Map & Help) -->
       <div class="home-btn-container">
-        <button class="tiny-foot-btn" id="btn-foot-restroom" aria-label="Find Restrooms">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: #ccc; pointer-events: none;"><circle cx="7.5" cy="4" r="2"/><path d="M7.5 7v7M5.5 9h4M6.5 22v-6M8.5 22v-6"/><circle cx="16.5" cy="4" r="2"/><path d="M16.5 7v6M14 9h5m-3.5 13v-6m2 6v-6"/></svg>
-        </button>
-        <button class="bottom-btn" id="btn-home" aria-label="Home (Lyrics Mode)">
-          <div class="btn-icon" id="home-btn-icon">☀️</div>
+        <button class="tiny-foot-btn" id="btn-foot-map" aria-label="Grounds Map">🗺️</button>
+        <button class="bottom-btn" id="btn-home" aria-label="Home (Now Playing)">
+          <div class="btn-icon" id="home-btn-icon">🍴</div>
           <div class="btn-label">
-            <span class="btn-title">Sun</span>
-            <span class="btn-subtitle">Home / Reset</span>
+            <span class="btn-title">Eats</span>
+            <span class="btn-subtitle">Now Playing</span>
           </div>
         </button>
-        <button class="tiny-foot-btn" id="btn-foot-help" aria-label="Page Context Help">?</button>
+        <button class="tiny-foot-btn" id="btn-foot-help" aria-label="Help & About">?</button>
       </div>
 
-      <button class="bottom-btn" id="btn-tour" aria-label="Tour Information">
-        <div class="btn-icon">🌎</div>
+      <button class="bottom-btn" id="btn-passport" aria-label="Tasting Wishlist">
+        <div class="btn-icon">⭐</div>
         <div class="btn-label">
-          <span class="btn-title">Victory Garden</span>
-          <span class="btn-subtitle">Ethos & Causes</span>
+          <span class="btn-title">Wishlist</span>
+          <span class="btn-subtitle" id="wishlist-sub-label">0 Queued</span>
         </div>
       </button>
     </footer>
 
   </div>
 
-  <!-- OFFLINE SHARE MODAL (QR Code Generator Built In) -->
-  <div class="modal-overlay" id="share-modal">
-    <div class="modal-card">
-      <h2>Share Sun Map</h2>
-      <p>Scan this QR code with another phone to instantly share the offline-capable guide.</p>
-      
-      <div class="qr-container">
-        <canvas id="qr-canvas"></canvas>
-      </div>
-
-      <div class="modal-actions">
-        <button class="modal-btn outline" id="btn-close-share">Dismiss</button>
-        <button class="modal-btn" id="btn-install-pwa">Install Web App</button>
-      </div>
-    </div>
+  <!-- DETAIL MODAL SHEET -->
+  <div class="modal-backdrop" id="detail-modal">
+    <div class="modal-sheet" id="modal-content"></div>
   </div>
 
-  <!-- HELP & ABOUT MODAL -->
-  <div class="modal-overlay" id="help-modal">
-    <div class="modal-card" style="max-height:85vh; display:flex; flex-direction:column; justify-content:space-between; width:92%; max-width:440px;">
-      <div>
-        <h2 style="font-size:1.6rem; margin-bottom:14px;">Sun Map Help Guide</h2>
-        <div id="help-modal-context" style="font-size:1.22rem; line-height:1.55; color:#eee; text-align:left; margin-bottom:18px;">
-          <!-- Context help text injected here -->
-        </div>
-      </div>
-
-      <div class="modal-actions" style="margin-top:20px;">
-        <button class="modal-btn" id="btn-close-help-modal" style="font-size:1.1rem; padding:12px; width:100%;">Dismiss</button>
-      </div>
-    </div>
-  </div>
-
+  <!-- SCRIPTS -->
+  <script src="data_bundle.js"></script>
+  <script src="map_logic.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

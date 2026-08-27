@@ -25,20 +25,29 @@ Each task should define:
 - `quality_checks`: source class assigned, page relevance confirmed
 - `escalate_if`: no official source found, identity unclear
 
-### Capture secondary source set
+### Capture secondary source set (Smart Sources)
 - `task_name`: `capture_secondary_source_set`
 - `scope_type`: `artist|tour|event|song|venue`
 - `inputs`: seed entity, starter URLs, search results
-- `actions`: gather secondary sources, archive useful context, log source family
+- `actions`: prioritize smart community sources (Clashfinder, Reddit) for timetables before attempting hard official scrapes, archive useful context
 - `outputs`: secondary source records, notes, snippets
 - `quality_checks`: no obvious duplicate-source flooding, relevance confirmed
 - `escalate_if`: source echo dominates, provenance weak
+
+### Sub-pass: Minor act discovery
+- `task_name`: `sub_pass_minor_act_discovery`
+- `scope_type`: `artist`
+- `inputs`: minor act or opener entity, past tour history
+- `actions`: scrape local scenes, past tour history, and associations to establish context for tricky nobodies
+- `outputs`: artist background notes, past associations
+- `quality_checks`: context is factual and tied to past tours/releases
+- `escalate_if`: zero trace of artist exists online
 
 ### Capture utility pages
 - `task_name`: `capture_utility_pages`
 - `scope_type`: `venue|event`
 - `inputs`: venue or event seed, venue urls
-- `actions`: capture parking, entry, bag, accessibility, map, faq, weather links
+- `actions`: capture parking, entry, bag, accessibility, map, faq, weather links, and multi-stage navigation guidance (e.g., "Stage Blue Moon")
 - `outputs`: utility source records, page notes
 - `quality_checks`: key utility categories covered where available
 - `escalate_if`: utility info missing for high-risk category
@@ -110,6 +119,15 @@ Each task should define:
 - `quality_checks`: actuals separated from pre-event assumptions
 - `escalate_if`: recap facts conflict with prior stable record
 
+### Compile prior day wraps (Festival)
+- `task_name`: `compile_prior_day_wraps`
+- `scope_type`: `festival`
+- `inputs`: festival object, prior daily event recaps
+- `actions`: attach prior day wraps to the festival view so attendees can access them easily
+- `outputs`: linked prior day recap bundles
+- `quality_checks`: wraps are attached to the correct festival and days
+- `escalate_if`: missing prior day recap prevents festival-wide compilation
+
 ### Score bundle quality
 - `task_name`: `score_bundle_quality`
 - `scope_type`: `bundle`
@@ -153,15 +171,17 @@ Each task should define:
 1. `capture_official_source_set`
 2. `capture_utility_pages`
 3. `capture_secondary_source_set`
-4. `normalize_entity_identity`
-5. `link_entity_scope`
-6. `extract_structured_fields`
-7. `build_utility_bundle`
-8. `build_song_fast_bundle`
-9. `score_bundle_quality`
-10. `apply_post_event_actuals`
-11. `build_event_recap_bundle`
-12. `supersede_or_retract`
+4. `sub_pass_minor_act_discovery`
+5. `normalize_entity_identity`
+6. `link_entity_scope`
+7. `extract_structured_fields`
+8. `build_utility_bundle`
+9. `build_song_fast_bundle`
+10. `score_bundle_quality`
+11. `apply_post_event_actuals`
+12. `build_event_recap_bundle`
+13. `compile_prior_day_wraps`
+14. `supersede_or_retract`
 
 ## Notes
 

@@ -1,11 +1,11 @@
 {
-  "name": "Sun Map — Concert Companion Guide",
-  "short_name": "Sun Map",
+  "name": "Eats Map — Town Food & Venue Guide",
+  "short_name": "Eats Map",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#ff5722",
-  "description": "Offline-first companion event guide for live music fans.",
+  "description": "Offline-first companion guide and menu of places.",
   "orientation": "portrait",
   "icons": [
     {

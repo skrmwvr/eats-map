@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sun Map - Intake Generator</title>
+    <title>Startographer - Intake Generator</title>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #121212; color: #fff; max-width: 800px; margin: 0 auto; padding: 20px; }
         h1 { color: #ff9f0a; border-bottom: 1px solid #333; padding-bottom: 10px; }
@@ -19,24 +19,56 @@
         .steering-controls { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #444; }
         #hint-input { width: calc(100% - 120px); display: inline-block; }
         #btn-hint { width: 100px; display: inline-block; background: #34c759; }
+        #btn-hint { width: 100px; display: inline-block; background: #34c759; }
+        .qr-output { display: flex; flex-direction: column; align-items: center; margin-top: 20px; }
+        .qr-output canvas { border: 5px solid #fff; border-radius: 8px; }
+        .qr-title { margin-top: 10px; font-weight: bold; color: #ff9f0a; text-transform: uppercase; }
+        
+        .verification-panel { display: none; margin-top: 20px; border-top: 1px solid #444; padding-top: 20px; }
+        .verif-section { background: #2c2c2e; padding: 15px; border-radius: 6px; margin-bottom: 15px; border-left: 4px solid #ff9f0a; }
+        .verif-title { font-weight: bold; font-size: 1.1rem; color: #ff9f0a; margin-bottom: 10px; text-transform: uppercase; }
+        .verif-data { font-family: monospace; background: #121212; padding: 10px; border-radius: 4px; color: #ccc; margin-bottom: 10px; white-space: pre-wrap; font-size: 0.85rem; }
+        .verif-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .verif-btn { background: #333; color: #fff; border: 1px solid #555; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; cursor: pointer; }
+        .verif-btn:hover { background: #444; }
+        .verif-btn.active { background: #0a84ff; border-color: #0a84ff; }
+        .override-input { display: none; width: 100%; margin-top: 10px; font-family: monospace; padding: 8px; background: #121212; border: 1px dashed #ff9f0a; color: #fff; box-sizing: border-box; }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
 <body>
 
-    <h1>Sun Map Intake Generator</h1>
+    <h1>Startographer Intake Generator</h1>
     
     <div class="panel" id="intake-form">
         <h3>Seed Data</h3>
-        <label>Headliner Band</label>
+        
+        <label>Event Type</label>
+        <select id="input-event-type" style="width: 100%; padding: 10px; margin-top: 5px; background: #2c2c2e; border: 1px solid #444; color: #fff; border-radius: 4px; box-sizing: border-box;">
+            <option value="single">Single Event</option>
+            <option value="festival">Festival Day</option>
+        </select>
+        
+        <label>Festival Name (If applicable)</label>
+        <input type="text" id="input-festival" placeholder="e.g. Lollapalooza 2026">
+        
+        <label>Headliner(s)</label>
         <input type="text" id="input-band" placeholder="e.g. Young the Giant" value="Young the Giant">
+        
+        <label>Support Act(s) / Special Guests</label>
+        <input type="text" id="input-support" placeholder="e.g. Opener 1, Opener 2">
         
         <label>Venue / Location</label>
         <input type="text" id="input-venue" placeholder="e.g. Ascend Amphitheater, Nashville, TN" value="Ascend Amphitheater, Nashville, TN">
+        
+        <label>Stage Name (If Festival)</label>
+        <input type="text" id="input-stage" placeholder="e.g. Bud Light Stage">
         
         <label>Date</label>
         <input type="date" id="input-date" value="2026-06-27">
         
         <button id="btn-generate">Start Generation Pipeline</button>
+        <button id="btn-download-tracker" style="background: #333; color: #fff; margin-left: 10px;">Download Tracker CSV</button>
     </div>
 
     <div class="panel" id="monitor-panel">
@@ -51,6 +83,19 @@
                 <button id="btn-hint">Inject Hint</button>
             </div>
         </div>
+        
+        <div class="qr-output" id="qr-output" style="display:none;">
+            <canvas id="qr-canvas"></canvas>
+            <div class="qr-title" id="qr-title"></div>
+        </div>
+        
+        <!-- Data Verification Editor -->
+        <div class="verification-panel" id="verification-panel">
+            <h3 style="color:#ff9f0a;">Data Verification Checkpoint</h3>
+            <p style="font-size: 0.9rem; color: #aaa;">Review the data mapped to the final Sun Map layout. For each section, you can confirm it, ask the agent to double-check its sources, or provide a direct override (URL or exact text).</p>
+            <div id="verif-container"></div>
+            <button id="btn-submit-verif" style="width: 100%; background: #34c759; color: #fff;">Submit Verification & Generate Sun Map</button>
+        </div>
     </div>
 
     <script>
@@ -63,8 +108,12 @@
             btn.textContent = "Pipeline Running...";
             
             const seed = {
-                band: document.getElementById('input-band').value,
+                event_type: document.getElementById('input-event-type').value,
+                festival: document.getElementById('input-festival').value,
+                headliners: document.getElementById('input-band').value,
+                support: document.getElementById('input-support').value,
                 venue: document.getElementById('input-venue').value,
+                stage: document.getElementById('input-stage').value,
                 date: document.getElementById('input-date').value
             };
             
@@ -74,7 +123,11 @@
                 body: JSON.stringify(seed)
             });
             
+            
             document.getElementById('log-container').innerHTML = '';
+            document.getElementById('qr-output').style.display = 'none';
+            document.getElementById('verification-panel').style.display = 'none';
+            document.getElementById('steering-controls').style.display = 'none';
             lastLogCount = 0;
             
             if (pollingInterval) clearInterval(pollingInterval);
@@ -97,6 +150,22 @@
             document.getElementById('hint-input').value = '';
             document.getElementById('steering-controls').style.display = 'none';
         });
+        
+        let pendingVerifications = {};
+
+        document.getElementById('btn-submit-verif').addEventListener('click', async () => {
+            await fetch('/api/verify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(pendingVerifications)
+            });
+            document.getElementById('verification-panel').style.display = 'none';
+            pendingVerifications = {};
+        });
+        
+        document.getElementById('btn-download-tracker').addEventListener('click', () => {
+            window.open('/api/tracker', '_blank');
+        });
 
         async function pollStatus() {
             try {
@@ -118,10 +187,19 @@
                 
                 // Handle steering controls
                 const steering = document.getElementById('steering-controls');
-                if (data.paused) {
+                if (data.paused && data.status !== 'awaiting_verification') {
                     steering.style.display = 'block';
                 } else {
                     steering.style.display = 'none';
+                }
+                
+                // Handle Data Verification Checkpoint
+                const verifPanel = document.getElementById('verification-panel');
+                if (data.status === 'awaiting_verification' && verifPanel.style.display !== 'block') {
+                    verifPanel.style.display = 'block';
+                    renderVerificationPanel(data.draft_data || {});
+                } else if (data.status !== 'awaiting_verification') {
+                    verifPanel.style.display = 'none';
                 }
                 
                 // Handle completion
@@ -130,10 +208,119 @@
                     const btn = document.getElementById('btn-generate');
                     btn.disabled = false;
                     btn.textContent = "Start Generation Pipeline";
+                    
+                    // Render QR Code
+                    if (data.output_url && data.event_title) {
+                        const qrContainer = document.getElementById('qr-output');
+                        const qrCanvas = document.getElementById('qr-canvas');
+                        const qrTitle = document.getElementById('qr-title');
+                        
+                        qrContainer.style.display = 'flex';
+                        qrTitle.textContent = data.event_title;
+                        
+                        const qr = new QRious({
+                            element: qrCanvas,
+                            value: data.output_url,
+                            size: 200,
+                            level: 'H'
+                        });
+                        
+                        // Draw Sun Logo in center (simulating AI generated remixed logo for now)
+                        const ctx = qrCanvas.getContext('2d');
+                        const size = 200;
+                        const boxSize = 50;
+                        const center = (size - boxSize) / 2;
+                        
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(center, center, boxSize, boxSize);
+                        ctx.font = '30px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('☀️', size/2, size/2 + 2);
+                    }
                 }
                 
             } catch(e) {
-                console.error("Polling error", e);
+                // Ignore fetch errors during polling
+            }
+        }
+        
+        function renderVerificationPanel(draftData) {
+            const container = document.getElementById('verif-container');
+            container.innerHTML = '';
+            pendingVerifications = {};
+            
+            for (const [section, content] of Object.entries(draftData)) {
+                pendingVerifications[section] = { action: 'confirm', value: null }; // Default action
+                
+                const sectionDiv = document.createElement('div');
+                sectionDiv.className = 'verif-section';
+                
+                const title = document.createElement('div');
+                title.className = 'verif-title';
+                title.textContent = section;
+                
+                const dataBox = document.createElement('div');
+                dataBox.className = 'verif-data';
+                dataBox.textContent = JSON.stringify(content, null, 2);
+                
+                const actions = document.createElement('div');
+                actions.className = 'verif-actions';
+                
+                const btnConfirm = document.createElement('button');
+                btnConfirm.className = 'verif-btn active';
+                btnConfirm.textContent = '✅ Looks Good';
+                
+                const btnDouble = document.createElement('button');
+                btnDouble.className = 'verif-btn';
+                btnDouble.textContent = '🔍 Double Check';
+                
+                const btnOverride = document.createElement('button');
+                btnOverride.className = 'verif-btn';
+                btnOverride.textContent = '✏️ Override';
+                
+                const overrideInput = document.createElement('textarea');
+                overrideInput.className = 'override-input';
+                overrideInput.placeholder = 'Type override text or paste a source URL...';
+                overrideInput.rows = 3;
+                
+                const allBtns = [btnConfirm, btnDouble, btnOverride];
+                
+                btnConfirm.onclick = () => {
+                    allBtns.forEach(b => b.classList.remove('active'));
+                    btnConfirm.classList.add('active');
+                    overrideInput.style.display = 'none';
+                    pendingVerifications[section] = { action: 'confirm', value: null };
+                };
+                
+                btnDouble.onclick = () => {
+                    allBtns.forEach(b => b.classList.remove('active'));
+                    btnDouble.classList.add('active');
+                    overrideInput.style.display = 'none';
+                    pendingVerifications[section] = { action: 'double_check', value: null };
+                };
+                
+                btnOverride.onclick = () => {
+                    allBtns.forEach(b => b.classList.remove('active'));
+                    btnOverride.classList.add('active');
+                    overrideInput.style.display = 'block';
+                    pendingVerifications[section] = { action: 'override', value: overrideInput.value };
+                };
+                
+                overrideInput.oninput = (e) => {
+                    pendingVerifications[section].value = e.target.value;
+                };
+                
+                actions.appendChild(btnConfirm);
+                actions.appendChild(btnDouble);
+                actions.appendChild(btnOverride);
+                
+                sectionDiv.appendChild(title);
+                sectionDiv.appendChild(dataBox);
+                sectionDiv.appendChild(actions);
+                sectionDiv.appendChild(overrideInput);
+                
+                container.appendChild(sectionDiv);
             }
         }
     </script>
