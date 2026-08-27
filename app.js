@@ -83,6 +83,29 @@ class EatsMapApp {
     document.getElementById('btn-foot-map').addEventListener('click', () => this.switchViewport('map'));
     document.getElementById('btn-foot-help').addEventListener('click', () => this.switchViewport('about'));
 
+    // Allergen Dropdown Toggle & Backdrop Click-Outside
+    const btnAllergenToggle = document.getElementById('allergen-toggle-btn');
+    if (btnAllergenToggle) {
+      btnAllergenToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleAllergenPanel();
+      });
+    }
+
+    const allergenBackdrop = document.getElementById('allergen-backdrop');
+    if (allergenBackdrop) {
+      allergenBackdrop.addEventListener('click', () => {
+        this.closeAllergenPanel();
+      });
+    }
+
+    // Close allergen panel if tapping outside anywhere on main-viewport
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#allergen-pref-bar')) {
+        this.closeAllergenPanel();
+      }
+    });
+
     const chipsTray = document.getElementById('allergen-chips-tray');
     if (chipsTray) {
       chipsTray.addEventListener('click', (e) => {
@@ -110,7 +133,23 @@ class EatsMapApp {
     }
   }
 
+  toggleAllergenPanel() {
+    const bar = document.getElementById('allergen-pref-bar');
+    const backdrop = document.getElementById('allergen-backdrop');
+    if (!bar) return;
+    const isExp = bar.classList.toggle('is-expanded');
+    if (backdrop) backdrop.classList.toggle('is-active', isExp);
+  }
+
+  closeAllergenPanel() {
+    const bar = document.getElementById('allergen-pref-bar');
+    const backdrop = document.getElementById('allergen-backdrop');
+    if (bar) bar.classList.remove('is-expanded');
+    if (backdrop) backdrop.classList.remove('is-active');
+  }
+
   switchViewport(view) {
+    this.closeAllergenPanel();
     this.activeViewport = view;
     document.querySelectorAll('.top-btn, .bottom-btn').forEach(btn => btn.classList.remove('active'));
     if (view === 'weather') document.getElementById('btn-weather')?.classList.add('active');
@@ -128,9 +167,12 @@ class EatsMapApp {
       const allergen = chip.dataset.allergen;
       chip.classList.toggle('active', this.avoidedAllergens.includes(allergen));
     });
-    const countEl = document.getElementById('active-avoid-count');
-    if (countEl) {
-      countEl.textContent = this.avoidedAllergens.length + ' flagged';
+    
+    const count = this.avoidedAllergens.length;
+    const badgeEl = document.getElementById('active-avoid-badge');
+    if (badgeEl) {
+      badgeEl.textContent = count > 0 ? count + ' active' : '0';
+      badgeEl.classList.toggle('has-active', count > 0);
     }
   }
 

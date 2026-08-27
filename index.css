@@ -176,12 +176,163 @@ body {
   flex-shrink: 0;
 }
 
-/* ALLERGEN FLAG TRAY */
+/* ALLERGEN FLAG TRAY (Collapsible Dropdown Overlay) */
 .allergen-pref-bar {
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border-color);
-  padding: 6px 12px;
+  position: relative;
+  z-index: 40;
   flex-shrink: 0;
+}
+
+.allergen-toggle-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  outline: none;
+  transition: background 0.15s ease;
+}
+
+.allergen-toggle-header:hover, .allergen-toggle-header:active {
+  background: rgba(255, 94, 54, 0.08);
+}
+
+.allergen-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.allergen-title-icon {
+  font-size: 0.85rem;
+}
+
+.allergen-title-text {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: 0.02em;
+}
+
+.allergen-badge {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: var(--radius-full);
+  transition: all 0.2s ease;
+}
+
+.allergen-badge.has-active {
+  background: rgba(255, 159, 28, 0.25);
+  border-color: var(--fl-amber);
+  color: var(--fl-yellow);
+}
+
+.allergen-caret {
+  font-size: 0.65rem;
+  color: var(--fl-orange);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.allergen-pref-bar.is-expanded .allergen-caret {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Expansion Panel (Covers roughly halfway into main area) */
+.allergen-expand-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-surface);
+  border-bottom: 2px solid var(--fl-orange);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.85);
+  padding: 12px 14px 16px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, padding 0.3s ease;
+  z-index: 50;
+}
+
+.allergen-pref-bar.is-expanded .allergen-expand-panel {
+  max-height: 48vh;
+  opacity: 1;
+  pointer-events: auto;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.allergen-pref-bar.is-expanded .allergen-expand-panel::-webkit-scrollbar {
+  display: none;
+}
+
+.allergen-panel-instruction {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+.allergen-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: 0.74rem;
+  padding: 6px 12px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition);
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.chip-btn:hover {
+  border-color: var(--text-secondary);
+  color: #fff;
+}
+
+.chip-btn.active {
+  background: rgba(255, 94, 54, 0.22);
+  border-color: var(--fl-orange);
+  color: var(--fl-yellow);
+  font-weight: 800;
+  box-shadow: 0 0 10px rgba(255, 94, 54, 0.3);
+}
+
+/* Dimming Backdrop overlay */
+.allergen-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 35;
+}
+
+.allergen-backdrop.is-active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* CENTER PANEL: SQUARE VIEWPORT */

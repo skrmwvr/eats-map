@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -57,25 +57,36 @@
       <span class="banner-text" id="alert-text">FoodieLand Nashville • 200+ Global Flavors & Night Market</span>
     </div>
 
-    <!-- ALLERGEN & INTOLERANCE FLAG TRAY -->
-    <div class="allergen-pref-bar">
-      <div class="allergen-header">
-        <span>⚠️ Flag My Allergens / Aversions:</span>
-        <span id="active-avoid-count" style="color: var(--fl-yellow); font-weight: 700;">0 flagged</span>
-      </div>
-      <div class="allergen-chips" id="allergen-chips-tray">
-        <button class="chip-btn" data-allergen="Cilantro">🌿 Cilantro</button>
-        <button class="chip-btn" data-allergen="Peanuts">🥜 Peanuts</button>
-        <button class="chip-btn" data-allergen="Tree Nuts">🌰 Tree/Pine Nuts</button>
-        <button class="chip-btn" data-allergen="Pork / Bacon">🥓 Pork / Bacon</button>
-        <button class="chip-btn" data-allergen="Dairy">🧀 Dairy</button>
-        <button class="chip-btn" data-allergen="Gluten/Wheat">🌾 Gluten</button>
-        <button class="chip-btn" data-allergen="Shellfish">🦐 Shellfish</button>
-        <button class="chip-btn" data-allergen="Fennel / Anise">🌱 Fennel/Anise</button>
-        <button class="chip-btn" data-allergen="Mayo">🥚 Mayo</button>
-        <button class="chip-btn" data-allergen="Sesame">✨ Sesame</button>
+    <!-- ALLERGEN & INTOLERANCE FLAG TRAY (Collapsible Halfway Dropdown) -->
+    <div class="allergen-pref-bar" id="allergen-pref-bar">
+      <button class="allergen-toggle-header" id="allergen-toggle-btn" aria-label="Toggle Allergen Filter Tray">
+        <div class="allergen-header-left">
+          <span class="allergen-title-icon">⚠️</span>
+          <span class="allergen-title-text">Flag Allergens / Aversions</span>
+          <span class="allergen-badge" id="active-avoid-badge">0</span>
+        </div>
+        <div class="allergen-caret" id="allergen-caret">▼</div>
+      </button>
+
+      <div class="allergen-expand-panel" id="allergen-expand-panel">
+        <div class="allergen-panel-instruction">Tap any to flag on menus (never hides food):</div>
+        <div class="allergen-grid" id="allergen-chips-tray">
+          <button class="chip-btn" data-allergen="Cilantro">🌿 Cilantro</button>
+          <button class="chip-btn" data-allergen="Peanuts">🥜 Peanuts</button>
+          <button class="chip-btn" data-allergen="Tree Nuts">🌰 Tree/Pine Nuts</button>
+          <button class="chip-btn" data-allergen="Pork / Bacon">🥓 Pork / Bacon</button>
+          <button class="chip-btn" data-allergen="Dairy">🧀 Dairy</button>
+          <button class="chip-btn" data-allergen="Gluten/Wheat">🌾 Gluten</button>
+          <button class="chip-btn" data-allergen="Shellfish">🦐 Shellfish</button>
+          <button class="chip-btn" data-allergen="Fennel / Anise">🌱 Fennel/Anise</button>
+          <button class="chip-btn" data-allergen="Mayo">🥚 Mayo</button>
+          <button class="chip-btn" data-allergen="Sesame">✨ Sesame</button>
+        </div>
       </div>
     </div>
+
+    <!-- Backdrop overlay to dismiss allergen dropdown when tapping outside -->
+    <div class="allergen-backdrop" id="allergen-backdrop"></div>
 
     <!-- CENTER AREA: Sun Map Square Viewport -->
     <main class="viewport-square" id="main-viewport">
