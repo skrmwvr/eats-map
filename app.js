@@ -239,38 +239,17 @@ class EatsMapApp {
     }
   }
 
-  // --- VIEW 1: NOW PLAYING HOME VIEW (List / Deck / Map Toggle) ---
+  // --- VIEW 1: "NOW PLAYING" HOME VIEW (Clean List & Map Views, Deck in Detail Modal) ---
   renderHomeView(container) {
-    if (this.allFeaturedDishes.length === 0) {
-      container.innerHTML = '<p style="color:#fff;">Loading featured creations...</p>';
-      return;
-    }
-
-    const dish = this.allFeaturedDishes[this.activeDishIndex];
-    const isWishlisted = this.wishlist.includes(dish.id);
-    const flagged = this.checkAllergenFlags(dish.allergens);
     const totalCount = this.allFeaturedDishes.length;
-    const displayIndex = String(this.activeDishIndex + 1).padStart(2, '0');
-    const totalStr = String(totalCount).padStart(2, '0');
-
-    let pairingLine = '';
-    if (dish.pairings) {
-      pairingLine = '<div style="font-size: 0.74rem; color: var(--text-secondary); margin-bottom: 4px;"><strong>Suggested Pairing:</strong> ' + dish.pairings + '</div>';
-    }
-
-    let allergenLine = '';
-    if (flagged.length > 0) {
-      allergenLine = '<div class="allergen-warning-tag">⚠️ Contains your flagged: <strong>' + flagged.join(', ') + '</strong></div>';
-    }
 
     if (this.homeDisplayMode === 'map') {
       container.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
           <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">Now Playing Grounds Map</strong>
           <div class="view-mode-toggle">
-            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('deck')">Deck</button>
-            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('list')">List</button>
-            <button class="view-mode-btn active" onclick="window.app.setHomeDisplayMode('map')">Map</button>
+            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('list')">List View</button>
+            <button class="view-mode-btn active" onclick="window.app.setHomeDisplayMode('map')">Map View</button>
           </div>
         </div>
         <div id="leaflet-map" style="width:100%; height:calc(100% - 40px); border-radius:var(--radius-md);"></div>
@@ -282,84 +261,41 @@ class EatsMapApp {
       return;
     }
 
-    if (this.homeDisplayMode === 'list') {
-      let listHtml = `
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">Featured Creations (${totalCount})</strong>
-          <div class="view-mode-toggle">
-            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('deck')">Deck</button>
-            <button class="view-mode-btn active" onclick="window.app.setHomeDisplayMode('list')">List</button>
-            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('map')">Map</button>
-          </div>
-        </div>
-        <div class="vendor-grid">
-      `;
-      this.allFeaturedDishes.forEach((d, idx) => {
-        const itemFlagged = this.checkAllergenFlags(d.allergens);
-        const inWish = this.wishlist.includes(d.id);
-        listHtml += `
-          <div class="vendor-card" onclick="window.app.selectDishAndGoDeck(${idx})">
-            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-              <div>
-                <strong style="color:#fff; font-size:0.95rem;">${d.name}</strong>
-                <div style="font-size:0.74rem; color:var(--fl-teal);">${d.vendorName} • ${d.vendorBooth}</div>
-              </div>
-              <span style="color:var(--fl-yellow); font-weight:800; font-size:0.9rem;">$${d.price}</span>
-            </div>
-            <p style="font-size:0.76rem; color:var(--text-secondary); margin:4px 0;">${d.description}</p>
-            ${itemFlagged.length > 0 ? '<div class="allergen-warning-tag">⚠️ Contains: <strong>' + itemFlagged.join(', ') + '</strong></div>' : ''}
-            <div style="margin-top:6px; display:flex; justify-content:flex-end;">
-              <span style="font-size:0.72rem; color:var(--fl-orange); font-weight:700;">${inWish ? '✓ In Wishlist' : 'Tap to View'}</span>
-            </div>
-          </div>
-        `;
-      });
-      listHtml += '</div>';
-      container.innerHTML = listHtml;
-      return;
-    }
-
-    // Default: 'deck' mode (Sun Map Carousel)
-    container.innerHTML = `
-      <div style="display: flex; flex-direction: column; height: 100%; justify-content: space-between;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-          <div class="dish-header">
-            <span class="booth-badge" style="margin-bottom: 4px; display: inline-block;">${dish.vendorBooth} • ${dish.vendorZone}</span>
-            <h1>${dish.name}</h1>
-            <p>${dish.vendorName} • $${dish.price}</p>
-          </div>
-          <div class="view-mode-toggle">
-            <button class="view-mode-btn active" onclick="window.app.setHomeDisplayMode('deck')">Deck</button>
-            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('list')">List</button>
-            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('map')">Map</button>
-          </div>
-        </div>
-
-        <div class="dish-details-card">
-          <p style="font-size: 0.86rem; line-height: 1.45; color: #f1f5f9; margin-bottom: 8px;">${dish.description}</p>
-          <div style="font-size: 0.76rem; color: var(--fl-teal); margin-bottom: 4px;">
-            <strong>Flavor Notes:</strong> ${dish.flavor_profile}
-          </div>
-          ${pairingLine}
-          ${allergenLine}
-          
-          <div style="margin-top: 10px; display: flex; gap: 8px;">
-            <button class="chip-btn ${isWishlisted ? 'active' : ''}" style="flex: 1; padding: 8px; font-weight: bold;" onclick="window.app.toggleWishlist('${dish.id}')">
-              ${isWishlisted ? '✓ Saved in Tasting Wishlist' : '+ Add to Tasting Wishlist'}
-            </button>
-            <button class="chip-btn" style="padding: 8px 12px;" onclick="window.app.openVendorById('${dish.vendorId}')">
-              Chef Bio 📖
-            </button>
-          </div>
-        </div>
-
-        <div class="dish-controller">
-          <button class="ctrl-btn" onclick="window.app.prevDish()" aria-label="Previous Dish">◀</button>
-          <span class="dish-index">${displayIndex} / ${totalStr} Dishes</span>
-          <button class="ctrl-btn" onclick="window.app.nextDish()" aria-label="Next Dish">▶</button>
+    // Default: List View
+    let listHtml = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">Now Playing • Featured Creations (${totalCount})</strong>
+        <div class="view-mode-toggle">
+          <button class="view-mode-btn active" onclick="window.app.setHomeDisplayMode('list')">List View</button>
+          <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('map')">Map View</button>
         </div>
       </div>
+      <div class="vendor-grid">
     `;
+
+    this.allFeaturedDishes.forEach((d) => {
+      const itemFlagged = this.checkAllergenFlags(d.allergens);
+      const inWish = this.wishlist.includes(d.id);
+      listHtml += `
+        <div class="vendor-card" onclick="window.app.openDishCardModal('${d.id}')">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+            <div>
+              <strong style="color:#fff; font-size:0.95rem;">${d.name}</strong>
+              <div style="font-size:0.74rem; color:var(--fl-teal);">${d.vendorName} • ${d.vendorBooth}</div>
+            </div>
+            <span style="color:var(--fl-yellow); font-weight:800; font-size:0.9rem;">$${d.price}</span>
+          </div>
+          <p style="font-size:0.76rem; color:var(--text-secondary); margin:4px 0;">${d.description}</p>
+          ${itemFlagged.length > 0 ? '<div class="allergen-warning-tag">⚠️ Contains: <strong>' + itemFlagged.join(', ') + '</strong></div>' : ''}
+          <div style="margin-top:6px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.7rem; color:var(--text-muted);">${d.vendorZone}</span>
+            <span style="font-size:0.72rem; color:var(--fl-orange); font-weight:700;">${inWish ? '✓ In Wishlist' : 'Tap for Card →'}</span>
+          </div>
+        </div>
+      `;
+    });
+    listHtml += '</div>';
+    container.innerHTML = listHtml;
   }
 
   setHomeDisplayMode(mode) {
@@ -367,27 +303,63 @@ class EatsMapApp {
     this.renderHomeView(document.getElementById('viewport-content'));
   }
 
-  selectDishAndGoDeck(idx) {
-    this.activeDishIndex = idx;
-    this.homeDisplayMode = 'deck';
-    this.renderHomeView(document.getElementById('viewport-content'));
-  }
+  // --- SECOND-LEVEL DISH DECK CARD MODAL ---
+  openDishCardModal(dishId) {
+    const dish = this.allFeaturedDishes.find(d => d.id === dishId);
+    if (!dish) return;
 
-  prevDish() {
-    if (this.activeDishIndex > 0) {
-      this.activeDishIndex--;
-    } else {
-      this.activeDishIndex = this.allFeaturedDishes.length - 1;
-    }
-    this.renderActiveViewport();
-  }
+    const modal = document.getElementById('detail-modal');
+    const content = document.getElementById('modal-content');
+    if (!modal || !content) return;
 
-  nextDish() {
-    if (this.activeDishIndex < this.allFeaturedDishes.length - 1) {
-      this.activeDishIndex++;
-    } else {
-      this.activeDishIndex = 0;
+    const isWishlisted = this.wishlist.includes(dish.id);
+    const flagged = this.checkAllergenFlags(dish.allergens);
+
+    let pairingLine = '';
+    if (dish.pairings) {
+      pairingLine = '<div style="font-size: 0.76rem; color: var(--text-secondary); margin-bottom: 6px;"><strong>Suggested Pairing:</strong> ' + dish.pairings + '</div>';
     }
+
+    let allergenLine = '';
+    if (flagged.length > 0) {
+      allergenLine = '<div class="allergen-warning-tag" style="margin-top: 6px;">⚠️ Contains your flagged: <strong>' + flagged.join(', ') + '</strong></div>';
+    }
+
+    content.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span class="booth-badge">${dish.vendorBooth} • ${dish.vendorZone}</span>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div>
+        <h2 style="font-family: 'Outfit'; font-size: 1.35rem; font-weight: 900; color: #fff;">${dish.name}</h2>
+        <p style="color: var(--fl-teal); font-size: 0.85rem; font-weight: 600;">${dish.vendorName} • <span style="color: var(--fl-yellow);">$${dish.price}</span></p>
+      </div>
+
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px;">
+        <p style="font-size: 0.86rem; line-height: 1.45; color: #f1f5f9; margin-bottom: 8px;">${dish.description}</p>
+        <div style="font-size: 0.78rem; color: var(--fl-teal); margin-bottom: 6px;">
+          <strong>Flavor Notes:</strong> ${dish.flavor_profile}
+        </div>
+        ${pairingLine}
+        ${allergenLine}
+      </div>
+
+      <div style="background: rgba(255, 94, 54, 0.08); border-left: 3px solid var(--fl-orange); padding: 8px 10px; border-radius: 4px; font-size: 0.78rem; line-height: 1.4; color: #e2e8f0;">
+        <p><strong>Chef/Team:</strong> ${dish.vendorStory ? dish.vendorStory.founder : 'Artisan Culinary Team'}</p>
+        <p style="color: var(--fl-yellow);"><strong>Acclaim:</strong> ${dish.vendorStory ? dish.vendorStory.claim_to_fame : ''}</p>
+      </div>
+
+      <div style="display: flex; gap: 8px; margin-top: 6px;">
+        <button class="chip-btn ${isWishlisted ? 'active' : ''}" style="flex: 1; padding: 10px; font-weight: bold;" onclick="window.app.toggleWishlist('${dish.id}')">
+          ${isWishlisted ? '✓ Saved in Tasting Wishlist' : '+ Add to Tasting Wishlist'}
+        </button>
+        <button class="chip-btn" style="padding: 10px 14px;" onclick="window.app.openVendorById('${dish.vendorId}')">
+          Full Booth Menu 📖
+        </button>
+      </div>
+    `;
+
+    modal.classList.add('active');
   }
 
   // --- VIEW 2: 3-DAY PROGRAM & STAGE EVENTS VIEW WITH WISHLIST INTEGRATION ---
@@ -861,27 +833,77 @@ class EatsMapApp {
     }
   }
 
-  handleMarkCar() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          this.carLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-          localStorage.setItem('eatsmap_car', JSON.stringify(this.carLocation));
-          alert('🚗 Car location saved via live GPS!');
-          if (this.mapManager && this.activeViewport === 'map') {
-            this.mapManager.updateCarPin(this.carLocation);
-          }
-        },
-        () => {
-          this.carLocation = { lat: 36.0461, lng: -86.4150 };
-          localStorage.setItem('eatsmap_car', JSON.stringify(this.carLocation));
-          alert('🚗 Car location marked (Simulated at Speedway parking)!');
-          if (this.mapManager && this.activeViewport === 'map') {
-            this.mapManager.updateCarPin(this.carLocation);
+  // --- QR CODE SHARING MODAL ---
+  openShareQRModal() {
+    const modal = document.getElementById('detail-modal');
+    const content = document.getElementById('modal-content');
+    if (!modal || !content) return;
+
+    content.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: 'Outfit';">Share Eats Map Offline App</strong>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div style="text-align: center; padding: 12px 0 6px;">
+        <p style="font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4;">
+          Point any smartphone camera to launch the offline companion guide at FoodieLand!
+        </p>
+        <div style="background: #ffffff; padding: 14px; border-radius: 12px; display: inline-block; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+          <canvas id="qr-canvas" width="180" height="180"></canvas>
+        </div>
+        <div style="color: #cbd5e1; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px;">
+          Offline Festival PWA
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('active');
+    setTimeout(() => this.drawShareQRCode('qr-canvas'), 50);
+  }
+
+  drawShareQRCode(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const size = 180;
+    canvas.width = size;
+    canvas.height = size;
+
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, size, size);
+
+    ctx.fillStyle = '#10121a';
+    this.drawFinderPattern(ctx, 10, 10, 45);
+    this.drawFinderPattern(ctx, size - 55, 10, 45);
+    this.drawFinderPattern(ctx, 10, size - 55, 45);
+
+    const blockSize = 5;
+    const numBlocks = size / blockSize;
+
+    for (let x = 0; x < numBlocks; x++) {
+      for (let y = 0; y < numBlocks; y++) {
+        const isTopLeft = (x < 12 && y < 12);
+        const isTopRight = (x > numBlocks - 13 && y < 12);
+        const isBottomLeft = (x < 12 && y > numBlocks - 13);
+        
+        if (!isTopLeft && !isTopRight && !isBottomLeft) {
+          const seed = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
+          const rand = seed - Math.floor(seed);
+          if (rand > 0.46) {
+            ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
           }
         }
-      );
+      }
     }
+  }
+
+  drawFinderPattern(ctx, x, y, size) {
+    ctx.fillStyle = '#10121a';
+    ctx.fillRect(x, y, size, size);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(x + 6, y + 6, size - 12, size - 12);
+    ctx.fillStyle = '#10121a';
+    ctx.fillRect(x + 12, y + 12, size - 24, size - 24);
   }
 }
 

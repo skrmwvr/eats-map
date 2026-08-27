@@ -42,7 +42,8 @@ class MapManager {
           <div style="font-family: sans-serif; font-size: 0.85rem; color: #111;">
             <strong style="color: #ff5e36; font-size: 0.95rem;">${vendor.name}</strong><br>
             <strong>Booth:</strong> ${vendor.booth_number} (${vendor.zone})<br>
-            <em>${vendor.cuisine}</em>
+            <em>${vendor.cuisine}</em><br>
+            <button style="margin-top:6px; background:#ff5e36; color:#fff; border:none; border-radius:4px; padding:4px 8px; font-size:0.75rem; cursor:pointer; font-weight:bold;" onclick="window.app.openVendorById('${vendor.id}')">View Menu & Bio →</button>
           </div>
         `);
         this.vendorMarkers.push(marker);
