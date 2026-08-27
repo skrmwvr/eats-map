@@ -764,6 +764,12 @@ class EatsMapApp {
         <div style="margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
           💡 <strong>Pro Tip:</strong> Evening night-market hours (6:00 PM – 10:00 PM) offer cooler breezes and twilight neon vibes. Stay hydrated at free water stations!
         </div>
+
+        <!-- Weather Source & Recent Update Footer -->
+        <div style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: var(--text-muted);">
+          <span>📡 Source: <strong>NOAA / National Weather Service (Nashville, TN)</strong></span>
+          <span style="color: var(--fl-teal);">Updated Aug 27, 12:00 PM CDT</span>
+        </div>
       </div>
     `;
   }
