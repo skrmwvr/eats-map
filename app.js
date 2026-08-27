@@ -83,10 +83,11 @@ class EatsMapApp {
       alert('Medical & First Aid Station is stationed at Main Concourse Gate 1. Call 911 for emergencies or event dispatch on site.');
     });
 
-    document.getElementById('btn-foot-eats').addEventListener('click', () => this.switchViewport('home'));
-    document.getElementById('btn-foot-wishlist').addEventListener('click', () => this.switchViewport('passport'));
-    document.getElementById('btn-foot-map').addEventListener('click', () => this.switchViewport('map'));
-    document.getElementById('btn-foot-help').addEventListener('click', () => this.switchViewport('about'));
+    document.getElementById('btn-booths')?.addEventListener('click', () => this.switchViewport('booths'));
+    document.getElementById('btn-home')?.addEventListener('click', () => this.switchViewport('home'));
+    document.getElementById('btn-passport')?.addEventListener('click', () => this.switchViewport('passport'));
+    document.getElementById('btn-foot-map')?.addEventListener('click', () => this.switchViewport('map'));
+    document.getElementById('btn-foot-help')?.addEventListener('click', () => this.switchViewport('about'));
 
     // Temperature Unit Toggle (°F / °C)
     const btnTempUnit = document.getElementById('btn-temp-unit');
