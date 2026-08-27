@@ -120,14 +120,23 @@ class EatsMapApp {
           this.openCustomAllergenModal();
           return;
         }
-        if (this.avoidedAllergens.includes(allergen)) {
+        
+        // Handle Preset Allergen Click: Toggle state & show match feedback popup
+        const isCurrentlyActive = this.avoidedAllergens.includes(allergen);
+        if (isCurrentlyActive) {
+          // Remove preset
           this.avoidedAllergens = this.avoidedAllergens.filter(a => a !== allergen);
+          localStorage.setItem('eatsmap_allergens', JSON.stringify(this.avoidedAllergens));
+          this.renderAllergenChips();
+          this.renderActiveViewport();
         } else {
+          // Add preset and show feedback modal with results and undo action
           this.avoidedAllergens.push(allergen);
+          localStorage.setItem('eatsmap_allergens', JSON.stringify(this.avoidedAllergens));
+          this.renderAllergenChips();
+          this.renderActiveViewport();
+          this.openPresetAllergenModal(allergen);
         }
-        localStorage.setItem('eatsmap_allergens', JSON.stringify(this.avoidedAllergens));
-        this.renderAllergenChips();
-        this.renderActiveViewport();
       });
     }
 
@@ -317,6 +326,88 @@ class EatsMapApp {
     localStorage.removeItem('eatsmap_custom_allergen');
     this.renderAllergenChips();
     this.renderActiveViewport();
+  }
+
+  // --- PRESET ALLERGEN POPUP: Search Results, Action Taken, Big OK & Tiny Undo ---
+  openPresetAllergenModal(allergenName) {
+    const modal = document.getElementById('detail-modal');
+    const content = document.getElementById('modal-content');
+    if (!modal || !content) return;
+
+    // Search corpus for matches
+    const termLower = allergenName.toLowerCase();
+    const matchingDishes = [];
+    this.allFeaturedDishes.forEach(d => {
+      const matchName = d.name.toLowerCase().includes(termLower);
+      const matchDesc = (d.description || '').toLowerCase().includes(termLower);
+      const matchFlavor = (d.flavor_profile || '').toLowerCase().includes(termLower);
+      const matchAllergens = (d.allergens || []).some(a => a.toLowerCase().includes(termLower));
+      if (matchName || matchDesc || matchFlavor || matchAllergens) {
+        matchingDishes.push(d);
+      }
+    });
+
+    const matchCount = matchingDishes.length;
+    let matchSummaryHtml = '';
+
+    if (matchCount > 0) {
+      matchSummaryHtml = `
+        <div style="background: rgba(0, 240, 144, 0.12); border-left: 3px solid var(--fl-green); padding: 10px; border-radius: 4px; margin-bottom: 12px;">
+          <strong style="color: var(--fl-green); font-size: 0.9rem;">✓ Found in ${matchCount} menu items!</strong>
+          <p style="font-size: 0.78rem; color: #cbd5e1; margin-top: 3px; line-height: 1.4;">
+            All creations containing <strong>${allergenName}</strong> are now flagged with in-line warning tags on menus.
+          </p>
+        </div>
+      `;
+    } else {
+      matchSummaryHtml = `
+        <div style="background: rgba(255, 159, 28, 0.12); border-left: 3px solid var(--fl-amber); padding: 10px; border-radius: 4px; margin-bottom: 12px;">
+          <strong style="color: var(--fl-yellow); font-size: 0.9rem;">⚠️ Flag Activated</strong>
+          <p style="font-size: 0.78rem; color: #cbd5e1; margin-top: 3px; line-height: 1.4;">
+            <strong>${allergenName}</strong> is now flagged. (Not explicitly listed in current vendor ingredients, but flagged as caution).
+          </p>
+        </div>
+      `;
+    }
+
+    content.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: 'Outfit';">⚠️ Allergen Flag Active</strong>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div>
+        <h3 style="font-family: 'Outfit'; font-size: 1.25rem; font-weight: 900; color: #fff; margin-bottom: 6px;">
+          Flagged: ${allergenName}
+        </h3>
+        
+        ${matchSummaryHtml}
+
+        <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px; font-size: 0.74rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 14px;">
+          <em>Note: Flagging alerts you in-line without hiding foods. Curated from public vendor listings; please confirm critical allergies with booth staff.</em>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <!-- Big OK Button -->
+          <button class="action-share-btn" style="width: 100%; padding: 12px; font-size: 0.9rem; font-weight: 800;" onclick="window.app.closeModal()">
+            OK, Got It!
+          </button>
+          <!-- Tiny Undo Text -->
+          <button style="background: transparent; border: none; color: var(--text-muted); font-size: 0.72rem; text-decoration: underline; cursor: pointer; padding: 4px;" onclick="window.app.undoPresetAllergen('${allergenName}')">
+            Undo & Unflag ${allergenName}
+          </button>
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('active');
+  }
+
+  undoPresetAllergen(allergenName) {
+    this.avoidedAllergens = this.avoidedAllergens.filter(a => a !== allergenName);
+    localStorage.setItem('eatsmap_allergens', JSON.stringify(this.avoidedAllergens));
+    this.renderAllergenChips();
+    this.renderActiveViewport();
+    this.closeModal();
   }
 
   updateTopBarStatus() {
