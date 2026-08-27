@@ -316,6 +316,61 @@ body {
   box-shadow: 0 0 10px rgba(255, 94, 54, 0.3);
 }
 
+.chip-btn-custom {
+  border-style: dashed;
+  color: var(--fl-teal);
+  border-color: rgba(5, 217, 232, 0.4);
+}
+.chip-btn-custom:hover {
+  border-color: var(--fl-teal);
+  color: #fff;
+}
+.chip-btn-custom.active {
+  background: rgba(5, 217, 232, 0.18);
+  border-color: var(--fl-teal);
+  border-style: solid;
+  color: #fff;
+  box-shadow: 0 0 10px rgba(5, 217, 232, 0.35);
+}
+
+/* Custom Active Slot Display Bar */
+.custom-active-tray {
+  margin-top: 10px;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--fl-teal);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.74rem;
+}
+
+.custom-active-name {
+  color: #fff;
+  font-weight: 700;
+}
+
+.custom-remove-btn {
+  background: transparent;
+  border: none;
+  color: var(--fl-orange);
+  font-weight: 800;
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+}
+
+/* Disclaimer at bottom of dropdown */
+.allergen-disclaimer {
+  margin-top: 12px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 8px;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  line-height: 1.35;
+}
+
 /* Dimming Backdrop overlay */
 .allergen-backdrop {
   position: absolute;

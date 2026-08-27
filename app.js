@@ -10,6 +10,7 @@ class EatsMapApp {
     this.activeDishIndex = 0;
     this.allFeaturedDishes = [];
     this.avoidedAllergens = JSON.parse(localStorage.getItem('eatsmap_allergens') || '[]');
+    this.customAllergen = localStorage.getItem('eatsmap_custom_allergen') || null;
     this.wishlist = JSON.parse(localStorage.getItem('eatsmap_wishlist') || '[]');
     this.ratings = JSON.parse(localStorage.getItem('eatsmap_ratings') || '{}');
     this.carLocation = JSON.parse(localStorage.getItem('eatsmap_car') || 'null');
@@ -112,6 +113,10 @@ class EatsMapApp {
         const chip = e.target.closest('.chip-btn');
         if (!chip) return;
         const allergen = chip.dataset.allergen;
+        if (allergen === 'custom') {
+          this.openCustomAllergenModal();
+          return;
+        }
         if (this.avoidedAllergens.includes(allergen)) {
           this.avoidedAllergens = this.avoidedAllergens.filter(a => a !== allergen);
         } else {
@@ -165,19 +170,150 @@ class EatsMapApp {
   renderAllergenChips() {
     document.querySelectorAll('#allergen-chips-tray .chip-btn').forEach(chip => {
       const allergen = chip.dataset.allergen;
-      chip.classList.toggle('active', this.avoidedAllergens.includes(allergen));
+      if (allergen !== 'custom') {
+        chip.classList.toggle('active', this.avoidedAllergens.includes(allergen));
+      }
     });
+
+    const customBtn = document.getElementById('btn-custom-allergen');
+    if (customBtn) {
+      customBtn.classList.toggle('active', !!this.customAllergen);
+      customBtn.innerHTML = this.customAllergen ? `🔍 ${this.customAllergen}` : '🔍 Custom...';
+    }
+
+    const customActiveTray = document.getElementById('custom-active-tray');
+    if (customActiveTray) {
+      if (this.customAllergen) {
+        customActiveTray.style.display = 'flex';
+        customActiveTray.innerHTML = `
+          <span>Active custom slot: <strong class="custom-active-name">${this.customAllergen}</strong></span>
+          <button class="custom-remove-btn" onclick="window.app.removeCustomAllergen()">✕ Remove</button>
+        `;
+      } else {
+        customActiveTray.style.display = 'none';
+        customActiveTray.innerHTML = '';
+      }
+    }
     
-    const count = this.avoidedAllergens.length;
+    let totalActive = this.avoidedAllergens.length + (this.customAllergen ? 1 : 0);
     const badgeEl = document.getElementById('active-avoid-badge');
     if (badgeEl) {
-      badgeEl.textContent = count > 0 ? count + ' active' : '0';
-      badgeEl.classList.toggle('has-active', count > 0);
+      badgeEl.textContent = totalActive > 0 ? totalActive + ' active' : '0';
+      badgeEl.classList.toggle('has-active', totalActive > 0);
     }
   }
 
-  checkAllergenFlags(itemAllergens = []) {
-    return (itemAllergens || []).filter(a => this.avoidedAllergens.includes(a));
+  checkAllergenFlags(itemAllergens = [], dishText = '') {
+    const flags = (itemAllergens || []).filter(a => this.avoidedAllergens.includes(a));
+    
+    // Check custom allergen match against known allergens and description/name text
+    if (this.customAllergen) {
+      const target = this.customAllergen.toLowerCase().trim();
+      const matchKnown = (itemAllergens || []).some(a => a.toLowerCase().includes(target));
+      const matchText = (dishText || '').toLowerCase().includes(target);
+      if (matchKnown || matchText) {
+        if (!flags.includes(this.customAllergen)) {
+          flags.push(this.customAllergen);
+        }
+      }
+    }
+    return flags;
+  }
+
+  // --- CUSTOM ALLERGEN SEARCH MODAL & CORPUS QUERY ---
+  openCustomAllergenModal() {
+    const modal = document.getElementById('detail-modal');
+    const content = document.getElementById('modal-content');
+    if (!modal || !content) return;
+
+    content.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: 'Outfit';">🔍 Set Custom Allergen / Aversion</strong>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <div>
+        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 10px; line-height: 1.4;">
+          Enter any specific ingredient or food intolerance (e.g. <em>MSG, Mushrooms, Truffle, Cinnamon, Soy</em>) to search the festival menu database. You have <strong>1 active custom slot</strong>.
+        </p>
+        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+          <input type="text" id="custom-allergen-input" value="${this.customAllergen || ''}" placeholder="Type ingredient or allergen..." style="flex: 1; background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-sm); padding: 8px 12px; color: #fff; font-size: 0.85rem; outline: none;">
+          <button class="action-share-btn" style="padding: 8px 14px;" onclick="window.app.submitCustomAllergenSearch()">Search & Flag</button>
+        </div>
+        <div id="custom-search-result" style="font-size: 0.76rem; line-height: 1.45; color: #cbd5e1;"></div>
+      </div>
+    `;
+
+    modal.classList.add('active');
+    setTimeout(() => {
+      document.getElementById('custom-allergen-input')?.focus();
+    }, 50);
+  }
+
+  submitCustomAllergenSearch() {
+    const inputEl = document.getElementById('custom-allergen-input');
+    const resultEl = document.getElementById('custom-search-result');
+    if (!inputEl || !resultEl) return;
+
+    const term = inputEl.value.trim();
+    if (!term) {
+      resultEl.innerHTML = '<span style="color: var(--alert-red);">Please enter an ingredient name.</span>';
+      return;
+    }
+
+    // Search corpus (all dish names, descriptions, flavor profiles, and allergen arrays)
+    const termLower = term.toLowerCase();
+    const matchingDishes = [];
+    this.allFeaturedDishes.forEach(d => {
+      const matchName = d.name.toLowerCase().includes(termLower);
+      const matchDesc = (d.description || '').toLowerCase().includes(termLower);
+      const matchFlavor = (d.flavor_profile || '').toLowerCase().includes(termLower);
+      const matchAllergens = (d.allergens || []).some(a => a.toLowerCase().includes(termLower));
+      if (matchName || matchDesc || matchFlavor || matchAllergens) {
+        matchingDishes.push(d);
+      }
+    });
+
+    if (matchingDishes.length > 0) {
+      this.customAllergen = term;
+      localStorage.setItem('eatsmap_custom_allergen', this.customAllergen);
+      this.renderAllergenChips();
+      this.renderActiveViewport();
+      resultEl.innerHTML = `
+        <div style="background: rgba(0, 240, 144, 0.15); border-left: 3px solid var(--fl-green); padding: 8px 10px; border-radius: 4px; margin-top: 6px;">
+          <strong style="color: var(--fl-green);">✓ Found in ${matchingDishes.length} menu items!</strong><br>
+          <span><strong>"${term}"</strong> is now saved to your custom slot and will be flagged in-line.</span>
+        </div>
+        <div style="margin-top: 10px;">
+          <button class="chip-btn" style="width: 100%; padding: 8px; font-weight: bold;" onclick="window.app.closeModal()">Close & View Menus</button>
+        </div>
+      `;
+    } else {
+      resultEl.innerHTML = `
+        <div style="background: rgba(255, 159, 28, 0.15); border-left: 3px solid var(--fl-amber); padding: 8px 10px; border-radius: 4px; margin-top: 6px;">
+          <strong style="color: var(--fl-yellow);">⚠️ Not explicitly found in database</strong><br>
+          <span>"${term}" was not found in our public festival menu data. Remember that our database reflects public vendor submissions and may not be exhaustive. Please check directly with booth chefs!</span>
+        </div>
+        <div style="margin-top: 10px; display: flex; gap: 8px;">
+          <button class="chip-btn active" style="flex: 1; padding: 8px;" onclick="window.app.forceSaveCustomAllergen('${term}')">Flag Anyway as Caution</button>
+          <button class="chip-btn" style="padding: 8px 12px;" onclick="window.app.closeModal()">Dismiss</button>
+        </div>
+      `;
+    }
+  }
+
+  forceSaveCustomAllergen(term) {
+    this.customAllergen = term;
+    localStorage.setItem('eatsmap_custom_allergen', this.customAllergen);
+    this.renderAllergenChips();
+    this.renderActiveViewport();
+    this.closeModal();
+  }
+
+  removeCustomAllergen() {
+    this.customAllergen = null;
+    localStorage.removeItem('eatsmap_custom_allergen');
+    this.renderAllergenChips();
+    this.renderActiveViewport();
   }
 
   updateTopBarStatus() {
@@ -317,7 +453,8 @@ class EatsMapApp {
     `;
 
     this.allFeaturedDishes.forEach((d) => {
-      const itemFlagged = this.checkAllergenFlags(d.allergens);
+      const dishCorpusText = d.name + ' ' + d.description + ' ' + (d.flavor_profile || '');
+      const itemFlagged = this.checkAllergenFlags(d.allergens, dishCorpusText);
       const inWish = this.wishlist.includes(d.id);
       listHtml += `
         <div class="vendor-card" onclick="window.app.openDishCardModal('${d.id}')">
@@ -356,7 +493,8 @@ class EatsMapApp {
     if (!modal || !content) return;
 
     const isWishlisted = this.wishlist.includes(dish.id);
-    const flagged = this.checkAllergenFlags(dish.allergens);
+    const dishCorpusText = dish.name + ' ' + dish.description + ' ' + (dish.flavor_profile || '');
+    const flagged = this.checkAllergenFlags(dish.allergens, dishCorpusText);
 
     let pairingLine = '';
     if (dish.pairings) {
