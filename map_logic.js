@@ -10,7 +10,7 @@ class MapManager {
     this.watchId = null;
   }
 
-  init(vendors = [], venue = null, carLocation = null) {
+  init(vendors = [], venue = null, carLocation = null, filterMode = 'all') {
     const defaultCenter = [36.0465, -86.4172]; // Nashville Superspeedway Infield Plaza
     
     if (!this.map) {
@@ -25,54 +25,76 @@ class MapManager {
       this.map.invalidateSize();
     }
 
-    // Render Food Booth Markers
     this.clearMarkers();
-    vendors.forEach(vendor => {
-      if (vendor.coordinates) {
-        const marker = L.circleMarker([vendor.coordinates.lat, vendor.coordinates.lng], {
-          radius: 8,
-          fillColor: '#ff5e36',
-          color: '#fff',
-          weight: 2,
-          opacity: 1,
-          fillOpacity: 0.9
-        }).addTo(this.map);
 
-        marker.bindPopup(`
-          <div style="font-family: sans-serif; font-size: 0.85rem; color: #111;">
-            <strong style="color: #ff5e36; font-size: 0.95rem;">${vendor.name}</strong><br>
-            <strong>Booth:</strong> ${vendor.booth_number} (${vendor.zone})<br>
-            <em>${vendor.cuisine}</em><br>
-            <button style="margin-top:6px; background:#ff5e36; color:#fff; border:none; border-radius:4px; padding:4px 8px; font-size:0.75rem; cursor:pointer; font-weight:bold;" onclick="window.app.openVendorById('${vendor.id}')">View Menu & Bio →</button>
-          </div>
-        `);
-        this.vendorMarkers.push(marker);
-      }
-    });
+    // Render Food Booth Markers (Only if not in dedicated facility focus mode)
+    if (filterMode === 'all') {
+      vendors.forEach(vendor => {
+        if (vendor.coordinates) {
+          const marker = L.circleMarker([vendor.coordinates.lat, vendor.coordinates.lng], {
+            radius: 8,
+            fillColor: '#ff5e36',
+            color: '#fff',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.9
+          }).addTo(this.map);
+
+          marker.bindPopup(`
+            <div style="font-family: sans-serif; font-size: 0.85rem; color: #111;">
+              <strong style="color: #ff5e36; font-size: 0.95rem;">${vendor.name}</strong><br>
+              <strong>Booth:</strong> ${vendor.booth_number} (${vendor.zone})<br>
+              <em>${vendor.cuisine}</em><br>
+              <button style="margin-top:6px; background:#ff5e36; color:#fff; border:none; border-radius:4px; padding:4px 8px; font-size:0.75rem; cursor:pointer; font-weight:bold;" onclick="window.app.openVendorById('${vendor.id}')">View Menu & Bio →</button>
+            </div>
+          `);
+          this.vendorMarkers.push(marker);
+        }
+      });
+    }
 
     // Render Health & Wellness / Restroom Amenities
     if (venue && venue.utility && venue.utility.amenities) {
       venue.utility.amenities.forEach(amenity => {
+        if (filterMode !== 'all' && amenity.type !== filterMode) {
+          return;
+        }
+
         let pinColor = '#05d9e8';
-        if (amenity.type === 'wellness') pinColor = '#ff2a6d'; // Red/Pink First Aid
-        if (amenity.type === 'water') pinColor = '#00f090';    // Green Water
-        if (amenity.type === 'restroom') pinColor = '#ffc837'; // Yellow Restrooms
+        let radius = 7;
+        if (amenity.type === 'wellness') {
+          pinColor = '#ff2a6d'; // Red/Pink First Aid
+          if (filterMode === 'wellness') radius = 12;
+        }
+        if (amenity.type === 'water') {
+          pinColor = '#00f090';    // Green Water
+          if (filterMode === 'water') radius = 12;
+        }
+        if (amenity.type === 'restroom') {
+          pinColor = '#ffc837'; // Yellow Restrooms
+        }
 
         const marker = L.circleMarker([amenity.lat, amenity.lng], {
-          radius: 7,
+          radius: radius,
           fillColor: pinColor,
-          color: '#111',
-          weight: 2,
+          color: filterMode !== 'all' ? '#ffffff' : '#111',
+          weight: filterMode !== 'all' ? 3 : 2,
           opacity: 1,
           fillOpacity: 0.95
         }).addTo(this.map);
 
         marker.bindPopup(`
-          <div style="font-family: sans-serif; font-size: 0.82rem; color: #111;">
-            <strong>${amenity.name}</strong><br>
-            <span style="color: #666;">${amenity.location}</span>
+          <div style="font-family: sans-serif; font-size: 0.85rem; color: #111;">
+            <strong style="color: ${pinColor}; font-size: 0.95rem;">${amenity.name}</strong><br>
+            <span style="color: #444;">${amenity.location}</span><br>
+            <small style="color: #666;">${amenity.type === 'water' ? '💧 Free Hydration Station' : '🏥 Emergency & First Aid Support'}</small>
           </div>
         `);
+
+        if (filterMode !== 'all') {
+          setTimeout(() => marker.openPopup(), 200);
+        }
+
         this.amenityMarkers.push(marker);
       });
     }

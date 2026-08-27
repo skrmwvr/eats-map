@@ -14,6 +14,7 @@ class EatsMapApp {
     this.wishlist = JSON.parse(localStorage.getItem('eatsmap_wishlist') || '[]');
     this.ratings = JSON.parse(localStorage.getItem('eatsmap_ratings') || '{}');
     this.carLocation = JSON.parse(localStorage.getItem('eatsmap_car') || 'null');
+    this.tempUnit = localStorage.getItem('eatsmap_temp_unit') || 'F'; // 'F' or 'C'
     this.userCoords = null; // Real live device GPS coords {lat, lng, accuracy}
     this.gpsStatus = 'prompt'; // 'prompt' | 'granted' | 'denied' | 'unsupported'
     this.isAtVenue = false; // Whether user is within 1.5 miles of Nashville Superspeedway
@@ -81,11 +82,18 @@ class EatsMapApp {
       alert('Medical & First Aid Station is stationed at Main Concourse Gate 1. Call 911 for emergencies or event dispatch on site.');
     });
 
-    document.getElementById('btn-home').addEventListener('click', () => this.switchViewport('home'));
-    document.getElementById('btn-booths').addEventListener('click', () => this.switchViewport('booths'));
-    document.getElementById('btn-passport').addEventListener('click', () => this.switchViewport('passport'));
+    document.getElementById('btn-foot-eats').addEventListener('click', () => this.switchViewport('home'));
+    document.getElementById('btn-foot-wishlist').addEventListener('click', () => this.switchViewport('passport'));
     document.getElementById('btn-foot-map').addEventListener('click', () => this.switchViewport('map'));
     document.getElementById('btn-foot-help').addEventListener('click', () => this.switchViewport('about'));
+
+    // Temperature Unit Toggle (°F / °C)
+    const btnTempUnit = document.getElementById('btn-temp-unit');
+    if (btnTempUnit) {
+      btnTempUnit.addEventListener('click', () => {
+        this.toggleTempUnit();
+      });
+    }
 
     // Allergen Dropdown Toggle & Backdrop Click-Outside
     const btnAllergenToggle = document.getElementById('allergen-toggle-btn');
@@ -417,7 +425,10 @@ class EatsMapApp {
       const timelineStatus = document.getElementById('timeline-status');
       if (timelineStatus) timelineStatus.textContent = currentDay.date_short;
       const weatherStatus = document.getElementById('weather-status');
-      if (weatherStatus) weatherStatus.textContent = currentDay.weather.split('•')[0].trim();
+      if (weatherStatus) {
+        const afternoonF = currentDay.temp_afternoon_f || 84;
+        weatherStatus.textContent = this.formatTemp(afternoonF);
+      }
     }
   }
 
@@ -916,34 +927,89 @@ class EatsMapApp {
     }
   }
 
+  toggleTempUnit() {
+    this.tempUnit = this.tempUnit === 'F' ? 'C' : 'F';
+    localStorage.setItem('eatsmap_temp_unit', this.tempUnit);
+    const btn = document.getElementById('btn-temp-unit');
+    if (btn) btn.textContent = `°${this.tempUnit}`;
+    this.updateTopBarStatus();
+    if (this.activeViewport === 'weather') {
+      this.renderWeatherView(document.getElementById('viewport-content'));
+    }
+  }
+
+  formatTemp(f) {
+    if (this.tempUnit === 'C') {
+      const c = Math.round((f - 32) * (5 / 9));
+      return `${c}°C`;
+    }
+    return `${f}°F`;
+  }
+
   renderWeatherView(container) {
     const days = (this.venue && this.venue.days) ? this.venue.days : [];
     container.innerHTML = `
       <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px;">
-        <h3 style="color: #fff; font-size: 1.2rem; font-family: 'Outfit'; margin-bottom: 6px;">🌤️ FoodieLand 3-Day Forecast</h3>
-        <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 14px;">Nashville Superspeedway • Lebanon, TN</p>
+        <h2 style="color: #fff; font-size: 1.45rem; font-weight: 900; font-family: 'Outfit'; margin-bottom: 4px; letter-spacing: -0.01em;">
+          🌤️ FoodieLand 3-Day Forecast
+        </h2>
+        <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 14px;">
+          Nashville Superspeedway • Lebanon, TN
+        </p>
         
-        ${days.map(d => `
-          <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: var(--bg-surface); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border-color);">
-            <div>
-              <strong style="color: var(--fl-orange); font-size: 0.9rem;">${d.date_str}</strong>
-              <div style="font-size: 0.74rem; color: var(--text-secondary);">Hours: ${d.hours}</div>
+        ${days.map(d => {
+          const afternoonF = d.temp_afternoon_f || 84;
+          const eveningF = d.temp_evening_f || 74;
+          const cond = d.conditions || d.weather.split('•')[1]?.trim() || 'Clear';
+          return `
+            <div style="padding: 10px 12px; background: var(--bg-surface); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border-color);">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+                <strong style="color: var(--fl-orange); font-size: 0.95rem;">${d.date_str}</strong>
+                <span style="color: var(--fl-yellow); font-size: 0.8rem; font-weight: 600;">${cond}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem;">
+                <span style="color: var(--text-secondary);">Hours: ${d.hours}</span>
+                <span style="color: #fff; font-weight: 700;">
+                  <span style="color: var(--fl-yellow);">☀️ Afternoon: ${this.formatTemp(afternoonF)}</span>
+                  <span style="color: var(--text-muted); margin: 0 4px;">•</span>
+                  <span style="color: var(--fl-teal);">🌙 Evening: ${this.formatTemp(eveningF)}</span>
+                </span>
+              </div>
             </div>
-            <span style="color: var(--fl-yellow); font-weight: 700; font-size: 0.85rem;">${d.weather}</span>
-          </div>
-        `).join('')}
+          `;
+        }).join('')}
         
-        <div style="margin-top: 12px; font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
-          💡 <strong>Pro Tip:</strong> Evening night-market hours (6:00 PM – 10:00 PM) offer cooler breezes and twilight neon vibes. Stay hydrated at free water stations!
+        <!-- Plain English Hydration & Safe Spot Map Focus Actions -->
+        <div style="margin-top: 14px; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; font-size: 0.8rem; line-height: 1.5; color: #e2e8f0;">
+          <p style="margin-bottom: 8px;">
+            💧 <strong>Stay Hydrated:</strong> Free refill stations are stationed across the grounds. 
+            <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('water')" style="color: var(--fl-teal); font-weight: 700; text-decoration: underline; margin-left: 4px;">
+              View Water Stations on Map →
+            </a>
+          </p>
+          <p style="margin: 0;">
+            🏥 <strong>Medical & First Aid:</strong> Need medical assistance or sun relief? 
+            <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('wellness')" style="color: var(--fl-pink); font-weight: 700; text-decoration: underline; margin-left: 4px;">
+              View Gate 1 First Aid Tent on Map →
+            </a>
+          </p>
         </div>
 
         <!-- Weather Source & Recent Update Footer -->
-        <div style="margin-top: 16px; border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: var(--text-muted);">
+        <div style="margin-top: 14px; border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: var(--text-muted);">
           <span>📡 Source: <strong>NOAA / National Weather Service (Nashville, TN)</strong></span>
           <span style="color: var(--fl-teal);">Updated Aug 27, 12:00 PM CDT</span>
         </div>
       </div>
     `;
+  }
+
+  showMapFacilityFocus(facilityType) {
+    this.switchViewport('map');
+    setTimeout(() => {
+      if (!this.mapManager) this.mapManager = new MapManager();
+      this.mapManager.init(this.vendors, this.venue, this.carLocation, facilityType);
+    }, 100);
   }
 
   renderVenueView(container) {

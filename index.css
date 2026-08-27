@@ -194,18 +194,53 @@ body {
   background-color: var(--fl-amber); /* Amber = Prompting / checking */
 }
 
-/* STATUS BANNER */
+/* STATUS BANNER WITH F / C TOGGLE */
 .status-banner {
   background: rgba(255, 94, 54, 0.15);
   border-bottom: 1px solid rgba(255, 94, 54, 0.3);
-  padding: 6px 12px;
+  padding: 4px 10px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
   font-size: 0.72rem;
   font-weight: 600;
   color: var(--fl-yellow);
   flex-shrink: 0;
+  gap: 8px;
+}
+
+.banner-center-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: 1;
+  text-align: center;
+  overflow: hidden;
+}
+
+.banner-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.temp-unit-toggle {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--fl-orange);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.temp-unit-toggle:hover {
+  background: var(--fl-orange);
+  color: #fff;
 }
 
 /* ALLERGEN FLAG TRAY (Collapsible Dropdown Overlay) */
