@@ -786,11 +786,14 @@ class EatsMapApp {
     let highlightsHtml = '';
     (currentDay.stage_highlights || []).forEach(item => {
       const isWish = this.wishlist.includes(item.id);
+      const isPast = this.isPastEvent(currentDay.date_str, item.time);
       highlightsHtml += `
-        <div class="stage-event-card" onclick="window.app.openStageEventModal('${item.id}')">
+        <div class="stage-event-card ${isPast ? 'is-past' : ''}" onclick="window.app.openStageEventModal('${item.id}')">
           <div style="display: flex; justify-content: space-between; align-items: baseline;">
             <strong style="color: var(--fl-orange); font-size: 0.88rem;">${item.time}</strong>
-            <span style="font-size: 0.72rem; color: var(--fl-teal); font-weight: 600;">${item.stage_name}</span>
+            <span style="font-size: 0.72rem; color: var(--fl-teal); font-weight: 600;">
+              ${isPast ? '<span class="past-badge">Concluded</span> ' : ''}${item.stage_name}
+            </span>
           </div>
           <div style="color: #fff; font-size: 0.92rem; font-weight: 700; margin: 2px 0;">${item.title}</div>
           <div style="font-size: 0.76rem; color: var(--text-secondary);">${item.performer}</div>
@@ -900,12 +903,29 @@ class EatsMapApp {
 
       <div style="margin-top: 10px;">
         <button class="chip-btn ${isWishlisted ? 'active' : ''}" style="width: 100%; padding: 10px; font-weight: bold;" onclick="window.app.toggleWishlist('${foundEvent.id}')">
-          ${isWishlisted ? '✓ Scheduled in My Wishlist' : '+ Add Stage Event to Wishlist'}
+          ${isWishlisted ? '✓ Scheduled in My Wishlist (Tap to Remove)' : '+ Add Stage Event to Wishlist'}
         </button>
       </div>
     `;
 
     modal.classList.add('active');
+  }
+
+  isPastEvent(dayDateStr, eventTimeStr) {
+    if (!dayDateStr) return false;
+    try {
+      // Parse event time (e.g. '4:30 PM', '8:00 PM') and date (e.g. 'Friday, Aug 28, 2026')
+      const datePart = dayDateStr.replace(/^[A-Za-z]+,\s*/, ''); // 'Aug 28, 2026'
+      const dateTimeString = `${datePart} ${eventTimeStr || '11:59 PM'}`;
+      const eventDate = new Date(dateTimeString);
+      const now = new Date();
+      if (!isNaN(eventDate.getTime())) {
+        return now.getTime() > eventDate.getTime();
+      }
+    } catch (e) {
+      return false;
+    }
+    return false;
   }
 
   renderBoothsView(container) {
@@ -1159,10 +1179,10 @@ class EatsMapApp {
         const flagged = this.checkAllergenFlags(foundDish.allergens);
 
         html += `
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px;">
+          <div class="wishlist-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: flex-start;">
               <div>
-                <strong style="color: #fff; font-size: 0.92rem;">${foundDish.name}</strong>
+                <strong style="color: #fff; font-size: 0.92rem; cursor: pointer;" onclick="window.app.openDishCardModal('${foundDish.id}')">${foundDish.name}</strong>
                 <div style="font-size: 0.72rem; color: var(--fl-teal);">${foundVendor.name} (${foundVendor.booth_number})</div>
               </div>
               <span style="color: var(--fl-yellow); font-weight: 800; font-size: 0.85rem;">$${foundDish.price}</span>
@@ -1175,9 +1195,14 @@ class EatsMapApp {
                   <span onclick="window.app.rateDish('${itemId}', ${star})">${star <= userRating ? '⭐' : '☆'}</span>
                 `).join('')}
               </div>
-              <button class="action-share-btn" style="padding: 4px 10px; font-size: 0.7rem;" onclick="window.app.shareTasting('${foundVendor.name}', '${foundDish.name}', ${userRating})">
-                📤 Share
-              </button>
+              <div style="display: flex; gap: 6px;">
+                <button class="action-share-btn" style="padding: 4px 10px; font-size: 0.7rem;" onclick="window.app.shareTasting('${foundVendor.name}', '${foundDish.name}', ${userRating})">
+                  📤 Share
+                </button>
+                <button class="wishlist-remove-btn" onclick="window.app.toggleWishlist('${foundDish.id}')">
+                  ✕ Remove
+                </button>
+              </div>
             </div>
           </div>
         `;
@@ -1197,17 +1222,22 @@ class EatsMapApp {
       }
 
       if (foundStage) {
+        const isPast = this.isPastEvent(foundDay?.date_str, foundStage.time);
         html += `
-          <div style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px;">
+          <div class="wishlist-card ${isPast ? 'is-past' : ''}" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
               <strong style="color: var(--fl-orange); font-size: 0.85rem;">${foundStage.time} • ${foundStage.stage_name}</strong>
-              <span style="font-size: 0.7rem; color: var(--fl-yellow);">${foundDay ? foundDay.date_short : ''}</span>
+              <span style="font-size: 0.7rem; color: var(--fl-yellow);">
+                ${isPast ? '<span class="past-badge">Concluded</span> ' : ''}${foundDay ? foundDay.date_short : ''}
+              </span>
             </div>
-            <div style="color: #fff; font-size: 0.92rem; font-weight: 700; margin: 2px 0;">${foundStage.title}</div>
+            <div style="color: #fff; font-size: 0.92rem; font-weight: 700; margin: 2px 0; cursor: pointer;" onclick="window.app.openStageEventModal('${foundStage.id}')">${foundStage.title}</div>
             <div style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 6px;">${foundStage.performer}</div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
               <span style="font-size: 0.7rem; color: var(--fl-teal);">🎤 Stage Event</span>
-              <button class="chip-btn" style="padding: 4px 8px; font-size: 0.68rem;" onclick="window.app.toggleWishlist('${foundStage.id}')">Remove ✕</button>
+              <button class="wishlist-remove-btn" onclick="window.app.toggleWishlist('${foundStage.id}')">
+                ✕ Remove
+              </button>
             </div>
           </div>
         `;

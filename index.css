@@ -726,6 +726,48 @@ body {
   background: rgba(255, 94, 54, 0.08);
 }
 
+/* Past / Concluded Events turn grey */
+.stage-event-card.is-past,
+.wishlist-card.is-past {
+  opacity: 0.55;
+  filter: grayscale(0.85);
+  border-color: #334155;
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.stage-event-card.is-past:hover,
+.wishlist-card.is-past:hover {
+  opacity: 0.8;
+  filter: grayscale(0.4);
+}
+
+.past-badge {
+  background: #334155;
+  color: #94a3b8;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+}
+
+.wishlist-remove-btn {
+  background: rgba(255, 94, 54, 0.12);
+  border: 1px solid rgba(255, 94, 54, 0.35);
+  color: var(--fl-orange);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wishlist-remove-btn:hover {
+  background: var(--fl-orange);
+  color: #fff;
+}
+
 /* BOTTOM DASHBOARD (Authentic Sun Map sloped architecture) */
 .dashboard-bottom {
   display: grid;
