@@ -213,7 +213,7 @@ body {
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border-color);
   position: relative;
-  z-index: 40;
+  z-index: 1000;
   flex-shrink: 0;
 }
 
@@ -287,14 +287,14 @@ body {
   right: 0;
   background: var(--bg-surface);
   border-bottom: 2px solid var(--fl-orange);
-  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.9);
   padding: 12px 14px 16px;
   max-height: 0;
   opacity: 0;
   overflow: hidden;
   pointer-events: none;
   transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, padding 0.3s ease;
-  z-index: 50;
+  z-index: 1100;
 }
 
 .allergen-pref-bar.is-expanded .allergen-expand-panel {
@@ -410,11 +410,11 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.65);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s ease;
-  z-index: 35;
+  z-index: 900;
 }
 
 .allergen-backdrop.is-active {
@@ -431,6 +431,16 @@ body {
   position: relative;
   background-color: #10121a;
   overflow: hidden;
+  z-index: 1;
+}
+
+/* Ensure Leaflet controls and map tiles stay beneath header dropdowns */
+#leaflet-map {
+  z-index: 1 !important;
+}
+
+.leaflet-pane, .leaflet-top, .leaflet-bottom {
+  z-index: 10 !important;
 }
 
 .viewport-content {

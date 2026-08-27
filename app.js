@@ -27,7 +27,6 @@ class EatsMapApp {
     this.determineCurrentDayIndex();
     this.bindEvents();
     this.renderAllergenChips();
-    this.initGPSProximity();
     this.updateCarButtonStatus();
     this.updateTopBarStatus();
     this.updateWishlistBadge();
