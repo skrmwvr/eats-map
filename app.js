@@ -14,6 +14,9 @@ class EatsMapApp {
     this.wishlist = JSON.parse(localStorage.getItem('eatsmap_wishlist') || '[]');
     this.ratings = JSON.parse(localStorage.getItem('eatsmap_ratings') || '{}');
     this.carLocation = JSON.parse(localStorage.getItem('eatsmap_car') || 'null');
+    this.userCoords = null; // Real live device GPS coords {lat, lng, accuracy}
+    this.gpsStatus = 'prompt'; // 'prompt' | 'granted' | 'denied' | 'unsupported'
+    this.isAtVenue = false; // Whether user is within 1.5 miles of Nashville Superspeedway
     this.searchQuery = '';
     this.mapManager = null;
     this.qrExpanded = false;
@@ -24,6 +27,7 @@ class EatsMapApp {
     this.determineCurrentDayIndex();
     this.bindEvents();
     this.renderAllergenChips();
+    this.initGPSProximity();
     this.updateCarButtonStatus();
     this.updateTopBarStatus();
     this.updateWishlistBadge();
@@ -332,32 +336,108 @@ class EatsMapApp {
     if (badge) badge.textContent = this.wishlist.length + ' Queued';
   }
 
-  // --- CAR BUTTON LOGIC: Dynamic Text Toggle Synced to Real GPS Location ---
+  // --- GPS STATUS & PROXIMITY ENGINE ---
+  initGPSProximity() {
+    if (!navigator.geolocation) {
+      this.gpsStatus = 'unsupported';
+      this.updateCarButtonStatus();
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        this.gpsStatus = 'granted';
+        this.userCoords = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+          accuracy: pos.coords.accuracy
+        };
+        // Check if user is within ~2.5 miles of Nashville Superspeedway (36.0465, -86.4172)
+        const venueCoords = this.venue?.coordinates || { lat: 36.0465, lng: -86.4172 };
+        const distMiles = this.calculateDistanceMiles(this.userCoords.lat, this.userCoords.lng, venueCoords.lat, venueCoords.lng);
+        this.isAtVenue = distMiles <= 2.5;
+        this.updateCarButtonStatus();
+      },
+      (err) => {
+        this.gpsStatus = 'denied';
+        this.updateCarButtonStatus();
+      },
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
+    );
+  }
+
+  calculateDistanceMiles(lat1, lon1, lat2, lon2) {
+    const R = 3958.8; // Earth radius in miles
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // --- CAR & DIRECTIONS BUTTON LOGIC: Dynamic Mode Based on GPS Proximity & Stored Spot ---
   updateCarButtonStatus() {
     const carTextEl = document.getElementById('btn-car-text');
+    const carIconEl = document.getElementById('btn-car-icon');
     const carBtn = document.getElementById('btn-venue-car');
-    if (this.carLocation && typeof this.carLocation.lat === 'number') {
-      if (carTextEl) carTextEl.textContent = 'Find my car';
-      if (carBtn) carBtn.classList.add('car-saved');
-    } else {
-      if (carTextEl) carTextEl.textContent = 'Mark my car';
-      if (carBtn) carBtn.classList.remove('car-saved');
+    const gpsDot = document.getElementById('gps-dot-indicator');
+
+    // Update Dev GPS Dot Indicator (Green = GPS live/granted, Red = denied, Amber = checking/pending)
+    if (gpsDot) {
+      gpsDot.className = 'gps-dot-indicator ' + (this.gpsStatus || 'prompt');
     }
+
+    if (!carBtn) return;
+
+    // State 1: Car spot is already saved
+    if (this.carLocation && typeof this.carLocation.lat === 'number') {
+      if (carIconEl) carIconEl.textContent = '🚗';
+      if (carTextEl) carTextEl.textContent = 'Find my car';
+      carBtn.className = 'sub-venue-btn car-saved';
+      return;
+    }
+
+    // State 2: User is NOT at the festival grounds -> Button acts as "Get Directions"
+    if (this.userCoords && !this.isAtVenue) {
+      if (carIconEl) carIconEl.textContent = '🧭';
+      if (carTextEl) carTextEl.textContent = 'Get Directions';
+      carBtn.className = 'sub-venue-btn nav-directions';
+      return;
+    }
+
+    // State 3: User IS at venue (or GPS is pending) & no car saved yet -> "Mark my car"
+    if (carIconEl) carIconEl.textContent = '🚗';
+    if (carTextEl) carTextEl.textContent = 'Mark my car';
+    carBtn.className = 'sub-venue-btn';
   }
 
   handleCarButtonClick() {
+    // 1. If Car already marked -> View pin on interactive grounds map
     if (this.carLocation && typeof this.carLocation.lat === 'number') {
-      // Car is already marked -> View on map with navigation guide
       this.switchViewport('map');
       setTimeout(() => {
         if (this.mapManager) {
-          this.mapManager.updateCarPin(this.carLocation);
+          this.mapManager.focusOnCar(this.carLocation);
         }
       }, 100);
       return;
     }
 
-    // No car marked yet -> Request GPS and save only on real success
+    // 2. If User is NOT at venue -> Launch local native maps app with directions to Speedway
+    if (this.userCoords && !this.isAtVenue) {
+      const address = encodeURIComponent(this.venue?.address || '400 Victory Ln Dr, Lebanon, TN 37090');
+      const venueLat = this.venue?.coordinates?.lat || 36.0465;
+      const venueLng = this.venue?.coordinates?.lng || -86.4172;
+      
+      // Universal maps intent (Apple Maps on iOS / Google Maps on Android & Web)
+      const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueLat},${venueLng}&destination_place_id=${address}`;
+      window.open(mapsUrl, '_blank');
+      return;
+    }
+
+    // 3. User is at venue -> Request high accuracy GPS to mark parking spot
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser.');
       return;
@@ -368,6 +448,7 @@ class EatsMapApp {
 
     navigator.geolocation.getCurrentPosition(
       (pos) => {
+        this.gpsStatus = 'granted';
         this.carLocation = {
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
@@ -376,12 +457,13 @@ class EatsMapApp {
         };
         localStorage.setItem('eatsmap_car', JSON.stringify(this.carLocation));
         this.updateCarButtonStatus();
-        alert('🚗 Car spot marked successfully at your exact GPS coordinates!');
+        alert('🚗 Parking spot saved successfully at your exact coordinates!');
         if (this.mapManager && this.activeViewport === 'map') {
           this.mapManager.updateCarPin(this.carLocation);
         }
       },
       (err) => {
+        this.gpsStatus = 'denied';
         this.carLocation = null;
         localStorage.removeItem('eatsmap_car');
         this.updateCarButtonStatus();

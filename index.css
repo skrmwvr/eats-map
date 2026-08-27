@@ -155,11 +155,43 @@ body {
   font-size: 0.75rem;
   font-weight: 600;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .sub-venue-btn.car-saved {
   border-color: var(--fl-green);
   color: var(--fl-green);
+}
+
+.sub-venue-btn.nav-directions {
+  border-color: var(--fl-teal);
+  color: #fff;
+}
+
+/* Tiny dev GPS status indicator dot inside button capsule */
+.gps-dot-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #64748b; /* Default / Pending (Grey) */
+  display: inline-block;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gps-dot-indicator.granted {
+  background-color: var(--fl-green); /* Green = Live GPS active & permitted */
+  box-shadow: 0 0 6px rgba(0, 240, 144, 0.7);
+}
+
+.gps-dot-indicator.denied {
+  background-color: var(--alert-red); /* Red = Permission denied or error */
+}
+
+.gps-dot-indicator.prompt {
+  background-color: var(--fl-amber); /* Amber = Prompting / checking */
 }
 
 /* STATUS BANNER */
