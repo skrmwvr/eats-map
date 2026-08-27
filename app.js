@@ -15,6 +15,7 @@ class EatsMapApp {
     this.carLocation = JSON.parse(localStorage.getItem('eatsmap_car') || 'null');
     this.searchQuery = '';
     this.mapManager = null;
+    this.qrExpanded = false;
   }
 
   init() {
@@ -421,14 +422,27 @@ class EatsMapApp {
       <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); margin: 12px 0 6px;">🥢 Active Pavilion Focus</h4>
       <div>${catHtml}</div>
 
-      <!-- ABOUT ANCHOR AT BOTTOM OF PROGRAM -->
-      <div style="margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 14px;">
-        <h4 style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 6px;">☀️ About Eats Map Guide</h4>
-        <p style="font-size: 0.78rem; color: #94a3b8; line-height: 1.45;">
+      <!-- ABOUT & QR FOOTER AT BOTTOM OF PROGRAM -->
+      <div style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+        <h4 style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">☀️ Offline Companion Guide</h4>
+        <p style="font-size: 0.78rem; color: #94a3b8; line-height: 1.45; margin-bottom: 12px;">
           Eats Map is an offline-first companion guide engineered for large town-scale food festivals. Navigate 200+ vendor booths, mark your car with live GPS, track allergen flags, and build your tasting crawl wishlist.
         </p>
+
+        <!-- Dynamic Inline Tap-to-Expand QR Card -->
+        <div class="qr-footer-card" id="program-qr-card" onclick="window.app.toggleQRExpansion('program-qr-card', 'qr-canvas-program')">
+          ${this.getQRCardHTML('qr-canvas-program')}
+        </div>
+
+        <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 10px; text-align: center;">
+          Built for FoodieLand Nashville 2026 • Open Companion Architecture
+        </div>
       </div>
     `;
+
+    setTimeout(() => {
+      this.drawShareQRCode('qr-canvas-program', this.qrExpanded ? 180 : 76);
+    }, 50);
   }
 
   changeDay(delta) {
@@ -723,16 +737,69 @@ class EatsMapApp {
           Eats Map transforms town and festival grounds into an interactive, offline-ready companion. Treat top chefs, popup creators, and food stalls with the deep heritage and spotlight they deserve.
         </p>
 
-        <div style="background: var(--bg-surface); padding: 10px; border-radius: var(--radius-md); font-size: 0.76rem; color: #94a3b8; line-height: 1.4;">
+        <div style="background: var(--bg-surface); padding: 10px; border-radius: var(--radius-md); font-size: 0.76rem; color: #94a3b8; line-height: 1.4; margin-bottom: 14px;">
           <strong style="color: #fff; display: block; margin-bottom: 4px;">Features:</strong>
-          • 3-Day Program Navigator (&lt; &gt; day shifts)<br>
-          • Deep Chef Lineage & Origin Stories<br>
-          • Personal Allergen & Aversion Flagging<br>
-          • Live Grounds GPS Navigation & Car Marker<br>
-          • Tasting Wishlist & Reaction Sharing
+          • <strong>Now Playing List & Map</strong>: Fast visual dish browse<br>
+          • <strong>Dish Cards</strong>: Detailed culinary profiles, flavor notes & pairings<br>
+          • <strong>3-Day Program</strong>: Shift between festival dates with stage events<br>
+          • <strong>Synced Car Marker</strong>: Real GPS tracking that alerts on permission status<br>
+          • <strong>Allergen Highlighting</strong>: In-line warnings without hiding options
+        </div>
+
+        <!-- Dynamic Inline Tap-to-Expand QR Card -->
+        <div class="qr-footer-card" id="about-qr-card" onclick="window.app.toggleQRExpansion('about-qr-card', 'qr-canvas-about')">
+          ${this.getQRCardHTML('qr-canvas-about')}
+        </div>
+
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 14px; text-align: center; line-height: 1.4;">
+          <strong>Open Source & Local First</strong><br>
+          Designed with Sun Map layout specs • MIT License
         </div>
       </div>
     `;
+
+    setTimeout(() => {
+      this.drawShareQRCode('qr-canvas-about', this.qrExpanded ? 180 : 76);
+    }, 50);
+  }
+
+  // --- HELPER: Dynamic QR Card Markup Generation ---
+  getQRCardHTML(canvasId) {
+    if (this.qrExpanded) {
+      return `
+        <div class="qr-footer-expanded">
+          <div class="qr-canvas-box">
+            <canvas id="${canvasId}" width="180" height="180"></canvas>
+          </div>
+          <div class="qr-brand-title">SUN MAP</div>
+          <div class="qr-subtext">Scan with any phone camera to install companion app offline. Tap to minimize.</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="qr-footer-compact">
+        <div class="qr-canvas-box">
+          <canvas id="${canvasId}" width="76" height="76"></canvas>
+        </div>
+        <div class="qr-label-compact">
+          <div class="qr-brand-title">SUN MAP</div>
+          <div class="qr-subtext">Offline Guide</div>
+          <div class="qr-hint">Tap QR to enlarge & unwrap →</div>
+        </div>
+      </div>
+    `;
+  }
+
+  toggleQRExpansion(cardContainerId, canvasId) {
+    this.qrExpanded = !this.qrExpanded;
+    const cardEl = document.getElementById(cardContainerId);
+    if (cardEl) {
+      cardEl.innerHTML = this.getQRCardHTML(canvasId);
+      setTimeout(() => {
+        this.drawShareQRCode(canvasId, this.qrExpanded ? 180 : 76);
+      }, 30);
+    }
   }
 
   openVendorById(vendorId) {
@@ -861,11 +928,11 @@ class EatsMapApp {
     setTimeout(() => this.drawShareQRCode('qr-canvas'), 50);
   }
 
-  drawShareQRCode(canvasId) {
+  drawShareQRCode(canvasId, targetSize = 180) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-    const size = 180;
+    const size = targetSize;
     canvas.width = size;
     canvas.height = size;
 
@@ -873,12 +940,15 @@ class EatsMapApp {
     ctx.fillRect(0, 0, size, size);
 
     ctx.fillStyle = '#10121a';
-    this.drawFinderPattern(ctx, 10, 10, 45);
-    this.drawFinderPattern(ctx, size - 55, 10, 45);
-    this.drawFinderPattern(ctx, 10, size - 55, 45);
+    const finderSize = Math.max(16, Math.floor(size * 0.25));
+    const padding = Math.max(4, Math.floor(size * 0.05));
 
-    const blockSize = 5;
-    const numBlocks = size / blockSize;
+    this.drawFinderPattern(ctx, padding, padding, finderSize);
+    this.drawFinderPattern(ctx, size - finderSize - padding, padding, finderSize);
+    this.drawFinderPattern(ctx, padding, size - finderSize - padding, finderSize);
+
+    const blockSize = Math.max(3, Math.floor(size / 36));
+    const numBlocks = Math.floor(size / blockSize);
 
     for (let x = 0; x < numBlocks; x++) {
       for (let y = 0; y < numBlocks; y++) {

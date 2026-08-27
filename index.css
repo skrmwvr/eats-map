@@ -519,3 +519,96 @@ body {
   cursor: pointer;
   font-size: 0.78rem;
 }
+
+/* FOOTER QR CODE CARD & INTERACTIVE EXPANSION */
+.qr-footer-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  margin-top: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.qr-footer-compact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.qr-canvas-box {
+  background: #ffffff;
+  padding: 6px;
+  border-radius: 8px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.qr-footer-card:hover .qr-canvas-box {
+  transform: scale(1.03);
+}
+
+.qr-label-compact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+.qr-brand-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 900;
+  font-size: 1.15rem;
+  line-height: 1.1;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.qr-subtext {
+  font-size: 0.72rem;
+  color: var(--fl-yellow);
+  font-weight: 700;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+
+.qr-hint {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* EXPANDED QR STATE */
+.qr-footer-expanded {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.qr-footer-expanded .qr-canvas-box {
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.qr-footer-expanded .qr-brand-title {
+  font-size: 1.35rem;
+  letter-spacing: 0.08em;
+  color: var(--fl-orange);
+}
+
+.qr-footer-expanded .qr-subtext {
+  font-size: 0.76rem;
+  color: #cbd5e1;
+  text-transform: none;
+  font-weight: 500;
+}
