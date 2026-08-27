@@ -15,6 +15,7 @@ class EatsMapApp {
     this.ratings = JSON.parse(localStorage.getItem('eatsmap_ratings') || '{}');
     this.carLocation = JSON.parse(localStorage.getItem('eatsmap_car') || 'null');
     this.tempUnit = localStorage.getItem('eatsmap_temp_unit') || 'F'; // 'F' or 'C'
+    this.historyStack = []; // Navigation history stack for back button
     this.userCoords = null; // Real live device GPS coords {lat, lng, accuracy}
     this.gpsStatus = 'prompt'; // 'prompt' | 'granted' | 'denied' | 'unsupported'
     this.isAtVenue = false; // Whether user is within 1.5 miles of Nashville Superspeedway
@@ -92,6 +93,14 @@ class EatsMapApp {
     if (btnTempUnit) {
       btnTempUnit.addEventListener('click', () => {
         this.toggleTempUnit();
+      });
+    }
+
+    // Floating History Back Button
+    const backFab = document.getElementById('viewport-back-fab');
+    if (backFab) {
+      backFab.addEventListener('click', () => {
+        this.goBack();
       });
     }
 
@@ -173,8 +182,17 @@ class EatsMapApp {
     if (backdrop) backdrop.classList.remove('is-active');
   }
 
-  switchViewport(view) {
+  switchViewport(view, pushHistory = true) {
     this.closeAllergenPanel();
+    
+    if (pushHistory && this.activeViewport && this.activeViewport !== view) {
+      this.historyStack.push({
+        viewport: this.activeViewport,
+        dayIndex: this.activeDayIndex,
+        homeMode: this.homeDisplayMode
+      });
+    }
+
     this.activeViewport = view;
     document.querySelectorAll('.top-btn, .bottom-btn').forEach(btn => btn.classList.remove('active'));
     if (view === 'weather') document.getElementById('btn-weather')?.classList.add('active');
@@ -184,7 +202,31 @@ class EatsMapApp {
     if (view === 'booths') document.getElementById('btn-booths')?.classList.add('active');
     if (view === 'passport') document.getElementById('btn-passport')?.classList.add('active');
 
+    this.updateBackFabVisibility();
     this.renderActiveViewport();
+  }
+
+  goBack() {
+    if (this.historyStack.length === 0) return;
+    const prev = this.historyStack.pop();
+    if (typeof prev.dayIndex === 'number') {
+      this.activeDayIndex = prev.dayIndex;
+      this.updateTopBarStatus();
+    }
+    if (prev.homeMode) {
+      this.homeDisplayMode = prev.homeMode;
+    }
+    this.switchViewport(prev.viewport, false);
+  }
+
+  updateBackFabVisibility() {
+    const fab = document.getElementById('viewport-back-fab');
+    if (!fab) return;
+    if (this.historyStack.length > 0) {
+      fab.style.display = 'inline-flex';
+    } else {
+      fab.style.display = 'none';
+    }
   }
 
   renderAllergenChips() {
@@ -971,19 +1013,19 @@ class EatsMapApp {
           Nashville Superspeedway • Lebanon, TN
         </p>
         
-        ${days.map(d => {
+        ${days.map((d, idx) => {
           const afternoonF = d.temp_afternoon_f || 84;
           const eveningF = d.temp_evening_f || 74;
           const cond = d.conditions || d.weather.split('•')[1]?.trim() || 'Clear';
           const icon = this.getWeatherIcon(cond);
           return `
-            <div style="padding: 10px 12px; background: var(--bg-surface); border-radius: var(--radius-md); margin-bottom: 8px; border: 1px solid var(--border-color);">
+            <div class="forecast-day-card" onclick="window.app.jumpToProgramDay(${idx})" title="Tap to view ${d.date_short} full program & stage schedule">
               <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
                 <strong style="color: var(--fl-orange); font-size: 0.92rem;">${d.date_str}</strong>
                 <span style="color: var(--fl-yellow); font-size: 0.78rem; font-weight: 600;">${icon} ${cond}</span>
               </div>
               <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem;">
-                <span style="color: var(--text-secondary); font-size: 0.72rem;">${d.hours}</span>
+                <span style="color: var(--text-secondary); font-size: 0.72rem;">${d.hours} • <span style="color: var(--fl-teal); font-weight: 700;">View Program →</span></span>
                 <span style="font-weight: 800; font-size: 0.8rem; white-space: nowrap;">
                   <span style="color: var(--fl-yellow);">${this.formatTemp(afternoonF)} day</span>
                   <span style="color: var(--text-muted); margin: 0 4px;">•</span>
@@ -1017,6 +1059,15 @@ class EatsMapApp {
         </div>
       </div>
     `;
+  }
+
+  jumpToProgramDay(dayIndex) {
+    const days = (this.venue && this.venue.days) ? this.venue.days : [];
+    if (dayIndex >= 0 && dayIndex < days.length) {
+      this.activeDayIndex = dayIndex;
+      this.updateTopBarStatus();
+      this.switchViewport('program');
+    }
   }
 
   showMapFacilityFocus(facilityType) {

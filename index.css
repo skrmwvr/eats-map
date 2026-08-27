@@ -457,25 +457,49 @@ body {
   pointer-events: auto;
 }
 
-/* CENTER PANEL: SQUARE VIEWPORT */
-.viewport-square {
-  flex: 1 1 0;
-  min-height: 0;
-  width: 100%;
-  border-bottom: 2px solid var(--border-color);
-  position: relative;
-  background-color: #10121a;
-  overflow: hidden;
-  z-index: 1;
+/* Floating Navigation History Back Button */
+.viewport-back-fab {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(16, 18, 26, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--fl-orange);
+  color: var(--fl-yellow);
+  font-size: 0.76rem;
+  font-weight: 800;
+  padding: 5px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  z-index: 25;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
 }
 
-/* Ensure Leaflet controls and map tiles stay beneath header dropdowns */
-#leaflet-map {
-  z-index: 1 !important;
+.viewport-back-fab:hover, .viewport-back-fab:active {
+  background: var(--fl-orange);
+  color: #fff;
+  transform: translateX(-2px);
 }
 
-.leaflet-pane, .leaflet-top, .leaflet-bottom {
-  z-index: 10 !important;
+/* Clickable Day Forecast Cards (Tapping jumps to that day's Program view) */
+.forecast-day-card {
+  padding: 10px 12px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.forecast-day-card:hover, .forecast-day-card:active {
+  border-color: var(--fl-orange);
+  background: rgba(255, 94, 54, 0.08);
+  transform: translateY(-1px);
 }
 
 .viewport-content {
