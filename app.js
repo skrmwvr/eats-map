@@ -203,7 +203,6 @@ class EatsMapApp {
     if (view === 'booths') document.getElementById('btn-booths')?.classList.add('active');
     if (view === 'passport') document.getElementById('btn-passport')?.classList.add('active');
 
-    this.updateBackFabVisibility();
     this.renderActiveViewport();
   }
 
@@ -218,16 +217,6 @@ class EatsMapApp {
       this.homeDisplayMode = prev.homeMode;
     }
     this.switchViewport(prev.viewport, false);
-  }
-
-  updateBackFabVisibility() {
-    const fab = document.getElementById('viewport-back-fab');
-    if (!fab) return;
-    if (this.historyStack.length > 0) {
-      fab.style.display = 'inline-flex';
-    } else {
-      fab.style.display = 'none';
-    }
   }
 
   renderAllergenChips() {
@@ -810,9 +799,14 @@ class EatsMapApp {
       catHtml += `<span class="chip-btn" style="margin-right: 4px; margin-bottom: 4px; display: inline-block;">${cat}</span>`;
     });
 
+    const showBack = this.historyStack.length > 0;
+
     container.innerHTML = `
       <div class="day-navigator-bar">
-        <button class="day-nav-btn" ${isFirst ? 'disabled' : ''} onclick="window.app.changeDay(-1)">◀</button>
+        <div style="display: flex; align-items: center;">
+          ${showBack ? '<button class="page-back-chevron" onclick="window.app.goBack()" aria-label="Go Back">◀</button>' : ''}
+          <button class="day-nav-btn" ${isFirst ? 'disabled' : ''} onclick="window.app.changeDay(-1)">◀</button>
+        </div>
         <div class="day-nav-label">
           <div class="day-nav-title">${currentDay.date_str}</div>
           <div class="day-nav-sub">${currentDay.hours}</div>
@@ -929,9 +923,11 @@ class EatsMapApp {
   }
 
   renderBoothsView(container) {
+    const showBack = this.historyStack.length > 0;
     let html = `
-      <div style="margin-bottom: 10px;">
-        <input type="text" id="booth-search-input" value="${this.searchQuery}" placeholder="Search dishes, chefs, or ingredients..." style="width: 100%; background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px 12px; color: #fff; font-size: 0.85rem; outline: none;">
+      <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+        ${showBack ? '<button class="page-back-chevron" onclick="window.app.goBack()" aria-label="Go Back">◀</button>' : ''}
+        <input type="text" id="booth-search-input" value="${this.searchQuery}" placeholder="Search dishes, chefs, or ingredients..." style="flex: 1; background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px 12px; color: #fff; font-size: 0.85rem; outline: none;">
       </div>
       <div class="vendor-grid">
     `;
@@ -1020,17 +1016,21 @@ class EatsMapApp {
 
   renderWeatherView(container) {
     const days = (this.venue && this.venue.days) ? this.venue.days : [];
+    const showBack = this.historyStack.length > 0;
     container.innerHTML = `
       <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-          <h2 style="color: #fff; font-size: 1.4rem; font-weight: 900; font-family: 'Outfit'; margin: 0; letter-spacing: -0.01em;">
-            🌤️ FoodieLand 3-Day Forecast
-          </h2>
+        <div class="page-header-row">
+          <div class="page-header-left">
+            ${showBack ? '<button class="page-back-chevron" onclick="window.app.goBack()" aria-label="Go Back">◀</button>' : ''}
+            <h2 style="color: #fff; font-size: 1.35rem; font-weight: 900; font-family: 'Outfit'; margin: 0; letter-spacing: -0.01em;">
+              🌤️ FoodieLand 3-Day Forecast
+            </h2>
+          </div>
           <button class="temp-unit-toggle" onclick="window.app.toggleTempUnit()" title="Click to switch between Fahrenheit and Celsius">
             °${this.tempUnit}
           </button>
         </div>
-        <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 14px;">
+        <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 14px; padding-left: ${showBack ? '36px' : '0'};">
           Nashville Superspeedway • Lebanon, TN
         </p>
         
@@ -1102,10 +1102,14 @@ class EatsMapApp {
   renderVenueView(container) {
     const v = this.venue || {};
     const u = v.utility || {};
+    const showBack = this.historyStack.length > 0;
     container.innerHTML = `
       <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px;">
-        <h3 style="color: #fff; font-size: 1.2rem; font-family: 'Outfit'; margin-bottom: 2px;">🏟️ ${v.name || 'Nashville Superspeedway'}</h3>
-        <p style="font-size: 0.78rem; color: var(--fl-teal); margin-bottom: 12px;">${v.address || '400 Victory Ln Dr, Lebanon, TN'}</p>
+        <div style="display: flex; align-items: center; margin-bottom: 2px;">
+          ${showBack ? '<button class="page-back-chevron" onclick="window.app.goBack()" aria-label="Go Back">◀</button>' : ''}
+          <h3 style="color: #fff; font-size: 1.2rem; font-family: 'Outfit'; margin: 0;">🏟️ ${v.name || 'Nashville Superspeedway'}</h3>
+        </div>
+        <p style="font-size: 0.78rem; color: var(--fl-teal); margin-bottom: 12px; padding-left: ${showBack ? '36px' : '0'};">${v.address || '400 Victory Ln Dr, Lebanon, TN'}</p>
         
         <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem;">
           <div style="background: var(--bg-surface); padding: 8px 10px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-green);">
@@ -1142,9 +1146,11 @@ class EatsMapApp {
   }
 
   renderPassportView(container) {
+    const showBack = this.historyStack.length > 0;
     if (this.wishlist.length === 0) {
       container.innerHTML = `
         <div style="text-align: center; padding: 30px 10px; color: var(--text-muted);">
+          ${showBack ? '<div style="text-align: left; margin-bottom: 10px;"><button class="page-back-chevron" onclick="window.app.goBack()" aria-label="Go Back">◀</button></div>' : ''}
           <p style="font-size: 2.2rem; margin-bottom: 6px;">⭐</p>
           <h3 style="color: #fff; margin-bottom: 4px;">Tasting Wishlist Empty</h3>
           <p style="font-size: 0.8rem;">Browse the <strong>Home Deck</strong> or <strong>Menu</strong> to queue up your must-eat dishes!</p>
@@ -1155,7 +1161,10 @@ class EatsMapApp {
 
     let html = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border-color);">
-        <h3 style="color: #fff; font-size: 1rem; font-family: 'Outfit';">My Festival Tasting Queue</h3>
+        <div style="display: flex; align-items: center;">
+          ${showBack ? '<button class="page-back-chevron" onclick="window.app.goBack()" aria-label="Go Back">◀</button>' : ''}
+          <h3 style="color: #fff; font-size: 1rem; font-family: 'Outfit'; margin: 0;">My Festival Tasting Queue</h3>
+        </div>
         <span style="font-size: 0.75rem; color: var(--fl-yellow); font-weight: 700;">${this.wishlist.length} Items</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -1249,10 +1258,14 @@ class EatsMapApp {
   }
 
   renderAboutView(container) {
+    const showBack = this.historyStack.length > 0;
     container.innerHTML = `
       <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px;">
-        <h3 style="color: #fff; font-size: 1.2rem; font-family: 'Outfit'; margin-bottom: 4px;">☀️ About Eats Map</h3>
-        <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 12px;">Offline Companion Guide for FoodieLand Nashville 2026</p>
+        <div style="display: flex; align-items: center; margin-bottom: 4px;">
+          ${showBack ? '<button class="page-back-chevron" onclick="window.app.goBack()" aria-label="Go Back">◀</button>' : ''}
+          <h3 style="color: #fff; font-size: 1.2rem; font-family: 'Outfit'; margin: 0;">☀️ About Eats Map</h3>
+        </div>
+        <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 12px; padding-left: ${showBack ? '36px' : '0'};">Offline Companion Guide for FoodieLand Nashville 2026</p>
         
         <p style="font-size: 0.82rem; line-height: 1.45; color: #cbd5e1; margin-bottom: 10px;">
           Eats Map transforms town and festival grounds into an interactive, offline-ready companion. Treat top chefs, popup creators, and food stalls with the deep heritage and spotlight they deserve.

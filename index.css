@@ -457,32 +457,43 @@ body {
   pointer-events: auto;
 }
 
-/* Floating Navigation History Back Button */
-.viewport-back-fab {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(16, 18, 26, 0.85);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--fl-orange);
+/* Embedded Header Row Back Chevron Button */
+.page-back-chevron {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
   color: var(--fl-yellow);
-  font-size: 0.76rem;
+  font-size: 0.85rem;
   font-weight: 800;
-  padding: 5px 10px;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  z-index: 25;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  transition: all 0.2s ease;
+  justify-content: center;
+  cursor: pointer;
+  margin-right: 8px;
+  flex-shrink: 0;
+  transition: all 0.18s ease;
 }
 
-.viewport-back-fab:hover, .viewport-back-fab:active {
+.page-back-chevron:hover, .page-back-chevron:active {
   background: var(--fl-orange);
+  border-color: var(--fl-orange);
   color: #fff;
-  transform: translateX(-2px);
+  transform: translateX(-1px);
+}
+
+.page-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.page-header-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
 }
 
 /* CENTER PANEL: SQUARE VIEWPORT */
