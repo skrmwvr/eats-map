@@ -16,15 +16,10 @@ class MapManager {
     if (!this.map) {
       this.map = L.map('leaflet-map', { 
         zoomControl: true,
+        attributionControl: false,
         minZoom: 15,
         maxZoom: 20
       }).setView(defaultCenter, 17);
-      
-      // Fallback base tiles (cached by browser / offline service worker)
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO',
-        maxZoom: 20
-      }).addTo(this.map);
     } else {
       this.map.invalidateSize();
     }
