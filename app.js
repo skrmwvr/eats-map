@@ -504,7 +504,7 @@ class EatsMapApp {
     if (badge) badge.textContent = this.wishlist.length + ' Queued';
   }
 
-  // --- GPS STATUS & PROXIMITY ENGINE ---
+  // --- GPS STATUS & PROXIMITY ENGINE (Zero Startup Geolocation Calls) ---
   initGPSProximity() {
     if (!navigator.geolocation) {
       this.gpsStatus = 'unsupported';
@@ -512,7 +512,7 @@ class EatsMapApp {
       return;
     }
 
-    // Check modern Permissions API to know if user already granted permission
+    // Passive permission state check only (does NOT prompt the user)
     if (navigator.permissions && navigator.permissions.query) {
       navigator.permissions.query({ name: 'geolocation' }).then((result) => {
         this.gpsStatus = result.state; // 'granted' | 'prompt' | 'denied'
@@ -527,14 +527,17 @@ class EatsMapApp {
       }).catch(() => {});
     }
 
-    // Only query position on startup if user already granted permission or has marked a car
-    if (this.gpsStatus === 'granted' || this.carLocation) {
-      this.requestCurrentPositionSilent();
-    }
+    // Default to 'Directions' until user taps or is verified inside venue
+    this.updateCarButtonStatus();
   }
 
-  requestCurrentPositionSilent() {
-    if (!navigator.geolocation) return;
+  // Triggered ONLY on user action (e.g. tapping Venue top button or Car/Directions button)
+  checkUserProximity(callback) {
+    if (!navigator.geolocation) {
+      if (callback) callback(false);
+      return;
+    }
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         this.gpsStatus = 'granted';
@@ -546,8 +549,10 @@ class EatsMapApp {
         };
         const venueCoords = this.venue?.coordinates || { lat: 36.0465, lng: -86.4172 };
         const distMiles = this.calculateDistanceMiles(this.userCoords.lat, this.userCoords.lng, venueCoords.lat, venueCoords.lng);
+        // User is at venue if within ~2.5 miles (covers all Speedway grounds & parking zones)
         this.isAtVenue = distMiles <= 2.5;
         this.updateCarButtonStatus();
+        if (callback) callback(true);
       },
       (err) => {
         if (err.code === 1) {
@@ -555,8 +560,9 @@ class EatsMapApp {
           localStorage.setItem('eatsmap_gps_permission', 'denied');
         }
         this.updateCarButtonStatus();
+        if (callback) callback(false);
       },
-      { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
+      { enableHighAccuracy: false, timeout: 8000, maximumAge: 30000 }
     );
   }
 
@@ -578,14 +584,13 @@ class EatsMapApp {
     const carBtn = document.getElementById('btn-venue-car');
     const gpsDot = document.getElementById('gps-dot-indicator');
 
-    // Update Dev GPS Dot Indicator (Green = GPS live/granted, Red = denied, Amber = checking/pending)
     if (gpsDot) {
       gpsDot.className = 'gps-dot-indicator ' + (this.gpsStatus || 'prompt');
     }
 
     if (!carBtn) return;
 
-    // State 1: Car spot is already saved
+    // State 1: Car spot is already saved -> "Find my car"
     if (this.carLocation && typeof this.carLocation.lat === 'number') {
       if (carIconEl) carIconEl.textContent = '🚗';
       if (carTextEl) carTextEl.textContent = 'Find my car';
@@ -593,18 +598,18 @@ class EatsMapApp {
       return;
     }
 
-    // State 2: User is NOT at the festival grounds -> Button acts as "Get Directions"
-    if (this.userCoords && !this.isAtVenue) {
-      if (carIconEl) carIconEl.textContent = '🧭';
-      if (carTextEl) carTextEl.textContent = 'Get Directions';
-      carBtn.className = 'sub-venue-btn nav-directions';
+    // State 2: User is confirmed INSIDE venue & associated parking -> "Mark my car"
+    if (this.userCoords && this.isAtVenue) {
+      if (carIconEl) carIconEl.textContent = '🚗';
+      if (carTextEl) carTextEl.textContent = 'Mark my car';
+      carBtn.className = 'sub-venue-btn';
       return;
     }
 
-    // State 3: User IS at venue (or GPS is pending) & no car saved yet -> "Mark my car"
-    if (carIconEl) carIconEl.textContent = '🚗';
-    if (carTextEl) carTextEl.textContent = 'Mark my car';
-    carBtn.className = 'sub-venue-btn';
+    // State 3: User is outside venue (or location not yet requested) -> Default to "Get Directions"
+    if (carIconEl) carIconEl.textContent = '🧭';
+    if (carTextEl) carTextEl.textContent = 'Get Directions';
+    carBtn.className = 'sub-venue-btn nav-directions';
   }
 
   handleCarButtonClick() {
@@ -619,19 +624,42 @@ class EatsMapApp {
       return;
     }
 
-    // 2. If User is NOT at venue -> Launch local native maps app with directions to Speedway
-    if (this.userCoords && !this.isAtVenue) {
-      const address = encodeURIComponent(this.venue?.address || '400 Victory Ln Dr, Lebanon, TN 37090');
-      const venueLat = this.venue?.coordinates?.lat || 36.0465;
-      const venueLng = this.venue?.coordinates?.lng || -86.4172;
-      
-      // Universal maps intent (Apple Maps on iOS / Google Maps on Android & Web)
-      const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueLat},${venueLng}&destination_place_id=${address}`;
-      window.open(mapsUrl, '_blank');
+    // 2. If User coords unknown, check location first on tap
+    if (!this.userCoords) {
+      const carTextEl = document.getElementById('btn-car-text');
+      if (carTextEl) carTextEl.textContent = 'Checking...';
+
+      this.checkUserProximity((success) => {
+        if (!success || !this.isAtVenue) {
+          // Outside venue or denied -> Launch external native maps directions
+          this.launchDirectionsToVenue();
+        } else {
+          // Inside venue -> Prompt to mark car spot
+          this.saveCarLocationSpot();
+        }
+      });
       return;
     }
 
-    // 3. User is at venue -> Request high accuracy GPS to mark parking spot
+    // 3. User is confirmed outside venue -> Launch external directions
+    if (!this.isAtVenue) {
+      this.launchDirectionsToVenue();
+      return;
+    }
+
+    // 4. User is confirmed inside venue -> Save car location
+    this.saveCarLocationSpot();
+  }
+
+  launchDirectionsToVenue() {
+    const address = encodeURIComponent(this.venue?.address || '400 Victory Ln Dr, Lebanon, TN 37090');
+    const venueLat = this.venue?.coordinates?.lat || 36.0465;
+    const venueLng = this.venue?.coordinates?.lng || -86.4172;
+    const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueLat},${venueLng}&destination_place_id=${address}`;
+    window.open(mapsUrl, '_blank');
+  }
+
+  saveCarLocationSpot() {
     if (!navigator.geolocation) {
       alert('Geolocation is not supported by your browser.');
       return;
@@ -662,9 +690,9 @@ class EatsMapApp {
         localStorage.removeItem('eatsmap_car');
         this.updateCarButtonStatus();
         let errMsg = 'Could not access GPS location.';
-        if (err.code === 1) errMsg = 'Location permission was denied. Please allow location access in your browser settings.';
-        else if (err.code === 2) errMsg = 'Location position unavailable. Check GPS/Wi-Fi connection.';
-        else if (err.code === 3) errMsg = 'GPS request timed out. Try again.';
+        if (err.code === 1) errMsg = 'Location permission was denied in your browser settings.';
+        else if (err.code === 2) errMsg = 'Position unavailable. Check GPS signal.';
+        else if (err.code === 3) errMsg = 'GPS request timed out.';
         alert('⚠️ ' + errMsg);
       },
       { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
