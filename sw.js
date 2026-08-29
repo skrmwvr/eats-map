@@ -1,20 +1,21 @@
-const CACHE_NAME = 'eats-map-v10';
+const CACHE_NAME = 'eats-map-foodieland-v10';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
-  './landing.html',
   './index.css',
   './app.js',
   './data_bundle.js',
   './map_logic.js',
-  './manifest.webmanifest'
+  './manifest.webmanifest',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 // Install: Cache core shell and initial data
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('SW: Pre-caching static assets and offline data');
+      console.log('SW: Pre-caching FoodieLand static assets');
       return cache.addAll(ASSETS_TO_CACHE);
     })
   );
@@ -38,29 +39,25 @@ self.addEventListener('activate', (e) => {
   self.clients.claim();
 });
 
-// Fetch: Cache first, fallback to network for shells. Network first for dynamic JSON files.
+// Fetch: Cache first strategy for offline speed
 self.addEventListener('fetch', (e) => {
-  const url = new URL(e.request.url);
-  
-  // Network first strategy for bundle JSON files to allow live show-day updates
-  if (url.pathname.includes('/bundles/') || url.pathname.includes('/fill-data/')) {
-    e.respondWith(
-      fetch(e.request)
-        .then((res) => {
-          const resClone = res.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(e.request, resClone);
-          });
-          return res;
-        })
-        .catch(() => caches.match(e.request))
-    );
-  } else {
-    // Cache first strategy for static shell
-    e.respondWith(
-      caches.match(e.request).then((cachedRes) => {
-        return cachedRes || fetch(e.request);
-      })
-    );
-  }
+  e.respondWith(
+    caches.match(e.request).then((res) => {
+      if (res) return res;
+      return fetch(e.request).then((networkRes) => {
+        if (!networkRes || networkRes.status !== 200 || networkRes.type !== 'basic') {
+          return networkRes;
+        }
+        const resClone = networkRes.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(e.request, resClone);
+        });
+        return networkRes;
+      });
+    }).catch(() => {
+      if (e.request.destination === 'document') {
+        return caches.match('./index.html');
+      }
+    })
+  );
 });

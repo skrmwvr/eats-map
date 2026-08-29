@@ -68,45 +68,123 @@ body {
   overflow: hidden;
 }
 
-/* TOP AREA (Sun Map 3-Button Grid) */
-.dashboard-top {
+/* BOTTOM AREA (Sun Map 3-Button Layout: Menu | Eats Map | Wishlist) */
+#bottom-bar, .dashboard-bottom {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1.2fr 1fr;
   background-color: var(--header-footer-bg);
-  border-bottom: 2px solid var(--border-color);
-  padding: 8px;
+  border-top: 2px solid var(--border-color);
+  padding: 6px 8px 8px;
   gap: 6px;
-  z-index: 10;
+  z-index: 100;
   flex-shrink: 0;
 }
 
 .top-btn, .bottom-btn {
   background: transparent;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 10px;
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10px 4px;
+  padding: 6px 4px;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s, border-color 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
 .top-btn:active, .bottom-btn:active {
-  background: rgba(255, 94, 54, 0.1);
-  transform: scale(0.96);
+  background: rgba(255, 94, 54, 0.15);
+  transform: scale(0.97);
 }
 
 .top-btn.active, .bottom-btn.active {
   border-color: var(--fl-orange);
-  background: rgba(255, 94, 54, 0.12);
+  background: rgba(255, 94, 54, 0.14);
 }
 
-.btn-icon {
-  font-size: 1.4rem;
+/* Center Brand Button (Eats Map Home) */
+.bottom-btn.center-brand-btn {
+  background: rgba(255, 94, 54, 0.08);
+  border-color: rgba(255, 94, 54, 0.35);
+}
+
+.bottom-btn.center-brand-btn.active {
+  background: linear-gradient(180deg, rgba(255, 94, 54, 0.25) 0%, rgba(255, 42, 109, 0.15) 100%);
+  border-color: var(--fl-orange);
+  box-shadow: 0 0 15px rgba(255, 94, 54, 0.3);
+}
+
+.nav-icon {
+  font-size: 1.25rem;
+  line-height: 1;
   margin-bottom: 2px;
+}
+
+.nav-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.nav-label.one-line {
+  white-space: nowrap;
+  font-size: 0.88rem;
+  color: var(--fl-yellow);
+}
+
+.nav-subtext {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--fl-teal);
+  margin-top: 1px;
+}
+
+/* Jumbo Grounds Map Button */
+.jumbo-map-btn {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(255, 94, 54, 0.2), rgba(255, 42, 109, 0.15));
+  border: 1.5px solid var(--fl-orange);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(255, 94, 54, 0.2);
+}
+
+.jumbo-map-btn:hover, .jumbo-map-btn:active {
+  background: linear-gradient(135deg, rgba(255, 94, 54, 0.35), rgba(255, 42, 109, 0.25));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 94, 54, 0.35);
+}
+
+/* Cuisine Zone Map Launcher Pills */
+.cuisine-map-pill {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  color: #f1f5f9;
+  border-radius: var(--radius-full);
+  padding: 6px 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.cuisine-map-pill:hover, .cuisine-map-pill:active {
+  border-color: var(--fl-teal);
+  background: rgba(5, 217, 232, 0.15);
+  color: #fff;
+  transform: translateY(-1px);
 }
 
 .btn-label {

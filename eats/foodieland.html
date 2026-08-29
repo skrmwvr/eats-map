@@ -6,12 +6,12 @@
   <title>FoodieLand Nashville 2026 • Eats Map by Sun Map</title>
   
   <!-- PWA Metadata -->
-  <link rel="manifest" href="./foodieland/manifest.webmanifest">
+  <link rel="manifest" href="./manifest.webmanifest">
   <meta name="theme-color" content="#0b0c10">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Eats Map">
-  <link rel="apple-touch-icon" href="./foodieland/icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
   
   <!-- Leaflet CSS for Vector Map Display -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -89,24 +89,26 @@
       </div>
     </div>
 
-    <!-- BOTTOM APP NAVIGATION -->
+    <!-- BOTTOM APP NAVIGATION (3-BUTTON TOOLBAR: Menu | Eats Map | Wishlist) -->
     <footer id="bottom-bar">
-      <button class="bottom-btn active" id="btn-home" onclick="window.app.switchViewport('home')">
-        <span class="nav-icon">🥢</span>
-        <span class="nav-label">Now Playing</span>
-      </button>
+      <!-- Left Action: Menu + Booth Count -->
       <button class="bottom-btn" id="btn-booths" onclick="window.app.switchViewport('booths')">
-        <span class="nav-icon">📍</span>
-        <span class="nav-label">Booths</span>
+        <span class="nav-icon">📖</span>
+        <span class="nav-label">Menu</span>
+        <span id="booth-count-subtext" class="nav-subtext">8 Booths</span>
       </button>
+
+      <!-- Center Default / Starting View: Eats Map Home -->
+      <button class="bottom-btn active center-brand-btn" id="btn-home" onclick="window.app.switchViewport('home')">
+        <span class="nav-icon">☀️</span>
+        <span class="nav-label one-line">Eats Map</span>
+      </button>
+
+      <!-- Right Action: Wishlist + Live Saved Count -->
       <button class="bottom-btn" id="btn-passport" onclick="window.app.switchViewport('passport')">
         <span class="nav-icon">⭐</span>
         <span class="nav-label">Wishlist</span>
-        <span id="wishlist-badge" class="nav-badge" style="display:none;">0</span>
-      </button>
-      <button class="bottom-btn" id="btn-share" onclick="window.app.openShareModal()">
-        <span class="nav-icon">📲</span>
-        <span class="nav-label">Share App</span>
+        <span id="wishlist-count-subtext" class="nav-subtext">0 Saved</span>
       </button>
     </footer>
 

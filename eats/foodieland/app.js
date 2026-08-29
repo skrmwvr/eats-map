@@ -32,6 +32,7 @@ class EatsMapApp {
     this.updateCarButtonStatus();
     this.updateTopBarStatus();
     this.updateWishlistBadge();
+    this.updateBoothCountSubtext();
     this.renderActiveViewport();
 
     // Register PWA Service Worker for offline vector and shell caching
@@ -41,6 +42,75 @@ class EatsMapApp {
           console.log('SW registration note:', err);
         });
       });
+    }
+  }
+
+  // --- TIME CALCULATION: Check if a Stage Event has passed + 15 min grace period ---
+  isPastEvent(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return false;
+    try {
+      // Parse timeStr like '4:00 PM' or '11:30 AM'
+      const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
+      if (!match) return false;
+      let hours = parseInt(match[1], 10);
+      const minutes = parseInt(match[2], 10);
+      const ampm = match[3].toUpperCase();
+      if (ampm === 'PM' && hours < 12) hours += 12;
+      if (ampm === 'AM' && hours === 12) hours = 0;
+
+      // Extract month and day from dateStr like 'Friday, Aug 28, 2026'
+      const dateParts = dateStr.match(/Aug(?:ust)?\s+(\d+),\s*(\d{4})/i);
+      if (!dateParts) return false;
+      const day = parseInt(dateParts[1], 10);
+      const year = parseInt(dateParts[2], 10);
+
+      // Event conclusion time = start time + 45 min duration + 15 min grace period = +60 mins
+      const eventTime = new Date(year, 7, day, hours, minutes + 60);
+      const now = new Date();
+      return now.getTime() > eventTime.getTime();
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // Get active valid wishlist items (filtering out program events passed + 15 min)
+  getActiveWishlistItems() {
+    return this.wishlist.filter(itemId => {
+      // If it's a food dish, it never expires
+      const isFood = this.allFeaturedDishes.some(d => d.id === itemId);
+      if (isFood) return true;
+
+      // If it's a stage event, check if it concluded
+      let foundStage = null;
+      let foundDay = null;
+      for (const d of (this.venue?.days || [])) {
+        const ev = (d.stage_highlights || []).find(h => h.id === itemId);
+        if (ev) {
+          foundStage = ev;
+          foundDay = d;
+          break;
+        }
+      }
+      if (foundStage && foundDay) {
+        return !this.isPastEvent(foundDay.date_str, foundStage.time);
+      }
+      return true;
+    });
+  }
+
+  updateWishlistBadge() {
+    const activeItems = this.getActiveWishlistItems();
+    const subtextEl = document.getElementById('wishlist-count-subtext');
+    if (subtextEl) {
+      subtextEl.textContent = activeItems.length === 1 ? '1 Saved' : `${activeItems.length} Saved`;
+    }
+  }
+
+  updateBoothCountSubtext() {
+    const boothSubEl = document.getElementById('booth-count-subtext');
+    if (boothSubEl) {
+      const count = (this.vendors || []).length;
+      boothSubEl.textContent = `${count} Booths`;
     }
   }
 
@@ -723,37 +793,108 @@ class EatsMapApp {
     }
   }
 
-  // --- VIEW 1: "NOW PLAYING" HOME VIEW (Clean List & Map Views, Deck in Detail Modal) ---
+  // --- VIEW 1: "EATS MAP" HYBRID HOME VIEW (Jumbo Map Button, Cuisine Map Pills, Live Program, Food Finder) ---
   renderHomeView(container) {
     const totalCount = this.allFeaturedDishes.length;
 
+    // View Mode 1: Full Grounds Map View
     if (this.homeDisplayMode === 'map') {
       container.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">Now Playing Grounds Map</strong>
+          <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">
+            ${this.activeMapZoneFilter ? `Grounds Map • ${this.activeMapZoneFilter}` : 'Now Playing Grounds Map'}
+          </strong>
           <div class="view-mode-toggle">
-            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('list')">List View</button>
-            <button class="view-mode-btn active" onclick="window.app.setHomeDisplayMode('map')">Map View</button>
+            <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('list')">Close Map ✕</button>
           </div>
         </div>
         <div id="leaflet-map" style="width:100%; height:calc(100% - 40px); border-radius:var(--radius-md);"></div>
       `;
       setTimeout(() => {
         if (!this.mapManager) this.mapManager = new MapManager();
-        this.mapManager.init(this.vendors, this.venue, this.carLocation);
+        const filterMode = this.activeMapZoneFilter ? `zone:${this.activeMapZoneFilter}` : 'all';
+        this.mapManager.init(this.vendors, this.venue, this.carLocation, filterMode);
       }, 50);
       return;
     }
 
-    // Default: List View
-    let listHtml = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">Now Playing • Featured Creations (${totalCount})</strong>
-        <div class="view-mode-toggle">
-          <button class="view-mode-btn active" onclick="window.app.setHomeDisplayMode('list')">List View</button>
-          <button class="view-mode-btn" onclick="window.app.setHomeDisplayMode('map')">Map View</button>
+    // View Mode 2: The Hybrid Eats Map Dashboard
+    const days = (this.venue && this.venue.days) ? this.venue.days : [];
+    const currentDay = days[this.activeDayIndex] || days[0];
+
+    // Crop stage events to present and upcoming
+    const allStageEvents = currentDay ? (currentDay.stage_highlights || []) : [];
+    const activeUpcomingEvents = allStageEvents.filter(ev => !this.isPastEvent(currentDay?.date_str, ev.time));
+
+    let programCardsHtml = '';
+    if (activeUpcomingEvents.length > 0) {
+      const currentOrNext = activeUpcomingEvents.slice(0, 2);
+      programCardsHtml = `
+        <div style="margin: 14px 0 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <strong style="color: var(--fl-yellow); font-size: 0.84rem; font-family: 'Outfit'; text-transform: uppercase; letter-spacing: 0.04em;">
+              🎤 Happening Today on Stage
+            </strong>
+            <a href="javascript:void(0)" onclick="window.app.switchViewport('program')" style="color: var(--fl-teal); font-size: 0.75rem; text-decoration: underline; font-weight: 700;">
+              Full 3-Day Program →
+            </a>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            ${currentOrNext.map((ev, idx) => `
+              <div class="stage-event-card" style="margin-bottom:0; background: var(--bg-surface-elevated); border: 1px solid ${idx === 0 ? 'var(--fl-orange)' : 'var(--border-color)'};" onclick="window.app.openStageEventModal('${ev.id}')">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <strong style="color:var(--fl-orange); font-size:0.85rem;">${ev.time}</strong>
+                  <span style="font-size:0.72rem; color:var(--fl-teal); font-weight:700;">${ev.stage_name}</span>
+                </div>
+                <div style="color:#fff; font-size:0.92rem; font-weight:700; margin:3px 0 2px;">${ev.title}</div>
+                <div style="font-size:0.75rem; color:var(--text-secondary);">${ev.performer}</div>
+              </div>
+            `).join('')}
+          </div>
         </div>
+      `;
+    }
+
+    // Cuisine Categories for 1-Tap Filtered Map View
+    const cuisineZones = [
+      { name: 'Latin & Chamoy Row', label: '🌮 Latin Row' },
+      { name: 'Sweet Tooth Avenue', label: '🍧 Sweet Tooth' },
+      { name: 'Asian Street Market', label: '🥢 Asian Street' },
+      { name: 'Smokehouse Stage', label: '🥩 Smokehouse' }
+    ];
+
+    let html = `
+      <!-- JUMBO GROUNDS MAP BUTTON ACROSS TOP -->
+      <div style="margin-bottom: 10px;">
+        <button class="jumbo-map-btn" onclick="window.app.openFullGroundsMap()">
+          <span style="font-size: 1.3rem;">🗺️</span>
+          <span style="flex: 1; text-align: left; font-family: 'Outfit'; font-size: 1.05rem; font-weight: 900; color: #fff;">
+            Grounds Map of All Booths
+          </span>
+          <span style="font-size: 1.1rem; color: var(--fl-yellow);">Explore →</span>
+        </button>
       </div>
+
+      <!-- 1-TAP CUISINE ZONE MAP LAUNCHER BUTTONS -->
+      <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 8px; scrollbar-width: none;">
+        ${cuisineZones.map(z => `
+          <button class="cuisine-map-pill" onclick="window.app.openZoneGroundsMap('${z.name}')">
+            ${z.label} Map
+          </button>
+        `).join('')}
+      </div>
+
+      <!-- CURRENT & UPCOMING PROGRAM CARDS (CROPPED TO PRESENT TIME) -->
+      ${programCardsHtml}
+
+      <!-- FEATURED CULINARY CREATIONS (FOOD FINDER JUMBO DECK) -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 0 10px; padding-top: 6px; border-top: 1px solid var(--border-color);">
+        <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">
+          🥢 Featured Culinary Creations (${totalCount})
+        </strong>
+        <span style="font-size: 0.72rem; color: var(--text-muted);">Tap for Deck Card</span>
+      </div>
+
       <div class="vendor-grid">
     `;
 
@@ -761,26 +902,41 @@ class EatsMapApp {
       const dishCorpusText = d.name + ' ' + d.description + ' ' + (d.flavor_profile || '');
       const itemFlagged = this.checkAllergenFlags(d.allergens, dishCorpusText);
       const inWish = this.wishlist.includes(d.id);
-      listHtml += `
+      const zoneClass = this.getZoneBadgeClass(d.vendorZone);
+
+      html += `
         <div class="vendor-card" onclick="window.app.openDishCardModal('${d.id}')">
           <div style="display:flex; justify-content:space-between; align-items:flex-start;">
             <div>
               <strong style="color:#fff; font-size:0.95rem;">${d.name}</strong>
-              <div style="font-size:0.74rem; color:var(--fl-teal);">${d.vendorName} • ${d.vendorBooth}</div>
+              <div style="font-size:0.74rem; color:var(--fl-teal); font-weight:600;">${d.vendorName}</div>
             </div>
-            <span style="color:var(--fl-yellow); font-weight:800; font-size:0.9rem;">$${d.price}</span>
+            <span style="color:var(--fl-yellow); font-weight:800; font-size:0.92rem;">$${d.price}</span>
           </div>
           <p style="font-size:0.76rem; color:var(--text-secondary); margin:4px 0;">${d.description}</p>
           ${itemFlagged.length > 0 ? '<div class="allergen-warning-tag">⚠️ Contains: <strong>' + itemFlagged.join(', ') + '</strong></div>' : ''}
-          <div style="margin-top:6px; display:flex; justify-content:space-between; align-items:center;">
-            <span style="font-size:0.7rem; color:var(--text-muted);">${d.vendorZone}</span>
-            <span style="font-size:0.72rem; color:var(--fl-orange); font-weight:700;">${inWish ? '✓ In Wishlist' : 'Tap for Card →'}</span>
+          <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
+            <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${d.vendorId}', event)" title="Locate on Map">
+              📍 Booth ${d.vendorBooth}
+            </span>
+            <span style="font-size:0.72rem; color:var(--fl-orange); font-weight:700;">${inWish ? '✓ In Wishlist' : 'Card →'}</span>
           </div>
         </div>
       `;
     });
-    listHtml += '</div>';
-    container.innerHTML = listHtml;
+
+    html += '</div>';
+    container.innerHTML = html;
+  }
+
+  openFullGroundsMap() {
+    this.activeMapZoneFilter = null;
+    this.setHomeDisplayMode('map');
+  }
+
+  openZoneGroundsMap(zoneName) {
+    this.activeMapZoneFilter = zoneName;
+    this.setHomeDisplayMode('map');
   }
 
   setHomeDisplayMode(mode) {
@@ -1264,12 +1420,14 @@ class EatsMapApp {
   }
 
   renderPassportView(container) {
-    if (this.wishlist.length === 0) {
+    const activeItems = this.getActiveWishlistItems();
+
+    if (activeItems.length === 0) {
       container.innerHTML = `
         <div style="text-align: center; padding: 30px 10px; color: var(--text-muted);">
           <p style="font-size: 2.2rem; margin-bottom: 6px;">⭐</p>
           <h3 style="color: #fff; margin-bottom: 4px;">Tasting Wishlist Empty</h3>
-          <p style="font-size: 0.8rem;">Browse the <strong>Home Deck</strong> or <strong>Menu</strong> to queue up your must-eat dishes!</p>
+          <p style="font-size: 0.8rem;">Browse the <strong>Eats Map</strong> or <strong>Menu</strong> to queue up your must-eat dishes!</p>
         </div>
       `;
       return;
@@ -1278,12 +1436,12 @@ class EatsMapApp {
     let html = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border-color);">
         <h3 style="color: #fff; font-size: 1rem; font-family: 'Outfit'; margin: 0;">My Festival Tasting Queue</h3>
-        <span style="font-size: 0.75rem; color: var(--fl-yellow); font-weight: 700;">${this.wishlist.length} Items</span>
+        <span style="font-size: 0.75rem; color: var(--fl-yellow); font-weight: 700;">${activeItems.length} Items</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px;">
     `;
 
-    this.wishlist.forEach(itemId => {
+    activeItems.forEach(itemId => {
       // Check if it's a food dish
       let foundDish = null;
       let foundVendor = null;
@@ -1344,13 +1502,12 @@ class EatsMapApp {
       }
 
       if (foundStage) {
-        const isPast = this.isPastEvent(foundDay?.date_str, foundStage.time);
         html += `
-          <div class="wishlist-card ${isPast ? 'is-past' : ''}" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px;">
+          <div class="wishlist-card" style="background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: baseline;">
               <strong style="color: var(--fl-orange); font-size: 0.85rem;">${foundStage.time} • ${foundStage.stage_name}</strong>
               <span style="font-size: 0.7rem; color: var(--fl-yellow);">
-                ${isPast ? '<span class="past-badge">Concluded</span> ' : ''}${foundDay ? foundDay.date_short : ''}
+                ${foundDay ? foundDay.date_short : ''}
               </span>
             </div>
             <div style="color: #fff; font-size: 0.92rem; font-weight: 700; margin: 2px 0; cursor: pointer;" onclick="window.app.openStageEventModal('${foundStage.id}')">${foundStage.title}</div>

@@ -32,17 +32,23 @@ class MapManager {
     // Render Map Legend Overlay (by default)
     this.renderLegend();
 
-    // Render Food Booth Markers (Only if not in dedicated facility focus mode)
-    if (filterMode === 'all') {
+    // Render Food Booth Markers (Supports 'all', facility filters, or specific zone filters)
+    if (filterMode === 'all' || filterMode.startsWith('zone:')) {
+      const targetZone = filterMode.startsWith('zone:') ? filterMode.replace('zone:', '') : null;
+
       vendors.forEach(vendor => {
+        if (targetZone && vendor.zone !== targetZone && !vendor.cuisine?.toLowerCase().includes(targetZone.toLowerCase())) {
+          return;
+        }
+
         if (vendor.coordinates) {
           const marker = L.circleMarker([vendor.coordinates.lat, vendor.coordinates.lng], {
-            radius: 8,
+            radius: targetZone ? 10 : 8,
             fillColor: '#ff5e36',
             color: '#fff',
-            weight: 2,
+            weight: targetZone ? 3 : 2,
             opacity: 1,
-            fillOpacity: 0.9
+            fillOpacity: 0.95
           }).addTo(this.map);
 
           // Permanent text label by default
