@@ -771,7 +771,7 @@ class EatsMapApp {
   }
 
   renderActiveViewport() {
-    const container = document.getElementById('viewport-content');
+    const container = document.getElementById('main-viewport');
     if (!container) return;
 
     if (this.activeViewport === 'home') {
@@ -941,7 +941,7 @@ class EatsMapApp {
 
   setHomeDisplayMode(mode) {
     this.homeDisplayMode = mode;
-    this.renderHomeView(document.getElementById('viewport-content'));
+    this.renderHomeView(document.getElementById('main-viewport'));
   }
 
   // --- SECOND-LEVEL DISH DECK CARD MODAL ---
@@ -1729,7 +1729,7 @@ class EatsMapApp {
   rateDish(dishId, rating) {
     this.ratings[dishId] = rating;
     localStorage.setItem('eatsmap_ratings', JSON.stringify(this.ratings));
-    this.renderPassportView(document.getElementById('viewport-content'));
+    this.renderPassportView(document.getElementById('main-viewport'));
   }
 
   shareTasting(vendorName, dishName, rating) {
@@ -1853,7 +1853,13 @@ class EatsMapApp {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// Boot the App once DOM is loaded
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    window.app = new EatsMapApp();
+    window.app.init();
+  });
+} else {
   window.app = new EatsMapApp();
   window.app.init();
-});
+}
