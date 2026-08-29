@@ -27,6 +27,9 @@ class MapManager {
 
     this.clearMarkers();
 
+    // Render Map Legend Overlay (by default)
+    this.renderLegend();
+
     // Render Food Booth Markers (Only if not in dedicated facility focus mode)
     if (filterMode === 'all') {
       vendors.forEach(vendor => {
@@ -39,6 +42,14 @@ class MapManager {
             opacity: 1,
             fillOpacity: 0.9
           }).addTo(this.map);
+
+          // Permanent text label by default
+          marker.bindTooltip(`<strong>${vendor.booth_number}</strong> • ${vendor.name}`, {
+            permanent: true,
+            direction: 'top',
+            offset: [0, -8],
+            className: 'map-label-tooltip'
+          });
 
           marker.bindPopup(`
             <div style="font-family: sans-serif; font-size: 0.85rem; color: #111;">
@@ -83,6 +94,14 @@ class MapManager {
           fillOpacity: 0.95
         }).addTo(this.map);
 
+        // Permanent text label by default
+        marker.bindTooltip(`<strong>${amenity.name}</strong>`, {
+          permanent: true,
+          direction: 'top',
+          offset: [0, -8],
+          className: 'map-label-tooltip amenity-label-' + amenity.type
+        });
+
         marker.bindPopup(`
           <div style="font-family: sans-serif; font-size: 0.85rem; color: #111;">
             <strong style="color: ${pinColor}; font-size: 0.95rem;">${amenity.name}</strong><br>
@@ -92,7 +111,10 @@ class MapManager {
         `);
 
         if (filterMode !== 'all') {
-          setTimeout(() => marker.openPopup(), 200);
+          setTimeout(() => {
+            marker.openPopup();
+            this.highlightBullseye([amenity.lat, amenity.lng]);
+          }, 200);
         }
 
         this.amenityMarkers.push(marker);
@@ -168,5 +190,62 @@ class MapManager {
     this.amenityMarkers.forEach(m => this.map.removeLayer(m));
     this.vendorMarkers = [];
     this.amenityMarkers = [];
+    if (this.bullseyeLayerGroup) {
+      this.map.removeLayer(this.bullseyeLayerGroup);
+      this.bullseyeLayerGroup = null;
+    }
+  }
+
+  highlightBullseye(latlng) {
+    if (!this.map) return;
+    
+    // Remove existing bullseye group if present
+    if (this.bullseyeLayerGroup) {
+      this.map.removeLayer(this.bullseyeLayerGroup);
+    }
+
+    this.bullseyeLayerGroup = L.layerGroup().addTo(this.map);
+
+    // Inner Ring 1
+    const ring1 = L.circleMarker(latlng, {
+      radius: 20,
+      fillColor: 'transparent',
+      color: '#ff2a6d',
+      weight: 3,
+      opacity: 0.9,
+      className: 'bullseye-ring-1'
+    }).addTo(this.bullseyeLayerGroup);
+
+    // Outer Ring 2
+    const ring2 = L.circleMarker(latlng, {
+      radius: 36,
+      fillColor: 'transparent',
+      color: '#ff5e36',
+      weight: 2,
+      opacity: 0.7,
+      className: 'bullseye-ring-2'
+    }).addTo(this.bullseyeLayerGroup);
+
+    this.map.setView(latlng, 18, { animate: true });
+  }
+
+  renderLegend() {
+    if (this.legendControl) return;
+
+    this.legendControl = L.control({ position: 'bottomright' });
+
+    this.legendControl.onAdd = function() {
+      const div = L.DomUtil.create('div', 'map-legend-overlay');
+      div.innerHTML = `
+        <div class="legend-title">Grounds Legend</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ff5e36;"></span> Food Booths</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ff2a6d;"></span> Medical & First Aid</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#00f090;"></span> Water Stations</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ffc837;"></span> Restrooms</div>
+      `;
+      return div;
+    };
+
+    this.legendControl.addTo(this.map);
   }
 }
