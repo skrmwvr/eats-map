@@ -94,53 +94,21 @@
       color: #f1f5f9;
     }
 
-    /* Product Editions / Categories Grid */
-    .edition-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
-
-    @media (max-width: 540px) {
-      .edition-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .edition-card {
-      background: var(--surface);
+    /* Single Editorial Platform Prose Block */
+    .platform-prose-block {
+      background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--border);
       border-radius: 16px;
-      padding: 16px 14px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .edition-card:hover {
-      border-color: rgba(255, 200, 55, 0.4);
-      background: rgba(255, 255, 255, 0.03);
-    }
-
-    .edition-icon {
-      font-size: 1.6rem;
-      margin-bottom: 2px;
-    }
-
-    .edition-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    .edition-desc {
-      font-size: 0.74rem;
+      padding: 16px 20px;
+      font-size: 0.86rem;
+      line-height: 1.6;
       color: #94a3b8;
-      line-height: 1.35;
+      text-align: center;
+    }
+
+    .platform-prose-block strong {
+      color: #f1f5f9;
+      font-weight: 700;
     }
 
     /* Directory Section & Cards */
@@ -380,23 +348,11 @@
       </p>
     </header>
 
-    <!-- Product Editions / Ecosystem Overview -->
-    <div class="edition-grid">
-      <div class="edition-card">
-        <div class="edition-icon">🥢</div>
-        <div class="edition-title">Eats Map</div>
-        <div class="edition-desc">Food festivals, night markets, popup chefs & artisan culinary rows.</div>
-      </div>
-      <div class="edition-card">
-        <div class="edition-icon">🎸</div>
-        <div class="edition-title">Live Music & Tours</div>
-        <div class="edition-desc">Amphitheaters, setlists, band histories, and tour schedules.</div>
-      </div>
-      <div class="edition-card">
-        <div class="edition-icon">⛺</div>
-        <div class="edition-title">Festival Grounds</div>
-        <div class="edition-desc">Multi-stage timing, vector maps, hydration, and safety waypoints.</div>
-      </div>
+    <!-- Single Concise Platform Narrative Block (No Fake Button Boxes) -->
+    <div class="platform-prose-block">
+      <p>
+        Sun Map creates bespoke, offline-ready companion guides across three live experiences: <strong>Eats Map</strong> for food festivals, night markets, and popup culinary rows; <strong>Live Music & Tours</strong> for setlists, amphitheaters, and artist lore; and <strong>Festival Grounds</strong> for multi-stage schedules, native vector navigation, and safety waypoints.
+      </p>
     </div>
 
     <!-- Live & Upcoming Companion Guides Directory -->
@@ -434,7 +390,7 @@
           </div>
         </div>
 
-        <a href="/eats/foodieland" class="launch-btn">
+        <a href="./index.html" class="launch-btn" id="foodieland-launch-btn">
           <span>☀️ Launch FoodieLand Eats Map</span>
           <span class="arrow-icon">→</span>
         </a>
