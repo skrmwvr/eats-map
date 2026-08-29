@@ -846,8 +846,8 @@ class EatsMapApp {
             </a>
           </div>
           <div style="display: flex; flex-direction: column; gap: 8px;">
-            ${currentOrNext.map((ev, idx) => `
-              <div class="stage-event-card" style="margin-bottom:0; background: var(--bg-surface-elevated); border: 1px solid ${idx === 0 ? 'var(--fl-orange)' : 'var(--border-color)'};" onclick="window.app.openStageEventModal('${ev.id}')">
+            ${currentOrNext.map((ev) => `
+              <div class="stage-event-card" style="margin-bottom:0; background: var(--bg-surface-elevated); border: 1px solid var(--border-color);" onclick="window.app.openStageEventModal('${ev.id}')">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
                   <strong style="color:var(--fl-orange); font-size:0.85rem;">${ev.time}</strong>
                   <span style="font-size:0.72rem; color:var(--fl-teal); font-weight:700;">${ev.stage_name}</span>

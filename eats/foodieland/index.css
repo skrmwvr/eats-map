@@ -353,8 +353,8 @@ html, body {
 /* Jumbo Grounds Map Button */
 .jumbo-map-btn {
   width: 100%;
-  background: linear-gradient(135deg, rgba(255, 94, 54, 0.2), rgba(255, 42, 109, 0.15));
-  border: 1.5px solid var(--fl-orange);
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 12px 14px;
   display: flex;
@@ -362,13 +362,12 @@ html, body {
   gap: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 15px rgba(255, 94, 54, 0.2);
 }
 
 .jumbo-map-btn:hover, .jumbo-map-btn:active {
-  background: linear-gradient(135deg, rgba(255, 94, 54, 0.35), rgba(255, 42, 109, 0.25));
+  border-color: var(--fl-teal);
+  background: rgba(5, 217, 232, 0.08);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(255, 94, 54, 0.35);
 }
 
 /* Cuisine Zone Map Launcher Pills */
