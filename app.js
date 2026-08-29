@@ -548,9 +548,10 @@ class EatsMapApp {
           accuracy: pos.coords.accuracy
         };
         const venueCoords = this.venue?.coordinates || { lat: 36.0465, lng: -86.4172 };
+        const radiusMiles = this.venue?.boundary_radius_miles || 1.25; // Speedway compact grounds & direct lots
         const distMiles = this.calculateDistanceMiles(this.userCoords.lat, this.userCoords.lng, venueCoords.lat, venueCoords.lng);
-        // User is at venue if within ~2.5 miles (covers all Speedway grounds & parking zones)
-        this.isAtVenue = distMiles <= 2.5;
+        // User is at venue if within configured venue grounds + parking footprint
+        this.isAtVenue = distMiles <= radiusMiles;
         this.updateCarButtonStatus();
         if (callback) callback(true);
       },

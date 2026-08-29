@@ -435,6 +435,7 @@ window.EMBEDDED_VENUE = {
     "lat": 36.0465,
     "lng": -86.4172
   },
+  "boundary_radius_miles": 1.25,
   "utility": {
     "parking_info": "Free general parking on-site. ADA parking available near main entrance.",
     "ticket_policy": "Tickets must be purchased online in advance. No tickets sold at the gate.",
