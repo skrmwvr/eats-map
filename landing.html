@@ -94,6 +94,89 @@
       color: #f1f5f9;
     }
 
+    /* Product Editions / Categories Grid */
+    .edition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 540px) {
+      .edition-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .edition-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 14px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .edition-card:hover {
+      border-color: rgba(255, 200, 55, 0.4);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .edition-icon {
+      font-size: 1.6rem;
+      margin-bottom: 2px;
+    }
+
+    .edition-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .edition-desc {
+      font-size: 0.74rem;
+      color: #94a3b8;
+      line-height: 1.35;
+    }
+
+    /* Directory Section & Cards */
+    .directory-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .directory-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .directory-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .directory-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--sun-teal);
+      background: rgba(5, 217, 232, 0.1);
+      border: 1px solid rgba(5, 217, 232, 0.25);
+      padding: 2px 8px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
     /* The Live Feature Card / Today's Event Portal */
     .event-portal-card {
       background: var(--surface);
@@ -103,6 +186,18 @@
       position: relative;
       overflow: hidden;
       transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .event-portal-card.upcoming-guide {
+      background: rgba(15, 17, 24, 0.6);
+      border: 1px dashed var(--border);
+      padding: 18px 20px;
+    }
+
+    .portal-tag.upcoming {
+      color: #94a3b8;
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
     }
 
     .event-portal-card:hover {
@@ -285,39 +380,79 @@
       </p>
     </header>
 
-    <!-- Published Festival Companion Portal -->
-    <main class="event-portal-card">
-      <div class="portal-tag">
-        <span class="live-dot"></span> Active Companion Guide
+    <!-- Product Editions / Ecosystem Overview -->
+    <div class="edition-grid">
+      <div class="edition-card">
+        <div class="edition-icon">🥢</div>
+        <div class="edition-title">Eats Map</div>
+        <div class="edition-desc">Food festivals, night markets, popup chefs & artisan culinary rows.</div>
+      </div>
+      <div class="edition-card">
+        <div class="edition-icon">🎸</div>
+        <div class="edition-title">Live Music & Tours</div>
+        <div class="edition-desc">Amphitheaters, setlists, band histories, and tour schedules.</div>
+      </div>
+      <div class="edition-card">
+        <div class="edition-icon">⛺</div>
+        <div class="edition-title">Festival Grounds</div>
+        <div class="edition-desc">Multi-stage timing, vector maps, hydration, and safety waypoints.</div>
+      </div>
+    </div>
+
+    <!-- Live & Upcoming Companion Guides Directory -->
+    <section class="directory-section">
+      <div class="directory-header">
+        <h2 class="directory-title">Published Companion Guides</h2>
+        <span class="directory-badge">Live Index</span>
       </div>
 
-      <h2 class="event-title">FoodieLand Nashville</h2>
-      <div class="event-subtitle">Nashville Superspeedway • Aug 28–30, 2026</div>
+      <!-- Featured Live Card: FoodieLand Nashville (Eats Map) -->
+      <article class="event-portal-card live-guide">
+        <div class="portal-tag">
+          <span class="live-dot"></span> Live This Weekend • Eats Map Edition
+        </div>
 
-      <div class="event-perks">
-        <div class="perk-item">
-          <strong>🗺️ Offline Vector Grounds</strong>
-          Walk the speedway, stalls & parking with zero lag.
-        </div>
-        <div class="perk-item">
-          <strong>🥢 200+ Dish Cards</strong>
-          Chef heritage, flavor profiles & pairings.
-        </div>
-        <div class="perk-item">
-          <strong>⚠️ Allergen Scanner</strong>
-          In-line ingredient flags without hiding foods.
-        </div>
-        <div class="perk-item">
-          <strong>🚗 Car Finder & Stage Clock</strong>
-          GPS parking locator & 3-day timeline.
-        </div>
-      </div>
+        <h3 class="event-title">FoodieLand Nashville 2026</h3>
+        <div class="event-subtitle">Nashville Superspeedway • Lebanon, TN • Aug 28–30</div>
 
-      <a href="/eats/foodieland" class="launch-btn">
-        <span>☀️ Open FoodieLand Companion</span>
-        <span class="arrow-icon">→</span>
-      </a>
-    </main>
+        <div class="event-perks">
+          <div class="perk-item">
+            <strong>🗺️ Native Vector Grounds</strong>
+            Zero-lag speedway, booth rows & parking.
+          </div>
+          <div class="perk-item">
+            <strong>🥢 200+ Dish Profiles</strong>
+            Culinary heritage, flavor notes & pairings.
+          </div>
+          <div class="perk-item">
+            <strong>⚠️ Allergen Scanner</strong>
+            In-line warnings without hiding foods.
+          </div>
+          <div class="perk-item">
+            <strong>🚗 GPS Car Finder</strong>
+            Mark & locate your vehicle instantly.
+          </div>
+        </div>
+
+        <a href="/eats/foodieland" class="launch-btn">
+          <span>☀️ Launch FoodieLand Eats Map</span>
+          <span class="arrow-icon">→</span>
+        </a>
+      </article>
+
+      <!-- Upcoming Event Card: Victory Garden Tour (Music Edition) -->
+      <article class="event-portal-card upcoming-guide">
+        <div class="portal-tag upcoming">
+          <span>📅 Upcoming • Live Music Edition</span>
+        </div>
+
+        <h3 class="event-title" style="font-size: 1.3rem;">Young the Giant — Victory Garden Tour</h3>
+        <div class="event-subtitle">Ascend Amphitheater • Nashville, TN</div>
+        <p style="font-size: 0.78rem; color: #94a3b8; line-height: 1.4; margin-top: -8px;">
+          Setlist tracker, song lore, band history, and venue bag/transit guide.
+        </p>
+      </article>
+    </section>
 
     <!-- 1-Sentence PWA Note -->
     <div class="pwa-note">
