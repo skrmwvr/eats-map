@@ -29,19 +29,8 @@
 <body>
   <div id="app-container">
     
-    <!-- TOP APP BAR -->
+    <!-- TOP APP BAR (Snapped to top of viewport like bottom toolbar) -->
     <header id="top-bar">
-      <div id="brand-header">
-        <div id="brand-logo-wrap">
-          <span class="sun-icon">☀️</span>
-          <span class="brand-name">Eats Map</span>
-        </div>
-        <div id="festival-indicator">
-          <span id="top-bar-event-name">FoodieLand Nashville 2026</span>
-          <span id="top-bar-status" class="status-badge live">Loading...</span>
-        </div>
-      </div>
-      
       <!-- Quick Action / View Filter Pills (Clean 3-Button Stacked Architecture) -->
       <nav id="top-nav-pills">
         <button class="top-btn" id="btn-weather" onclick="window.app.switchViewport('weather')">
@@ -54,13 +43,25 @@
           <span class="btn-top-title">Venue</span>
           <span id="venue-info-pill" class="btn-top-subtitle">Superspeedway</span>
         </button>
-        <button class="top-btn" id="btn-timeline" onclick="window.app.switchViewport('program')">
+        <button class="top-btn" id="btn-timeline" onclick="window.app.openTodaysProgram()">
           <span class="btn-top-icon">📅</span>
-          <span class="btn-top-title">Schedule</span>
+          <span class="btn-top-title">Program</span>
           <span id="program-day-pill" class="btn-top-subtitle">Today</span>
         </button>
       </nav>
     </header>
+
+    <!-- BRAND & FESTIVAL STATUS BAND (Positioned below top toolbar, above dietary bar) -->
+    <div id="brand-status-band" class="brand-status-band">
+      <div id="brand-logo-wrap">
+        <span class="sun-icon">☀️</span>
+        <span class="brand-name">Eats Map</span>
+      </div>
+      <div id="festival-indicator">
+        <span id="top-bar-event-name">FoodieLand Nashville 2026</span>
+        <span id="top-bar-status" class="status-badge live">LIVE</span>
+      </div>
+    </div>
 
     <!-- INTOLERANCE & ALLERGEN PREFERENCE DRAWER (ACCORDION) -->
     <section id="allergen-pref-bar" class="allergen-bar">

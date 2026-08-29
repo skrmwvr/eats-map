@@ -841,8 +841,8 @@ class EatsMapApp {
             <strong style="color: var(--fl-yellow); font-size: 0.84rem; font-family: 'Outfit'; text-transform: uppercase; letter-spacing: 0.04em;">
               🎤 Happening Today on Stage
             </strong>
-            <a href="javascript:void(0)" onclick="window.app.switchViewport('program')" style="color: var(--fl-teal); font-size: 0.75rem; text-decoration: underline; font-weight: 700;">
-              Full 3-Day Program →
+            <a href="javascript:void(0)" onclick="window.app.openTodaysProgram()" style="color: var(--fl-teal); font-size: 0.75rem; text-decoration: underline; font-weight: 700;">
+              Today's Events →
             </a>
           </div>
           <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -893,12 +893,16 @@ class EatsMapApp {
       <!-- CURRENT & UPCOMING PROGRAM CARDS (CROPPED TO PRESENT TIME) -->
       ${programCardsHtml}
 
-      <!-- FEATURED CULINARY CREATIONS (FOOD FINDER JUMBO DECK) -->
-      <div style="display: flex; justify-content: space-between; align-items: center; margin: 16px 0 10px; padding-top: 6px; border-top: 1px solid var(--border-color);">
-        <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">
-          🥢 Featured Culinary Creations (${totalCount})
-        </strong>
-        <span style="font-size: 0.72rem; color: var(--text-muted);">Tap for Deck Card</span>
+      <!-- FEATURED CULINARY CREATIONS (SAME STYLING AS HAPPENING TODAY ON STAGE) -->
+      <div style="margin: 18px 0 10px; padding-top: 8px; border-top: 1px solid var(--border-color);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <strong style="color: var(--fl-yellow); font-size: 0.84rem; font-family: 'Outfit'; text-transform: uppercase; letter-spacing: 0.04em;">
+            🥢 Featured Culinary Creations (${totalCount})
+          </strong>
+          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">
+            Tap for Details
+          </span>
+        </div>
       </div>
 
       <div class="vendor-grid">
@@ -1328,6 +1332,12 @@ class EatsMapApp {
         </div>
       </div>
     `;
+  }
+
+  openTodaysProgram() {
+    this.determineCurrentDayIndex();
+    this.updateTopBarStatus();
+    this.switchViewport('program');
   }
 
   jumpToProgramDay(dayIndex) {

@@ -67,22 +67,27 @@ html, body {
   overflow: hidden;
 }
 
-/* TOP APP BAR */
+/* TOP APP BAR (Snapped Flush to Top of Viewport) */
 #top-bar {
   background-color: var(--header-footer-bg);
   border-bottom: 1px solid var(--border-color);
-  padding: 10px 12px 8px;
+  padding: 8px 8px 6px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   flex-shrink: 0;
   z-index: 100;
 }
 
-#brand-header {
+/* BRAND & FESTIVAL STATUS BAND (Positioned below top toolbar, styled like dietary band) */
+.brand-status-band {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-color);
+  padding: 6px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-shrink: 0;
+  z-index: 95;
 }
 
 #brand-logo-wrap {
@@ -92,15 +97,15 @@ html, body {
 }
 
 .sun-icon {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .brand-name {
   font-family: 'Outfit', sans-serif;
   font-weight: 900;
-  font-size: 1.1rem;
+  font-size: 0.98rem;
   color: #fff;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 #festival-indicator {
@@ -110,16 +115,16 @@ html, body {
 }
 
 #top-bar-event-name {
-  font-size: 0.76rem;
+  font-size: 0.74rem;
   color: var(--text-secondary);
   font-weight: 600;
 }
 
 .status-badge {
-  font-size: 0.65rem;
+  font-size: 0.64rem;
   font-weight: 800;
   text-transform: uppercase;
-  padding: 2px 6px;
+  padding: 1px 6px;
   border-radius: 99px;
   letter-spacing: 0.04em;
 }
