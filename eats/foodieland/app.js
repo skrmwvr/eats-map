@@ -353,10 +353,9 @@ class EatsMapApp {
     }
     
     let totalActive = this.avoidedAllergens.length + (this.customAllergen ? 1 : 0);
-    const badgeEl = document.getElementById('active-avoid-badge');
+    const badgeEl = document.getElementById('active-allergen-count-badge');
     if (badgeEl) {
-      badgeEl.textContent = totalActive > 0 ? totalActive + ' active' : '0';
-      badgeEl.classList.toggle('has-active', totalActive > 0);
+      badgeEl.textContent = totalActive > 0 ? `${totalActive} flagged` : '0 flagged';
     }
   }
 

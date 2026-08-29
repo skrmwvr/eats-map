@@ -1,0 +1,356 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eats Map & Sun Map • UI Colorboard & Swatch Inspector</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0b0c10;
+      --bg-card: #171923;
+      --bg-surface: #13151f;
+      --bg-surface-elevated: #1e2230;
+      --header-footer-bg: #10121a;
+      --border-color: #2b2f42;
+      --border-subtle: #1e2230;
+
+      /* FoodieLand & Sun Map Neon Palette */
+      --fl-orange: #ff5e36;
+      --fl-yellow: #ffc837;
+      --fl-pink: #ff2a6d;
+      --fl-teal: #05d9e8;
+      --fl-purple: #9d4edd;
+      --fl-green: #00f090;
+      --fl-amber: #ff9f1c;
+      --alert-red: #ff3b30;
+
+      --text-primary: #ffffff;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #06070a;
+      color: var(--text-primary);
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 760px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+    
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--fl-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 6px;
+    }
+
+    /* Swatch Grid */
+    .swatch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .swatch-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .swatch-chip {
+      height: 48px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .swatch-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .swatch-name {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .swatch-hex {
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    /* UI Component Previews */
+    .component-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Booth Zone Badges */
+    .badge {
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 6px 12px;
+      border-radius: 8px;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .zone-latin { background: linear-gradient(135deg, #ff5e36, #ff9f1c); box-shadow: 0 2px 8px rgba(255, 94, 54, 0.4); }
+    .zone-sweet { background: linear-gradient(135deg, #ff2a6d, #b5179e); box-shadow: 0 2px 8px rgba(255, 42, 109, 0.4); }
+    .zone-asian { background: linear-gradient(135deg, #05d9e8, #0077b6); box-shadow: 0 2px 8px rgba(5, 217, 232, 0.4); }
+    .zone-smoke { background: linear-gradient(135deg, #e63946, #9d0208); box-shadow: 0 2px 8px rgba(230, 57, 70, 0.4); }
+
+    /* Button Treatments */
+    .btn-top-sample {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 6px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 100px;
+    }
+
+    .btn-brand-sample {
+      background: linear-gradient(180deg, rgba(255, 94, 54, 0.25) 0%, rgba(255, 42, 109, 0.15) 100%);
+      border: 1px solid var(--fl-orange);
+      box-shadow: 0 0 15px rgba(255, 94, 54, 0.3);
+      border-radius: 10px;
+      padding: 8px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .pill-sample {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-color);
+      color: #f1f5f9;
+      border-radius: 99px;
+      padding: 6px 12px;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .tag-sample {
+      background: rgba(255, 159, 28, 0.2);
+      border: 1px solid var(--fl-amber);
+      color: var(--fl-yellow);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .status-live {
+      background: rgba(0, 240, 144, 0.15);
+      color: var(--fl-green);
+      border: 1px solid rgba(0, 240, 144, 0.4);
+      font-size: 0.64rem;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 99px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div>
+      <div style="font-size: 0.8rem; color: var(--fl-orange); font-weight: 800; text-transform: uppercase;">Internal Reference Only</div>
+      <h1 style="font-size: 1.8rem; color: #fff; margin-top: 2px;">☀️ Sun Map / Eats Map Colorboard</h1>
+      <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 4px;">System palette swatches, surface depths, and UI element test canvas.</p>
+    </div>
+
+    <!-- 1. NEON BRAND PALETTE -->
+    <section>
+      <h2 class="section-title">1. Core Neon Brand Palette</h2>
+      <div class="swatch-grid">
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #ff5e36;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Solar Orange</span>
+            <span class="swatch-hex">#ff5e36</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #ffc837;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Sun Yellow</span>
+            <span class="swatch-hex">#ffc837</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #ff2a6d;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Neon Pink</span>
+            <span class="swatch-hex">#ff2a6d</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #05d9e8;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Cyber Teal</span>
+            <span class="swatch-hex">#05d9e8</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #00f090;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Lime Green (Live)</span>
+            <span class="swatch-hex">#00f090</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #ff9f1c;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Amber Alert</span>
+            <span class="swatch-hex">#ff9f1c</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #9d4edd;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Electric Purple</span>
+            <span class="swatch-hex">#9d4edd</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. DARK THEME SURFACE DEPTHS -->
+    <section>
+      <h2 class="section-title">2. Dark Theme Surfaces & Borders</h2>
+      <div class="swatch-grid">
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #0b0c10; border-color: #333;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Background Dark</span>
+            <span class="swatch-hex">#0b0c10</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #10121a; border-color: #333;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Header / Footer Bar</span>
+            <span class="swatch-hex">#10121a</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #13151f; border-color: #333;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Base Surface Card</span>
+            <span class="swatch-hex">#13151f</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #1e2230; border-color: #333;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Elevated Card</span>
+            <span class="swatch-hex">#1e2230</span>
+          </div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-chip" style="background: #2b2f42; border-color: #555;"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Border Subtle</span>
+            <span class="swatch-hex">#2b2f42</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ZONE BADGES & CHIPS -->
+    <section>
+      <h2 class="section-title">3. Zone Waypoint Badges</h2>
+      <div class="component-box">
+        <div class="row">
+          <span class="badge zone-latin">📍 Booth A-12 • Latin Row</span>
+          <span class="badge zone-sweet">📍 Booth B-04 • Sweet Tooth</span>
+          <span class="badge zone-asian">📍 Booth C-18 • Asian Street</span>
+          <span class="badge zone-smoke">📍 Booth D-01 • Smokehouse</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. BUTTON & STATUS TREATMENTS -->
+    <section>
+      <h2 class="section-title">4. Button & Status Styles</h2>
+      <div class="component-box">
+        <div style="font-size: 0.75rem; color: var(--text-secondary); font-weight: 700;">Top Bar vs Active Home vs Pills</div>
+        <div class="row">
+          <div class="btn-top-sample">
+            <span style="font-size: 1rem;">☀️</span>
+            <span style="font-size: 0.72rem; font-weight: 800; text-transform: uppercase;">Weather</span>
+            <span style="font-size: 0.66rem; color: var(--fl-yellow); font-weight: 700;">88°F Clear</span>
+          </div>
+
+          <div class="btn-brand-sample">
+            <span style="font-size: 1.1rem;">☀️</span>
+            <span style="font-size: 0.82rem; font-weight: 800; color: var(--fl-yellow);">Eats Map</span>
+          </div>
+
+          <div class="pill-sample">🌮 Latin Row Map</div>
+          <div class="tag-sample">⚠️ Contains: Gluten</div>
+          <div class="status-live">LIVE</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. TYPOGRAPHY & CONTRAST -->
+    <section>
+      <h2 class="section-title">5. Typography & Text Hierarchy</h2>
+      <div class="component-box">
+        <div style="color: var(--text-primary); font-size: 1.1rem; font-weight: 800; font-family: 'Outfit';">Primary Header • White #ffffff</div>
+        <div style="color: var(--fl-yellow); font-size: 0.95rem; font-weight: 800; font-family: 'Outfit';">Section Eyebrow • Yellow #ffc837</div>
+        <div style="color: var(--fl-teal); font-size: 0.85rem; font-weight: 700;">Accent / Link / Performer • Teal #05d9e8</div>
+        <div style="color: var(--text-secondary); font-size: 0.8rem; font-weight: 500;">Body Description Text • Slate #94a3b8</div>
+        <div style="color: var(--text-muted); font-size: 0.72rem; font-weight: 500;">Muted Metadata & Footers • Muted #64748b</div>
+      </div>
+    </section>
+
+  </div>
+
+</body>
+</html>
