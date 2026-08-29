@@ -1306,7 +1306,7 @@ class EatsMapApp {
         <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 12px;">Offline Companion Guide for FoodieLand Nashville 2026</p>
         
         <p style="font-size: 0.82rem; line-height: 1.45; color: #cbd5e1; margin-bottom: 10px;">
-          Eats Map transforms town and festival grounds into an interactive, offline-ready companion. Treat top chefs, popup creators, and food stalls with the deep heritage and spotlight they deserve.
+          Eats Map, by Sun Maps, transforms town and festival grounds into an interactive, offline-ready companion. Treat top chefs, popup creators, and food stalls with the deep heritage and spotlight they deserve.
         </p>
 
         <div style="background: var(--bg-surface); padding: 10px; border-radius: var(--radius-md); font-size: 0.76rem; color: #94a3b8; line-height: 1.4; margin-bottom: 14px;">
