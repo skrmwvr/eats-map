@@ -1,12 +1,13 @@
-const CACHE_NAME = 'sun-map-v9';
+const CACHE_NAME = 'eats-map-v10';
 const ASSETS_TO_CACHE = [
+  './',
   './index.html',
+  './landing.html',
   './index.css',
   './app.js',
-  './manifest.webmanifest',
-  './fill-data/venue/nashville-transit-parking-options.json',
-  './fill-data/event/victory-garden-tour-history.json',
-  './fill-data/band/young-the-giant-song-sentiment.json'
+  './data_bundle.js',
+  './map_logic.js',
+  './manifest.webmanifest'
 ];
 
 // Install: Cache core shell and initial data

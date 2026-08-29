@@ -1123,6 +1123,29 @@ body {
   color: #79f8c4 !important;
 }
 
+/* Vector Parking Zone Tooltip */
+.parking-label-tooltip {
+  background: rgba(16, 18, 26, 0.85) !important;
+  border: 1px dashed #05d9e8 !important;
+  color: #05d9e8 !important;
+  font-size: 0.68rem !important;
+  font-weight: 700 !important;
+  text-align: center !important;
+  padding: 3px 8px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7) !important;
+}
+
+.parking-label-tooltip::before {
+  display: none !important;
+}
+
+.gate-marker-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .qr-footer-expanded .qr-canvas-box {
   padding: 12px;
   border-radius: 12px;

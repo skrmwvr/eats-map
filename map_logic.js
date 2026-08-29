@@ -14,9 +14,13 @@ class MapManager {
     const defaultCenter = [36.0465, -86.4172]; // Nashville Superspeedway Infield Plaza
     
     if (!this.map) {
-      this.map = L.map('leaflet-map', { zoomControl: true }).setView(defaultCenter, 17);
+      this.map = L.map('leaflet-map', { 
+        zoomControl: true,
+        minZoom: 15,
+        maxZoom: 20
+      }).setView(defaultCenter, 17);
       
-      // High-contrast clean CartoDB Voyager tiles for festival vibe
+      // Fallback base tiles (cached by browser / offline service worker)
       L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap &copy; CARTO',
         maxZoom: 20
@@ -26,6 +30,9 @@ class MapManager {
     }
 
     this.clearMarkers();
+
+    // Render 100% Offline Vector Venue & Parking Architecture
+    this.renderVectorVenueLayout();
 
     // Render Map Legend Overlay (by default)
     this.renderLegend();
@@ -242,10 +249,128 @@ class MapManager {
         <div class="legend-item"><span class="legend-dot" style="background:#ff2a6d;"></span> Medical & First Aid</div>
         <div class="legend-item"><span class="legend-dot" style="background:#00f090;"></span> Water Stations</div>
         <div class="legend-item"><span class="legend-dot" style="background:#ffc837;"></span> Restrooms</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#05d9e8;"></span> Parking Zones</div>
       `;
       return div;
     };
 
     this.legendControl.addTo(this.map);
+  }
+
+  // --- EMBEDDED VECTOR VENUE ARCHITECTURE (Zero Network Download) ---
+  renderVectorVenueLayout() {
+    if (this.venueVectorGroup) {
+      this.map.removeLayer(this.venueVectorGroup);
+    }
+    this.venueVectorGroup = L.layerGroup().addTo(this.map);
+
+    // 1. Speedway D-Shaped Oval Track & Outer Perimeter
+    const trackOuterCoords = [
+      [36.0515, -86.4172],
+      [36.0510, -86.4140],
+      [36.0485, -86.4130],
+      [36.0440, -86.4135],
+      [36.0415, -86.4165],
+      [36.0415, -86.4185],
+      [36.0440, -86.4210],
+      [36.0485, -86.4215],
+      [36.0510, -86.4200]
+    ];
+    L.polygon(trackOuterCoords, {
+      color: '#334155',
+      weight: 6,
+      fillColor: '#1e293b',
+      fillOpacity: 0.35,
+      dashArray: '8, 8',
+      interactive: false
+    }).addTo(this.venueVectorGroup);
+
+    // 2. Infield Festival Plaza (The Active Grounds)
+    const infieldCoords = [
+      [36.0492, -86.4182],
+      [36.0490, -86.4158],
+      [36.0465, -86.4152],
+      [36.0442, -86.4162],
+      [36.0445, -86.4185],
+      [36.0470, -86.4190]
+    ];
+    L.polygon(infieldCoords, {
+      color: '#ff5e36',
+      weight: 2,
+      fillColor: 'rgba(255, 94, 54, 0.08)',
+      fillOpacity: 0.6,
+      interactive: false
+    }).addTo(this.venueVectorGroup);
+
+    // 3. Surrounding Parking Lots (North, South, East, West)
+    const parkingLots = [
+      {
+        name: "North General Parking Lot",
+        coords: [
+          [36.0535, -86.4195],
+          [36.0535, -86.4155],
+          [36.0518, -86.4155],
+          [36.0518, -86.4195]
+        ]
+      },
+      {
+        name: "South General & VIP Parking",
+        coords: [
+          [36.0410, -86.4190],
+          [36.0410, -86.4150],
+          [36.0392, -86.4150],
+          [36.0392, -86.4190]
+        ]
+      },
+      {
+        name: "West ADA & Rideshare Staging Lot",
+        coords: [
+          [36.0485, -86.4240],
+          [36.0485, -86.4220],
+          [36.0450, -86.4220],
+          [36.0450, -86.4240]
+        ]
+      }
+    ];
+
+    parkingLots.forEach(lot => {
+      const poly = L.polygon(lot.coords, {
+        color: '#05d9e8',
+        weight: 1.5,
+        fillColor: '#05d9e8',
+        fillOpacity: 0.12,
+        dashArray: '4, 4'
+      }).addTo(this.venueVectorGroup);
+
+      poly.bindTooltip(`🚗 <strong>${lot.name}</strong><br><small style="color:#94a3b8;">Free Festival Parking</small>`, {
+        permanent: true,
+        direction: 'center',
+        className: 'parking-label-tooltip'
+      });
+    });
+
+    // 4. Main Concourse Pedestrian Thoroughfare (Gate 1 to Central Stage)
+    const walkwayCoords = [
+      [36.0475, -86.4210], // Gate 1 Entrance
+      [36.0472, -86.4168], // Medical Tent
+      [36.0467, -86.4171], // Water Hub
+      [36.0460, -86.4169]  // Asian Market Row
+    ];
+    L.polyline(walkwayCoords, {
+      color: '#ffc837',
+      weight: 3,
+      opacity: 0.6,
+      dashArray: '6, 6'
+    }).addTo(this.venueVectorGroup);
+
+    // 5. Main Concourse Gate 1 Entrance Marker
+    L.marker([36.0475, -86.4210], {
+      icon: L.divIcon({
+        className: 'gate-marker-icon',
+        html: '<div style="background:#ff2a6d; color:#fff; font-size:0.65rem; font-weight:800; padding:2px 6px; border-radius:4px; border:1px solid #fff; white-space:nowrap;">🎟️ GATE 1 MAIN ENTRY</div>',
+        iconSize: [120, 20],
+        iconAnchor: [60, 10]
+      })
+    }).addTo(this.venueVectorGroup);
   }
 }
