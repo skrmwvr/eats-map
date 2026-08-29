@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>FoodieLand Nashville 2026 • Eats Map by Sun Map</title>
+  
+  <!-- PWA Metadata -->
+  <link rel="manifest" href="./manifest.webmanifest">
+  <meta name="theme-color" content="#0b0c10">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Eats Map">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  
+  <!-- Leaflet CSS for Vector Map Display -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <!-- Google Fonts: Outfit for display headers, Plus Jakarta Sans for UI text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="./index.css">
+  
+  <!-- Offline QR Code Generator Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div id="app-container">
+    
+    <!-- TOP APP BAR -->
+    <header id="top-bar">
+      <div id="brand-header">
+        <div id="brand-logo-wrap">
+          <span class="sun-icon">☀️</span>
+          <span class="brand-name">Eats Map</span>
+        </div>
+        <div id="festival-indicator">
+          <span id="top-bar-event-name">FoodieLand Nashville 2026</span>
+          <span id="top-bar-status" class="status-badge live">Loading...</span>
+        </div>
+      </div>
+      
+      <!-- Quick Action / View Filter Pills -->
+      <nav id="top-nav-pills">
+        <button class="top-btn" id="btn-weather" onclick="window.app.switchViewport('weather')">
+          ☀️ <span id="weather-temp-pill">78°F Clear</span>
+        </button>
+        <button class="top-btn" id="btn-venue" onclick="window.app.switchViewport('venue')">
+          🏟️ <span id="venue-info-pill">Superspeedway</span>
+        </button>
+        <button class="top-btn" id="btn-timeline" onclick="window.app.switchViewport('program')">
+          📅 <span id="program-day-pill">Today's Schedule</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- INTOLERANCE & ALLERGEN PREFERENCE DRAWER (ACCORDION) -->
+    <section id="allergen-pref-bar" class="allergen-bar">
+      <div class="allergen-header" onclick="window.app.toggleAllergenPanel()">
+        <div class="allergen-title">
+          <span class="alert-icon">⚠️</span>
+          <span>Dietary & Allergen Highlighting</span>
+        </div>
+        <div class="allergen-status-indicator">
+          <span id="active-allergen-count-badge" class="count-pill">0 flagged</span>
+          <span class="chevron-toggle">▼</span>
+        </div>
+      </div>
+      <div id="allergen-chips-tray" class="chips-tray">
+        <!-- Preset and custom chips rendered dynamically by app.js -->
+      </div>
+    </section>
+    <div id="allergen-backdrop" class="allergen-panel-backdrop" onclick="window.app.closeAllergenPanel()"></div>
+
+    <!-- MAIN VIEWPORT CONTAINER -->
+    <main id="main-viewport">
+      <!-- Active view dynamically injected here -->
+      <div id="loading-spinner" style="text-align: center; padding: 40px; color: var(--text-secondary);">
+        <p>Loading FoodieLand Guide...</p>
+      </div>
+    </main>
+
+    <!-- DETAIL / PROGRAM / PASSPORT MODAL (SHARED OVERLAY) -->
+    <div id="detail-modal" class="modal-overlay">
+      <div id="modal-content" class="modal-card">
+        <!-- Modal content injected dynamically -->
+      </div>
+    </div>
+
+    <!-- BOTTOM APP NAVIGATION -->
+    <footer id="bottom-bar">
+      <button class="bottom-btn active" id="btn-home" onclick="window.app.switchViewport('home')">
+        <span class="nav-icon">🥢</span>
+        <span class="nav-label">Now Playing</span>
+      </button>
+      <button class="bottom-btn" id="btn-booths" onclick="window.app.switchViewport('booths')">
+        <span class="nav-icon">📍</span>
+        <span class="nav-label">Booths</span>
+      </button>
+      <button class="bottom-btn" id="btn-passport" onclick="window.app.switchViewport('passport')">
+        <span class="nav-icon">⭐</span>
+        <span class="nav-label">Wishlist</span>
+        <span id="wishlist-badge" class="nav-badge" style="display:none;">0</span>
+      </button>
+      <button class="bottom-btn" id="btn-share" onclick="window.app.openShareModal()">
+        <span class="nav-icon">📲</span>
+        <span class="nav-label">Share App</span>
+      </button>
+    </footer>
+
+  </div>
+
+  <!-- Leaflet Vector Engine -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  
+  <!-- App Scripts & Embedded Data Bundles -->
+  <script src="./data_bundle.js"></script>
+  <script src="./map_logic.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

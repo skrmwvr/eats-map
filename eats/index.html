@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EATS MAP by Sun Map • Offline Culinary & Food Festival Companion Guides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07080c;
+      --surface: #0f1118;
+      --border: #1e2230;
+      --sun-yellow: #ffc837;
+      --sun-orange: #ff5e36;
+      --sun-pink: #ff2a6d;
+      --sun-teal: #05d9e8;
+      --sun-lime: #00f090;
+      --text: #f8fafc;
+      --muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse at top center, rgba(255, 94, 54, 0.15) 0%, transparent 65%),
+        radial-gradient(circle at bottom right, rgba(255, 42, 109, 0.08) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 580px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Back Link to Sun Map Platform Root */
+    .platform-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    .back-home-link {
+      color: var(--sun-teal);
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .back-home-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Hero Block */
+    .hero-block {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eats-badge {
+      font-size: 2.2rem;
+      margin-bottom: 2px;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(135deg, #ffffff 40%, var(--sun-orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-byline {
+      font-size: 0.85rem;
+      color: var(--sun-yellow);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-manifesto {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: #94a3b8;
+      max-width: 480px;
+      margin: 6px auto 0;
+    }
+
+    .brand-manifesto strong {
+      color: #f1f5f9;
+    }
+
+    /* Active Food Festival Card */
+    .event-portal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .event-portal-card:hover {
+      border-color: rgba(255, 94, 54, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px -15px rgba(255, 94, 54, 0.25);
+    }
+
+    .portal-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--sun-yellow);
+      background: rgba(255, 200, 55, 0.1);
+      border: 1px solid rgba(255, 200, 55, 0.25);
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+
+    .portal-tag .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--sun-lime);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--sun-lime);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .event-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .event-subtitle {
+      font-size: 0.85rem;
+      color: var(--sun-teal);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .event-perks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .perk-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+
+    .perk-item strong {
+      color: #fff;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .launch-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: linear-gradient(135deg, var(--sun-orange), var(--sun-pink));
+      color: #ffffff;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 18px 24px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(255, 94, 54, 0.35);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .launch-btn:hover, .launch-btn:active {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(255, 94, 54, 0.55);
+      filter: brightness(1.08);
+    }
+
+    .launch-btn .arrow-icon {
+      font-size: 1.35rem;
+      transition: transform 0.2s ease;
+    }
+
+    .launch-btn:hover .arrow-icon {
+      transform: translateX(5px);
+    }
+
+    .site-footer {
+      text-align: center;
+      font-size: 0.74rem;
+      color: #475569;
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+
+    .site-footer a {
+      color: var(--sun-teal);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .site-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Top Platform Bar -->
+    <nav class="platform-nav">
+      <a href="../index.html" class="back-home-link" id="home-root-link">← Sun Map Home</a>
+      <span style="color: var(--muted); font-size: 0.72rem;">Edition Index: /eats/</span>
+    </nav>
+
+    <!-- Eats Map Category Header -->
+    <header class="hero-block">
+      <div class="eats-badge">🥢</div>
+      <h1 class="brand-title">Eats Map</h1>
+      <div class="brand-byline">by Sun Map</div>
+      <p class="brand-manifesto">
+        Offline-first companion guides for food festivals, night markets, and street culinary circuits. <strong>Treating top chefs and food stalls with the deep spotlight they deserve.</strong>
+      </p>
+    </header>
+
+    <!-- Latest Featured Eats Map Listing -->
+    <main class="event-portal-card">
+      <div class="portal-tag">
+        <span class="live-dot"></span> Active Festival Guide
+      </div>
+
+      <h2 class="event-title">FoodieLand Nashville</h2>
+      <div class="event-subtitle">Nashville Superspeedway • Lebanon, TN • Aug 28–30, 2026</div>
+
+      <div class="event-perks">
+        <div class="perk-item">
+          <strong>🗺️ Native Vector Grounds</strong>
+          Offline speedway, booth rows & parking.
+        </div>
+        <div class="perk-item">
+          <strong>🥢 200+ Dish Profiles</strong>
+          Culinary heritage, flavor notes & pairings.
+        </div>
+        <div class="perk-item">
+          <strong>⚠️ Allergen Scanner</strong>
+          In-line ingredient flags without hiding foods.
+        </div>
+        <div class="perk-item">
+          <strong>🚗 GPS Car Finder</strong>
+          Mark & locate your vehicle instantly.
+        </div>
+      </div>
+
+      <a href="./foodieland/index.html" class="launch-btn" id="foodieland-eats-link">
+        <span>☀️ Launch FoodieLand Eats Map</span>
+        <span class="arrow-icon">→</span>
+      </a>
+    </main>
+
+    <!-- Rights & Sentiments Footer -->
+    <footer class="site-footer">
+      <div style="color: var(--sun-yellow); font-weight: 700; margin-bottom: 2px;">
+        ☀️ Crafted by fans, free, for the love of the show.
+      </div>
+      <div>Free personal attendee use & peer sharing • CC BY-NC-ND 4.0</div>
+      <div style="margin-top: 4px;">
+        © 2026 Sun Map • Event inquiries: <a href="https://sunmap.dev">sunmap.dev</a>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const eatsBtn = document.getElementById('foodieland-eats-link');
+    if (eatsBtn && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+      eatsBtn.href = '/eats/foodieland';
+    }
+    const homeLink = document.getElementById('home-root-link');
+    if (homeLink && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+      homeLink.href = '/';
+    }
+  </script>
+</body>
+</html>

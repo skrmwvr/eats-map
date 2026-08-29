@@ -2,156 +2,419 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Eats Map — FoodieLand Nashville 2026</title>
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#0b0c10">
-  <link rel="stylesheet" href="index.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUN MAP • Offline Companion Guides for Live Events & Food Festivals</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07080c;
+      --surface: #0f1118;
+      --border: #1e2230;
+      --sun-yellow: #ffc837;
+      --sun-orange: #ff5e36;
+      --sun-pink: #ff2a6d;
+      --sun-teal: #05d9e8;
+      --sun-lime: #00f090;
+      --text: #f8fafc;
+      --muted: #64748b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 20px;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse at top center, rgba(255, 94, 54, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at bottom right, rgba(5, 217, 232, 0.06) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 580px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Minimalist Solar Icon & Hero Header */
+    .hero-block {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sun-burst-logo {
+      width: 72px;
+      height: 72px;
+      animation: solar-rotate 30s linear infinite;
+    }
+
+    @keyframes solar-rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      background: linear-gradient(135deg, #ffffff 30%, var(--sun-yellow) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-manifesto {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #94a3b8;
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .brand-manifesto strong {
+      color: #f1f5f9;
+    }
+
+    /* Single Editorial Platform Prose Block */
+    .platform-prose-block {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 20px;
+      font-size: 0.86rem;
+      line-height: 1.6;
+      color: #94a3b8;
+      text-align: center;
+    }
+
+    .platform-prose-block strong {
+      color: #f1f5f9;
+      font-weight: 700;
+    }
+
+    .category-link {
+      color: var(--sun-teal);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    /* Directory Section & Cards */
+    .directory-section {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .directory-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .directory-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .directory-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--sun-teal);
+      background: rgba(5, 217, 232, 0.1);
+      border: 1px solid rgba(5, 217, 232, 0.25);
+      padding: 2px 8px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* The Live Feature Card / Today's Event Portal */
+    .event-portal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .event-portal-card:hover {
+      border-color: rgba(255, 94, 54, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px -15px rgba(255, 94, 54, 0.2);
+    }
+
+    .portal-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--sun-yellow);
+      background: rgba(255, 200, 55, 0.1);
+      border: 1px solid rgba(255, 200, 55, 0.25);
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+
+    .portal-tag .live-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--sun-lime);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--sun-lime);
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .event-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .event-subtitle {
+      font-size: 0.85rem;
+      color: var(--sun-teal);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .event-perks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .perk-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 0.78rem;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+
+    .perk-item strong {
+      color: #fff;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Big Punchy Action CTA */
+    .launch-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: linear-gradient(135deg, var(--sun-orange), var(--sun-pink));
+      color: #ffffff;
+      text-decoration: none;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 18px 24px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(255, 94, 54, 0.35);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .launch-btn:hover, .launch-btn:active {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 35px rgba(255, 94, 54, 0.55);
+      filter: brightness(1.08);
+    }
+
+    .launch-btn .arrow-icon {
+      font-size: 1.35rem;
+      transition: transform 0.2s ease;
+    }
+
+    .launch-btn:hover .arrow-icon {
+      transform: translateX(5px);
+    }
+
+    /* PWA Explainer Note (Subtle, clean, educational) */
+    .pwa-note {
+      text-align: center;
+      font-size: 0.76rem;
+      color: #64748b;
+      line-height: 1.5;
+      padding: 0 16px;
+    }
+
+    .pwa-note strong {
+      color: #94a3b8;
+    }
+
+    /* Footer */
+    .site-footer {
+      text-align: center;
+      font-size: 0.74rem;
+      color: #475569;
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+
+    .site-footer a {
+      color: var(--sun-teal);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .site-footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <div class="app-container">
+
+  <div class="container">
     
-    <!-- TOP AREA: Weather, Venue, and Program (Sun Map 3-Button Grid) -->
-    <header class="dashboard-top">
-      <button class="top-btn" id="btn-weather" aria-label="Weather Forecast">
-        <div class="btn-icon" id="weather-icon">🌤️</div>
-        <div class="btn-label">
-          <span class="btn-title">Weather</span>
-          <span class="btn-subtitle" id="weather-status">84°F / Warm</span>
-        </div>
-      </button>
+    <!-- Hero Header with Sun Map Geometric Emblem -->
+    <header class="hero-block">
+      <svg class="sun-burst-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Sun Core -->
+        <circle cx="50" cy="50" r="20" fill="url(#sun-grad)"/>
+        <!-- Geometric Rays -->
+        <g stroke="url(#ray-grad)" stroke-width="3.5" stroke-linecap="round">
+          <line x1="50" y1="12" x2="50" y2="20" />
+          <line x1="50" y1="80" x2="50" y2="88" />
+          <line x1="12" y1="50" x2="20" y2="50" />
+          <line x1="80" y1="50" x2="88" y2="50" />
+          <line x1="23" y1="23" x2="29" y2="29" />
+          <line x1="71" y1="71" x2="77" y2="77" />
+          <line x1="23" y1="77" x2="29" y2="71" />
+          <line x1="71" y1="29" x2="77" y2="23" />
+        </g>
+        <defs>
+          <linearGradient id="sun-grad" x1="30" y1="30" x2="70" y2="70" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFC837"/>
+            <stop offset="1" stop-color="#FF5E36"/>
+          </linearGradient>
+          <linearGradient id="ray-grad" x1="10" y1="10" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FF5E36"/>
+            <stop offset="1" stop-color="#FF2A6D"/>
+          </linearGradient>
+        </defs>
+      </svg>
 
-      <button class="top-btn" id="btn-venue" aria-label="Venue Guide">
-        <div class="btn-icon">🏟️</div>
-        <div class="btn-label">
-          <span class="btn-title">Speedway</span>
-          <span class="btn-subtitle" id="venue-status">Lebanon, TN</span>
-        </div>
-      </button>
-
-      <button class="top-btn" id="btn-timeline" aria-label="Event Program">
-        <div class="btn-icon">⏰</div>
-        <div class="btn-label">
-          <span class="btn-title">Program</span>
-          <span class="btn-subtitle" id="timeline-status">Fri 8/28</span>
-        </div>
-      </button>
+      <h1 class="brand-title">SUN MAP</h1>
+      <p class="brand-manifesto">
+        Offline companion guides for live events, concert tours, and food festivals. <strong>Explore grounds, menus, stages, and stories without cell service.</strong>
+      </p>
     </header>
 
-    <!-- VENUE SUB-HEADER ACTIONS (Collapsible) -->
-    <div class="sub-header-venue" id="sub-header-venue" style="display: none;">
-      <button class="sub-venue-btn" id="btn-venue-car" aria-label="Mark or Find Car Spot / Get Directions">
-        <span class="gps-dot-indicator" id="gps-dot-indicator" title="GPS Access Status"></span>
-        <span id="btn-car-icon">🚗</span> <span id="btn-car-text">Mark my car</span>
-      </button>
-      <button class="sub-venue-btn" id="btn-venue-fac" aria-label="Show Grounds Map">🗺️ Grounds Map</button>
-      <button class="sub-venue-btn" id="btn-venue-help" aria-label="Call Medical Help">🏥 First Aid</button>
+    <!-- Single Concise Platform Narrative Block -->
+    <div class="platform-prose-block">
+      <p>
+        Sun Map creates bespoke, offline-ready companion guides across three live experiences: <a href="./eats/index.html" class="category-link">Eats Map</a> for food festivals and night markets; <strong>Live Music & Tours</strong> for setlists and artist lore; and <strong>Festival Grounds</strong> for multi-stage vector navigation and safety waypoints.
+      </p>
     </div>
 
-    <!-- LIVE STATUS / ALERT BANNER -->
-    <div class="status-banner" id="alert-banner">
-      <div class="banner-center-text">
-        <span class="alert-pulse"></span>
-        <span class="banner-text" id="alert-text">FoodieLand Nashville • 200+ Global Flavors & Night Market</span>
+    <!-- Live & Upcoming Companion Guides Directory -->
+    <section class="directory-section">
+      <div class="directory-header">
+        <h2 class="directory-title">Published Companion Guides</h2>
+        <span class="directory-badge">Live Index</span>
       </div>
-    </div>
 
-    <!-- ALLERGEN & INTOLERANCE FLAG TRAY (Collapsible Halfway Dropdown) -->
-    <div class="allergen-pref-bar" id="allergen-pref-bar">
-      <button class="allergen-toggle-header" id="allergen-toggle-btn" aria-label="Toggle Allergen Filter Tray">
-        <div class="allergen-header-left">
-          <span class="allergen-title-icon">⚠️</span>
-          <span class="allergen-title-text">Flag Allergens / Aversions</span>
-          <span class="allergen-badge" id="active-avoid-badge">0</span>
-        </div>
-        <div class="allergen-caret" id="allergen-caret">▼</div>
-      </button>
-
-      <div class="allergen-expand-panel" id="allergen-expand-panel">
-        <div class="allergen-panel-instruction">Tap any to flag on menus (never hides food):</div>
-        <div class="allergen-grid" id="allergen-chips-tray">
-          <button class="chip-btn" data-allergen="Cilantro">🌿 Cilantro</button>
-          <button class="chip-btn" data-allergen="Peanuts">🥜 Peanuts</button>
-          <button class="chip-btn" data-allergen="Tree Nuts">🌰 Tree/Pine Nuts</button>
-          <button class="chip-btn" data-allergen="Pork / Bacon">🥓 Pork / Bacon</button>
-          <button class="chip-btn" data-allergen="Dairy">🧀 Dairy</button>
-          <button class="chip-btn" data-allergen="Gluten/Wheat">🌾 Gluten</button>
-          <button class="chip-btn" data-allergen="Shellfish">🦐 Shellfish</button>
-          <button class="chip-btn" data-allergen="Fennel / Anise">🌱 Fennel/Anise</button>
-          <button class="chip-btn" data-allergen="Mayo">🥚 Mayo</button>
-          <button class="chip-btn" data-allergen="Sesame">✨ Sesame</button>
-          <button class="chip-btn chip-btn-custom" id="btn-custom-allergen" data-allergen="custom">🔍 Custom...</button>
+      <!-- Featured Live Card: FoodieLand Nashville (Eats Map) -->
+      <article class="event-portal-card live-guide">
+        <div class="portal-tag">
+          <span class="live-dot"></span> Live This Weekend • Eats Map Edition
         </div>
 
-        <!-- Custom Item Active Tag Display -->
-        <div class="custom-active-tray" id="custom-active-tray" style="display: none;"></div>
+        <h3 class="event-title">FoodieLand Nashville 2026</h3>
+        <div class="event-subtitle">Nashville Superspeedway • Lebanon, TN • Aug 28–30</div>
 
-        <!-- Safety / Knowledge Limit Disclaimer -->
-        <div class="allergen-disclaimer">
-          ⚠️ <em>Curated from public menu data and vendor listings, not an official medical authority. Please confirm critical allergies directly with booth staff.</em>
-        </div>
-      </div>
-    </div>
-
-    <!-- Backdrop overlay to dismiss allergen dropdown when tapping outside -->
-    <div class="allergen-backdrop" id="allergen-backdrop"></div>
-
-    <!-- CENTER AREA: Sun Map Square Viewport -->
-    <main class="viewport-square" id="main-viewport">
-      <div class="viewport-content" id="viewport-content">
-        <!-- Injected via JavaScript -->
-      </div>
-    </main>
-
-    <!-- BOTTOM AREA: Authentic Sun Map 3 Columns + 2 Dove-tailed Buttons -->
-    <footer class="dashboard-bottom">
-      <button class="bottom-btn" id="btn-booths" aria-label="Menu of Places">
-        <div class="btn-icon">🥢</div>
-        <div class="btn-label">
-          <span class="btn-title">Menu</span>
-          <span class="btn-subtitle" id="booth-sub-label">All Booths</span>
-        </div>
-      </button>
-
-      <!-- Center Container: Fork Icon Home + Tucked Shoulder Buttons (Map & Help) -->
-      <div class="home-btn-container">
-        <button class="tiny-foot-btn" id="btn-foot-map" aria-label="Grounds Map">🗺️</button>
-        <button class="bottom-btn" id="btn-home" aria-label="Home (Now Playing)">
-          <div class="btn-icon" id="home-btn-icon">🍴</div>
-          <div class="btn-label">
-            <span class="btn-title">Eats</span>
-            <span class="btn-subtitle">Now Playing</span>
+        <div class="event-perks">
+          <div class="perk-item">
+            <strong>🗺️ Native Vector Grounds</strong>
+            Zero-lag speedway, booth rows & parking.
           </div>
-        </button>
-        <button class="tiny-foot-btn" id="btn-foot-help" aria-label="Help & About">?</button>
-      </div>
-
-      <button class="bottom-btn" id="btn-passport" aria-label="Tasting Wishlist">
-        <div class="btn-icon">⭐</div>
-        <div class="btn-label">
-          <span class="btn-title">Wishlist</span>
-          <span class="btn-subtitle" id="wishlist-sub-label">0 Queued</span>
+          <div class="perk-item">
+            <strong>🥢 200+ Dish Profiles</strong>
+            Culinary heritage, flavor notes & pairings.
+          </div>
+          <div class="perk-item">
+            <strong>⚠️ Allergen Scanner</strong>
+            In-line warnings without hiding foods.
+          </div>
+          <div class="perk-item">
+            <strong>🚗 GPS Car Finder</strong>
+            Mark & locate your vehicle instantly.
+          </div>
         </div>
-      </button>
+
+        <a href="./eats/foodieland/index.html" class="launch-btn" id="foodieland-launch-btn">
+          <span>☀️ Launch FoodieLand Eats Map</span>
+          <span class="arrow-icon">→</span>
+        </a>
+      </article>
+    </section>
+
+    <!-- 1-Sentence PWA Note -->
+    <div class="pwa-note">
+      📱 <strong>Zero app store downloads:</strong> Sun Map is a Progressive Web App (PWA) that boots directly in your mobile browser and runs 100% offline once opened.
+    </div>
+
+    <!-- Rights & Sentiments Footer -->
+    <footer class="site-footer">
+      <div style="color: var(--sun-yellow); font-weight: 700; margin-bottom: 2px;">
+        ☀️ Crafted by fans, free, for the love of the show.
+      </div>
+      <div>Free personal attendee use & peer sharing • CC BY-NC-ND 4.0</div>
+      <div style="margin-top: 4px;">
+        © 2026 Sun Map • Event & tour inquiries: <a href="https://sunmap.dev">sunmap.dev</a>
+      </div>
     </footer>
 
   </div>
 
-  <!-- DETAIL MODAL SHEET -->
-  <div class="modal-backdrop" id="detail-modal">
-    <div class="modal-sheet" id="modal-content"></div>
-  </div>
-
-  <!-- SCRIPTS -->
-  <script src="data_bundle.js"></script>
-  <script src="map_logic.js"></script>
-  <script src="app.js"></script>
+  <script>
+    // Universal URL resolver: supports web server roots and local file paths
+    const btn = document.getElementById('foodieland-launch-btn');
+    if (btn && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
+      btn.href = '/eats/foodieland';
+    }
+  </script>
 </body>
 </html>
