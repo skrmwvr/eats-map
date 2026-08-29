@@ -42,16 +42,22 @@
         </div>
       </div>
       
-      <!-- Quick Action / View Filter Pills -->
+      <!-- Quick Action / View Filter Pills (Clean 3-Button Stacked Architecture) -->
       <nav id="top-nav-pills">
         <button class="top-btn" id="btn-weather" onclick="window.app.switchViewport('weather')">
-          ☀️ <span id="weather-temp-pill">78°F Clear</span>
+          <span class="btn-top-icon">☀️</span>
+          <span class="btn-top-title">Weather</span>
+          <span id="weather-temp-pill" class="btn-top-subtitle">78°F Clear</span>
         </button>
         <button class="top-btn" id="btn-venue" onclick="window.app.switchViewport('venue')">
-          🏟️ <span id="venue-info-pill">Superspeedway</span>
+          <span class="btn-top-icon">🏟️</span>
+          <span class="btn-top-title">Venue</span>
+          <span id="venue-info-pill" class="btn-top-subtitle">Superspeedway</span>
         </button>
         <button class="top-btn" id="btn-timeline" onclick="window.app.switchViewport('program')">
-          📅 <span id="program-day-pill">Today's Schedule</span>
+          <span class="btn-top-icon">📅</span>
+          <span class="btn-top-title">Schedule</span>
+          <span id="program-day-pill" class="btn-top-subtitle">Today</span>
         </button>
       </nav>
     </header>

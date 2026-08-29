@@ -559,12 +559,18 @@ class EatsMapApp {
     if (!this.venue || !this.venue.days) return;
     const currentDay = this.venue.days[this.activeDayIndex];
     if (currentDay) {
-      const timelineStatus = document.getElementById('timeline-status');
-      if (timelineStatus) timelineStatus.textContent = currentDay.date_short;
-      const weatherStatus = document.getElementById('weather-status');
-      if (weatherStatus) {
+      const programPill = document.getElementById('program-day-pill');
+      if (programPill) programPill.textContent = currentDay.date_short;
+      
+      const weatherPill = document.getElementById('weather-temp-pill');
+      if (weatherPill) {
         const afternoonF = currentDay.temp_afternoon_f || 84;
-        weatherStatus.textContent = this.formatTemp(afternoonF);
+        weatherPill.textContent = this.formatTemp(afternoonF) + ' Clear';
+      }
+
+      const statusBadge = document.getElementById('top-bar-status');
+      if (statusBadge) {
+        statusBadge.textContent = 'LIVE';
       }
     }
   }
