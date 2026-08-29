@@ -17,8 +17,8 @@ class EatsMapApp {
     this.tempUnit = localStorage.getItem('eatsmap_temp_unit') || 'F'; // 'F' or 'C'
     this.historyStack = []; // Navigation history stack for back button
     this.userCoords = null; // Real live device GPS coords {lat, lng, accuracy}
-    this.gpsStatus = 'prompt'; // 'prompt' | 'granted' | 'denied' | 'unsupported'
-    this.isAtVenue = false; // Whether user is within 1.5 miles of Nashville Superspeedway
+    this.gpsStatus = localStorage.getItem('eatsmap_gps_permission') || 'prompt'; // 'prompt' | 'granted' | 'denied' | 'unsupported'
+    this.isAtVenue = false; // Whether user is within 2.5 miles of Nashville Superspeedway
     this.searchQuery = '';
     this.mapManager = null;
     this.qrExpanded = false;
@@ -512,22 +512,48 @@ class EatsMapApp {
       return;
     }
 
+    // Check modern Permissions API to know if user already granted permission
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        this.gpsStatus = result.state; // 'granted' | 'prompt' | 'denied'
+        localStorage.setItem('eatsmap_gps_permission', result.state);
+        this.updateCarButtonStatus();
+
+        result.onchange = () => {
+          this.gpsStatus = result.state;
+          localStorage.setItem('eatsmap_gps_permission', result.state);
+          this.updateCarButtonStatus();
+        };
+      }).catch(() => {});
+    }
+
+    // Only query position on startup if user already granted permission or has marked a car
+    if (this.gpsStatus === 'granted' || this.carLocation) {
+      this.requestCurrentPositionSilent();
+    }
+  }
+
+  requestCurrentPositionSilent() {
+    if (!navigator.geolocation) return;
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         this.gpsStatus = 'granted';
+        localStorage.setItem('eatsmap_gps_permission', 'granted');
         this.userCoords = {
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
           accuracy: pos.coords.accuracy
         };
-        // Check if user is within ~2.5 miles of Nashville Superspeedway (36.0465, -86.4172)
         const venueCoords = this.venue?.coordinates || { lat: 36.0465, lng: -86.4172 };
         const distMiles = this.calculateDistanceMiles(this.userCoords.lat, this.userCoords.lng, venueCoords.lat, venueCoords.lng);
         this.isAtVenue = distMiles <= 2.5;
         this.updateCarButtonStatus();
       },
       (err) => {
-        this.gpsStatus = 'denied';
+        if (err.code === 1) {
+          this.gpsStatus = 'denied';
+          localStorage.setItem('eatsmap_gps_permission', 'denied');
+        }
         this.updateCarButtonStatus();
       },
       { enableHighAccuracy: false, timeout: 8000, maximumAge: 60000 }
