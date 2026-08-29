@@ -1395,7 +1395,7 @@ class EatsMapApp {
         </div>
 
         <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 14px; text-align: center; line-height: 1.45;">
-          <span style="color: var(--fl-yellow); font-weight: 700;">☀️ Crafted by <s>fans</s> <strong style="color:#fff;">foodies</strong>, free, for the love of the <s>show</s> <strong style="color:#fff;">grub</strong>.</span><br>
+          <span style="color: var(--fl-yellow); font-weight: 700;">☀️ Crafted by <s style="font-weight: 400; opacity: 0.75;">fans</s> <strong style="color: #ffffff; font-weight: 800;">foodies</strong>, free, for the love of the <s style="font-weight: 400; opacity: 0.75;">show</s> <strong style="color: #ffffff; font-weight: 800;">grub</strong>.</span><br>
           Free for personal use & peer sharing • CC BY-NC-ND 4.0<br>
           <span style="font-size: 0.68rem; color: var(--text-secondary);">
             © 2026 Sun Map • Event & tour inquiries: <a href="https://sunmap.dev" target="_blank" style="color: var(--fl-teal); text-decoration: underline;">sunmap.dev</a>
