@@ -1394,9 +1394,12 @@ class EatsMapApp {
           ${this.getQRCardHTML('qr-canvas-about')}
         </div>
 
-        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 14px; text-align: center; line-height: 1.4;">
-          <strong>Open Source & Local First</strong><br>
-          Designed with Sun Map layout specs • MIT License
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 14px; text-align: center; line-height: 1.45;">
+          <strong style="color: var(--fl-yellow);">☀️ Made by fans, purely for fans</strong><br>
+          Free for personal use & peer sharing • CC BY-NC-ND 4.0<br>
+          <span style="font-size: 0.68rem; color: var(--text-secondary);">
+            © 2026 Sun Map • Event & tour inquiries: <a href="https://sunmap.dev" target="_blank" style="color: var(--fl-teal); text-decoration: underline;">sunmap.dev</a>
+          </span>
         </div>
       </div>
     `;
