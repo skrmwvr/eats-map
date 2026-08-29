@@ -756,10 +756,46 @@ body {
 .booth-badge {
   background: linear-gradient(135deg, var(--fl-orange), var(--fl-pink));
   color: #fff;
-  font-weight: 800;
-  font-size: 0.7rem;
-  padding: 2px 7px;
-  border-radius: var(--radius-sm);
+  font-weight: 900;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  padding: 5px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(255, 94, 54, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.booth-badge:hover, .booth-badge:active {
+  transform: translateY(-1px) scale(1.03);
+  box-shadow: 0 4px 14px rgba(255, 94, 54, 0.6);
+  border-color: #fff;
+}
+
+/* Zone Specific Color Coding */
+.booth-badge.zone-latin {
+  background: linear-gradient(135deg, #ff5e36, #ff9f1c);
+  box-shadow: 0 2px 8px rgba(255, 94, 54, 0.4);
+}
+
+.booth-badge.zone-sweet {
+  background: linear-gradient(135deg, #ff2a6d, #b5179e);
+  box-shadow: 0 2px 8px rgba(255, 42, 109, 0.4);
+}
+
+.booth-badge.zone-asian {
+  background: linear-gradient(135deg, #05d9e8, #0077b6);
+  box-shadow: 0 2px 8px rgba(5, 217, 232, 0.4);
+}
+
+.booth-badge.zone-smokehouse {
+  background: linear-gradient(135deg, #e63946, #9d0208);
+  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.4);
 }
 
 .allergen-warning-tag {

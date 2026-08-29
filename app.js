@@ -811,9 +811,13 @@ class EatsMapApp {
       allergenLine = '<div class="allergen-warning-tag" style="margin-top: 6px;">⚠️ Contains your flagged: <strong>' + flagged.join(', ') + '</strong></div>';
     }
 
+    const zoneClass = this.getZoneBadgeClass(dish.vendorZone);
+
     content.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="booth-badge">${dish.vendorBooth} • ${dish.vendorZone}</span>
+        <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${dish.vendorId}', event)" title="Tap to locate Booth ${dish.vendorBooth} on the grounds map">
+          📍 <strong>Booth ${dish.vendorBooth}</strong> • ${dish.vendorZone} <span style="font-size:0.75rem; opacity:0.85;">(Map →)</span>
+        </span>
         <button class="modal-close-btn">✕</button>
       </div>
       <div>
@@ -836,7 +840,7 @@ class EatsMapApp {
       </div>
 
       <div style="display: flex; gap: 8px; margin-top: 6px;">
-        <button class="chip-btn ${isWishlisted ? 'active' : ''}" style="flex: 1; padding: 10px; font-weight: bold;" onclick="window.app.toggleWishlist('${dish.id}')">
+        <button class="chip-btn ${isWishlisted ? 'active' : ''}" data-wishlist-dish-id="${dish.id}" style="flex: 1; padding: 10px; font-weight: bold;" onclick="window.app.toggleWishlist('${dish.id}')">
           ${isWishlisted ? '✓ Saved in Tasting Wishlist' : '+ Add to Tasting Wishlist'}
         </button>
         <button class="chip-btn" style="padding: 10px 14px;" onclick="window.app.openVendorById('${dish.vendorId}')">
@@ -1026,6 +1030,7 @@ class EatsMapApp {
 
     filtered.forEach(vendor => {
       const preview = (vendor.menu || []).slice(0, 2);
+      const zoneClass = this.getZoneBadgeClass(vendor.zone);
       html += `
         <div class="vendor-card" onclick="window.app.openVendorById('${vendor.id}')">
           <div class="vendor-card-header">
@@ -1033,7 +1038,9 @@ class EatsMapApp {
               <strong style="color: #fff; font-size: 0.98rem;">${vendor.name}</strong>
               <div style="font-size: 0.72rem; color: var(--fl-teal);">${vendor.cuisine} • ${vendor.zone}</div>
             </div>
-            <span class="booth-badge">${vendor.booth_number}</span>
+            <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${vendor.id}', event)" title="Tap to locate Booth ${vendor.booth_number} on the grounds map">
+              📍 ${vendor.booth_number}
+            </span>
           </div>
           <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35; margin: 4px 0 6px;">${vendor.story ? vendor.story.claim_to_fame : ''}</p>
           <div style="border-top: 1px dashed var(--border-color); padding-top: 6px;">
@@ -1438,6 +1445,28 @@ class EatsMapApp {
     }
   }
 
+  getZoneBadgeClass(zone = '') {
+    const z = (zone || '').toLowerCase();
+    if (z.includes('latin') || z.includes('chamoy')) return 'zone-latin';
+    if (z.includes('sweet') || z.includes('dessert')) return 'zone-sweet';
+    if (z.includes('asian')) return 'zone-asian';
+    if (z.includes('smoke') || z.includes('chicken') || z.includes('bbq')) return 'zone-smokehouse';
+    return '';
+  }
+
+  highlightBoothOnMap(vendorId, event) {
+    if (event) {
+      event.stopPropagation(); // Don't trigger outer card click if tapping badge
+    }
+    this.closeModal();
+    this.switchViewport('map');
+    setTimeout(() => {
+      if (this.mapManager) {
+        this.mapManager.focusOnVendorWaypoint(vendorId);
+      }
+    }, 150);
+  }
+
   openVendorById(vendorId) {
     const vendor = this.vendors.find(v => v.id === vendorId);
     if (vendor) this.openVendorModal(vendor);
@@ -1465,17 +1494,21 @@ class EatsMapApp {
           ${dish.pairings ? '<div style="font-size: 0.72rem; color: var(--text-muted);"><strong>Pairs With:</strong> ' + dish.pairings + '</div>' : ''}
           ${flagged.length > 0 ? '<div class="allergen-warning-tag" style="margin-top: 4px;">⚠️ Flagged Ingredient: <strong>' + flagged.join(', ') + '</strong></div>' : ''}
           <div style="margin-top: 8px;">
-            <button class="chip-btn ${isWishlisted ? 'active' : ''}" style="width: 100%; padding: 6px;" onclick="window.app.toggleWishlist('${dish.id}')">
-              ${isWishlisted ? '✓ Saved in Wishlist' : '+ Add to Wishlist'}
+            <button class="chip-btn ${isWishlisted ? 'active' : ''}" data-wishlist-dish-id="${dish.id}" style="width: 100%; padding: 8px; font-weight: bold;" onclick="window.app.toggleWishlist('${dish.id}')">
+              ${isWishlisted ? '✓ Saved in Tasting Wishlist' : '+ Add to Tasting Wishlist'}
             </button>
           </div>
         </div>
       `;
     });
 
+    const zoneClass = this.getZoneBadgeClass(vendor.zone);
+
     content.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="booth-badge">${vendor.booth_number} • ${vendor.zone}</span>
+        <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${vendor.id}', event)" title="Tap to locate Booth ${vendor.booth_number} on the grounds map">
+          📍 <strong>Booth ${vendor.booth_number}</strong> • ${vendor.zone} <span style="font-size:0.75rem; opacity:0.85;">(Map →)</span>
+        </span>
         <button class="modal-close-btn">✕</button>
       </div>
       <div>
@@ -1502,15 +1535,33 @@ class EatsMapApp {
   }
 
   toggleWishlist(dishId) {
+    let added = false;
     if (this.wishlist.includes(dishId)) {
       this.wishlist = this.wishlist.filter(id => id !== dishId);
+      added = false;
     } else {
       this.wishlist.push(dishId);
+      added = true;
     }
     localStorage.setItem('eatsmap_wishlist', JSON.stringify(this.wishlist));
     this.updateWishlistBadge();
     
-    if (this.activeViewport === 'home' || this.activeViewport === 'passport') {
+    // Update button inside active modal if one is currently open
+    const modal = document.getElementById('detail-modal');
+    if (modal && modal.classList.contains('active')) {
+      const modalBtn = modal.querySelector(`[data-wishlist-dish-id="${dishId}"]`);
+      if (modalBtn) {
+        if (added) {
+          modalBtn.className = 'chip-btn active';
+          modalBtn.textContent = '✓ Saved in Tasting Wishlist';
+        } else {
+          modalBtn.className = 'chip-btn';
+          modalBtn.textContent = '+ Add to Tasting Wishlist';
+        }
+      }
+    }
+
+    if (this.activeViewport === 'home' || this.activeViewport === 'passport' || this.activeViewport === 'booths') {
       this.renderActiveViewport();
     }
   }

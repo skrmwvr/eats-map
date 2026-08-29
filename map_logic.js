@@ -61,7 +61,12 @@ class MapManager {
               <button style="margin-top:6px; background:#ff5e36; color:#fff; border:none; border-radius:4px; padding:4px 8px; font-size:0.75rem; cursor:pointer; font-weight:bold;" onclick="window.app.openVendorById('${vendor.id}')">View Menu & Bio →</button>
             </div>
           `);
-          this.vendorMarkers.push(marker);
+          this.vendorMarkers.push({
+            vendorId: vendor.id,
+            lat: vendor.coordinates.lat,
+            lng: vendor.coordinates.lng,
+            marker: marker
+          });
         }
       });
     }
@@ -158,6 +163,18 @@ class MapManager {
     }
   }
 
+  focusOnVendorWaypoint(vendorId) {
+    if (!this.map) return;
+    const markerObj = this.vendorMarkers.find(m => m.vendorId === vendorId);
+    if (markerObj) {
+      this.map.setView([markerObj.lat, markerObj.lng], 19, { animate: true });
+      setTimeout(() => {
+        markerObj.marker.openPopup();
+        this.highlightBullseye([markerObj.lat, markerObj.lng]);
+      }, 150);
+    }
+  }
+
   startTracking() {
     if (navigator.geolocation) {
       this.watchId = navigator.geolocation.watchPosition(
@@ -188,8 +205,13 @@ class MapManager {
   }
 
   clearMarkers() {
-    this.vendorMarkers.forEach(m => this.map.removeLayer(m));
-    this.amenityMarkers.forEach(m => this.map.removeLayer(m));
+    this.vendorMarkers.forEach(m => {
+      const layer = m.marker || m;
+      if (this.map.hasLayer(layer)) this.map.removeLayer(layer);
+    });
+    this.amenityMarkers.forEach(m => {
+      if (this.map.hasLayer(m)) this.map.removeLayer(m);
+    });
     this.vendorMarkers = [];
     this.amenityMarkers = [];
     if (this.bullseyeLayerGroup) {
