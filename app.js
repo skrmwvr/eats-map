@@ -1503,49 +1503,78 @@ class EatsMapApp {
   drawShareQRCode(canvasId, targetSize = 180) {
     const canvas = document.getElementById(canvasId);
     if (!canvas) return;
+
+    // Use live URL where the app is running (or fallback to production target)
+    let shareUrl = window.location.href;
+    if (shareUrl.startsWith('file:') || shareUrl.includes('localhost') || shareUrl.includes('127.0.0.1')) {
+      // If local dev or file, embed direct current origin or target production domain
+      shareUrl = window.location.origin && window.location.origin !== 'null' ? window.location.origin + window.location.pathname : 'https://sunmap.dev/eats/foodieland';
+    }
+
+    // If QRCode library is available, generate real scannable QR matrix on canvas
+    if (typeof QRCode !== 'undefined' && QRCode.toCanvas) {
+      QRCode.toCanvas(canvas, shareUrl, {
+        width: targetSize,
+        margin: 2,
+        color: {
+          dark: '#10121a',
+          light: '#ffffff'
+        }
+      }, (err) => {
+        if (err) console.error('QR code render error:', err);
+      });
+      return;
+    }
+
+    // Native reliable fallback QR rendering on standard 2D canvas
+    if (typeof QRCode !== 'undefined') {
+      try {
+        const tempDiv = document.createElement('div');
+        new QRCode(tempDiv, {
+          text: shareUrl,
+          width: targetSize,
+          height: targetSize,
+          colorDark: '#10121a',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+        setTimeout(() => {
+          const img = tempDiv.querySelector('img') || tempDiv.querySelector('canvas');
+          if (img) {
+            const ctx = canvas.getContext('2d');
+            canvas.width = targetSize;
+            canvas.height = targetSize;
+            ctx.drawImage(img, 0, 0, targetSize, targetSize);
+          }
+        }, 30);
+        return;
+      } catch (e) {
+        console.warn('QRCode fallback:', e);
+      }
+    }
+
+    // Geometric pattern fallback
     const ctx = canvas.getContext('2d');
     const size = targetSize;
     canvas.width = size;
     canvas.height = size;
-
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, size, size);
-
     ctx.fillStyle = '#10121a';
     const finderSize = Math.max(16, Math.floor(size * 0.25));
     const padding = Math.max(4, Math.floor(size * 0.05));
-
     this.drawFinderPattern(ctx, padding, padding, finderSize);
     this.drawFinderPattern(ctx, size - finderSize - padding, padding, finderSize);
     this.drawFinderPattern(ctx, padding, size - finderSize - padding, finderSize);
-
-    const blockSize = Math.max(3, Math.floor(size / 36));
-    const numBlocks = Math.floor(size / blockSize);
-
-    for (let x = 0; x < numBlocks; x++) {
-      for (let y = 0; y < numBlocks; y++) {
-        const isTopLeft = (x < 12 && y < 12);
-        const isTopRight = (x > numBlocks - 13 && y < 12);
-        const isBottomLeft = (x < 12 && y > numBlocks - 13);
-        
-        if (!isTopLeft && !isTopRight && !isBottomLeft) {
-          const seed = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
-          const rand = seed - Math.floor(seed);
-          if (rand > 0.46) {
-            ctx.fillRect(x * blockSize, y * blockSize, blockSize, blockSize);
-          }
-        }
-      }
-    }
   }
 
   drawFinderPattern(ctx, x, y, size) {
     ctx.fillStyle = '#10121a';
     ctx.fillRect(x, y, size, size);
     ctx.fillStyle = '#ffffff';
-    ctx.fillRect(x + 6, y + 6, size - 12, size - 12);
+    ctx.fillRect(x + 4, y + 4, size - 8, size - 8);
     ctx.fillStyle = '#10121a';
-    ctx.fillRect(x + 12, y + 12, size - 24, size - 24);
+    ctx.fillRect(x + 8, y + 8, size - 16, size - 16);
   }
 }
 
