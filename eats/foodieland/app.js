@@ -950,7 +950,7 @@ class EatsMapApp {
           ${itemFlagged.length > 0 ? '<div class="allergen-warning-tag" style="margin-bottom:8px;">⚠️ Contains: <strong>' + itemFlagged.join(', ') + '</strong></div>' : ''}
           <div style="margin-top:4px; display:flex; justify-content:space-between; align-items:center;">
             <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${d.vendorId}', event)" title="Locate on Map">
-              📍 Booth ${d.vendorBooth}
+              Booth ${d.vendorBooth}
             </span>
             <span style="font-size:0.75rem; color:var(--fl-orange); font-weight:800;">${inWish ? '✓ In Wishlist' : 'Card →'}</span>
           </div>
@@ -1005,7 +1005,7 @@ class EatsMapApp {
     content.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${dish.vendorId}', event)" title="Tap to locate Booth ${dish.vendorBooth} on the grounds map">
-          📍 <strong>Booth ${dish.vendorBooth}</strong> • ${dish.vendorZone} <span style="font-size:0.75rem; opacity:0.85;">(Map →)</span>
+          <strong>Booth ${dish.vendorBooth}</strong> • ${dish.vendorZone} <span style="font-size:0.78rem; opacity:0.9;">(Map →)</span>
         </span>
         <button class="modal-close-btn">✕</button>
       </div>
@@ -1247,7 +1247,7 @@ class EatsMapApp {
               <div style="font-size: 0.82rem; color: var(--fl-teal); font-weight: 600; margin-top: 2px;">${vendor.cuisine} • ${vendor.zone}</div>
             </div>
             <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${vendor.id}', event)" title="Tap to locate Booth ${vendor.booth_number} on the grounds map" style="white-space: nowrap; flex-shrink: 0; min-width: 90px; text-align: center; justify-content: center; font-size: 0.88rem; padding: 6px 12px;">
-              📍 Booth ${vendor.booth_number}
+              Booth ${vendor.booth_number}
             </span>
           </div>
           <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35; margin: 4px 0 6px;">${vendor.story ? vendor.story.claim_to_fame : ''}</p>
@@ -1800,22 +1800,22 @@ class EatsMapApp {
     content.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${vendor.id}', event)" title="Tap to locate Booth ${vendor.booth_number} on the grounds map">
-          📍 <strong>Booth ${vendor.booth_number}</strong> • ${vendor.zone} <span style="font-size:0.75rem; opacity:0.85;">(Map →)</span>
+          <strong>Booth ${vendor.booth_number}</strong> • ${vendor.zone} <span style="font-size:0.78rem; opacity:0.9;">(Map →)</span>
         </span>
         <button class="modal-close-btn">✕</button>
       </div>
       <div>
-        <h2 style="font-family: 'Outfit'; font-size: 1.35rem; font-weight: 900; color: #fff;">${vendor.name}</h2>
-        <p style="color: var(--fl-teal); font-size: 0.8rem; font-weight: 600;">${vendor.cuisine} | From: ${vendor.story ? vendor.story.origin : ''}</p>
+        <h2 style="font-size: 1.4rem; font-weight: 900; color: #fff; letter-spacing: -0.01em;">${vendor.name}</h2>
+        <p style="color: var(--fl-teal); font-size: 0.88rem; font-weight: 700; margin-top: 2px;">${vendor.cuisine} | From: ${vendor.story ? vendor.story.origin : ''}</p>
       </div>
 
-      <div style="background: rgba(255, 94, 54, 0.08); border-left: 3px solid var(--fl-orange); padding: 8px 10px; border-radius: 4px; font-size: 0.78rem; line-height: 1.4; color: #e2e8f0;">
+      <div style="background: rgba(255, 94, 54, 0.08); border-left: 3px solid var(--fl-orange); padding: 10px 12px; border-radius: 4px; font-size: 0.84rem; line-height: 1.45; color: #e2e8f0; margin-bottom: 12px;">
         <p><strong>Chef/Team:</strong> ${vendor.story ? vendor.story.founder : ''}</p>
-        <p style="margin: 2px 0;">${vendor.story ? vendor.story.heritage : ''}</p>
+        <p style="margin: 3px 0;">${vendor.story ? vendor.story.heritage : ''}</p>
         <p style="color: var(--fl-yellow);"><strong>Acclaim:</strong> ${vendor.story ? vendor.story.claim_to_fame : ''}</p>
       </div>
 
-      <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); margin-top: 6px;">Featured Creations</h4>
+      <h4 style="font-size: 0.88rem; text-transform: uppercase; color: var(--text-secondary); margin: 12px 0 6px; font-weight: 800;">Featured Creations</h4>
       ${menuHtml}
     `;
 
