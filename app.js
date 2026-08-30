@@ -1079,7 +1079,11 @@ class EatsMapApp {
 
     let catHtml = '';
     (currentDay.featured_categories || []).forEach(cat => {
-      catHtml += `<span class="chip-btn" style="margin-right: 4px; margin-bottom: 4px; display: inline-block;">${cat}</span>`;
+      catHtml += `
+        <button class="chip-btn" style="margin-right: 6px; margin-bottom: 6px; display: inline-flex; align-items: center; gap: 4px; font-weight: 700; color: #fff; background: var(--bg-surface-elevated); border: 1px solid var(--fl-teal);" onclick="window.app.handleCategoryFocusClick('${cat}')">
+          <span>📍</span> <span>${cat} →</span>
+        </button>
+      `;
     });
 
     container.innerHTML = `
@@ -1093,15 +1097,15 @@ class EatsMapApp {
       </div>
 
       <div style="background: rgba(255, 94, 54, 0.1); border-left: 3px solid var(--fl-orange); padding: 10px; border-radius: 4px; margin-bottom: 12px;">
-        <strong style="color: var(--fl-yellow); font-size: 0.95rem; font-family: 'Outfit';">${currentDay.theme_title}</strong>
+        <strong style="color: var(--fl-yellow); font-size: 0.95rem;">${currentDay.theme_title}</strong>
         <p style="font-size: 0.78rem; color: #cbd5e1; margin-top: 2px;">${currentDay.status_line}</p>
       </div>
 
       <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">🎤 Stage Events & Contests (Tap for details / wishlist)</h4>
       ${highlightsHtml}
 
-      <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); margin: 12px 0 6px;">🥢 Active Pavilion Focus</h4>
-      <div>${catHtml}</div>
+      <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); margin: 14px 0 8px;">🥢 Active Pavilion Focus (Tap to Explore)</h4>
+      <div style="display: flex; flex-wrap: wrap;">${catHtml}</div>
 
       <!-- ABOUT & QR FOOTER AT BOTTOM OF PROGRAM -->
       <div style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 16px;">
@@ -1124,6 +1128,38 @@ class EatsMapApp {
     setTimeout(() => {
       this.drawShareQRCode('qr-canvas-program', this.qrExpanded ? 180 : 76);
     }, 50);
+  }
+
+  handleCategoryFocusClick(categoryName = '') {
+    const cat = categoryName.toLowerCase();
+    
+    // 1. Check if it references the Tasting Passport / Wishlist
+    if (cat.includes('passport') || cat.includes('wishlist') || cat.includes('crawl')) {
+      this.switchViewport('passport');
+      return;
+    }
+
+    // 2. Check if it matches a specific Cuisine Zone on the Grounds Map
+    if (cat.includes('latin') || cat.includes('chamoy')) {
+      this.openZoneGroundsMap('Latin & Chamoy Row');
+      return;
+    }
+    if (cat.includes('sweet') || cat.includes('dessert')) {
+      this.openZoneGroundsMap('Sweet Tooth Avenue');
+      return;
+    }
+    if (cat.includes('asian')) {
+      this.openZoneGroundsMap('Asian Street Market');
+      return;
+    }
+    if (cat.includes('smoke') || cat.includes('chicken') || cat.includes('bbq')) {
+      this.openZoneGroundsMap('Smokehouse Stage');
+      return;
+    }
+
+    // 3. Fallback: Search the Menu or open full booths view
+    this.searchQuery = categoryName.replace('Row', '').replace('Day', '').trim();
+    this.switchViewport('booths');
   }
 
   changeDay(delta) {
