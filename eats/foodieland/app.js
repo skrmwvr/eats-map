@@ -1421,13 +1421,15 @@ class EatsMapApp {
 
     // Trigger one-time golden flash on first visit to MENU tab
     if (isFirstVisit) {
-      const bar = document.getElementById('allergen-pref-bar');
-      if (bar) {
-        bar.classList.add('flash-attention');
-        setTimeout(() => {
-          bar.classList.remove('flash-attention');
-        }, 400);
-      }
+      setTimeout(() => {
+        const bar = document.getElementById('allergen-pref-bar');
+        if (bar) {
+          bar.classList.add('flash-attention');
+          setTimeout(() => {
+            bar.classList.remove('flash-attention');
+          }, 700);
+        }
+      }, 50);
     }
 
     const inputEl = document.getElementById('booth-search-input');
