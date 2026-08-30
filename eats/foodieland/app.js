@@ -26,6 +26,8 @@ class EatsMapApp {
     this.hasLeftHome = false; // Tracks if user navigated away from home
     this.hasInteractedAllergen = false; // Tracks if user interacted with card/banner
     this.hasFlashedHomeCard = false; // Tracks one-time return flash notice on home
+    this.timeFormat = localStorage.getItem('eatsmap_time_format') || '12h'; // '12h' or '24h'
+    this.activeMenuGenreFilter = 'All'; // Active food type filter for Menu view
   }
 
   // --- REUSABLE ALLERGEN TRACKER ACCORDION COMPONENT ---
@@ -490,7 +492,7 @@ class EatsMapApp {
 
     content.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: 'Outfit';">🔍 Set Custom Allergen / Aversion</strong>
+        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: var(--font-primary);">🔍 Set Custom Allergen / Aversion</strong>
         <button class="modal-close-btn">✕</button>
       </div>
       <div>
@@ -622,11 +624,11 @@ class EatsMapApp {
 
     content.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: 'Outfit';">⚠️ Allergen Flag Active</strong>
+        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: var(--font-primary);">⚠️ Allergen Flag Active</strong>
         <button class="modal-close-btn">✕</button>
       </div>
       <div>
-        <h3 style="font-family: 'Outfit'; font-size: 1.25rem; font-weight: 900; color: #fff; margin-bottom: 6px;">
+        <h3 style="font-family: var(--font-primary); font-size: 1.25rem; font-weight: 900; color: #fff; margin-bottom: 6px;">
           Flagged: ${allergenName}
         </h3>
         
@@ -936,7 +938,7 @@ class EatsMapApp {
     if (activeUpcomingEvents.length > 0) {
       const currentOrNext = activeUpcomingEvents.slice(0, 2);
       programCardsHtml = `
-        <div style="margin: 14px 0 16px;">
+        <div class="section-stripe-stage">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <strong style="color: var(--fl-yellow); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800;">
               🎤 Happening Today on Stage
@@ -949,7 +951,7 @@ class EatsMapApp {
             ${currentOrNext.map((ev) => `
               <div class="stage-event-card" style="margin-bottom:0; background: var(--bg-surface-elevated); border: 1px solid var(--border-color);" onclick="window.app.openStageEventModal('${ev.id}')">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <strong style="color:var(--fl-orange); font-size:0.90rem;">${ev.time}</strong>
+                  <strong style="color:var(--fl-orange); font-size:0.90rem;">${this.formatTimeStr(ev.time)}</strong>
                   <span style="font-size:0.78rem; color:var(--fl-teal); font-weight:700;">${ev.stage_name}</span>
                 </div>
                 <div style="color:#fff; font-size:0.98rem; font-weight:700; margin:4px 0 2px;">${ev.title}</div>
@@ -961,12 +963,12 @@ class EatsMapApp {
       `;
     }
 
-    // Cuisine Categories for 1-Tap Filtered Map View
+    // Cuisine Categories for 1-Tap Filtered Menu View
     const cuisineZones = [
-      { name: 'Latin & Chamoy Row', label: '🌮 Latin Row' },
-      { name: 'Sweet Tooth Avenue', label: '🍧 Sweet Tooth' },
-      { name: 'Asian Street Market', label: '🥢 Asian Street' },
-      { name: 'Smokehouse Stage', label: '🥩 Smokehouse' }
+      { name: 'Latin & Chamoy Row', label: '🌮 Latin Row', class: 'pill-latin' },
+      { name: 'Sweet Tooth Avenue', label: '🍧 Sweet Tooth', class: 'pill-sweet' },
+      { name: 'Asian Street Market', label: '🥢 Asian Street', class: 'pill-asian' },
+      { name: 'Smokehouse Stage', label: '🥩 Smokehouse', class: 'pill-bbq' }
     ];
 
     let html = `
@@ -981,11 +983,11 @@ class EatsMapApp {
         </button>
       </div>
 
-      <!-- 1-TAP CUISINE ZONE MAP LAUNCHER BUTTONS -->
-      <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 8px; scrollbar-width: none;">
+      <!-- 1-TAP CUISINE ZONE PILLS: JUMPS DIRECT TO FILTERED MENU WITH ACTIVE EFFECT -->
+      <div class="cuisine-swiper-tray">
         ${cuisineZones.map(z => `
-          <button class="cuisine-map-pill" onclick="window.app.openZoneGroundsMap('${z.name}')">
-            ${z.label} Map
+          <button class="cuisine-map-pill ${z.class}" onclick="window.app.jumpToMenuWithGenre('${z.name}')">
+            ${z.label}
           </button>
         `).join('')}
       </div>
@@ -1005,19 +1007,17 @@ class EatsMapApp {
         <span class="count-pill" style="font-size: 0.82rem; padding: 3px 10px;">${(this.avoidedAllergens || []).length + (this.customAllergen ? 1 : 0)} flagged</span>
       </div>
 
-      <!-- FEATURED CULINARY CREATIONS (SAME STYLING AS HAPPENING TODAY ON STAGE) -->
-      <div style="margin: 18px 0 10px; padding-top: 8px; border-top: 1px solid var(--border-color);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <strong style="color: var(--fl-yellow); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800;">
+      <!-- FEATURED CULINARY CREATIONS (FULL-WIDTH SCROLLING SECTION STRIPE) -->
+      <div class="section-stripe-featured">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <strong style="color: var(--fl-yellow); font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800;">
             🥢 Featured Culinary Creations (${totalCount})
           </strong>
           <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">
             Tap for Details
           </span>
         </div>
-      </div>
-
-      <div class="vendor-grid">
+        <div class="vendor-grid">
     `;
 
     this.allFeaturedDishes.forEach((d) => {
@@ -1047,7 +1047,7 @@ class EatsMapApp {
       `;
     });
 
-    html += '</div>';
+    html += '</div></div>';
     container.innerHTML = html;
 
     // Final Notice Flash on Home: Trigger if user left home AND never clicked dietary card or menu banner
@@ -1165,7 +1165,7 @@ class EatsMapApp {
       highlightsHtml += `
         <div class="stage-event-card ${isPast ? 'is-past' : ''}" onclick="window.app.openStageEventModal('${item.id}')">
           <div style="display: flex; justify-content: space-between; align-items: baseline;">
-            <strong style="color: var(--fl-orange); font-size: 0.88rem;">${item.time}</strong>
+            <strong style="color: var(--fl-orange); font-size: 0.88rem;">${this.formatTimeStr(item.time)}</strong>
             <span style="font-size: 0.72rem; color: var(--fl-teal); font-weight: 600;">
               ${isPast ? '<span class="past-badge">Concluded</span> ' : ''}${item.stage_name}
             </span>
@@ -1190,40 +1190,72 @@ class EatsMapApp {
     });
 
     container.innerHTML = `
-      <div class="day-navigator-bar">
-        <button class="day-nav-btn" ${isFirst ? 'disabled' : ''} onclick="window.app.changeDay(-1)">◀</button>
-        <div class="day-nav-label">
-          <div class="day-nav-title">${currentDay.date_str}</div>
-          <div class="day-nav-sub">${currentDay.hours}</div>
+      <!-- DEEP AMBIENT PROGRAM & PAVILION FULL-WIDTH STRIPE (NO BOX-IN-A-BOX) -->
+      <div style="margin: -20px -16px 18px; padding: 18px 16px 16px; background: linear-gradient(180deg, rgba(38, 20, 52, 0.96) 0%, rgba(20, 16, 32, 0.98) 100%); border-bottom: 1px solid rgba(255, 94, 54, 0.3);">
+        <div class="day-navigator-bar">
+          <button class="day-nav-btn" ${isFirst ? 'disabled' : ''} onclick="window.app.changeDay(-1)">◀</button>
+          <div class="day-nav-label">
+            <div class="day-nav-title">${currentDay.date_str}</div>
+            <div class="day-nav-sub">${this.formatTimeStr(currentDay.hours)}</div>
+          </div>
+          <button class="day-nav-btn" ${isLast ? 'disabled' : ''} onclick="window.app.changeDay(1)">▶</button>
         </div>
-        <button class="day-nav-btn" ${isLast ? 'disabled' : ''} onclick="window.app.changeDay(1)">▶</button>
+
+        <div style="background: rgba(255, 94, 54, 0.12); border-left: 3px solid var(--fl-orange); padding: 10px; border-radius: 4px; margin-bottom: 14px;">
+          <strong style="color: var(--fl-yellow); font-size: 0.95rem;">${currentDay.theme_title}</strong>
+          <p style="font-size: 0.78rem; color: #cbd5e1; margin-top: 2px;">${currentDay.status_line}</p>
+        </div>
+
+        <h4 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--fl-yellow); margin-bottom: 8px; font-weight: 800;">
+          🎤 Stage Events & Contests
+        </h4>
+        ${highlightsHtml}
+
+        <h4 style="font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.03em; color: var(--fl-yellow); margin: 16px 0 8px; font-weight: 800;">
+          🥢 Active Pavilion Focus
+        </h4>
+        <div style="display: flex; flex-wrap: wrap;">${catHtml}</div>
       </div>
 
-      <div style="background: rgba(255, 94, 54, 0.1); border-left: 3px solid var(--fl-orange); padding: 10px; border-radius: 4px; margin-bottom: 12px;">
-        <strong style="color: var(--fl-yellow); font-size: 0.95rem;">${currentDay.theme_title}</strong>
-        <p style="font-size: 0.78rem; color: #cbd5e1; margin-top: 2px;">${currentDay.status_line}</p>
-      </div>
-
-      <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">🎤 Stage Events & Contests (Tap for details / wishlist)</h4>
-      ${highlightsHtml}
-
-      <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-secondary); margin: 14px 0 8px;">🥢 Active Pavilion Focus (Tap to Explore)</h4>
-      <div style="display: flex; flex-wrap: wrap;">${catHtml}</div>
-
-      <!-- ABOUT & QR FOOTER AT BOTTOM OF PROGRAM -->
-      <div style="margin-top: 24px; border-top: 1px solid var(--border-color); padding-top: 16px;">
-        <h4 style="font-size: 0.82rem; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px;">☀️ Offline Companion Guide</h4>
-        <p style="font-size: 0.78rem; color: #94a3b8; line-height: 1.45; margin-bottom: 12px;">
-          Eats Map is an offline-first companion guide engineered for large town-scale food festivals. Navigate 200+ vendor booths, mark your car with live GPS, track allergen flags, and build your tasting crawl wishlist.
+      <!-- USUAL DARK BACKGROUND COMPANION & FULL ABOUT SUN MAP SECTION -->
+      <div id="program-about-section" style="border-top: 1px solid var(--border-color); padding-top: 18px; margin-top: 8px;">
+        <h4 style="font-size: 0.88rem; text-transform: uppercase; color: var(--fl-yellow); margin-bottom: 6px; font-weight: 800; letter-spacing: 0.03em;">
+          ☀️ About Sun Map
+        </h4>
+        <p style="font-size: 0.80rem; color: var(--fl-teal); font-weight: 700; margin-bottom: 10px;">
+          Eats Map by Sun Map • FoodieLand Nashville 2026
         </p>
+
+        <p style="font-size: 0.82rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 12px;">
+          <strong>Eats Map by Sun Map</strong> is a zero-download, offline-first companion-program-guide-concierge <strong>fan project</strong> celebrating a dependency shift and learning experiences.
+        </p>
+
+        <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; font-size: 0.80rem; color: #94a3b8; line-height: 1.5; margin-bottom: 14px;">
+          <strong style="color: #fff; display: block; margin-bottom: 6px; font-size: 0.84rem;">Platform Features:</strong>
+          • <strong>Interactive Grounds Map & Venue Overview</strong>: Fast visual dish browse & offline vector layout<br>
+          • <strong>Culinary Profiles</strong>: Detailed dish profiles, flavor notes & allergen checks<br>
+          • <strong>3-Day Program</strong>: Shift between festival dates with stage events & pavilion highlights<br>
+          • <strong>Synced Car Marker</strong>: Real GPS tracking that alerts on permission status<br>
+          • <strong>Allergen Highlighting</strong>: In-line warnings without hiding food options
+        </div>
+
+        <div style="margin-bottom: 14px;">
+          <a href="../index.html" style="display: inline-flex; align-items: center; gap: 6px; background: var(--bg-surface-elevated); border: 1px solid var(--fl-teal); border-radius: var(--radius-sm); padding: 8px 12px; color: #fff; font-size: 0.78rem; font-weight: 700; text-decoration: none;">
+            <span>🥢 Explore All Festival Guides & Leave Feedback</span> <span style="color: var(--fl-teal);">(/eats/ →)</span>
+          </a>
+        </div>
 
         <!-- Dynamic Inline Tap-to-Expand QR Card -->
         <div class="qr-footer-card" id="program-qr-card" onclick="window.app.toggleQRExpansion('program-qr-card', 'qr-canvas-program')">
           ${this.getQRCardHTML('qr-canvas-program')}
         </div>
 
-        <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 10px; text-align: center;">
-          Built for FoodieLand Nashville 2026 • Open Companion Architecture
+        <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 14px; text-align: center; line-height: 1.45;">
+          <span style="color: var(--fl-yellow); font-weight: 400;">☀️ Crafted by <s style="font-weight: 300; opacity: 0.65; color: #94a3b8; text-decoration: line-through;">fans</s> <strong style="color: #ffffff; font-weight: 800;">foodies</strong>, free, for the love of the <s style="font-weight: 300; opacity: 0.65; color: #94a3b8; text-decoration: line-through;">show</s> <strong style="color: #ffffff; font-weight: 800;">grub</strong>.</span><br>
+          Free for personal use & peer sharing • CC BY-NC-ND 4.0<br>
+          <span style="font-size: 0.68rem; color: var(--text-secondary);">
+            © 2026 Sun Map • Event & tour inquiries: <a href="https://sunmap.dev" target="_blank" style="color: var(--fl-teal); text-decoration: underline;">sunmap.dev</a>
+          </span>
         </div>
       </div>
     `;
@@ -1296,11 +1328,11 @@ class EatsMapApp {
 
     content.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span class="booth-badge">${foundEvent.time} • ${foundEvent.stage_name}</span>
+        <span class="booth-badge">${this.formatTimeStr(foundEvent.time)} • ${foundEvent.stage_name}</span>
         <button class="modal-close-btn">✕</button>
       </div>
       <div>
-        <h2 style="font-family: 'Outfit'; font-size: 1.35rem; font-weight: 900; color: #fff;">${foundEvent.title}</h2>
+        <h2 style="font-family: var(--font-primary); font-size: 1.35rem; font-weight: 900; color: #fff;">${foundEvent.title}</h2>
         <p style="color: var(--fl-teal); font-size: 0.82rem; font-weight: 600;">Featuring: ${foundEvent.performer}</p>
         <p style="color: var(--text-secondary); font-size: 0.75rem;">${foundDay ? foundDay.date_str : ''}</p>
       </div>
@@ -1322,23 +1354,56 @@ class EatsMapApp {
     modal.classList.add('active');
   }
 
+  jumpToMenuWithGenre(genreName) {
+    this.activeMenuGenreFilter = genreName;
+    this.searchQuery = '';
+    this.switchViewport('booths');
+  }
+
+  setMenuGenreFilter(genre) {
+    this.activeMenuGenreFilter = genre;
+    this.renderBoothsView(document.getElementById('main-viewport'));
+  }
+
   renderBoothsView(container) {
     const isFirstVisit = !this.hasVisitedMenu;
     if (isFirstVisit) {
       this.hasVisitedMenu = true;
     }
 
+    const genres = [
+      { name: 'All', label: '✨ All Foods', class: '' },
+      { name: 'Latin & Chamoy Row', label: '🌮 Latin & Chamoy', class: 'genre-latin' },
+      { name: 'Sweet Tooth Avenue', label: '🍧 Sweet Tooth', class: 'genre-sweet' },
+      { name: 'Asian Street Market', label: '🥢 Asian Street', class: 'genre-asian' },
+      { name: 'Smokehouse Stage', label: '🥩 Smokehouse & BBQ', class: 'genre-bbq' }
+    ];
+
     let html = `
       <!-- STICKY TOP DIETARY & ALLERGEN TRACKER BAR (LOCKED TO TOP OF MENU VIEWPORT) -->
       ${this.getAllergenBarHTML(true)}
 
-      <div style="margin-bottom: 12px; margin-top: 10px;">
-        <input type="text" id="booth-search-input" value="${this.searchQuery}" placeholder="Search dishes, chefs, or ingredients..." style="width: 100%; background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px 14px; color: #fff; font-size: 0.88rem; outline: none;">
+      <!-- COLORFUL FOOD GENRE FILTER CHIPS AT TOP -->
+      <div class="menu-genre-tray">
+        ${genres.map(g => `
+          <button class="menu-genre-chip ${g.class} ${this.activeMenuGenreFilter === g.name ? 'active' : ''}" onclick="window.app.setMenuGenreFilter('${g.name}')">
+            ${g.label}
+          </button>
+        `).join('')}
       </div>
+
       <div class="vendor-grid">
     `;
 
     const filtered = (this.vendors || []).filter(v => {
+      // 1. Filter by Food Genre / Zone
+      if (this.activeMenuGenreFilter && this.activeMenuGenreFilter !== 'All') {
+        const matchesZone = v.zone === this.activeMenuGenreFilter;
+        const matchesCuisine = (v.cuisine || '').toLowerCase().includes(this.activeMenuGenreFilter.toLowerCase());
+        if (!matchesZone && !matchesCuisine) return false;
+      }
+
+      // 2. Filter by Search Query
       if (!this.searchQuery) return true;
       const q = this.searchQuery.toLowerCase();
       const matchName = v.name.toLowerCase().includes(q);
@@ -1346,6 +1411,19 @@ class EatsMapApp {
       const matchDishes = (v.menu || []).some(m => m.name.toLowerCase().includes(q) || (m.description || '').toLowerCase().includes(q));
       return matchName || matchCuisine || matchDishes;
     });
+
+    if (filtered.length === 0) {
+      html += `
+        <div style="text-align: center; padding: 40px 10px; color: var(--text-muted);">
+          <p style="font-size: 2rem; margin-bottom: 8px;">🔍</p>
+          <strong style="color: #fff; font-size: 1rem; display: block; margin-bottom: 4px;">No booths found</strong>
+          <p style="font-size: 0.82rem;">Try adjusting your genre filter or clearing your search term.</p>
+          <button class="chip-btn" style="margin-top: 12px; padding: 8px 16px; font-weight: 700; color: var(--fl-yellow);" onclick="window.app.setMenuGenreFilter('All'); document.getElementById('booth-search-input').value=''; window.app.searchQuery=''; window.app.renderBoothsView(document.getElementById('main-viewport'));">
+            Reset Filters
+          </button>
+        </div>
+      `;
+    }
 
     filtered.forEach(vendor => {
       const preview = (vendor.menu || []).slice(0, 2);
@@ -1379,6 +1457,17 @@ class EatsMapApp {
     });
 
     html += '</div>';
+
+    // PINNED STICKY BOTTOM SEARCH BAR
+    html += `
+      <div class="menu-bottom-search-wrapper">
+        <div style="position: relative; width: 100%;">
+          <span style="position: absolute; left: 12px; top: 11px; font-size: 0.92rem; color: var(--text-muted); pointer-events: none;">🔍</span>
+          <input type="text" id="booth-search-input" class="menu-bottom-search-input" value="${this.searchQuery}" placeholder="Search 200+ dishes, chefs, or ingredients...">
+        </div>
+      </div>
+    `;
+
     container.innerHTML = html;
 
     // Attach allergen chips listener inside the newly injected sticky bar
@@ -1420,12 +1509,41 @@ class EatsMapApp {
     }
   }
 
+  toggleTimeFormat() {
+    this.timeFormat = this.timeFormat === '12h' ? '24h' : '12h';
+    localStorage.setItem('eatsmap_time_format', this.timeFormat);
+    if (this.activeViewport === 'weather') {
+      this.renderWeatherView(document.getElementById('main-viewport'));
+    } else if (this.activeViewport === 'program') {
+      this.renderProgramView(document.getElementById('main-viewport'));
+    } else if (this.activeViewport === 'home') {
+      this.renderHomeView(document.getElementById('main-viewport'));
+    }
+  }
+
   formatTemp(f) {
     if (this.tempUnit === 'C') {
       const c = Math.round((f - 32) * (5 / 9));
       return `${c}°C`;
     }
     return `${f}°F`;
+  }
+
+  formatTimeStr(timeStr) {
+    if (!timeStr || this.timeFormat === '12h') return timeStr;
+    try {
+      // Replaces all occurrences of 12h times (e.g. 4:00 PM or 11:30 AM) with 24h format (e.g. 16:00, 11:30)
+      return timeStr.replace(/(\d{1,2}):(\d{2})\s*(AM|PM)/gi, (match, h, m, ampm) => {
+        let hours = parseInt(h, 10);
+        const p = ampm.toUpperCase();
+        if (p === 'PM' && hours < 12) hours += 12;
+        if (p === 'AM' && hours === 12) hours = 0;
+        const hh = hours < 10 ? '0' + hours : hours;
+        return `${hh}:${m}`;
+      });
+    } catch (e) {
+      return timeStr;
+    }
   }
 
   getWeatherIcon(conditions = '') {
@@ -1443,13 +1561,19 @@ class EatsMapApp {
     const days = (this.venue && this.venue.days) ? this.venue.days : [];
     container.innerHTML = `
       <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2px;">
-          <h2 style="color: #fff; font-size: 1.4rem; font-weight: 900; font-family: 'Outfit'; margin: 0; letter-spacing: -0.01em;">
+        <!-- Single Row Header: Title on Left, Dual Square Unit Toggles on Right -->
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 2px;">
+          <h2 style="color: #fff; font-size: 1.15rem; font-weight: 900; margin: 0; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1;">
             🌤️ FoodieLand 3-Day Forecast
           </h2>
-          <button class="temp-unit-toggle" onclick="window.app.toggleTempUnit()" title="Click to switch between Fahrenheit and Celsius">
-            °${this.tempUnit}
-          </button>
+          <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+            <button class="temp-unit-toggle" onclick="window.app.toggleTimeFormat()" title="Switch between 12-hour and 24-hour time">
+              ${this.timeFormat}
+            </button>
+            <button class="temp-unit-toggle" onclick="window.app.toggleTempUnit()" title="Switch between Fahrenheit and Celsius">
+              °${this.tempUnit}
+            </button>
+          </div>
         </div>
         <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 14px;">
           Nashville Superspeedway • Lebanon, TN
@@ -1467,7 +1591,7 @@ class EatsMapApp {
                 <span style="color: var(--fl-yellow); font-size: 0.78rem; font-weight: 600;">${icon} ${cond}</span>
               </div>
               <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.76rem;">
-                <span style="color: var(--text-secondary); font-size: 0.72rem;">${d.hours} • <span style="color: var(--fl-teal); font-weight: 700;">View Program →</span></span>
+                <span style="color: var(--text-secondary); font-size: 0.72rem;">${this.formatTimeStr(d.hours)} • <span style="color: var(--fl-teal); font-weight: 700;">View Program →</span></span>
                 <span style="font-weight: 800; font-size: 0.8rem; white-space: nowrap;">
                   <span style="color: var(--fl-yellow);">${this.formatTemp(afternoonF)} day</span>
                   <span style="color: var(--text-muted); margin: 0 4px;">•</span>
@@ -1494,13 +1618,58 @@ class EatsMapApp {
           </p>
         </div>
 
-        <!-- Weather Source & Recent Update Footer -->
+        <!-- Weather Source & Recent Update Footer (Tap to Refresh) -->
         <div style="margin-top: 14px; border-top: 1px solid var(--border-color); padding-top: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 0.7rem; color: var(--text-muted);">
-          <span>📡 Source: <strong>NOAA / National Weather Service (Nashville, TN)</strong></span>
-          <span style="color: var(--fl-teal);">Updated Aug 27, 12:00 PM CDT</span>
+          <span>📡 Source: <strong>NOAA / NWS (Nashville)</strong></span>
+          <button id="btn-weather-refresh" onclick="window.app.refreshWeatherData()" style="background: transparent; border: 1px dashed rgba(0, 240, 144, 0.4); border-radius: 4px; padding: 2px 6px; color: var(--fl-teal); font-size: 0.7rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 4px;" title="Tap to refresh live forecast">
+            <span class="refresh-spinner-icon">🔄</span>
+            <span id="weather-last-updated-text">Updated ${this.weatherUpdatedStr || this.formatTimeStr('Aug 27, 12:00 PM CDT')}</span>
+          </button>
         </div>
       </div>
     `;
+  }
+
+  refreshWeatherData() {
+    const btn = document.getElementById('btn-weather-refresh');
+    const textEl = document.getElementById('weather-last-updated-text');
+    if (btn) {
+      btn.style.opacity = '0.7';
+      btn.style.pointerEvents = 'none';
+    }
+    
+    // Format live current time
+    const now = new Date();
+    const hours24 = now.getHours();
+    const minutes = (now.getMinutes() < 10 ? '0' : '') + now.getMinutes();
+    let timeFormatted = '';
+    if (this.timeFormat === '24h') {
+      timeFormatted = `${hours24 < 10 ? '0' + hours24 : hours24}:${minutes} CDT`;
+    } else {
+      const ampm = hours24 >= 12 ? 'PM' : 'AM';
+      const hours12 = hours24 % 12 || 12;
+      timeFormatted = `${hours12}:${minutes} ${ampm} CDT`;
+    }
+    
+    setTimeout(() => {
+      this.weatherUpdatedStr = `Just now, ${timeFormatted}`;
+      if (textEl) {
+        textEl.textContent = `Updated ${this.weatherUpdatedStr}`;
+      }
+      this.updateTopBarStatus();
+      if (btn) {
+        btn.style.opacity = '1';
+        btn.style.pointerEvents = 'auto';
+        btn.style.borderColor = 'var(--fl-green)';
+        btn.style.color = 'var(--fl-green)';
+        setTimeout(() => {
+          if (btn) {
+            btn.style.borderColor = 'rgba(0, 240, 144, 0.4)';
+            btn.style.color = 'var(--fl-teal)';
+          }
+        }, 1200);
+      }
+    }, 300);
   }
 
   openTodaysProgram() {
@@ -1539,7 +1708,7 @@ class EatsMapApp {
         <button class="modal-close-btn">✕</button>
       </div>
       <div>
-        <h2 style="font-family: 'Outfit'; font-size: 1.35rem; font-weight: 900; color: #fff; margin: 4px 0 2px;">Medical & First Aid Station</h2>
+        <h2 style="font-family: var(--font-primary); font-size: 1.35rem; font-weight: 900; color: #fff; margin: 4px 0 2px;">Medical & First Aid Station</h2>
         <p style="color: var(--fl-pink); font-size: 0.85rem; font-weight: 600; margin-bottom: 8px;">Main Concourse Gate 1 • Sun Relief & EMS</p>
       </div>
 
@@ -1566,32 +1735,125 @@ class EatsMapApp {
     const v = this.venue || {};
     const u = v.utility || {};
     container.innerHTML = `
-      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px;">
-        <h3 style="color: #fff; font-size: 1.35rem; font-weight: 900; margin-bottom: 4px;">🏟️ ${v.name || 'Nashville Superspeedway'}</h3>
-        <p style="font-size: 0.88rem; color: var(--fl-teal); font-weight: 700; margin-bottom: 14px;">${v.address || '400 Victory Ln Dr, Lebanon, TN'}</p>
-        
-        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; line-height: 1.45;">
-          <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-green);">
-            <strong>🚗 Parking:</strong> ${u.parking_info || 'Free on-site parking'}
+      <div style="position: relative; width: 100%; min-height: 100%; margin: -20px -16px -36px; padding: 20px 16px 36px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <!-- PASSIVE SPEEDWAY OVERVIEW MAP (NO GPS CALLS, STATIC BACKGROUND) -->
+        <div id="venue-passive-map" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: auto;"></div>
+
+        <!-- VENUE INFO MODAL SHEET (Tapping backdrop dismisses to explore passive map) -->
+        <div id="venue-card-sheet" style="position: relative; z-index: 10; width: 100%; max-width: 500px; background: rgba(19, 21, 31, 0.94); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px; box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7); transition: transform 0.3s ease, opacity 0.3s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px;">
+            <div>
+              <h3 style="color: #fff; font-size: 1.35rem; font-weight: 900; margin: 0;">🏟️ ${v.name || 'Nashville Superspeedway'}</h3>
+              <p style="font-size: 0.88rem; color: var(--fl-teal); font-weight: 700; margin: 2px 0 12px;">${v.address || '400 Victory Ln Dr, Lebanon, TN'}</p>
+            </div>
+            <button onclick="window.app.dismissVenueCard()" style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); color: #cbd5e1; border-radius: var(--radius-full); width: 30px; height: 30px; font-size: 1rem; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center;" title="View background overview map">
+              ✕
+            </button>
           </div>
-          <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-orange);">
-            <strong>🎟️ Tickets:</strong> ${u.ticket_policy || 'Advance online purchase required.'}
+          
+          <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; line-height: 1.45;">
+            <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-green);">
+              <strong>🚗 Parking:</strong> ${u.parking_info || 'Free on-site parking'}
+            </div>
+            <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-orange);">
+              <strong>🎟️ Tickets:</strong> ${u.ticket_policy || 'Advance online purchase required.'}
+            </div>
+            <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-yellow);">
+              <strong>🎒 Bag Policy:</strong> ${u.bag_policy || 'Clear bags recommended.'}
+            </div>
+            <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-pink);">
+              <strong>🐾 Pets:</strong> ${u.pet_policy || 'Service animals only.'}
+            </div>
           </div>
-          <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-yellow);">
-            <strong>🎒 Bag Policy:</strong> ${u.bag_policy || 'Clear bags recommended.'}
-          </div>
-          <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-pink);">
-            <strong>🐾 Pets:</strong> ${u.pet_policy || 'Service animals only.'}
+
+          <div style="margin-top: 16px; display: flex; gap: 8px;">
+            <button class="action-share-btn" style="flex: 1; padding: 10px; font-size: 0.88rem; font-weight: 800;" onclick="window.app.switchViewport('map')">
+              🗺️ Grounds GPS Map
+            </button>
+            <button class="chip-btn" style="padding: 10px 14px; font-size: 0.88rem; font-weight: 700; color: #fff; background: var(--bg-surface-elevated); border: 1px solid var(--fl-teal);" onclick="window.app.dismissVenueCard()">
+              View Overview
+            </button>
           </div>
         </div>
 
-        <div style="margin-top: 18px;">
-          <button class="action-share-btn" style="width: 100%; padding: 12px; font-size: 0.92rem; font-weight: 800;" onclick="window.app.switchViewport('map')">
-            🗺️ Open Interactive Grounds GPS Map
-          </button>
-        </div>
+        <!-- Float Pill to re-open Info Sheet when exploring passive map -->
+        <button id="venue-reopen-pill" onclick="window.app.restoreVenueCard()" style="display: none; position: absolute; bottom: 20px; z-index: 20; background: rgba(19, 21, 31, 0.94); border: 1px solid var(--fl-yellow); border-radius: var(--radius-full); padding: 8px 18px; color: #fff; font-size: 0.85rem; font-weight: 800; box-shadow: 0 4px 16px rgba(0,0,0,0.6); cursor: pointer;">
+          🏟️ Venue Policies & Info
+        </button>
       </div>
     `;
+
+    setTimeout(() => {
+      this.initPassiveOverviewMap();
+    }, 60);
+  }
+
+  dismissVenueCard() {
+    const card = document.getElementById('venue-card-sheet');
+    const pill = document.getElementById('venue-reopen-pill');
+    if (card) card.style.display = 'none';
+    if (pill) pill.style.display = 'block';
+  }
+
+  restoreVenueCard() {
+    const card = document.getElementById('venue-card-sheet');
+    const pill = document.getElementById('venue-reopen-pill');
+    if (card) card.style.display = 'block';
+    if (pill) pill.style.display = 'none';
+  }
+
+  // --- PASSIVE SPEEDWAY OVERVIEW MAP (NO GPS CALLS, CORE SPEEDWAY LAYOUT ONLY) ---
+  initPassiveOverviewMap() {
+    const mapEl = document.getElementById('venue-passive-map');
+    if (!mapEl) return;
+
+    const defaultCenter = [36.0465, -86.4172]; // Infield Plaza
+    const pMap = L.map('venue-passive-map', {
+      zoomControl: false,
+      attributionControl: false,
+      minZoom: 15,
+      maxZoom: 18,
+      dragging: true,
+      touchZoom: true,
+      scrollWheelZoom: false,
+      doubleClickZoom: false
+    }).setView(defaultCenter, 16);
+
+    // Render Offline Vector Speedway Layout & Core Features
+    const tempMgr = new MapManager();
+    tempMgr.map = pMap;
+    tempMgr.renderVectorVenueLayout();
+
+    // Render core landmarks (Main Entrance, First Aid, Parking, Speed Stage)
+    if (this.venue && this.venue.utility && this.venue.utility.amenities) {
+      this.venue.utility.amenities.forEach(a => {
+        let pinColor = '#05d9e8';
+        if (a.type === 'wellness') pinColor = '#ff2a6d';
+        if (a.type === 'water') pinColor = '#00f090';
+        if (a.type === 'restroom') pinColor = '#ffc837';
+
+        const marker = L.circleMarker([a.lat, a.lng], {
+          radius: 7,
+          fillColor: pinColor,
+          color: '#111',
+          weight: 2,
+          opacity: 1,
+          fillOpacity: 0.95
+        }).addTo(pMap);
+
+        marker.bindTooltip(`<strong>${a.name}</strong>`, {
+          permanent: true,
+          direction: 'top',
+          offset: [0, -6],
+          className: 'map-label-tooltip'
+        });
+      });
+    }
+
+    // Tapping background map dismisses info card
+    pMap.on('click', () => {
+      this.dismissVenueCard();
+    });
   }
 
   renderMapView(container) {
@@ -1620,7 +1882,7 @@ class EatsMapApp {
 
     let html = `
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border-color);">
-        <h3 style="color: #fff; font-size: 1rem; font-family: 'Outfit'; margin: 0;">My Festival Tasting Queue</h3>
+        <h3 style="color: #fff; font-size: 1rem; font-family: var(--font-primary); margin: 0;">My Festival Tasting Queue</h3>
         <span style="font-size: 0.75rem; color: var(--fl-yellow); font-weight: 700;">${activeItems.length} Items</span>
       </div>
       <div style="display: flex; flex-direction: column; gap: 8px;">
@@ -1715,20 +1977,20 @@ class EatsMapApp {
   renderAboutView(container) {
     container.innerHTML = `
       <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px;">
-        <h3 style="color: #fff; font-size: 1.35rem; font-weight: 900; margin-bottom: 4px;">☀️ About Eats Map</h3>
-        <p style="font-size: 0.88rem; color: var(--fl-teal); font-weight: 700; margin-bottom: 14px;">Offline Companion Guide for FoodieLand Nashville 2026</p>
+        <h3 style="color: #fff; font-size: 1.35rem; font-weight: 900; margin-bottom: 4px;">☀️ About Sun Map</h3>
+        <p style="font-size: 0.88rem; color: var(--fl-teal); font-weight: 700; margin-bottom: 14px;">Eats Map by Sun Map • FoodieLand Nashville 2026</p>
         
         <p style="font-size: 0.88rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 12px;">
-          Eats Map, by Sun Map, transforms town and festival grounds into an interactive, offline-ready companion. Treat top chefs, popup creators, and food stalls with the deep heritage and spotlight they deserve.
+          <strong>Eats Map by Sun Map</strong> is a zero-download, offline-first companion-program-guide-concierge <strong>fan project</strong> celebrating a dependency shift and learning experiences.
         </p>
 
         <div style="background: var(--bg-surface); padding: 12px; border-radius: var(--radius-md); font-size: 0.86rem; color: #94a3b8; line-height: 1.5; margin-bottom: 16px;">
-          <strong style="color: #fff; display: block; margin-bottom: 6px; font-size: 0.90rem;">Features:</strong>
-          • <strong>Now Playing List & Map</strong>: Fast visual dish browse<br>
-          • <strong>Dish Cards</strong>: Detailed culinary profiles, flavor notes & pairings<br>
-          • <strong>3-Day Program</strong>: Shift between festival dates with stage events<br>
+          <strong style="color: #fff; display: block; margin-bottom: 6px; font-size: 0.90rem;">Platform Features:</strong>
+          • <strong>Interactive Grounds Map & Venue Overview</strong>: Fast visual dish browse & offline vector layout<br>
+          • <strong>Culinary Profiles</strong>: Detailed dish profiles, flavor notes & allergen checks<br>
+          • <strong>3-Day Program</strong>: Shift between festival dates with stage events & pavilion highlights<br>
           • <strong>Synced Car Marker</strong>: Real GPS tracking that alerts on permission status<br>
-          • <strong>Allergen Highlighting</strong>: In-line warnings without hiding options
+          • <strong>Allergen Highlighting</strong>: In-line warnings without hiding food options
         </div>
 
         <!-- Dynamic Inline Tap-to-Expand QR Card -->
@@ -1816,50 +2078,61 @@ class EatsMapApp {
     if (!modal || !content) return;
 
     content.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: 'Outfit';">❓ Help & Safety Guide</strong>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+        <strong style="color: var(--fl-orange); font-size: 1rem; font-family: var(--font-primary);">❓ Help & Safety Guide</strong>
         <button class="modal-close-btn">✕</button>
       </div>
       
       <div>
-        <h3 style="font-family: 'Outfit'; font-size: 1.2rem; font-weight: 900; color: #fff; margin: 4px 0 6px;">
-          Festival Assistance & Amenities
-        </h3>
+        <!-- Title & Right-Flushed Global Format Toggles -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 14px;">
+          <h3 style="font-family: var(--font-primary); font-size: 1.25rem; font-weight: 900; color: #fff; margin: 0; line-height: 1.25; flex: 1;">
+            Festival Assistance & Amenities
+          </h3>
+          <div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 2px;">
+            <button class="temp-unit-toggle" onclick="window.app.toggleTimeFormat(); window.app.openContextHelpModal();" title="Switch between 12-hour and 24-hour time">
+              ${this.timeFormat || '12h'}
+            </button>
+            <button class="temp-unit-toggle" onclick="window.app.toggleTempUnit(); window.app.openContextHelpModal();" title="Switch between Fahrenheit and Celsius">
+              °${this.tempUnit || 'F'}
+            </button>
+          </div>
+        </div>
 
         <!-- Emergency / First Aid Quick Action -->
-        <div style="background: rgba(255, 42, 109, 0.12); border-left: 3px solid var(--fl-pink); padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-          <strong style="color: var(--fl-pink); font-size: 0.85rem;">🏥 Emergency & Medical (Gate 1):</strong>
-          <p style="font-size: 0.76rem; color: #cbd5e1; margin-top: 2px;">
-            First Aid & Sun Relief station located at Main Concourse Gate 1. In severe emergencies, call <strong>911</strong> or find event staff.
+        <div style="background: rgba(255, 42, 109, 0.14); border-left: 4px solid var(--fl-pink); padding: 14px 16px; border-radius: 6px; margin-bottom: 14px;">
+          <strong style="color: var(--fl-pink); font-size: 0.92rem; display: block; margin-bottom: 4px;">🏥 Emergency & Medical (Gate 1):</strong>
+          <p style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.45; margin: 0;">
+            First Aid & Sun Relief station located at Main Concourse Gate 1. In severe emergencies, call <strong>911</strong> or alert event staff immediately.
           </p>
-          <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('wellness')" style="color: var(--fl-teal); font-size: 0.74rem; font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 4px;">
+          <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('wellness')" style="color: var(--fl-teal); font-size: 0.78rem; font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 8px;">
             Locate First Aid on Map →
           </a>
         </div>
 
         <!-- Water & Hydration Quick Action -->
-        <div style="background: rgba(0, 240, 144, 0.12); border-left: 3px solid var(--fl-green); padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-          <strong style="color: var(--fl-green); font-size: 0.85rem;">💧 Free Water Refill Stations:</strong>
-          <p style="font-size: 0.76rem; color: #cbd5e1; margin-top: 2px;">
-            Hydration stations located near Pavilion B and Central Stage.
+        <div style="background: rgba(0, 240, 144, 0.14); border-left: 4px solid var(--fl-green); padding: 14px 16px; border-radius: 6px; margin-bottom: 14px;">
+          <strong style="color: var(--fl-green); font-size: 0.92rem; display: block; margin-bottom: 4px;">💧 Free Water Refill Stations:</strong>
+          <p style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.45; margin: 0;">
+            Hydration stations located near Pavilion B and Central Stage. Refill bottles freely throughout the festival grounds.
           </p>
-          <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('water')" style="color: var(--fl-teal); font-size: 0.74rem; font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 4px;">
+          <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('water')" style="color: var(--fl-teal); font-size: 0.78rem; font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 8px;">
             Locate Water Refills on Map →
           </a>
         </div>
 
         <!-- 1-2 Line Truncated About with Deep Link to Full Program About -->
-        <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; margin-top: 10px;">
-          <p style="font-size: 0.78rem; line-height: 1.45; color: #cbd5e1; margin-bottom: 6px;">
-            <strong>☀️ Sun Map (Eats Map):</strong> A zero-download, offline-first companion guide celebrating independent chefs and live experiences.
+        <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px 16px; margin-bottom: 16px;">
+          <p style="font-size: 0.82rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 8px;">
+            <strong>☀️ Eats Map by Sun Map:</strong> Zero-download offline-first companion-program-guide-concierge <strong>fan project</strong> celebrating a dependency shift and learning experiences.
           </p>
-          <a href="javascript:void(0)" onclick="window.app.openFullProgramAbout()" style="color: var(--fl-yellow); font-size: 0.74rem; font-weight: 700; text-decoration: underline;">
-            Read Full Companion Guide & Ethos →
+          <a href="javascript:void(0)" onclick="window.app.openFullProgramAbout()" style="color: var(--fl-yellow); font-size: 0.78rem; font-weight: 800; text-decoration: underline;">
+            About Sun Map →
           </a>
         </div>
 
-        <div style="margin-top: 12px;">
-          <button class="action-share-btn" style="width: 100%; padding: 10px; font-weight: 800;" onclick="window.app.closeModal()">
+        <div style="margin-top: 14px;">
+          <button class="action-share-btn" style="width: 100%; padding: 12px; font-weight: 800; font-size: 0.92rem;" onclick="window.app.closeModal()">
             ✓ Dismiss Help
           </button>
         </div>
@@ -1871,7 +2144,13 @@ class EatsMapApp {
 
   openFullProgramAbout() {
     this.closeModal();
-    this.switchViewport('about');
+    this.switchViewport('program');
+    setTimeout(() => {
+      const section = document.getElementById('program-about-section');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 120);
   }
 
   highlightBoothOnMap(vendorId, event) {

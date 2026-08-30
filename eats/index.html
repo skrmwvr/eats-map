@@ -309,6 +309,34 @@
       </a>
     </main>
 
+    <!-- Feedback & Message Drop Box (Saved locally for AI ingestion) -->
+    <section class="event-portal-card" style="margin-top: 4px; padding: 20px 24px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff; display: flex; align-items: center; gap: 8px;">
+          <span>💬</span> Message & Feedback Drop
+        </h3>
+        <span style="font-size: 0.72rem; color: var(--sun-teal); font-weight: 700;">Offline Store</span>
+      </div>
+      <p style="font-size: 0.8rem; color: var(--muted); line-height: 1.45; margin-bottom: 14px;">
+        Have feedback, vendor tips, or festival insights? Leave a note below. Stored securely in your companion buffer for our AI and event engine to analyze.
+      </p>
+
+      <form id="feedback-form" onsubmit="handleFeedbackSubmit(event)" style="display: flex; flex-direction: column; gap: 10px;">
+        <input type="text" id="feedback-sender" placeholder="Your name or handle (optional)" maxlength="60" style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: #fff; font-size: 0.85rem; outline: none;">
+        
+        <textarea id="feedback-msg" required placeholder="Write your note or feature suggestion here..." rows="3" maxlength="1000" style="background: rgba(255, 255, 255, 0.04); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; color: #fff; font-size: 0.85rem; outline: none; resize: vertical;"></textarea>
+
+        <button type="submit" id="btn-feedback-submit" style="background: var(--surface); border: 1px solid var(--sun-teal); color: var(--sun-teal); border-radius: 8px; padding: 10px; font-weight: 800; font-size: 0.88rem; cursor: pointer; transition: all 0.2s ease;">
+          📤 Save Message to AI Buffer
+        </button>
+        <div id="feedback-status" style="font-size: 0.76rem; text-align: center; display: none;"></div>
+      </form>
+
+      <div style="margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px; font-size: 0.74rem; text-align: center; color: var(--muted);">
+        Direct Inquiries: <a href="javascript:void(0)" onclick="openFeedbackModal()" style="color: var(--sun-teal); font-weight: 700; text-decoration: underline;">feedback@sunmap.dev</a>
+      </div>
+    </section>
+
     <!-- Rights & Sentiments Footer -->
     <footer class="site-footer">
       <div style="color: var(--sun-yellow); font-weight: 700; margin-bottom: 2px;">
@@ -323,6 +351,55 @@
   </div>
 
   <script>
+    function handleFeedbackSubmit(e) {
+      e.preventDefault();
+      const statusEl = document.getElementById('feedback-status');
+      const submitBtn = document.getElementById('btn-feedback-submit');
+      const sender = (document.getElementById('feedback-sender').value || 'Anonymous').trim();
+      const msg = document.getElementById('feedback-msg').value.trim();
+
+      if (!msg) return;
+
+      // Rate limiting: 10 seconds between submissions
+      const lastSubmit = parseInt(localStorage.getItem('sunmap_feedback_last_ts') || '0', 10);
+      const now = Date.now();
+      if (now - lastSubmit < 10000) {
+        statusEl.style.display = 'block';
+        statusEl.style.color = '#ff5e36';
+        statusEl.textContent = '⏳ Please wait a few seconds before sending another note.';
+        return;
+      }
+
+      // Safe JSON storage in localStorage
+      const existing = JSON.parse(localStorage.getItem('sunmap_saved_messages') || '[]');
+      const newEntry = {
+        id: 'msg_' + now,
+        timestamp: new Date().toISOString(),
+        sender: sender.substring(0, 60),
+        message: msg.substring(0, 1000)
+      };
+      existing.unshift(newEntry);
+      localStorage.setItem('sunmap_saved_messages', JSON.stringify(existing.slice(0, 50)));
+      localStorage.setItem('sunmap_feedback_last_ts', now.toString());
+
+      // Success visual feedback
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.5';
+      statusEl.style.display = 'block';
+      statusEl.style.color = '#00f090';
+      statusEl.textContent = '✓ Saved to companion buffer! AI will index this note.';
+      document.getElementById('feedback-msg').value = '';
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+      }, 5000);
+    }
+
+    function openFeedbackModal() {
+      const existing = JSON.parse(localStorage.getItem('sunmap_saved_messages') || '[]');
+      alert('Feedback Channel: feedback@sunmap.dev\n\nYour message box is stored locally in your browser cache (' + existing.length + ' stored notes).');
+    }
     const eatsBtn = document.getElementById('foodieland-eats-link');
     if (eatsBtn && (window.location.protocol === 'http:' || window.location.protocol === 'https:')) {
       eatsBtn.href = '/eats/foodieland';

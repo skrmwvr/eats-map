@@ -182,8 +182,26 @@ html, body {
   margin-bottom: 2px;
 }
 
+.dialog-modal-title {
+  font-family: var(--font-primary);
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.timeline-event-header h3 {
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+}
+
 .btn-top-title {
-  font-family: 'DM Sans', sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.82rem;
   font-weight: 800;
   color: #fff;
@@ -256,11 +274,27 @@ html, body {
   border-color: #000000 !important;
 }
 
+/* FULL-WIDTH SCROLLING SECTION STRIPES (EDGE-TO-EDGE ACCROSS VIEWPORT) */
+.section-stripe-stage {
+  margin: 14px -16px 14px;
+  padding: 16px 16px 14px;
+  background: linear-gradient(180deg, rgba(38, 20, 52, 0.95) 0%, rgba(24, 15, 36, 0.95) 100%);
+  border-top: 1px solid rgba(255, 94, 54, 0.25);
+  border-bottom: 1px solid rgba(255, 94, 54, 0.25);
+}
+
+.section-stripe-featured {
+  margin: 14px -16px -36px;
+  padding: 16px 16px 36px;
+  background: linear-gradient(180deg, rgba(16, 24, 38, 0.95) 0%, rgba(11, 14, 22, 0.98) 100%);
+  border-top: 1px solid rgba(5, 217, 232, 0.25);
+}
+
 /* Large Eats Map Dietary Card Button (Matching Yellow Golden Palette) */
 .eats-map-dietary-card {
-  background: linear-gradient(135deg, rgba(255, 200, 55, 0.12) 0%, rgba(255, 94, 54, 0.08) 100%);
-  border: 1px solid rgba(255, 200, 55, 0.4);
-  border-left: 4px solid var(--fl-yellow);
+  background: linear-gradient(135deg, rgba(255, 200, 55, 0.16) 0%, rgba(255, 94, 54, 0.12) 100%);
+  border: 1.5px solid rgba(255, 200, 55, 0.55);
+  border-left: 5px solid var(--fl-yellow);
   border-radius: var(--radius-md);
   padding: 14px 16px;
   display: flex;
@@ -268,14 +302,14 @@ html, body {
   align-items: center;
   margin: 14px 0 16px;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.12);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .eats-map-dietary-card:hover, .eats-map-dietary-card:active {
   border-color: var(--fl-yellow);
-  background: linear-gradient(135deg, rgba(255, 200, 55, 0.2) 0%, rgba(255, 94, 54, 0.14) 100%);
-  box-shadow: 0 0 18px rgba(255, 200, 55, 0.35);
+  background: linear-gradient(135deg, rgba(255, 200, 55, 0.26) 0%, rgba(255, 94, 54, 0.18) 100%);
+  box-shadow: 0 0 20px rgba(255, 200, 55, 0.45);
   transform: translateY(-1px);
 }
 
@@ -415,12 +449,13 @@ html, body {
   height: 74px;
   width: 100%;
   border-radius: 36px 36px 12px 12px;
-  background: radial-gradient(ellipse at top center, #3d1c0a 0%, #1c0e06 100%);
+  background: radial-gradient(ellipse at top center, #522209 0%, #241004 70%, #150902 100%);
   border: 2px solid var(--fl-orange);
-  outline: 1.5px solid rgba(255, 94, 54, 0.45);
-  box-shadow: 0 -6px 20px rgba(255, 94, 54, 0.55), 
-              inset 0 4px 12px rgba(255, 255, 255, 0.15),
-              inset 0 -4px 12px rgba(0, 0, 0, 0.8);
+  outline: 1.5px solid rgba(255, 200, 55, 0.6);
+  box-shadow: 0 -6px 24px rgba(255, 94, 54, 0.75), 
+              0 0 16px rgba(255, 200, 55, 0.4),
+              inset 0 4px 14px rgba(255, 200, 55, 0.3),
+              inset 0 -4px 12px rgba(0, 0, 0, 0.9);
   z-index: 105;
   padding: 6px 40px 2px;
   display: flex;
@@ -432,7 +467,7 @@ html, body {
 }
 
 .bottom-btn.center-brand-btn:active {
-  background: #3b1e0a;
+  background: #451b06;
   transform: scale(0.98);
 }
 
@@ -514,43 +549,124 @@ html, body {
 /* Jumbo Grounds Map Button */
 .jumbo-map-btn {
   width: 100%;
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-color);
+  background: linear-gradient(135deg, rgba(5, 217, 232, 0.18) 0%, rgba(255, 94, 54, 0.14) 100%);
+  border: 1.5px solid var(--fl-teal);
   border-radius: var(--radius-md);
   padding: 14px 16px;
   display: flex;
   align-items: center;
   gap: 12px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .jumbo-map-btn:hover, .jumbo-map-btn:active {
-  border-color: var(--fl-teal);
-  background: rgba(5, 217, 232, 0.08);
+  border-color: var(--fl-yellow);
+  background: linear-gradient(135deg, rgba(5, 217, 232, 0.28) 0%, rgba(255, 94, 54, 0.22) 100%);
+  box-shadow: 0 0 20px rgba(5, 217, 232, 0.45);
   transform: translateY(-1px);
 }
 
-/* Cuisine Zone Map Launcher Pills */
-.cuisine-map-pill {
+/* MENU STICKY BOTTOM SEARCH BAR */
+.menu-bottom-search-wrapper {
+  position: sticky;
+  bottom: -36px; /* pins flush to bottom of scrollable viewport */
+  margin: 16px -16px -36px;
+  padding: 10px 16px 14px;
+  background: rgba(11, 12, 16, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border-color);
+  z-index: 85;
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.menu-bottom-search-input {
+  width: 100%;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 11px 14px 11px 36px;
+  color: #fff;
+  font-size: 0.90rem;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.menu-bottom-search-input:focus {
+  border-color: var(--fl-orange);
+  box-shadow: 0 0 12px rgba(255, 94, 54, 0.4);
+}
+
+/* CUISINE & GENRE SWIPER PILLS (Shared across Eats Map Home & Menu) */
+.cuisine-swiper-tray, .menu-genre-tray {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cuisine-swiper-tray::-webkit-scrollbar, .menu-genre-tray::-webkit-scrollbar {
+  display: none;
+}
+
+.cuisine-map-pill, .menu-genre-chip {
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-color);
   color: #f1f5f9;
   border-radius: var(--radius-full);
-  padding: 8px 14px;
-  font-size: 0.76rem;
-  font-weight: 700;
+  padding: 8px 16px;
+  font-size: 0.82rem;
+  font-weight: 800;
   white-space: nowrap;
   cursor: pointer;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.cuisine-map-pill:hover, .cuisine-map-pill:active {
-  border-color: var(--fl-teal);
-  background: rgba(5, 217, 232, 0.15);
+.cuisine-map-pill:hover, .cuisine-map-pill:active,
+.menu-genre-chip:hover, .menu-genre-chip:active {
+  border-color: var(--fl-orange);
+  background: rgba(255, 94, 54, 0.15);
   color: #fff;
   transform: translateY(-1px);
+}
+
+.cuisine-map-pill.active, .menu-genre-chip.active {
+  background: var(--fl-orange);
+  border-color: var(--fl-orange);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(255, 94, 54, 0.6);
+  transform: scale(1.04);
+}
+
+.menu-genre-chip.genre-latin.active, .cuisine-map-pill.pill-latin:active {
+  background: #ff5e36;
+  border-color: #ff5e36;
+  color: #fff;
+}
+
+.menu-genre-chip.genre-sweet.active, .cuisine-map-pill.pill-sweet:active {
+  background: #ff2a6d;
+  border-color: #ff2a6d;
+  color: #fff;
+}
+
+.menu-genre-chip.genre-asian.active, .cuisine-map-pill.pill-asian:active {
+  background: #ffc837;
+  border-color: #ffc837;
+  color: #000;
+}
+
+.menu-genre-chip.genre-bbq.active, .cuisine-map-pill.pill-bbq:active {
+  background: #05d9e8;
+  border-color: #05d9e8;
+  color: #000;
 }
 
 .btn-label {
@@ -1449,7 +1565,7 @@ html, body {
 }
 
 .qr-brand-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-primary);
   font-weight: 900;
   font-size: 1.15rem;
   line-height: 1.1;

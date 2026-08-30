@@ -616,8 +616,6 @@ window.EMBEDDED_VENUE = {
         }
       ],
       "featured_categories": [
-        "Tasting Passport Check-off Day",
-        "Artisan Pop-up Row",
         "Sweet Tooth Finale"
       ]
     }
