@@ -1241,13 +1241,13 @@ class EatsMapApp {
       const zoneClass = this.getZoneBadgeClass(vendor.zone);
       html += `
         <div class="vendor-card" onclick="window.app.openVendorById('${vendor.id}')">
-          <div class="vendor-card-header">
-            <div>
-              <strong style="color: #fff; font-size: 0.98rem;">${vendor.name}</strong>
-              <div style="font-size: 0.72rem; color: var(--fl-teal);">${vendor.cuisine} • ${vendor.zone}</div>
+          <div class="vendor-card-header" style="display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px;">
+            <div style="flex: 1;">
+              <strong style="color: #fff; font-size: 1.05rem; font-weight: 800;">${vendor.name}</strong>
+              <div style="font-size: 0.82rem; color: var(--fl-teal); font-weight: 600; margin-top: 2px;">${vendor.cuisine} • ${vendor.zone}</div>
             </div>
-            <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${vendor.id}', event)" title="Tap to locate Booth ${vendor.booth_number} on the grounds map">
-              📍 ${vendor.booth_number}
+            <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${vendor.id}', event)" title="Tap to locate Booth ${vendor.booth_number} on the grounds map" style="white-space: nowrap; flex-shrink: 0; min-width: 90px; text-align: center; justify-content: center; font-size: 0.88rem; padding: 6px 12px;">
+              📍 Booth ${vendor.booth_number}
             </span>
           </div>
           <p style="font-size: 0.76rem; color: var(--text-secondary); line-height: 1.35; margin: 4px 0 6px;">${vendor.story ? vendor.story.claim_to_fame : ''}</p>
@@ -1439,27 +1439,27 @@ class EatsMapApp {
     const v = this.venue || {};
     const u = v.utility || {};
     container.innerHTML = `
-      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px;">
-        <h3 style="color: #fff; font-size: 1.2rem; font-family: 'Outfit'; margin-bottom: 2px;">🏟️ ${v.name || 'Nashville Superspeedway'}</h3>
-        <p style="font-size: 0.78rem; color: var(--fl-teal); margin-bottom: 12px;">${v.address || '400 Victory Ln Dr, Lebanon, TN'}</p>
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px;">
+        <h3 style="color: #fff; font-size: 1.35rem; font-weight: 900; margin-bottom: 4px;">🏟️ ${v.name || 'Nashville Superspeedway'}</h3>
+        <p style="font-size: 0.88rem; color: var(--fl-teal); font-weight: 700; margin-bottom: 14px;">${v.address || '400 Victory Ln Dr, Lebanon, TN'}</p>
         
-        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.8rem;">
-          <div style="background: var(--bg-surface); padding: 8px 10px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-green);">
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 0.88rem; line-height: 1.45;">
+          <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-green);">
             <strong>🚗 Parking:</strong> ${u.parking_info || 'Free on-site parking'}
           </div>
-          <div style="background: var(--bg-surface); padding: 8px 10px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-orange);">
+          <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-orange);">
             <strong>🎟️ Tickets:</strong> ${u.ticket_policy || 'Advance online purchase required.'}
           </div>
-          <div style="background: var(--bg-surface); padding: 8px 10px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-yellow);">
+          <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-yellow);">
             <strong>🎒 Bag Policy:</strong> ${u.bag_policy || 'Clear bags recommended.'}
           </div>
-          <div style="background: var(--bg-surface); padding: 8px 10px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-pink);">
+          <div style="background: var(--bg-surface); padding: 10px 12px; border-radius: var(--radius-sm); border-left: 3px solid var(--fl-pink);">
             <strong>🐾 Pets:</strong> ${u.pet_policy || 'Service animals only.'}
           </div>
         </div>
 
-        <div style="margin-top: 14px;">
-          <button class="action-share-btn" style="width: 100%;" onclick="window.app.switchViewport('map')">
+        <div style="margin-top: 18px;">
+          <button class="action-share-btn" style="width: 100%; padding: 12px; font-size: 0.92rem; font-weight: 800;" onclick="window.app.switchViewport('map')">
             🗺️ Open Interactive Grounds GPS Map
           </button>
         </div>
@@ -1587,16 +1587,16 @@ class EatsMapApp {
 
   renderAboutView(container) {
     container.innerHTML = `
-      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 16px;">
-        <h3 style="color: #fff; font-size: 1.2rem; font-family: 'Outfit'; margin-bottom: 4px;">☀️ About Eats Map</h3>
-        <p style="font-size: 0.8rem; color: var(--fl-teal); margin-bottom: 12px;">Offline Companion Guide for FoodieLand Nashville 2026</p>
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 18px;">
+        <h3 style="color: #fff; font-size: 1.35rem; font-weight: 900; margin-bottom: 4px;">☀️ About Eats Map</h3>
+        <p style="font-size: 0.88rem; color: var(--fl-teal); font-weight: 700; margin-bottom: 14px;">Offline Companion Guide for FoodieLand Nashville 2026</p>
         
-        <p style="font-size: 0.82rem; line-height: 1.45; color: #cbd5e1; margin-bottom: 10px;">
+        <p style="font-size: 0.88rem; line-height: 1.5; color: #cbd5e1; margin-bottom: 12px;">
           Eats Map, by Sun Map, transforms town and festival grounds into an interactive, offline-ready companion. Treat top chefs, popup creators, and food stalls with the deep heritage and spotlight they deserve.
         </p>
 
-        <div style="background: var(--bg-surface); padding: 10px; border-radius: var(--radius-md); font-size: 0.76rem; color: #94a3b8; line-height: 1.4; margin-bottom: 14px;">
-          <strong style="color: #fff; display: block; margin-bottom: 4px;">Features:</strong>
+        <div style="background: var(--bg-surface); padding: 12px; border-radius: var(--radius-md); font-size: 0.86rem; color: #94a3b8; line-height: 1.5; margin-bottom: 16px;">
+          <strong style="color: #fff; display: block; margin-bottom: 6px; font-size: 0.90rem;">Features:</strong>
           • <strong>Now Playing List & Map</strong>: Fast visual dish browse<br>
           • <strong>Dish Cards</strong>: Detailed culinary profiles, flavor notes & pairings<br>
           • <strong>3-Day Program</strong>: Shift between festival dates with stage events<br>
