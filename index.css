@@ -313,43 +313,6 @@ html, body {
   width: 100%;
 }
 
-/* Wing Buttons (Row 1, Cols 3 & 5 in the 2x7 grid): Generous touch targets with comfortable padding */
-.tiny-foot-btn {
-  position: absolute;
-  top: 4px;
-  height: 36px;
-  width: 36px;
-  background: var(--bg-surface-elevated);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-full);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-  color: #cbd5e1;
-  font-size: 1.15rem;
-  font-weight: 900;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 110;
-  transition: all 0.18s ease;
-}
-
-#btn-foot-map {
-  left: calc(50% - 64px); /* sits snugly sloped on the left shoulder of the Sun */
-}
-
-#btn-foot-help {
-  right: calc(50% - 64px); /* sits snugly sloped on the right shoulder of the Sun */
-}
-
-.tiny-foot-btn:hover, .tiny-foot-btn:active {
-  background: var(--fl-orange);
-  border-color: var(--fl-orange);
-  color: #fff;
-  transform: scale(1.1);
-  box-shadow: 0 0 12px rgba(255, 94, 54, 0.6);
-}
-
 .bottom-btn {
   background: transparent;
   border: 1px solid var(--border-color);
@@ -376,28 +339,66 @@ html, body {
   background: rgba(255, 94, 54, 0.14);
 }
 
-/* Center Sun / Brand Raised Cockpit Anchor Button */
+/* Center Sun / Brand Raised Cockpit Anchor Button (Spans Full Width of the 3-Unit Central Bay) */
 .bottom-btn.center-brand-btn {
   height: 74px;
-  width: 86px;
-  border-radius: 50% 50% 12px 12px;
-  background: radial-gradient(circle at center, #3d1c0a 0%, #201008 100%);
+  width: 100%;
+  border-radius: 36px 36px 12px 12px;
+  background: radial-gradient(ellipse at top center, #3d1c0a 0%, #1c0e06 100%);
   border: 2px solid var(--fl-orange);
   outline: 1.5px solid rgba(255, 94, 54, 0.45);
   box-shadow: 0 -6px 20px rgba(255, 94, 54, 0.55), 
               inset 0 4px 12px rgba(255, 255, 255, 0.15),
               inset 0 -4px 12px rgba(0, 0, 0, 0.8);
   z-index: 105;
-  padding: 4px 0 0;
+  padding: 6px 40px 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 
 .bottom-btn.center-brand-btn:active {
   background: #3b1e0a;
-  transform: scale(0.96);
+  transform: scale(0.98);
+}
+
+/* Wing Buttons: Positioned inside the upper-left and upper-right corners of the wide Eats Map button */
+.tiny-foot-btn {
+  position: absolute;
+  top: 6px;
+  height: 34px;
+  width: 34px;
+  background: rgba(19, 21, 31, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  color: #cbd5e1;
+  font-size: 1.15rem;
+  font-weight: 900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 115;
+  transition: all 0.18s ease;
+}
+
+#btn-foot-map {
+  left: 8px; /* nested inside the left corner of Eats Map */
+}
+
+#btn-foot-help {
+  right: 8px; /* nested inside the right corner of Eats Map */
+}
+
+.tiny-foot-btn:hover, .tiny-foot-btn:active {
+  background: var(--fl-orange);
+  border-color: var(--fl-orange);
+  color: #fff;
+  transform: scale(1.1);
+  box-shadow: 0 0 12px rgba(255, 94, 54, 0.7);
 }
 
 .nav-icon {
@@ -410,7 +411,7 @@ html, body {
   font-size: 2.1rem;
   line-height: 1;
   filter: drop-shadow(0 0 8px rgba(255, 200, 55, 0.75));
-  margin-bottom: 1px;
+  margin-bottom: 2px;
 }
 
 .nav-label {
