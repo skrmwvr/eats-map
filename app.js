@@ -1627,6 +1627,15 @@ class EatsMapApp {
     }
   }
 
+  getZoneBadgeClass(zone = '') {
+    const z = (zone || '').toLowerCase();
+    if (z.includes('latin') || z.includes('chamoy')) return 'zone-latin';
+    if (z.includes('sweet') || z.includes('dessert')) return 'zone-sweet';
+    if (z.includes('asian')) return 'zone-asian';
+    if (z.includes('smoke') || z.includes('chicken') || z.includes('bbq')) return 'zone-smokehouse';
+    return '';
+  }
+
   // --- LEFT WING ACTION: Event Overview Map with Nearest Bathrooms & Water Stations ---
   openEventOverviewMap() {
     this.closeModal();
