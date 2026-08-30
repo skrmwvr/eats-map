@@ -1132,7 +1132,7 @@ class EatsMapApp {
     if (nextIndex >= 0 && nextIndex < days.length) {
       this.activeDayIndex = nextIndex;
       this.updateTopBarStatus();
-      this.renderProgramView(document.getElementById('viewport-content'));
+      this.renderProgramView(document.getElementById('main-viewport'));
     }
   }
 
@@ -1181,23 +1181,6 @@ class EatsMapApp {
     `;
 
     modal.classList.add('active');
-  }
-
-  isPastEvent(dayDateStr, eventTimeStr) {
-    if (!dayDateStr) return false;
-    try {
-      // Parse event time (e.g. '4:30 PM', '8:00 PM') and date (e.g. 'Friday, Aug 28, 2026')
-      const datePart = dayDateStr.replace(/^[A-Za-z]+,\s*/, ''); // 'Aug 28, 2026'
-      const dateTimeString = `${datePart} ${eventTimeStr || '11:59 PM'}`;
-      const eventDate = new Date(dateTimeString);
-      const now = new Date();
-      if (!isNaN(eventDate.getTime())) {
-        return now.getTime() > eventDate.getTime();
-      }
-    } catch (e) {
-      return false;
-    }
-    return false;
   }
 
   renderBoothsView(container) {
@@ -1255,7 +1238,7 @@ class EatsMapApp {
     if (inputEl) {
       inputEl.addEventListener('input', (e) => {
         this.searchQuery = e.target.value;
-        this.renderBoothsView(document.getElementById('viewport-content'));
+        this.renderBoothsView(document.getElementById('main-viewport'));
         const newInput = document.getElementById('booth-search-input');
         if (newInput) {
           newInput.focus();
@@ -1270,7 +1253,7 @@ class EatsMapApp {
     localStorage.setItem('eatsmap_temp_unit', this.tempUnit);
     this.updateTopBarStatus();
     if (this.activeViewport === 'weather') {
-      this.renderWeatherView(document.getElementById('viewport-content'));
+      this.renderWeatherView(document.getElementById('main-viewport'));
     }
   }
 
