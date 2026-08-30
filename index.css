@@ -357,6 +357,7 @@ html, body {
   align-items: center;
   justify-content: center;
   position: relative;
+  pointer-events: auto;
 }
 
 .bottom-btn.center-brand-btn:active {
@@ -364,41 +365,41 @@ html, body {
   transform: scale(0.98);
 }
 
-/* Wing Buttons: Positioned inside the upper-left and upper-right corners of the wide Eats Map button */
+/* Wing Buttons: Positioned inward from border line and tucked behind main border on z-index */
 .tiny-foot-btn {
   position: absolute;
-  top: 6px;
-  height: 34px;
-  width: 34px;
-  background: rgba(19, 21, 31, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  top: 9px;
+  height: 32px;
+  width: 32px;
+  background: rgba(19, 21, 31, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-full);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   color: #cbd5e1;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 900;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  z-index: 115;
+  z-index: 106; /* Interactive layer layered over background fill but clean of border line */
   transition: all 0.18s ease;
 }
 
 #btn-foot-map {
-  left: 8px; /* nested inside the left corner of Eats Map */
+  left: 14px; /* moved inward from the left curved border */
 }
 
 #btn-foot-help {
-  right: 8px; /* nested inside the right corner of Eats Map */
+  right: 14px; /* moved inward from the right curved border */
 }
 
 .tiny-foot-btn:hover, .tiny-foot-btn:active {
   background: var(--fl-orange);
   border-color: var(--fl-orange);
   color: #fff;
-  transform: scale(1.1);
-  box-shadow: 0 0 12px rgba(255, 94, 54, 0.7);
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(255, 94, 54, 0.7);
 }
 
 .nav-icon {
