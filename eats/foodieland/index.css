@@ -90,19 +90,19 @@ html, body {
 /* TOP APP BAR (Snapped Flush to Top of Viewport) */
 #top-bar {
   background-color: var(--header-footer-bg);
-  border-bottom: 1px solid var(--border-color);
-  padding: 8px 8px 6px;
+  border-bottom: none; /* remove dividing line between buttons and Eats Map brand margin */
+  padding: 8px 8px 4px;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   z-index: 100;
 }
 
-/* BRAND & FESTIVAL STATUS BAND (Positioned below top toolbar, styled like dietary band) */
+/* BRAND & FESTIVAL STATUS BAND (Sits seamlessly in the margin directly below the top buttons) */
 .brand-status-band {
-  background-color: var(--bg-surface);
+  background-color: var(--header-footer-bg); /* matches top button background seamlessly */
   border-bottom: 1px solid var(--border-color);
-  padding: 6px 12px;
+  padding: 2px 12px 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
