@@ -22,6 +22,55 @@ class EatsMapApp {
     this.searchQuery = '';
     this.mapManager = null;
     this.qrExpanded = false;
+    this.hasVisitedMenu = false; // Tracks first-time visit for attention flash
+  }
+
+  // --- REUSABLE ALLERGEN TRACKER ACCORDION COMPONENT ---
+  getAllergenBarHTML(isSticky = false) {
+    const activeCount = (this.avoidedAllergens || []).length + (this.customAllergen ? 1 : 0);
+    return `
+      <section id="allergen-pref-bar" class="allergen-bar ${isSticky ? 'menu-sticky-top' : ''}">
+        <div class="allergen-header" onclick="window.app.toggleAllergenPanel()">
+          <div class="allergen-title">
+            <span class="alert-icon">⚠️</span>
+            <span>Dietary & Allergen Highlighting</span>
+          </div>
+          <div class="allergen-status-indicator">
+            <span id="active-allergen-count-badge" class="count-pill">${activeCount} flagged</span>
+            <span class="chevron-toggle">▼</span>
+          </div>
+        </div>
+        <div id="allergen-chips-tray" class="chips-tray">
+          ${this.getAllergenChipsHTML()}
+        </div>
+      </section>
+    `;
+  }
+
+  getAllergenChipsHTML() {
+    const list = [
+      { name: 'Cilantro', label: '🌿 Cilantro' },
+      { name: 'Peanuts', label: '🥜 Peanuts' },
+      { name: 'Tree Nuts', label: '🌰 Tree/Pine Nuts' },
+      { name: 'Pork / Bacon', label: '🥓 Pork / Bacon' },
+      { name: 'Dairy', label: '🧀 Dairy' },
+      { name: 'Gluten/Wheat', label: '🌾 Gluten' },
+      { name: 'Shellfish', label: '🦐 Shellfish' },
+      { name: 'Fennel / Anise', label: '🌱 Fennel/Anise' },
+      { name: 'Mayo', label: '🥚 Mayo' },
+      { name: 'Sesame', label: '✨ Sesame' }
+    ];
+
+    let html = list.map(item => {
+      const active = this.avoidedAllergens.includes(item.name) ? 'active' : '';
+      return `<button class="chip-btn ${active}" data-allergen="${item.name}">${item.label}</button>`;
+    }).join('');
+
+    const customActive = this.customAllergen ? 'active' : '';
+    const customLabel = this.customAllergen ? `🔍 ${this.customAllergen}` : '🔍 Custom...';
+    html += `<button class="chip-btn chip-btn-custom ${customActive}" id="btn-custom-allergen" data-allergen="custom">${customLabel}</button>`;
+
+    return html;
   }
 
   init() {
@@ -353,32 +402,109 @@ class EatsMapApp {
     this.switchViewport(prev.viewport, false);
   }
 
+  toggleAllergenPanel() {
+    const bar = document.getElementById('allergen-pref-bar');
+    if (bar) {
+      bar.classList.toggle('is-expanded');
+    }
+  }
+
+  closeAllergenPanel() {
+    const bar = document.getElementById('allergen-pref-bar');
+    if (bar) {
+      bar.classList.remove('is-expanded');
+    }
+  }
+
+  // Large Card modal trigger from Eats Map Home view
+  openAllergenModal() {
+    const modal = document.getElementById('detail-modal');
+    const content = document.getElementById('modal-content');
+    if (!modal || !content) return;
+
+    content.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <strong style="color: var(--fl-yellow); font-size: 1.05rem; font-weight: 800;">⚠️ Dietary & Allergen Tracker</strong>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      <p style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 14px;">
+        Tap ingredients to highlight them with amber tags across all menu cards. You can also define custom ingredients.
+      </p>
+
+      <div id="modal-allergen-chips-tray" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+        ${this.getAllergenChipsHTML()}
+      </div>
+
+      <button class="action-share-btn" style="width: 100%; padding: 12px; font-weight: 800;" onclick="window.app.closeModal()">
+        ✓ Save & Apply Flags
+      </button>
+    `;
+
+    modal.classList.add('active');
+
+    // Bind chip click events inside modal
+    document.querySelectorAll('#modal-allergen-chips-tray .chip-btn').forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const allergen = chip.dataset.allergen;
+        if (allergen === 'custom') {
+          this.openCustomAllergenModal();
+          return;
+        }
+
+        if (this.avoidedAllergens.includes(allergen)) {
+          this.avoidedAllergens = this.avoidedAllergens.filter(a => a !== allergen);
+        } else {
+          this.avoidedAllergens.push(allergen);
+        }
+
+        localStorage.setItem('eatsmap_allergens', JSON.stringify(this.avoidedAllergens));
+        this.renderAllergenChips();
+        this.renderActiveViewport();
+
+        // Refresh modal chips visual state
+        const modalTray = document.getElementById('modal-allergen-chips-tray');
+        if (modalTray) modalTray.innerHTML = this.getAllergenChipsHTML();
+      });
+    });
+  }
+
   renderAllergenChips() {
+    // 1. Bind and update inline drawer chips if present
     document.querySelectorAll('#allergen-chips-tray .chip-btn').forEach(chip => {
       const allergen = chip.dataset.allergen;
       if (allergen !== 'custom') {
         chip.classList.toggle('active', this.avoidedAllergens.includes(allergen));
       }
+
+      chip.onclick = (e) => {
+        e.stopPropagation();
+        if (allergen === 'custom') {
+          this.openCustomAllergenModal();
+          return;
+        }
+
+        if (this.avoidedAllergens.includes(allergen)) {
+          this.avoidedAllergens = this.avoidedAllergens.filter(a => a !== allergen);
+        } else {
+          this.avoidedAllergens.push(allergen);
+          this.openPresetAllergenModal(allergen);
+        }
+
+        localStorage.setItem('eatsmap_allergens', JSON.stringify(this.avoidedAllergens));
+        this.renderAllergenChips();
+        this.renderActiveViewport();
+      };
     });
 
     const customBtn = document.getElementById('btn-custom-allergen');
     if (customBtn) {
       customBtn.classList.toggle('active', !!this.customAllergen);
       customBtn.innerHTML = this.customAllergen ? `🔍 ${this.customAllergen}` : '🔍 Custom...';
-    }
-
-    const customActiveTray = document.getElementById('custom-active-tray');
-    if (customActiveTray) {
-      if (this.customAllergen) {
-        customActiveTray.style.display = 'flex';
-        customActiveTray.innerHTML = `
-          <span>Active custom slot: <strong class="custom-active-name">${this.customAllergen}</strong></span>
-          <button class="custom-remove-btn" onclick="window.app.removeCustomAllergen()">✕ Remove</button>
-        `;
-      } else {
-        customActiveTray.style.display = 'none';
-        customActiveTray.innerHTML = '';
-      }
+      customBtn.onclick = (e) => {
+        e.stopPropagation();
+        this.openCustomAllergenModal();
+      };
     }
     
     let totalActive = this.avoidedAllergens.length + (this.customAllergen ? 1 : 0);
@@ -916,6 +1042,18 @@ class EatsMapApp {
       <!-- CURRENT & UPCOMING PROGRAM CARDS (CROPPED TO PRESENT TIME) -->
       ${programCardsHtml}
 
+      <!-- LARGE DIETARY & ALLERGEN TRACKER CARD BUTTON (IMMEDIATELY AFTER STAGE HIGHLIGHTS) -->
+      <div class="eats-map-dietary-card" onclick="window.app.openAllergenModal()">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.3rem;">⚠️</span>
+          <div>
+            <strong style="color: #fff; font-size: 0.95rem; display: block;">Dietary & Allergen Highlighting</strong>
+            <span style="font-size: 0.78rem; color: var(--text-secondary);">Filter peanuts, gluten, dairy, cilantro & custom flags</span>
+          </div>
+        </div>
+        <span class="count-pill" style="font-size: 0.82rem; padding: 3px 10px;">${(this.avoidedAllergens || []).length + (this.customAllergen ? 1 : 0)} flagged</span>
+      </div>
+
       <!-- FEATURED CULINARY CREATIONS (SAME STYLING AS HAPPENING TODAY ON STAGE) -->
       <div style="margin: 18px 0 10px; padding-top: 8px; border-top: 1px solid var(--border-color);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -1220,9 +1358,17 @@ class EatsMapApp {
   }
 
   renderBoothsView(container) {
+    const isFirstVisit = !this.hasVisitedMenu;
+    if (isFirstVisit) {
+      this.hasVisitedMenu = true;
+    }
+
     let html = `
-      <div style="margin-bottom: 10px;">
-        <input type="text" id="booth-search-input" value="${this.searchQuery}" placeholder="Search dishes, chefs, or ingredients..." style="width: 100%; background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px 12px; color: #fff; font-size: 0.85rem; outline: none;">
+      <!-- STICKY TOP DIETARY & ALLERGEN TRACKER BAR (LOCKED TO TOP OF MENU VIEWPORT) -->
+      ${this.getAllergenBarHTML(true)}
+
+      <div style="margin-bottom: 12px; margin-top: 10px;">
+        <input type="text" id="booth-search-input" value="${this.searchQuery}" placeholder="Search dishes, chefs, or ingredients..." style="width: 100%; background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 10px 14px; color: #fff; font-size: 0.88rem; outline: none;">
       </div>
       <div class="vendor-grid">
     `;
@@ -1269,6 +1415,20 @@ class EatsMapApp {
 
     html += '</div>';
     container.innerHTML = html;
+
+    // Attach allergen chips listener inside the newly injected sticky bar
+    this.renderAllergenChips();
+
+    // Trigger one-time golden flash on first visit to MENU tab
+    if (isFirstVisit) {
+      const bar = document.getElementById('allergen-pref-bar');
+      if (bar) {
+        bar.classList.add('flash-attention');
+        setTimeout(() => {
+          bar.classList.remove('flash-attention');
+        }, 400);
+      }
+    }
 
     const inputEl = document.getElementById('booth-search-input');
     if (inputEl) {

@@ -202,13 +202,67 @@ html, body {
   max-width: 100%;
 }
 
-/* ALLERGEN PREFERENCE DRAWER */
+/* ALLERGEN PREFERENCE DRAWER (Sticky inside Menu Viewport & Modal Card) */
 .allergen-bar {
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border-color);
   position: relative;
   flex-shrink: 0;
   z-index: 90;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.allergen-bar.menu-sticky-top {
+  position: sticky;
+  top: -20px; /* locks flush to the top edge of scrollable #main-viewport */
+  margin: -20px -16px 14px; /* expands to the container boundaries */
+  border-top: 1px solid var(--border-color);
+  z-index: 95;
+}
+
+/* First-visit Attention Flash: Golden Yellow Glow Fade (150ms-250ms) */
+@keyframes menu-allergen-flash {
+  0% {
+    background-color: var(--fl-yellow);
+    color: #000;
+  }
+  30% {
+    background-color: var(--fl-yellow);
+    color: #000;
+  }
+  100% {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+  }
+}
+
+.allergen-bar.flash-attention {
+  animation: menu-allergen-flash 0.35s ease-out forwards;
+}
+
+.allergen-bar.flash-attention .allergen-title,
+.allergen-bar.flash-attention .chevron-toggle {
+  color: #000 !important;
+}
+
+/* Large Eats Map Dietary Card Button */
+.eats-map-dietary-card {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 14px 0 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.eats-map-dietary-card:hover, .eats-map-dietary-card:active {
+  border-color: var(--fl-yellow);
+  background: rgba(255, 200, 55, 0.08);
+  transform: translateY(-1px);
 }
 
 .allergen-header {
