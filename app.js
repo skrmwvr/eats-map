@@ -360,6 +360,8 @@ class EatsMapApp {
     const backdrop = document.getElementById('allergen-backdrop');
     if (bar) bar.classList.remove('is-expanded');
     if (backdrop) backdrop.classList.remove('is-active');
+  }
+
   switchViewport(view, pushHistory = true) {
     if (this.activeViewport !== view) {
       if (this.activeViewport === 'home') {
@@ -416,66 +418,6 @@ class EatsMapApp {
     if (bar) {
       bar.classList.toggle('is-expanded');
     }
-  }
-
-  closeAllergenPanel() {
-    const bar = document.getElementById('allergen-pref-bar');
-    if (bar) {
-      bar.classList.remove('is-expanded');
-    }
-  }
-
-  // Large Card modal trigger from Eats Map Home view
-  openAllergenModal() {
-    const modal = document.getElementById('detail-modal');
-    const content = document.getElementById('modal-content');
-    if (!modal || !content) return;
-
-    content.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <strong style="color: var(--fl-yellow); font-size: 1.05rem; font-weight: 800;">⚠️ Dietary & Allergen Tracker</strong>
-        <button class="modal-close-btn">✕</button>
-      </div>
-      <p style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45; margin-bottom: 14px;">
-        Tap ingredients to highlight them with amber tags across all menu cards. You can also define custom ingredients.
-      </p>
-
-      <div id="modal-allergen-chips-tray" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
-        ${this.getAllergenChipsHTML()}
-      </div>
-
-      <button class="action-share-btn" style="width: 100%; padding: 12px; font-weight: 800;" onclick="window.app.closeModal()">
-        ✓ Save & Apply Flags
-      </button>
-    `;
-
-    modal.classList.add('active');
-
-    // Bind chip click events inside modal
-    document.querySelectorAll('#modal-allergen-chips-tray .chip-btn').forEach(chip => {
-      chip.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const allergen = chip.dataset.allergen;
-        if (allergen === 'custom') {
-          this.openCustomAllergenModal();
-          return;
-        }
-
-        if (this.avoidedAllergens.includes(allergen)) {
-          this.avoidedAllergens = this.avoidedAllergens.filter(a => a !== allergen);
-        } else {
-          this.avoidedAllergens.push(allergen);
-        }
-
-        localStorage.setItem('eatsmap_allergens', JSON.stringify(this.avoidedAllergens));
-        this.renderAllergenChips();
-        this.renderActiveViewport();
-
-        // Refresh modal chips visual state
-        const modalTray = document.getElementById('modal-allergen-chips-tray');
-        if (modalTray) modalTray.innerHTML = this.getAllergenChipsHTML();
-      });
-    });
   }
 
   renderAllergenChips() {
