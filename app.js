@@ -830,7 +830,7 @@ class EatsMapApp {
     if (this.homeDisplayMode === 'map') {
       container.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <strong style="color: #fff; font-size: 0.95rem; font-family: 'Outfit';">
+          <strong style="color: #fff; font-size: 0.95rem; font-weight: 800;">
             ${this.activeMapZoneFilter ? `Grounds Map • ${this.activeMapZoneFilter}` : 'Now Playing Grounds Map'}
           </strong>
           <div class="view-mode-toggle">
@@ -861,7 +861,7 @@ class EatsMapApp {
       programCardsHtml = `
         <div style="margin: 14px 0 16px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <strong style="color: var(--fl-yellow); font-size: 0.84rem; font-family: 'Outfit'; text-transform: uppercase; letter-spacing: 0.04em;">
+            <strong style="color: var(--fl-yellow); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800;">
               🎤 Happening Today on Stage
             </strong>
             <a href="javascript:void(0)" onclick="window.app.openTodaysProgram()" style="color: var(--fl-teal); font-size: 0.75rem; text-decoration: underline; font-weight: 700;">
@@ -897,10 +897,10 @@ class EatsMapApp {
       <div style="margin-bottom: 10px;">
         <button class="jumbo-map-btn" onclick="window.app.openFullGroundsMap()">
           <span style="font-size: 1.3rem;">🗺️</span>
-          <span style="flex: 1; text-align: left; font-family: 'Outfit'; font-size: 1.05rem; font-weight: 900; color: #fff;">
+          <span style="flex: 1; text-align: left; font-size: 1.05rem; font-weight: 900; color: #fff;">
             Grounds Map of All Booths
           </span>
-          <span style="font-size: 1.1rem; color: var(--fl-yellow);">Explore →</span>
+          <span style="font-size: 1.1rem; color: var(--fl-yellow); font-weight: 800;">Explore →</span>
         </button>
       </div>
 
@@ -919,7 +919,7 @@ class EatsMapApp {
       <!-- FEATURED CULINARY CREATIONS (SAME STYLING AS HAPPENING TODAY ON STAGE) -->
       <div style="margin: 18px 0 10px; padding-top: 8px; border-top: 1px solid var(--border-color);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <strong style="color: var(--fl-yellow); font-size: 0.84rem; font-family: 'Outfit'; text-transform: uppercase; letter-spacing: 0.04em;">
+          <strong style="color: var(--fl-yellow); font-size: 0.84rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800;">
             🥢 Featured Culinary Creations (${totalCount})
           </strong>
           <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">

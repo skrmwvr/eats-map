@@ -1,3 +1,13 @@
+/* Embedded Local Variable Font for Instant Offline Zero-Shift Paint */
+@font-face {
+  font-family: 'DM Sans';
+  src: url('./fonts/DMSans-VariableFont.woff2') format('woff2-variations'),
+       url('./fonts/DMSans-VariableFont.woff2') format('woff2');
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Eats Map Night Market Brand & Sun Map Layout Architecture */
 :root {
   --bg-dark: #0b0c10;

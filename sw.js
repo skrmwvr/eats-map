@@ -1,4 +1,4 @@
-const CACHE_NAME = 'eats-map-foodieland-v10';
+const CACHE_NAME = 'eats-map-foodieland-v11';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,7 +8,8 @@ const ASSETS_TO_CACHE = [
   './map_logic.js',
   './manifest.webmanifest',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './fonts/DMSans-VariableFont.woff2'
 ];
 
 // Install: Cache core shell and initial data
