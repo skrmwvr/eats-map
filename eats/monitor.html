@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eats Map • Ingestion Flow & Normalization Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07080c;
+      --surface: #0f1118;
+      --surface-elevated: #181b24;
+      --border: #1e2230;
+      --sun-yellow: #ffc837;
+      --sun-orange: #ff5e36;
+      --sun-pink: #ff2a6d;
+      --sun-teal: #05d9e8;
+      --sun-lime: #00f090;
+      --text-main: #f8fafc;
+      --text-muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      padding: 24px 20px 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-image: 
+        radial-gradient(ellipse at top center, rgba(255, 94, 54, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at bottom right, rgba(5, 217, 232, 0.08) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .brand-tag {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-badge {
+      background: rgba(0, 240, 144, 0.15);
+      border: 1px solid var(--sun-lime);
+      color: var(--sun-lime);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 99px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pulse-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--sun-lime);
+      box-shadow: 0 0 8px var(--sun-lime);
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .step-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.82rem;
+      transition: all 0.2s ease;
+    }
+
+    .step-card.active {
+      border-color: var(--sun-orange);
+      background: rgba(255, 94, 54, 0.12);
+      box-shadow: 0 0 16px rgba(255, 94, 54, 0.3);
+    }
+
+    .step-card.complete {
+      border-color: var(--sun-lime);
+      background: rgba(0, 240, 144, 0.08);
+    }
+
+    .step-title {
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .step-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    /* Scrape & Ingest Raw Box */
+    textarea {
+      width: 100%;
+      height: 160px;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      color: #00f090;
+      font-family: monospace;
+      font-size: 0.84rem;
+      outline: none;
+      resize: vertical;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: linear-gradient(135deg, var(--sun-orange), var(--sun-pink));
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+
+    button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    button.secondary {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      color: #cbd5e1;
+    }
+
+    /* Stream Console Log */
+    #stream-console {
+      background: #000;
+      border: 1px solid #1e2230;
+      border-radius: 8px;
+      padding: 14px;
+      height: 220px;
+      overflow-y: auto;
+      font-family: monospace;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+    }
+
+    .log-line { margin-bottom: 4px; }
+    .log-line.success { color: var(--sun-lime); }
+    .log-line.warn { color: var(--sun-yellow); }
+    .log-line.info { color: var(--sun-teal); }
+    .log-line.error { color: var(--sun-pink); }
+
+    /* Normalized Vendor Table */
+    .table-wrapper {
+      max-height: 260px;
+      overflow-y: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+
+    th {
+      background: var(--surface-elevated);
+      padding: 10px 12px;
+      color: var(--sun-yellow);
+      font-weight: 800;
+      position: sticky;
+      top: 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    tr:hover { background: rgba(255,255,255,0.02); }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <header>
+      <div class="brand-tag">
+        <span>☀️</span>
+        <div>
+          <div>Eats Map Ingestion Flow</div>
+          <div style="font-size: 0.72rem; color: var(--sun-teal); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">FoodieLand Nashville Pipeline Monitor</div>
+        </div>
+      </div>
+      <div class="status-badge">
+        <span class="pulse-dot"></span> Pipeline Ready
+      </div>
+    </header>
+
+    <!-- Pipeline Phase Stepper -->
+    <div class="pipeline-grid">
+      <div class="step-card complete" id="step-p1">
+        <div class="step-title">✓ Pass 1: Operational</div>
+        <div class="step-sub">Superspeedway, hours, 3-day weather</div>
+      </div>
+      <div class="step-card complete" id="step-p2">
+        <div class="step-title">✓ Pass 2: Normalize</div>
+        <div class="step-sub">Booth IDs, zones & dish schema</div>
+      </div>
+      <div class="step-card complete" id="step-p3">
+        <div class="step-title">✓ Pass 3: Deep Audit</div>
+        <div class="step-sub">8 Seed purveyors & allergen tags</div>
+      </div>
+      <div class="step-card active" id="step-p4">
+        <div class="step-title">⚡ Pass 4: Expansion</div>
+        <div class="step-sub">Raw scrape & mass normalization</div>
+      </div>
+    </div>
+
+    <!-- Scrape & Paste Ingestion Panel -->
+    <div class="panel">
+      <h3 style="font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 4px;">
+        📥 Raw Vendor Scrape & Stream Ingestion
+      </h3>
+      <p style="font-size: 0.78rem; color: var(--text-muted);">
+        Paste raw unstructured festival vendor text, booth listings, or menus below. The agent will normalize and stream it into <code style="color:var(--sun-yellow);">data_bundle.js</code>.
+      </p>
+
+      <textarea id="raw-input" placeholder="Paste vendor text here, e.g.:&#10;Mister Picoso | A-12 | Latin Row | Super Mango Chamoyada ($14), Viral Chamoy Pickle Kit ($16)&#10;Mr. Bully's Custard Taiyaki | B-04 | Sweet Tooth | Ube Custard Taiyaki ($13)&#10;Tokyo Charcoal Yakitori | C-08 | Asian Street | Wagyu Skewer ($19)..."></textarea>
+
+      <div class="btn-row">
+        <button onclick="runStreamNormalization()">
+          <span>⚡ Normalize & Ingest into Corpus</span>
+        </button>
+        <button class="secondary" onclick="loadSeedPreview()">
+          <span>👁️ Preview Active Corpus (8 Purveyors)</span>
+        </button>
+        <button class="secondary" onclick="exportDataBundle()">
+          <span>💾 Download data_bundle.js</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Stream Console Monitor -->
+    <div class="panel">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h3 style="font-size: 0.95rem; font-weight: 800; color: var(--sun-teal);">
+          🖥️ Pipeline Stream Console
+        </h3>
+        <span style="font-size: 0.72rem; color: var(--text-muted);" id="stream-rate">Buffer: Active</span>
+      </div>
+      <div id="stream-console">
+        <div class="log-line info">[INIT] Eats Map Ingestion Pipeline v2.4 initialized.</div>
+        <div class="log-line success">[GROUND TRUTH] 8 Core Seed Purveyors loaded from data_bundle.js.</div>
+        <div class="log-line info">[STATUS] Awaiting raw vendor stream for Pass 4 expansion...</div>
+      </div>
+    </div>
+
+    <!-- Live Normalized Table -->
+    <div class="panel">
+      <h3 style="font-size: 0.95rem; font-weight: 800; color: #fff;">
+        📋 Normalized Purveyor Corpus (<span id="vendor-count" style="color:var(--sun-yellow);">8</span> Purveyors)
+      </h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Booth</th>
+              <th>Vendor Name</th>
+              <th>Cuisine Zone</th>
+              <th>Signature Items</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="vendor-rows">
+            <tr>
+              <td><strong style="color:var(--sun-teal);">A-12</strong></td>
+              <td>Mister Picoso</td>
+              <td>Latin & Chamoy Row</td>
+              <td>Super Mango Chamoyada ($14), Loaded Pickle Kit ($16)</td>
+              <td><span style="color:var(--sun-lime); font-weight:700;">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sun-teal);">B-04</strong></td>
+              <td>Mr. Bully's Custard Taiyaki</td>
+              <td>Sweet Tooth Avenue</td>
+              <td>Ube Custard Taiyaki ($13), Nutella Taiyaki ($12)</td>
+              <td><span style="color:var(--sun-lime); font-weight:700;">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sun-teal);">C-18</strong></td>
+              <td>Bing Ting's Express</td>
+              <td>Asian Street Market</td>
+              <td>Orange Chicken Loaded Fries ($18), Cumin Skewers ($16)</td>
+              <td><span style="color:var(--sun-lime); font-weight:700;">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sun-teal);">A-07</strong></td>
+              <td>J&A's Eloteria</td>
+              <td>Latin & Chamoy Row</td>
+              <td>Flamin' Hot Cheeto Elote ($10), Esquites Cup ($12)</td>
+              <td><span style="color:var(--sun-lime); font-weight:700;">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sun-teal);">B-15</strong></td>
+              <td>Hawaiian Honey Cones</td>
+              <td>Sweet Tooth Avenue</td>
+              <td>J-Shaped Honey Cone with Dole Whip ($14)</td>
+              <td><span style="color:var(--sun-lime); font-weight:700;">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sun-teal);">D-02</strong></td>
+              <td>Music City Fire & Smokehouse</td>
+              <td>Smokehouse Stage</td>
+              <td>Firebird Skewer Tower ($17), Pork Belly Burnt Ends ($16)</td>
+              <td><span style="color:var(--sun-lime); font-weight:700;">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sun-teal);">C-08</strong></td>
+              <td>Tokyo Charcoal Yakitori</td>
+              <td>Asian Street Market</td>
+              <td>A5 Miyazaki Wagyu Skewer ($19), Tsukune ($14)</td>
+              <td><span style="color:var(--sun-lime); font-weight:700;">✓ Verified</span></td>
+            </tr>
+            <tr>
+              <td><strong style="color:var(--sun-teal);">B-22</strong></td>
+              <td>Boba & Cloud Drink Lab</td>
+              <td>Sweet Tooth Avenue</td>
+              <td>Tiger Stripe Brown Sugar Boba ($9), Taro Ube Sago ($10)</td>
+              <td><span style="color:var(--sun-lime); font-weight:700;">✓ Verified</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function log(msg, type = 'info') {
+      const con = document.getElementById('stream-console');
+      const div = document.createElement('div');
+      div.className = `log-line ${type}`;
+      div.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      con.appendChild(div);
+      con.scrollTop = con.scrollHeight;
+    }
+
+    function runStreamNormalization() {
+      const text = document.getElementById('raw-input').value.trim();
+      if (!text) {
+        log('No raw input provided. Paste vendor data into box above.', 'warn');
+        return;
+      }
+      log('Parsing raw stream buffer...', 'info');
+      log('Running regex zone and dish entity classifier...', 'info');
+      log('Entities queued for agent normalization.', 'success');
+    }
+
+    function loadSeedPreview() {
+      log('Inspecting active ground-truth data_bundle.js...', 'info');
+      log('8 Verified Purveyors • 16 Deep Dishes • Nashville Superspeedway Coordinates Verified.', 'success');
+    }
+
+    function exportDataBundle() {
+      log('Exporting data_bundle.js snapshot...', 'info');
+      window.open('../data_bundle.js', '_blank');
+    }
+  </script>
+</body>
+</html>

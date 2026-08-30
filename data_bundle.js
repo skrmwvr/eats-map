@@ -419,6 +419,191 @@ window.EMBEDDED_VENDORS = [
         ]
       }
     ]
+  },
+  {
+    "id": "booth:daddys-dogs",
+    "name": "Daddy's Dogs",
+    "booth_number": "D-14",
+    "zone": "Smokehouse Stage",
+    "cuisine": "Nashville Gourmet Hot Dogs & Sausages",
+    "tags": ["Hot Dogs", "Comfort Food", "Nashville Local", "Late Night"],
+    "coordinates": { "lat": 36.0463, "lng": -86.4175 },
+    "story": {
+      "founder": "Sean 'Big Daddy' Porter",
+      "origin": "Nashville, TN",
+      "heritage": "Legendary Music City late-night cart culture transformed into Nashville's most celebrated gourmet hot dog institution.",
+      "claim_to_fame": "1/4lb all-beef dogs piled high with bacon, cream cheese, jalapeños, and secret Daddy's sauce."
+    },
+    "menu": [
+      {
+        "id": "dish:music-city-daddy-dog",
+        "name": "The Music City Daddy Dog",
+        "price": 12,
+        "description": "1/4lb all-beef dog grilled over hardwood, slathered with whipped cream cheese, crispy hardwood bacon, grilled onions, jalapeños, and sweet BBQ glaze.",
+        "flavor_profile": "Savory snap, rich cooling cream cheese, smoky bacon crunch with spicy jalapeño kick.",
+        "pairings": "Ice-cold lemonade or craft root beer.",
+        "allergens": ["Dairy", "Gluten/Wheat", "Pork / Bacon"],
+        "dietary": []
+      },
+      {
+        "id": "dish:loaded-tater-tot-dog",
+        "name": "Loaded Crispy Tot Dog",
+        "price": 11,
+        "description": "Grilled jumbo frank topped with golden crispy tater tots, warm cheddar cheese sauce, sour cream, and fresh chives.",
+        "flavor_profile": "Crunchy potato texture, gooey cheese comfort, savory beef frank.",
+        "pairings": "Boba tea or iced tea.",
+        "allergens": ["Dairy", "Gluten/Wheat"],
+        "dietary": []
+      }
+    ]
+  },
+  {
+    "id": "booth:the-mac-shack",
+    "name": "The Mac Shack",
+    "booth_number": "D-08",
+    "zone": "Smokehouse Stage",
+    "cuisine": "Artisan Mac & Cheese & Comfort Skillets",
+    "tags": ["Mac and Cheese", "BBQ", "Comfort Food", "Southern"],
+    "coordinates": { "lat": 36.0460, "lng": -86.4172 },
+    "story": {
+      "founder": "Chef Marcus Vance",
+      "origin": "Nashville, TN & Southern Street Pop-ups",
+      "heritage": "Five-cheese velvety Southern skillet mac layered with slow-smoked meats and gourmet toppings.",
+      "claim_to_fame": "Cast-iron skillet smoked gouda mac topped with 14-hour hickory pulled pork and crispy fried onions."
+    },
+    "menu": [
+      {
+        "id": "dish:pulled-pork-mac-skillet",
+        "name": "14-Hour Smoked Pork Mac Skillet",
+        "price": 15,
+        "description": "Cavatappi pasta drenched in sharp cheddar and smoked gouda cheese sauce, piled with hickory pulled pork, sweet bourbon glaze, and fried onion crisps.",
+        "flavor_profile": "Ultra-creamy cheese decadence, tender smoky pork sweetness, crispy savory onion crunch.",
+        "pairings": "Sweet peach tea or iced lemonade.",
+        "allergens": ["Dairy", "Gluten/Wheat", "Pork / Bacon"],
+        "dietary": []
+      },
+      {
+        "id": "dish:truffle-garlic-mac-bites",
+        "name": "Crispy Truffle White Cheddar Bites",
+        "price": 12,
+        "description": "Panko-crusted deep-fried mac and cheese balls infused with black truffle oil, aged Vermont white cheddar, and served with garlic herb aioli.",
+        "flavor_profile": "Crispy golden shell exploding with aromatic earthy truffle and rich molten cheese.",
+        "pairings": "Sparkling water or fruit slush.",
+        "allergens": ["Dairy", "Gluten/Wheat", "Eggs"],
+        "dietary": ["Vegetarian"]
+      }
+    ]
+  },
+  {
+    "id": "booth:bondi-bowls",
+    "name": "Bondi Bowls Nashville",
+    "booth_number": "B-10",
+    "zone": "Sweet Tooth Avenue",
+    "cuisine": "Australian Artisan Acai & Pitaya Bowls",
+    "tags": ["Acai Bowls", "Smoothies", "Healthy", "Vegan", "Gluten-Free"],
+    "coordinates": { "lat": 36.0476, "lng": -86.4170 },
+    "story": {
+      "founder": "Bailey & Bondi Crew",
+      "origin": "Bondi Beach inspired • Nashville, TN",
+      "heritage": "100% pure organic fruit bases free of refined sugar, dairy, and artificial additives, topped with artisan granola.",
+      "claim_to_fame": "Thick blended organic Brazilian acai topped with fresh berries, hemp seeds, toasted coconut, and raw wildflower honey drizzle."
+    },
+    "menu": [
+      {
+        "id": "dish:signature-bondi-acai-bowl",
+        "name": "The Bondi Signature Acai Bowl",
+        "price": 14,
+        "description": "Thick organic acai base layered with gluten-free vanilla almond granola, fresh strawberries, blueberries, banana slices, chia seeds, and raw local honey.",
+        "flavor_profile": "Tart-sweet refreshing berry depth, crunchy almond granola, soothing honey floral finish.",
+        "pairings": "Fresh coconut water or iced cold brew.",
+        "allergens": ["Tree Nuts (Almond)"],
+        "dietary": ["Vegetarian", "Gluten-Free", "Dairy-Free", "Vegan Option"]
+      },
+      {
+        "id": "dish:dragonfruit-pitaya-glow-bowl",
+        "name": "Neon Dragonfruit Pitaya Bowl",
+        "price": 15,
+        "description": "Vibrant magenta pitaya blended with mango and pineapple, topped with kiwi, toasted coconut flakes, goji berries, and passionfruit drizzle.",
+        "flavor_profile": "Tropical bright citrus notes, smooth creamy texture, exotic coconut crunch.",
+        "pairings": "Boba tea or lemonade.",
+        "allergens": ["Coconut"],
+        "dietary": ["Vegan", "Gluten-Free", "Dairy-Free"]
+      }
+    ]
+  },
+  {
+    "id": "booth:bubbled-up-nash",
+    "name": "Bubbled Up Nash",
+    "booth_number": "B-28",
+    "zone": "Sweet Tooth Avenue",
+    "cuisine": "Artisan Bubble Waffles & Boba Mocktails",
+    "tags": ["Bubble Waffles", "Boba", "Desserts", "Nashville Local"],
+    "coordinates": { "lat": 36.0478, "lng": -86.4165 },
+    "story": {
+      "founder": "Chef Linh Nguyen",
+      "origin": "Nashville, TN",
+      "heritage": "Hong Kong egg puff waffle tradition (*Gai Daan Jai*) fused with Southern artisan ice creams and popping boba infusions.",
+      "claim_to_fame": "Warm honeycomb bubble waffle cones wrapped around artisan ice cream, fruit skewers, and toasted marshmallow drizzles."
+    },
+    "menu": [
+      {
+        "id": "dish:matcha-strawberry-bubble-cone",
+        "name": "Matcha Strawberry Bubble Waffle Cone",
+        "price": 13,
+        "description": "Freshly pressed vanilla egg puff waffle wrapped around Uji matcha ice cream, fresh sliced strawberries, strawberry popping boba, and condensed milk drizzle.",
+        "flavor_profile": "Crisp-airy waffle puffs, earthy sweet matcha cream, bursting fruit boba pops.",
+        "pairings": "Iced jasmine green tea.",
+        "allergens": ["Dairy", "Eggs", "Gluten/Wheat"],
+        "dietary": ["Vegetarian"]
+      },
+      {
+        "id": "dish:sparkling-mango-popping-cooler",
+        "name": "Sparkling Mango Passionfruit Boba Cooler",
+        "price": 8,
+        "description": "Fizzy sparkling mango puree infused with passionfruit tea, green apple jelly, and mango popping pearls over crushed ice.",
+        "flavor_profile": "Bubbly tropical effervescence, juicy fruit bursts, intensely cooling.",
+        "pairings": "Loaded fries or yakitori skewers.",
+        "allergens": [],
+        "dietary": ["Vegan", "Gluten-Free", "Dairy-Free"]
+      }
+    ]
+  },
+  {
+    "id": "booth:mag-mile-pizza",
+    "name": "Mag Mile Pizza",
+    "booth_number": "A-18",
+    "zone": "Latin & Chamoy Row",
+    "cuisine": "Wood-Fired & Detroit-Style Street Pizza",
+    "tags": ["Pizza", "Wood-Fired", "Italian Street", "Comfort Food"],
+    "coordinates": { "lat": 36.0465, "lng": -86.4182 },
+    "story": {
+      "founder": "Pizzaiolo Tony & Crew",
+      "origin": "Nashville pop-up circuit",
+      "heritage": "72-hour cold-fermented dough fired at 800°F with house-simmered San Marzano tomato sauce and caramelized crispy frico cheese edges.",
+      "claim_to_fame": "Charred hot honey pepperoni slices and Latin-crossover Birria pizza slices."
+    },
+    "menu": [
+      {
+        "id": "dish:hot-honey-cupping-pepperoni",
+        "name": "Charred Hot Honey Pepperoni Jumbo Slice",
+        "price": 11,
+        "description": "Crispy Detroit-style crust topped with whole-milk mozzarella, crispy charred cupping pepperoni, fresh basil, and infused chili hot honey drizzle.",
+        "flavor_profile": "Crispy caramelized cheesy crust, spicy savory pepperoni, sweet floral chili honey heat.",
+        "pairings": "Cold soda or iced tea.",
+        "allergens": ["Dairy", "Gluten/Wheat", "Pork / Bacon"],
+        "dietary": []
+      },
+      {
+        "id": "dish:birria-quesa-pizza-slice",
+        "name": "Birria de Res Street Pizza Slice",
+        "price": 13,
+        "description": "Slow-braised beef birria, melted Oaxaca and mozzarella cheeses, cilantro, diced onions, served with a side cup of rich dipping consommé.",
+        "flavor_profile": "Rich savory shredded beef, gooey melted cheese pull, deeply aromatic chile-spiced consommé dip.",
+        "pairings": "Horchata or Jarritos tamarind.",
+        "allergens": ["Dairy", "Gluten/Wheat", "Cilantro"],
+        "dietary": ["Halal Beef Option"]
+      }
+    ]
   }
 ];
 window.EMBEDDED_VENUE = {
