@@ -604,6 +604,276 @@ window.EMBEDDED_VENDORS = [
         "dietary": ["Halal Beef Option"]
       }
     ]
+  },
+  {
+    "id": "booth:pineapple-boys",
+    "name": "Pineapple Boys",
+    "booth_number": "A-04",
+    "zone": "Latin & Chamoy Row",
+    "cuisine": "Hawaiian-Mexican Fusion & Fruit Bowls",
+    "tags": ["Pineapple Bowls", "Birria", "Teriyaki", "Showstopper"],
+    "coordinates": { "lat": 36.0469, "lng": -86.4179 },
+    "story": {
+      "founder": "Chef Kai & Crew",
+      "origin": "West Coast & FoodieLand Tour Circuit",
+      "heritage": "Whole caramelized pineapples carved fresh and piled with slow-roasted meats, coconut rice, and savory marinades.",
+      "claim_to_fame": "Viral carved whole pineapple bowls loaded with BBQ teriyaki beef, tropical salsa, and mini donut dessert buckets."
+    },
+    "menu": [
+      {
+        "id": "dish:loaded-pineapple-bbq-bowl",
+        "name": "Carved Whole Pineapple Teriyaki Beef Bowl",
+        "price": 18,
+        "description": "Half carved fresh pineapple stuffed with teriyaki glazed ribeye beef, jasmine rice, sweet pineapple chunks, and toasted sesame seeds.",
+        "flavor_profile": "Sweet tangy tropical citrus, rich savory beef umami, warm sesame finish.",
+        "pairings": "Fresh coconut water or pineapple slush.",
+        "allergens": ["Soy", "Sesame", "Gluten/Wheat"],
+        "dietary": ["Dairy-Free"]
+      }
+    ]
+  },
+  {
+    "id": "booth:the-lumpia-bucket",
+    "name": "The Lumpia Bucket™",
+    "booth_number": "C-12",
+    "zone": "Asian Street Market",
+    "cuisine": "Filipino Night Market Specialties",
+    "tags": ["Lumpia", "Filipino", "Street Snacks", "Crispy"],
+    "coordinates": { "lat": 36.0471, "lng": -86.4177 },
+    "story": {
+      "founder": "Chef Carlo & Family",
+      "origin": "Bay Area & National Tour",
+      "heritage": "Generational Manila family lumpia recipe rolled ultra-tight for maximum shatter-crisp crunch.",
+      "claim_to_fame": "Jumbo buckets of crispy pork and vegetable lumpia served with sweet chili dip and Filipino spaghetti."
+    },
+    "menu": [
+      {
+        "id": "dish:golden-lumpia-bucket",
+        "name": "Crispy Pork Lumpia Bucket (12pc)",
+        "price": 16,
+        "description": "Twelve hand-rolled golden crispy Filipino pork lumpia eggrolls served with house sweet garlic chili sauce and chicharrones.",
+        "flavor_profile": "Shatter-crisp pastry shell, savory seasoned pork mince, sweet-tangy dipping sauce.",
+        "pairings": "Calamansi iced tea or cold beer.",
+        "allergens": ["Gluten/Wheat", "Soy", "Pork / Bacon"],
+        "dietary": []
+      }
+    ]
+  },
+  {
+    "id": "booth:ghostix-corndogs",
+    "name": "Ghostix Korean Rice Dogs",
+    "booth_number": "C-22",
+    "zone": "Asian Street Market",
+    "cuisine": "Korean Street Food & Rice Corndogs",
+    "tags": ["Korean Hot Dog", "Cheese Pull", "Hot Cheetos", "Street Food"],
+    "coordinates": { "lat": 36.0474, "lng": -86.4179 },
+    "story": {
+      "founder": "Chef Min-Seok",
+      "origin": "Seoul Street Markets to Tour Circuit",
+      "heritage": "Authentic yeasted rice flour batter fried golden with extreme cheese pulls and viral toppings.",
+      "claim_to_fame": "Half-mozzarella half-beef hot dogs coated in crispy potato cubes and Flamin' Hot Cheeto crust."
+    },
+    "menu": [
+      {
+        "id": "dish:potato-mozz-rice-dog",
+        "name": "Potato Cube & Mozzarella Rice Dog",
+        "price": 11,
+        "description": "Stretchy whole-milk mozzarella cheese dipped in chewy rice batter, encrusted with crispy potato cubes, spicy sriracha mayo, and sweet sugar dust.",
+        "flavor_profile": "Crunchy exterior potato, ultra-chewy stretchy cheese core, spicy-sweet glaze.",
+        "pairings": "Brown sugar boba or iced lemonade.",
+        "allergens": ["Dairy", "Gluten/Wheat", "Eggs"],
+        "dietary": ["Vegetarian"]
+      }
+    ]
+  },
+  {
+    "id": "booth:sushi-pizzeria",
+    "name": "Sushi Pizzeria",
+    "booth_number": "C-05",
+    "zone": "Asian Street Market",
+    "cuisine": "Japanese-American Street Fusion",
+    "tags": ["Sushi Pizza", "Spicy Tuna", "Fusion", "Viral"],
+    "coordinates": { "lat": 36.0467, "lng": -86.4173 },
+    "story": {
+      "founder": "Chef Jin Takahashi",
+      "origin": "West Coast Night Markets",
+      "heritage": "Crispy flash-fried seasoned rice & nori crust reimagined as a hand-held pizza slice loaded with sashimi cuts.",
+      "claim_to_fame": "Deep-fried nori rice crust loaded with spicy tuna, salmon, tobiko, avocado, and flame-torched unagi sauce."
+    },
+    "menu": [
+      {
+        "id": "dish:spicy-tuna-sushi-pizza",
+        "name": "Flame-Torched Spicy Tuna Sushi Pizza",
+        "price": 16,
+        "description": "Crispy panko-crusted sushi rice base topped with seasoned sashimi spicy tuna, avocado ribbons, tobiko roe, spicy kewpie mayo, and sweet unagi drizzle.",
+        "flavor_profile": "Crispy savory rice base, rich melt-in-mouth spicy tuna, smoky torched eel sauce glaze.",
+        "pairings": "Green tea or Ramune.",
+        "allergens": ["Fish", "Soy", "Sesame", "Gluten/Wheat", "Eggs"],
+        "dietary": []
+      }
+    ]
+  },
+  {
+    "id": "booth:hgg-tanghulu",
+    "name": "HGG Tanghulu",
+    "booth_number": "B-08",
+    "zone": "Sweet Tooth Avenue",
+    "cuisine": "Traditional Chinese Glass-Glazed Fruit",
+    "tags": ["Tanghulu", "Sugar Glass", "Strawberries", "Sweets"],
+    "coordinates": { "lat": 36.0475, "lng": -86.4168 },
+    "story": {
+      "founder": "Master Candy Maker Zhang",
+      "origin": "Beijing Night Markets to Tour",
+      "heritage": "Ancient Song Dynasty candy-glazing method using pure boiling sugar cane syrup dipped at exact hard-crack temperatures.",
+      "claim_to_fame": "Crystal-glass coated giant fresh strawberry and shine muscat grape skewers that shatter with every bite."
+    },
+    "menu": [
+      {
+        "id": "dish:strawberry-muscat-tanghulu",
+        "name": "Glass-Cracked Strawberry & Shine Muscat Skewer",
+        "price": 9,
+        "description": "Fresh jumbo strawberries and crisp seedless Shine Muscat grapes enveloped in a paper-thin, ruby crystal hard-crack sugar shell.",
+        "flavor_profile": "Shattering glass candy crunch bursting into icy sweet juicy fruit nectar.",
+        "pairings": "Hot or iced jasmine green tea.",
+        "allergens": [],
+        "dietary": ["Vegan", "Gluten-Free", "Dairy-Free"]
+      }
+    ]
+  },
+  {
+    "id": "booth:cheese-wheel-pasta",
+    "name": "The Cheese Wheel Pasta",
+    "booth_number": "D-05",
+    "zone": "Smokehouse Stage",
+    "cuisine": "Tableside Flamed Italian Pasta",
+    "tags": ["Cheese Wheel", "Pasta", "Truffle", "Showstopper"],
+    "coordinates": { "lat": 36.0462, "lng": -86.4174 },
+    "story": {
+      "founder": "Chef Lorenzo & Team",
+      "origin": "Tour Circuit Showstopper",
+      "heritage": "Classic Emilia-Romagna *Pasta alla Ruota* tossed tableside in a hollowed 80lb Parmigiano-Reggiano wheel flamed with grappa.",
+      "claim_to_fame": "Steaming fresh fettuccine flambéed directly inside an 80lb aged Parmesan wheel with black winter truffle oil."
+    },
+    "menu": [
+      {
+        "id": "dish:flamed-parm-truffle-fettuccine",
+        "name": "Flambéed Truffle Parmigiano Fettuccine",
+        "price": 17,
+        "description": "Handmade fettuccine swirled tableside inside an 80lb flaming wheel of 24-month Parmigiano-Reggiano, finished with black truffle butter and cracked peppercorn.",
+        "flavor_profile": "Rich intense nutty aged parmesan cream, decadent earthy truffle aroma, al dente ribbon pasta.",
+        "pairings": "Sparkling water or iced tea.",
+        "allergens": ["Dairy", "Gluten/Wheat", "Eggs"],
+        "dietary": ["Vegetarian"]
+      }
+    ]
+  },
+  {
+    "id": "booth:twisted-potato-co",
+    "name": "Twisted Potato Co.",
+    "booth_number": "C-15",
+    "zone": "Asian Street Market",
+    "cuisine": "Night Market Tornado Skewers",
+    "tags": ["Tornado Potato", "Spiral Potato", "Street Snacks"],
+    "coordinates": { "lat": 36.0470, "lng": -86.4176 },
+    "story": {
+      "founder": "Alex & Tornado Crew",
+      "origin": "Myeongdong Night Markets",
+      "heritage": "Whole Russet potatoes precision spiral-cut on 18-inch bamboo skewers and flash-fried to ribbon crispness.",
+      "claim_to_fame": "Giant 18-inch spiral tornado potatoes dusted with Garlic Parmesan, Sour Cream, or Flamin' Cajun spices."
+    },
+    "menu": [
+      {
+        "id": "dish:spiral-tornado-potato-skewer",
+        "name": "18-Inch Golden Spiral Tornado Potato",
+        "price": 10,
+        "description": "Continuous single spiral-cut whole potato fried crisp on an 18-inch bamboo skewer, dusted with garlic parmesan and smoky paprika seasonings.",
+        "flavor_profile": "Crisp chip edges with fluffy potato center, savory garlic herb seasoning.",
+        "pairings": "Lemonade or iced boba.",
+        "allergens": ["Dairy (in cheese seasoning)"],
+        "dietary": ["Vegetarian", "Gluten-Free"]
+      }
+    ]
+  },
+  {
+    "id": "booth:taos-bao",
+    "name": "Tao's Bao",
+    "booth_number": "C-25",
+    "zone": "Asian Street Market",
+    "cuisine": "Shanghai Street Bao & Character Dim Sum",
+    "tags": ["Bao", "Dim Sum", "Dumplings", "Pork Buns"],
+    "coordinates": { "lat": 36.0473, "lng": -86.4180 },
+    "story": {
+      "founder": "Master Dim Sum Chef Tao",
+      "origin": "Shanghai & Tour Circuit",
+      "heritage": "Traditional cast-iron pan-fried Shanghai *Shengjianbao* with savory bone broth gelatin cores.",
+      "claim_to_fame": "Bottom-crisp juicy pan-fried pork bao and handmade animal-shaped molten custard buns."
+    },
+    "menu": [
+      {
+        "id": "dish:shanghai-crisp-pork-bao",
+        "name": "Crisp-Bottom Shanghai Pork Soup Bao (4pc)",
+        "price": 14,
+        "description": "Fluffy yeast dough filled with seasoned heritage pork and rich broth, pan-fried in sesame oil for an ultra-crisp golden bottom crust.",
+        "flavor_profile": "Pillowy bun, crunchy toasted sesame bottom, explosion of savory hot pork soup broth.",
+        "pairings": "Tsingtao beer or iced oolong tea.",
+        "allergens": ["Gluten/Wheat", "Soy", "Sesame", "Pork / Bacon"],
+        "dietary": []
+      }
+    ]
+  },
+  {
+    "id": "booth:fluffy-souffle-co",
+    "name": "Fluffy Soufflé Co.",
+    "booth_number": "B-18",
+    "zone": "Sweet Tooth Avenue",
+    "cuisine": "Japanese Jiggly Soufflé Pancakes",
+    "tags": ["Souffle Pancakes", "Japanese", "Dessert", "Fluffy"],
+    "coordinates": { "lat": 36.0477, "lng": -86.4169 },
+    "story": {
+      "founder": "Pastry Chef Yuka Ono",
+      "origin": "Harajuku, Tokyo",
+      "heritage": "Whipped egg-white meringue griddled slowly under steam domes for an impossibly cloud-like, melt-in-mouth texture.",
+      "claim_to_fame": "Double-stacked jiggly soufflé pancakes smothered in brown sugar boba pearls and mascarpone cream."
+    },
+    "menu": [
+      {
+        "id": "dish:boba-souffle-pancake-stack",
+        "name": "Tokyo Brown Sugar Boba Soufflé Stack",
+        "price": 15,
+        "description": "Two cloud-like Japanese soufflé pancakes layered with vanilla mascarpone cream, warm brown sugar tapioca pearls, and toasted almond slivers.",
+        "flavor_profile": "Melt-in-mouth warm airy pancake fluff, velvety cream, chewy caramel boba.",
+        "pairings": "Cold brew coffee or matcha latte.",
+        "allergens": ["Dairy", "Eggs", "Gluten/Wheat", "Tree Nuts (Almond)"],
+        "dietary": ["Vegetarian"]
+      }
+    ]
+  },
+  {
+    "id": "booth:big-baby-bottle",
+    "name": "The Original Big Baby Bottle",
+    "booth_number": "B-01",
+    "zone": "Sweet Tooth Avenue",
+    "cuisine": "Novelty Showstopper Drink Station",
+    "tags": ["Drinks", "Lemonade", "Novelty", "Unlimited Refills"],
+    "coordinates": { "lat": 36.0471, "lng": -86.4160 },
+    "story": {
+      "founder": "The Beverage Crew",
+      "origin": "FoodieLand National Festival Circuit",
+      "heritage": "The undisputed viral novelty showstopper of FoodieLand night markets nationwide.",
+      "claim_to_fame": "Jumbo 32oz refillable baby bottles filled with fresh fruit lemonades, glitter mocktails, and unlimited weekend refills."
+    },
+    "menu": [
+      {
+        "id": "dish:jumbo-baby-bottle-lemonade",
+        "name": "32oz Big Baby Bottle with Fruit Lemonade",
+        "price": 19,
+        "description": "32oz collectible souvenir baby bottle with silicone nipple lid, filled with freshly squeezed strawberry-dragonfruit lemonade and edible glitter (includes $5 refills all weekend).",
+        "flavor_profile": "Tart-sweet zesty citrus refreshment, sparkling fruit berry notes.",
+        "pairings": "Hot chicken skewers, tacos, or loaded fries.",
+        "allergens": [],
+        "dietary": ["Vegan", "Gluten-Free", "Dairy-Free"]
+      }
+    ]
   }
 ];
 window.EMBEDDED_VENUE = {
