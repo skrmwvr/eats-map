@@ -1240,71 +1240,7 @@ html, body {
   color: #fff;
 }
 
-/* BOTTOM DASHBOARD (Authentic Sun Map sloped architecture) */
-.dashboard-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  background-color: var(--header-footer-bg);
-  padding: 8px 12px;
-  gap: 8px;
-  border-top: 1px solid var(--border-color);
-  align-items: end;
-  overflow: visible;
-  flex-shrink: 0;
-}
 
-.home-btn-container {
-  position: relative;
-  height: 74px;
-  margin-top: -28px;
-  display: flex;
-  justify-content: center;
-  z-index: 5;
-  width: 100%;
-}
-
-.tiny-foot-btn {
-  position: absolute;
-  height: 36px;
-  width: 36px;
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-  outline: none !important;
-  color: #ccc;
-  font-size: 1.3rem;
-  font-weight: 900;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 6;
-  transition: all 0.15s ease;
-}
-
-.tiny-foot-btn:hover {
-  color: var(--fl-orange);
-  transform: scale(1.1);
-}
-
-#btn-foot-map {
-  left: calc(50% - 66px);
-  top: 6px;
-}
-
-#btn-foot-help {
-  right: calc(50% - 66px);
-  top: 6px;
-}
-
-#btn-home {
-  height: 100%;
-  width: 100%;
-  border-radius: 12px;
-  border: 2px solid var(--fl-orange);
-  background: var(--bg-surface-elevated);
-  box-shadow: 0 4px 15px rgba(255, 94, 54, 0.3);
-}
 
 /* Detail & Allergen Action Modal */
 .modal-backdrop {
