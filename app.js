@@ -25,23 +25,33 @@ class EatsMapApp {
   }
 
   init() {
-    this.buildFeaturedDishesList();
-    this.determineCurrentDayIndex();
-    this.bindEvents();
-    this.renderAllergenChips();
-    this.updateCarButtonStatus();
-    this.updateTopBarStatus();
-    this.updateWishlistBadge();
-    this.updateBoothCountSubtext();
-    this.renderActiveViewport();
+    try {
+      if ((!this.vendors || this.vendors.length === 0) && window.EMBEDDED_VENDORS) {
+        this.vendors = window.EMBEDDED_VENDORS;
+      }
+      if (!this.venue && window.EMBEDDED_VENUE) {
+        this.venue = window.EMBEDDED_VENUE;
+      }
+      this.buildFeaturedDishesList();
+      this.determineCurrentDayIndex();
+      this.bindEvents();
+      this.renderAllergenChips();
+      this.updateCarButtonStatus();
+      this.updateTopBarStatus();
+      this.updateWishlistBadge();
+      this.updateBoothCountSubtext();
+      this.renderActiveViewport();
 
-    // Register PWA Service Worker for offline vector and shell caching
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => {
-          console.log('SW registration note:', err);
+      // Register PWA Service Worker for offline vector and shell caching
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(err => {
+            console.log('SW registration note:', err);
+          });
         });
-      });
+      }
+    } catch (err) {
+      console.error('App init error:', err);
     }
   }
 
