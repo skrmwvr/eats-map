@@ -25,6 +25,7 @@ class EatsMapApp {
   }
 
   init() {
+    // 1. Ensure Embedded Data availability
     try {
       if ((!this.vendors || this.vendors.length === 0) && window.EMBEDDED_VENDORS) {
         this.vendors = window.EMBEDDED_VENDORS;
@@ -34,30 +35,48 @@ class EatsMapApp {
       }
       this.buildFeaturedDishesList();
       this.determineCurrentDayIndex();
+    } catch (e) {
+      console.warn('Data build error:', e);
+    }
+
+    // 2. Bind DOM Event Listeners
+    try {
       this.bindEvents();
+    } catch (e) {
+      console.warn('Bind events error:', e);
+    }
+
+    // 3. Render Top/Bottom Indicators
+    try {
       this.renderAllergenChips();
       this.updateCarButtonStatus();
       this.updateTopBarStatus();
       this.updateWishlistBadge();
       this.updateBoothCountSubtext();
-      this.renderActiveViewport();
+    } catch (e) {
+      console.warn('Indicators render error:', e);
+    }
 
-      // Register PWA Service Worker for offline vector and shell caching
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').catch(err => {
-            console.log('SW registration note:', err);
-          });
+    // 4. Primary Viewport Render (Guaranteed execution)
+    try {
+      this.renderActiveViewport();
+    } catch (e) {
+      console.error('Primary viewport render error:', e);
+    }
+
+    // 5. Register PWA Service Worker for offline vector and shell caching
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => {
+          console.log('SW registration note:', err);
         });
-      }
-    } catch (err) {
-      console.error('App init error:', err);
+      });
     }
   }
 
   // --- TIME CALCULATION: Check if a Stage Event has passed + 15 min grace period ---
   isPastEvent(dateStr, timeStr) {
-    if (!dateStr || !timeStr) return false;
+    if (!dateStr || !timeStr || typeof dateStr !== 'string' || typeof timeStr !== 'string') return false;
     try {
       // Parse timeStr like '4:00 PM' or '11:30 AM'
       const match = timeStr.match(/(\d+):(\d+)\s*(AM|PM)/i);
@@ -68,11 +87,19 @@ class EatsMapApp {
       if (ampm === 'PM' && hours < 12) hours += 12;
       if (ampm === 'AM' && hours === 12) hours = 0;
 
-      // Extract month and day from dateStr like 'Friday, Aug 28, 2026'
-      const dateParts = dateStr.match(/Aug(?:ust)?\s+(\d+),\s*(\d{4})/i);
-      if (!dateParts) return false;
-      const day = parseInt(dateParts[1], 10);
-      const year = parseInt(dateParts[2], 10);
+      // Extract month and day from dateStr (e.g. 'Friday, Aug 28, 2026' or 'Sun 8/30')
+      let day = 28;
+      let year = 2026;
+      const dateParts = dateStr.match(/Aug(?:ust)?\s+(\d+)(?:,\s*(\d{4}))?/i);
+      if (dateParts && dateParts[1]) {
+        day = parseInt(dateParts[1], 10);
+        if (dateParts[2]) year = parseInt(dateParts[2], 10);
+      } else {
+        const slashParts = dateStr.match(/(\d+)\/(\d+)/);
+        if (slashParts && slashParts[2]) {
+          day = parseInt(slashParts[2], 10);
+        }
+      }
 
       // Event conclusion time = start time + 45 min duration + 15 min grace period = +60 mins
       const eventTime = new Date(year, 7, day, hours, minutes + 60);
@@ -85,26 +112,31 @@ class EatsMapApp {
 
   // Get active valid wishlist items (filtering out program events passed + 15 min)
   getActiveWishlistItems() {
+    if (!Array.isArray(this.wishlist)) return [];
     return this.wishlist.filter(itemId => {
-      // If it's a food dish, it never expires
-      const isFood = this.allFeaturedDishes.some(d => d.id === itemId);
-      if (isFood) return true;
+      try {
+        // If it's a food dish, it never expires
+        const isFood = (this.allFeaturedDishes || []).some(d => d.id === itemId);
+        if (isFood) return true;
 
-      // If it's a stage event, check if it concluded
-      let foundStage = null;
-      let foundDay = null;
-      for (const d of (this.venue?.days || [])) {
-        const ev = (d.stage_highlights || []).find(h => h.id === itemId);
-        if (ev) {
-          foundStage = ev;
-          foundDay = d;
-          break;
+        // If it's a stage event, check if it concluded
+        let foundStage = null;
+        let foundDay = null;
+        for (const d of (this.venue?.days || [])) {
+          const ev = (d.stage_highlights || []).find(h => h.id === itemId);
+          if (ev) {
+            foundStage = ev;
+            foundDay = d;
+            break;
+          }
         }
+        if (foundStage && foundDay && foundDay.date_str && foundStage.time) {
+          return !this.isPastEvent(foundDay.date_str, foundStage.time);
+        }
+        return true;
+      } catch (e) {
+        return true;
       }
-      if (foundStage && foundDay) {
-        return !this.isPastEvent(foundDay.date_str, foundStage.time);
-      }
-      return true;
     });
   }
 
