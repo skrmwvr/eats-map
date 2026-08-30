@@ -939,20 +939,20 @@ class EatsMapApp {
 
       html += `
         <div class="vendor-card" onclick="window.app.openDishCardModal('${d.id}')">
-          <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom: 6px;">
             <div>
-              <strong style="color:#fff; font-size:0.95rem;">${d.name}</strong>
-              <div style="font-size:0.74rem; color:var(--fl-teal); font-weight:600;">${d.vendorName}</div>
+              <strong style="color:#fff; font-size:1.02rem; font-weight:800;">${d.name}</strong>
+              <div style="font-size:0.75rem; color:var(--fl-teal); font-weight:600; margin-top:2px;">${d.vendorName}</div>
             </div>
-            <span style="color:var(--fl-yellow); font-weight:800; font-size:0.92rem;">$${d.price}</span>
+            <span style="color:var(--fl-yellow); font-weight:900; font-size:0.98rem;">$${d.price}</span>
           </div>
-          <p style="font-size:0.76rem; color:var(--text-secondary); margin:4px 0;">${d.description}</p>
-          ${itemFlagged.length > 0 ? '<div class="allergen-warning-tag">⚠️ Contains: <strong>' + itemFlagged.join(', ') + '</strong></div>' : ''}
-          <div style="margin-top:8px; display:flex; justify-content:space-between; align-items:center;">
+          <p style="font-size:0.80rem; color:var(--text-secondary); line-height:1.45; margin: 8px 0 12px;">${d.description}</p>
+          ${itemFlagged.length > 0 ? '<div class="allergen-warning-tag" style="margin-bottom:8px;">⚠️ Contains: <strong>' + itemFlagged.join(', ') + '</strong></div>' : ''}
+          <div style="margin-top:4px; display:flex; justify-content:space-between; align-items:center;">
             <span class="booth-badge ${zoneClass}" onclick="window.app.highlightBoothOnMap('${d.vendorId}', event)" title="Locate on Map">
               📍 Booth ${d.vendorBooth}
             </span>
-            <span style="font-size:0.72rem; color:var(--fl-orange); font-weight:700;">${inWish ? '✓ In Wishlist' : 'Card →'}</span>
+            <span style="font-size:0.75rem; color:var(--fl-orange); font-weight:800;">${inWish ? '✓ In Wishlist' : 'Card →'}</span>
           </div>
         </div>
       `;
@@ -1010,21 +1010,21 @@ class EatsMapApp {
         <button class="modal-close-btn">✕</button>
       </div>
       <div>
-        <h2 style="font-family: 'Outfit'; font-size: 1.35rem; font-weight: 900; color: #fff;">${dish.name}</h2>
-        <p style="color: var(--fl-teal); font-size: 0.85rem; font-weight: 600;">${dish.vendorName} • <span style="color: var(--fl-yellow);">$${dish.price}</span></p>
+        <h2 style="font-family: 'DM Sans'; font-size: 1.4rem; font-weight: 900; color: #fff; letter-spacing: -0.01em;">${dish.name}</h2>
+        <p style="color: var(--fl-teal); font-size: 0.88rem; font-weight: 700; margin-top: 2px;">${dish.vendorName} • <span style="color: var(--fl-yellow); font-weight: 900;">$${dish.price}</span></p>
       </div>
 
-      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 14px;">
-        <p style="font-size: 0.86rem; line-height: 1.45; color: #f1f5f9; margin-bottom: 8px;">${dish.description}</p>
-        <div style="font-size: 0.78rem; color: var(--fl-teal); margin-bottom: 6px;">
+      <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 16px;">
+        <p style="font-size: 0.88rem; line-height: 1.5; color: #f1f5f9; margin-bottom: 14px;">${dish.description}</p>
+        <div style="font-size: 0.80rem; color: var(--fl-teal); margin-bottom: 10px;">
           <strong>Flavor Notes:</strong> ${dish.flavor_profile}
         </div>
         ${pairingLine}
         ${allergenLine}
       </div>
 
-      <div style="background: rgba(255, 94, 54, 0.08); border-left: 3px solid var(--fl-orange); padding: 8px 10px; border-radius: 4px; font-size: 0.78rem; line-height: 1.4; color: #e2e8f0;">
-        <p><strong>Chef/Team:</strong> ${dish.vendorStory ? dish.vendorStory.founder : 'Artisan Culinary Team'}</p>
+      <div style="background: rgba(255, 94, 54, 0.08); border-left: 3px solid var(--fl-orange); padding: 10px 12px; border-radius: 4px; font-size: 0.80rem; line-height: 1.45; color: #e2e8f0; margin-bottom: 8px;">
+        <p style="margin-bottom: 4px;"><strong>Chef/Team:</strong> ${dish.vendorStory ? dish.vendorStory.founder : 'Artisan Culinary Team'}</p>
         <p style="color: var(--fl-yellow);"><strong>Acclaim:</strong> ${dish.vendorStory ? dish.vendorStory.claim_to_fame : ''}</p>
       </div>
 

@@ -39,7 +39,7 @@
 }
 
 html, body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background-color: #000000;
   color: var(--text-primary);
   height: 100%;
@@ -50,6 +50,8 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #app-container, .app-container {
@@ -101,9 +103,9 @@ html, body {
 }
 
 .brand-name {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-weight: 900;
-  font-size: 0.98rem;
+  font-size: 1.02rem;
   color: #fff;
   letter-spacing: -0.01em;
 }
@@ -386,7 +388,7 @@ html, body {
 }
 
 .nav-label {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   font-size: 0.82rem;
   font-weight: 800;
   color: #fff;
