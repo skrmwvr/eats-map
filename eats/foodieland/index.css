@@ -275,10 +275,10 @@ html, body {
   border-radius: 4px;
 }
 
-/* BOTTOM AREA (Cockpit Sloped 3-Bay Architecture with Left & Right Wings) */
+/* BOTTOM AREA (Cockpit Sloped 2x7 Coarse Grid Architecture: 2-Bay Left | 3-Bay Center Sun + Wings | 2-Bay Right) */
 #bottom-bar, .dashboard-bottom {
   display: grid;
-  grid-template-columns: 1fr 1.35fr 1fr;
+  grid-template-columns: 2fr 3fr 2fr; /* 2 / 7 (28.5%) | 3 / 7 (43%) | 2 / 7 (28.5%) */
   background-color: var(--header-footer-bg);
   border-top: 1px solid var(--border-color);
   padding: 6px 8px 8px;
@@ -298,17 +298,18 @@ html, body {
   height: 100%;
 }
 
+/* Wing Buttons (Row 1, Cols 3 & 5 in the 2x7 grid): Generous touch targets with comfortable padding */
 .tiny-foot-btn {
   position: absolute;
-  top: -8px;
-  height: 28px;
-  width: 28px;
+  top: -10px;
+  height: 32px;
+  width: 32px;
   background: var(--bg-surface-elevated);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-full);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.45);
   color: #cbd5e1;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 800;
   display: flex;
   justify-content: center;
@@ -319,11 +320,11 @@ html, body {
 }
 
 #btn-foot-map {
-  left: 2px;
+  left: 4px;
 }
 
 #btn-foot-help {
-  right: 2px;
+  right: 4px;
 }
 
 .tiny-foot-btn:hover, .tiny-foot-btn:active {
@@ -359,6 +360,7 @@ html, body {
   background: rgba(255, 94, 54, 0.14);
 }
 
+/* Center Sun / Brand Bay (Span 3 units, aligning with Menu and Wishlist) */
 .bottom-btn.center-brand-btn {
   background: rgba(255, 94, 54, 0.08);
   border-color: rgba(255, 94, 54, 0.35);
@@ -372,9 +374,14 @@ html, body {
 }
 
 .nav-icon {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   line-height: 1;
   margin-bottom: 2px;
+}
+
+.center-brand-btn .nav-icon {
+  font-size: 1.35rem;
+  filter: drop-shadow(0 0 6px rgba(255, 200, 55, 0.45));
 }
 
 .nav-label {
