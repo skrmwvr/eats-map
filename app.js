@@ -145,28 +145,15 @@ class EatsMapApp {
   }
 
   bindEvents() {
-    document.getElementById('btn-weather').addEventListener('click', () => this.switchViewport('weather'));
-    document.getElementById('btn-venue').addEventListener('click', () => {
-      const sub = document.getElementById('sub-header-venue');
-      if (sub) sub.style.display = sub.style.display === 'none' ? 'flex' : 'none';
-      this.switchViewport('venue');
-    });
-    document.getElementById('btn-timeline').addEventListener('click', () => this.switchViewport('program'));
-
-    const btnCar = document.getElementById('btn-venue-car');
-    if (btnCar) btnCar.addEventListener('click', () => this.handleCarButtonClick());
-    const btnFac = document.getElementById('btn-venue-fac');
-    if (btnFac) btnFac.addEventListener('click', () => this.switchViewport('map'));
-    const btnHelp = document.getElementById('btn-venue-help');
-    if (btnHelp) btnHelp.addEventListener('click', () => {
-      this.openMedicalHelpModal();
-    });
+    document.getElementById('btn-weather')?.addEventListener('click', () => this.switchViewport('weather'));
+    document.getElementById('btn-venue')?.addEventListener('click', () => this.switchViewport('venue'));
+    document.getElementById('btn-timeline')?.addEventListener('click', () => this.openTodaysProgram());
 
     document.getElementById('btn-booths')?.addEventListener('click', () => this.switchViewport('booths'));
     document.getElementById('btn-home')?.addEventListener('click', () => this.switchViewport('home'));
     document.getElementById('btn-passport')?.addEventListener('click', () => this.switchViewport('passport'));
-    document.getElementById('btn-foot-map')?.addEventListener('click', () => this.switchViewport('map'));
-    document.getElementById('btn-foot-help')?.addEventListener('click', () => this.switchViewport('about'));
+    document.getElementById('btn-foot-map')?.addEventListener('click', () => this.openEventOverviewMap());
+    document.getElementById('btn-foot-help')?.addEventListener('click', () => this.openContextHelpModal());
 
     // Temperature Unit Toggle (°F / °C)
     const btnTempUnit = document.getElementById('btn-temp-unit');
