@@ -1620,13 +1620,79 @@ class EatsMapApp {
     }
   }
 
-  getZoneBadgeClass(zone = '') {
-    const z = (zone || '').toLowerCase();
-    if (z.includes('latin') || z.includes('chamoy')) return 'zone-latin';
-    if (z.includes('sweet') || z.includes('dessert')) return 'zone-sweet';
-    if (z.includes('asian')) return 'zone-asian';
-    if (z.includes('smoke') || z.includes('chicken') || z.includes('bbq')) return 'zone-smokehouse';
-    return '';
+  // --- LEFT WING ACTION: Event Overview Map with Nearest Bathrooms & Water Stations ---
+  openEventOverviewMap() {
+    this.closeModal();
+    this.switchViewport('map');
+    setTimeout(() => {
+      if (!this.mapManager) this.mapManager = new MapManager();
+      this.mapManager.init(this.vendors, this.venue, this.carLocation, 'all');
+    }, 60);
+  }
+
+  // --- RIGHT WING ACTION: Help, Safety, Emergency, and 1-2 Line About Link ---
+  openContextHelpModal() {
+    const modal = document.getElementById('detail-modal');
+    const content = document.getElementById('modal-content');
+    if (!modal || !content) return;
+
+    content.innerHTML = `
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <strong style="color: var(--fl-orange); font-size: 0.95rem; font-family: 'Outfit';">❓ Help & Safety Guide</strong>
+        <button class="modal-close-btn">✕</button>
+      </div>
+      
+      <div>
+        <h3 style="font-family: 'Outfit'; font-size: 1.2rem; font-weight: 900; color: #fff; margin: 4px 0 6px;">
+          Festival Assistance & Amenities
+        </h3>
+
+        <!-- Emergency / First Aid Quick Action -->
+        <div style="background: rgba(255, 42, 109, 0.12); border-left: 3px solid var(--fl-pink); padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+          <strong style="color: var(--fl-pink); font-size: 0.85rem;">🏥 Emergency & Medical (Gate 1):</strong>
+          <p style="font-size: 0.76rem; color: #cbd5e1; margin-top: 2px;">
+            First Aid & Sun Relief station located at Main Concourse Gate 1. In severe emergencies, call <strong>911</strong> or find event staff.
+          </p>
+          <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('wellness')" style="color: var(--fl-teal); font-size: 0.74rem; font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 4px;">
+            Locate First Aid on Map →
+          </a>
+        </div>
+
+        <!-- Water & Hydration Quick Action -->
+        <div style="background: rgba(0, 240, 144, 0.12); border-left: 3px solid var(--fl-green); padding: 10px; border-radius: 4px; margin-bottom: 10px;">
+          <strong style="color: var(--fl-green); font-size: 0.85rem;">💧 Free Water Refill Stations:</strong>
+          <p style="font-size: 0.76rem; color: #cbd5e1; margin-top: 2px;">
+            Hydration stations located near Pavilion B and Central Stage.
+          </p>
+          <a href="javascript:void(0)" onclick="window.app.showMapFacilityFocus('water')" style="color: var(--fl-teal); font-size: 0.74rem; font-weight: 700; text-decoration: underline; display: inline-block; margin-top: 4px;">
+            Locate Water Refills on Map →
+          </a>
+        </div>
+
+        <!-- 1-2 Line Truncated About with Deep Link to Full Program About -->
+        <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; margin-top: 10px;">
+          <p style="font-size: 0.78rem; line-height: 1.45; color: #cbd5e1; margin-bottom: 6px;">
+            <strong>☀️ Sun Map (Eats Map):</strong> A zero-download, offline-first companion guide celebrating independent chefs and live experiences.
+          </p>
+          <a href="javascript:void(0)" onclick="window.app.openFullProgramAbout()" style="color: var(--fl-yellow); font-size: 0.74rem; font-weight: 700; text-decoration: underline;">
+            Read Full Companion Guide & Ethos →
+          </a>
+        </div>
+
+        <div style="margin-top: 12px;">
+          <button class="action-share-btn" style="width: 100%; padding: 10px; font-weight: 800;" onclick="window.app.closeModal()">
+            ✓ Dismiss Help
+          </button>
+        </div>
+      </div>
+    `;
+
+    modal.classList.add('active');
+  }
+
+  openFullProgramAbout() {
+    this.closeModal();
+    this.switchViewport('about');
   }
 
   highlightBoothOnMap(vendorId, event) {

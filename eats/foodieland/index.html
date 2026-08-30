@@ -108,22 +108,35 @@
       </div>
     </div>
 
-    <!-- BOTTOM APP NAVIGATION (3-BUTTON TOOLBAR: Menu | Eats Map | Wishlist) -->
-    <footer id="bottom-bar">
-      <!-- Left Action: Menu + Booth Count -->
+    <!-- BOTTOM APP NAVIGATION (Cockpit Toolbar: Menu | Left Wing [🗺️] | Center Sun [☀️] | Right Wing [❓] | Wishlist) -->
+    <footer id="bottom-bar" class="dashboard-bottom">
+      <!-- Left Action Bay: Menu + Booth Count -->
       <button class="bottom-btn" id="btn-booths" onclick="window.app.switchViewport('booths')">
         <span class="nav-icon">📖</span>
         <span class="nav-label">Menu</span>
         <span id="booth-count-subtext" class="nav-subtext">8 Booths</span>
       </button>
 
-      <!-- Center Default / Starting View: Eats Map Home -->
-      <button class="bottom-btn active center-brand-btn" id="btn-home" onclick="window.app.switchViewport('home')">
-        <span class="nav-icon">☀️</span>
-        <span class="nav-label one-line">Eats Map</span>
-      </button>
+      <!-- Center Anchor Container with Left Wing (Map) and Right Wing (Help) -->
+      <div class="home-btn-container">
+        <!-- Left Wing: Event Overview Map with nearest Water & Restrooms -->
+        <button class="tiny-foot-btn" id="btn-foot-map" onclick="window.app.openEventOverviewMap()" title="Grounds Overview Map (Water & Restrooms)" aria-label="Grounds Map">
+          🗺️
+        </button>
 
-      <!-- Right Action: Wishlist + Live Saved Count -->
+        <!-- Center Raised Sun Button: Eats Map Home -->
+        <button class="bottom-btn active center-brand-btn" id="btn-home" onclick="window.app.switchViewport('home')" aria-label="Eats Map Home">
+          <span class="nav-icon">☀️</span>
+          <span class="nav-label one-line">Eats Map</span>
+        </button>
+
+        <!-- Right Wing: Instant Help, Safety, & Short About -->
+        <button class="tiny-foot-btn" id="btn-foot-help" onclick="window.app.openContextHelpModal()" title="Help, Safety & Info" aria-label="Help">
+          ❓
+        </button>
+      </div>
+
+      <!-- Right Action Bay: Wishlist + Live Saved Count -->
       <button class="bottom-btn" id="btn-passport" onclick="window.app.switchViewport('passport')">
         <span class="nav-icon">⭐</span>
         <span class="nav-label">Wishlist</span>
