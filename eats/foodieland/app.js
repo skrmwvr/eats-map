@@ -561,11 +561,6 @@ class EatsMapApp {
     }
   }
 
-  updateWishlistBadge() {
-    const badge = document.getElementById('wishlist-sub-label');
-    if (badge) badge.textContent = this.wishlist.length + ' Queued';
-  }
-
   // --- GPS STATUS & PROXIMITY ENGINE (Zero Startup Geolocation Calls) ---
   initGPSProximity() {
     if (!navigator.geolocation) {
