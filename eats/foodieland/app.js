@@ -23,6 +23,9 @@ class EatsMapApp {
     this.mapManager = null;
     this.qrExpanded = false;
     this.hasVisitedMenu = false; // Tracks first-time visit for attention flash
+    this.hasLeftHome = false; // Tracks if user navigated away from home
+    this.hasInteractedAllergen = false; // Tracks if user interacted with card/banner
+    this.hasFlashedHomeCard = false; // Tracks one-time return flash notice on home
   }
 
   // --- REUSABLE ALLERGEN TRACKER ACCORDION COMPONENT ---
@@ -357,24 +360,17 @@ class EatsMapApp {
     const backdrop = document.getElementById('allergen-backdrop');
     if (bar) bar.classList.remove('is-expanded');
     if (backdrop) backdrop.classList.remove('is-active');
-  }
-
   switchViewport(view, pushHistory = true) {
-    this.closeAllergenPanel();
-    
-    if (pushHistory && this.activeViewport && this.activeViewport !== view) {
-      this.historyStack.push({
-        viewport: this.activeViewport,
-        dayIndex: this.activeDayIndex,
-        homeMode: this.homeDisplayMode
-      });
-
-      // Synchronize with native browser/Android/iOS history stack
-      window.history.pushState({
-        viewport: view,
-        dayIndex: this.activeDayIndex,
-        homeMode: this.homeDisplayMode
-      }, '', '#' + view);
+    if (this.activeViewport !== view) {
+      if (this.activeViewport === 'home') {
+        this.hasLeftHome = true;
+      }
+      if (pushHistory) {
+        this.historyStack.push({ viewport: this.activeViewport, dayIndex: this.activeDayIndex, homeMode: this.homeDisplayMode });
+        try {
+          history.pushState({ viewport: view, dayIndex: this.activeDayIndex, homeMode: this.homeDisplayMode }, '', '#' + view);
+        } catch (e) {}
+      }
     }
 
     this.activeViewport = view;
@@ -387,6 +383,18 @@ class EatsMapApp {
     if (view === 'passport') document.getElementById('btn-passport')?.classList.add('active');
 
     this.renderActiveViewport();
+  }
+
+  // Tap on Main Page Card: Takes user to MENU tab and auto-expands the banner
+  openDietaryFromHome() {
+    this.hasInteractedAllergen = true;
+    this.switchViewport('booths');
+    setTimeout(() => {
+      const bar = document.getElementById('allergen-pref-bar');
+      if (bar && !bar.classList.contains('is-expanded')) {
+        bar.classList.add('is-expanded');
+      }
+    }, 100);
   }
 
   goBack() {
@@ -403,6 +411,7 @@ class EatsMapApp {
   }
 
   toggleAllergenPanel() {
+    this.hasInteractedAllergen = true;
     const bar = document.getElementById('allergen-pref-bar');
     if (bar) {
       bar.classList.toggle('is-expanded');
@@ -1043,7 +1052,7 @@ class EatsMapApp {
       ${programCardsHtml}
 
       <!-- LARGE DIETARY & ALLERGEN TRACKER CARD BUTTON (IMMEDIATELY AFTER STAGE HIGHLIGHTS) -->
-      <div class="eats-map-dietary-card" onclick="window.app.openAllergenModal()">
+      <div id="home-dietary-card" class="eats-map-dietary-card" onclick="window.app.openDietaryFromHome()">
         <div style="display: flex; align-items: center; gap: 10px;">
           <span style="font-size: 1.3rem;">⚠️</span>
           <div>
@@ -1098,6 +1107,20 @@ class EatsMapApp {
 
     html += '</div>';
     container.innerHTML = html;
+
+    // Final Notice Flash on Home: Trigger if user left home AND never clicked dietary card or menu banner
+    if (this.hasLeftHome && !this.hasInteractedAllergen && !this.hasFlashedHomeCard) {
+      this.hasFlashedHomeCard = true;
+      setTimeout(() => {
+        const homeCard = document.getElementById('home-dietary-card');
+        if (homeCard) {
+          homeCard.classList.add('flash-attention');
+          setTimeout(() => {
+            homeCard.classList.remove('flash-attention');
+          }, 700);
+        }
+      }, 80);
+    }
   }
 
   openFullGroundsMap() {
