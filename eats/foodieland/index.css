@@ -113,19 +113,12 @@ html, body {
 #brand-logo-wrap {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .sun-icon {
-  font-size: 1rem;
-}
-
-.brand-name {
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 900;
-  font-size: 1.02rem;
-  color: #fff;
-  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+  line-height: 1;
 }
 
 #festival-indicator {
@@ -135,9 +128,10 @@ html, body {
 }
 
 #top-bar-event-name {
-  font-size: 0.74rem;
+  font-size: 0.84rem;
   color: var(--text-secondary);
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
 .status-badge {
