@@ -433,10 +433,10 @@ html, body {
 }
 
 .nav-subtext {
-  font-size: 0.68rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: var(--fl-teal);
-  margin-top: 1px;
+  margin-top: 2px;
 }
 
 /* Jumbo Grounds Map Button */

@@ -872,11 +872,11 @@ class EatsMapApp {
             ${currentOrNext.map((ev) => `
               <div class="stage-event-card" style="margin-bottom:0; background: var(--bg-surface-elevated); border: 1px solid var(--border-color);" onclick="window.app.openStageEventModal('${ev.id}')">
                 <div style="display:flex; justify-content:space-between; align-items:center;">
-                  <strong style="color:var(--fl-orange); font-size:0.85rem;">${ev.time}</strong>
-                  <span style="font-size:0.72rem; color:var(--fl-teal); font-weight:700;">${ev.stage_name}</span>
+                  <strong style="color:var(--fl-orange); font-size:0.90rem;">${ev.time}</strong>
+                  <span style="font-size:0.78rem; color:var(--fl-teal); font-weight:700;">${ev.stage_name}</span>
                 </div>
-                <div style="color:#fff; font-size:0.92rem; font-weight:700; margin:3px 0 2px;">${ev.title}</div>
-                <div style="font-size:0.75rem; color:var(--text-secondary);">${ev.performer}</div>
+                <div style="color:#fff; font-size:0.98rem; font-weight:700; margin:4px 0 2px;">${ev.title}</div>
+                <div style="font-size:0.84rem; color:var(--text-secondary);">${ev.performer}</div>
               </div>
             `).join('')}
           </div>
