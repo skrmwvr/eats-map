@@ -2,142 +2,335 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  
-  <!-- Primary Document Identity -->
-  <title>☀️ Eats Map • FoodieLand Nashville 2026</title>
-  <meta name="description" content="Offline companion guide for FoodieLand Nashville 2026. 200+ vendor menus, interactive grounds GPS map, dietary filters, and tasting wishlist.">
-  <meta name="keywords" content="FoodieLand, Nashville, Eats Map, Night Market, Food Festival, Food Guide, Sun Map">
-  <meta name="author" content="Sun Map">
-  
-  <!-- W3C Web App Manifest & OS Theming -->
-  <link rel="manifest" href="./manifest.webmanifest">
-  <meta name="theme-color" content="#0b0c10">
-  <meta name="color-scheme" content="dark">
-  <meta name="application-name" content="Eats Map">
-  
-  <!-- iOS / Apple WebKit Capabilities -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Eats Map">
-  <link rel="apple-touch-icon" href="./icon-192.png">
-  <meta name="format-detection" content="telephone=no">
-
-  <!-- OpenGraph / Social Sharing (iMessage, WhatsApp, Twitter) -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Sun Map">
-  <meta property="og:title" content="Eats Map • FoodieLand Nashville 2026">
-  <meta property="og:description" content="Explore 200+ food booths, find stages, mark your car, and curate your tasting crawl offline.">
-  <meta property="og:image" content="./icon-512.png">
-  
-  <!-- Leaflet CSS for Vector Map Display -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  
-  <!-- Google Fonts: DM Sans Unified Variable Font (Optical Sizing, Full Weights 100-1000) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sun Map • Zero-Download Offline Event Companions & Program Concierges</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=optional" rel="stylesheet">
-  
-  <link rel="stylesheet" href="./index.css">
-  
-  <!-- Offline QR Code Generator Library -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;1,9..40,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07080c;
+      --surface: #0f1118;
+      --surface-elevated: #181b24;
+      --border: #1e2230;
+      --sun-yellow: #ffc837;
+      --sun-orange: #ff5e36;
+      --sun-pink: #ff2a6d;
+      --sun-teal: #05d9e8;
+      --sun-lime: #00f090;
+      --text-main: #f8fafc;
+      --text-muted: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 20px 60px;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(ellipse at top center, rgba(255, 94, 54, 0.15) 0%, transparent 65%),
+        radial-gradient(circle at bottom right, rgba(5, 217, 232, 0.08) 0%, transparent 50%);
+    }
+
+    .container {
+      max-width: 720px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* Top Brand Hero */
+    .hero-block {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .solar-icon {
+      font-size: 3rem;
+      margin-bottom: 2px;
+      filter: drop-shadow(0 0 20px rgba(255, 200, 55, 0.6));
+    }
+
+    .brand-title {
+      font-size: 2.8rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      background: linear-gradient(135deg, #ffffff 40%, var(--sun-orange) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .brand-tagline {
+      font-size: 0.95rem;
+      color: var(--sun-teal);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-manifesto {
+      font-size: 0.90rem;
+      color: #cbd5e1;
+      line-height: 1.5;
+      max-width: 580px;
+      margin-top: 4px;
+    }
+
+    /* Card Panels */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Big Hero Spotlight Card to Eats Map */
+    .hero-spotlight-card {
+      background: linear-gradient(135deg, rgba(38, 20, 52, 0.9) 0%, rgba(20, 16, 32, 0.95) 100%);
+      border: 1.5px solid var(--sun-orange);
+      box-shadow: 0 12px 36px rgba(255, 94, 54, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-spotlight-card::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0; width: 140px; height: 140px;
+      background: radial-gradient(circle, rgba(255, 94, 54, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 94, 54, 0.2);
+      border: 1px solid var(--sun-orange);
+      color: var(--sun-yellow);
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 99px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+
+    .big-launch-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: linear-gradient(135deg, var(--sun-orange), var(--sun-pink));
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 900;
+      padding: 16px 22px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(255, 94, 54, 0.4);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      margin-top: 16px;
+    }
+
+    .big-launch-btn:hover, .big-launch-btn:active {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255, 94, 54, 0.6);
+      filter: brightness(1.08);
+    }
+
+    /* Category Universe Grid */
+    .universe-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .universe-pill {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .universe-pill.active-link:hover {
+      border-color: var(--sun-teal);
+      transform: translateY(-2px);
+      background: rgba(5, 217, 232, 0.08);
+    }
+
+    .universe-pill.upcoming {
+      opacity: 0.75;
+      border-style: dashed;
+    }
+
+    /* Active Companion Guides Roster */
+    .guide-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+      margin-bottom: 10px;
+    }
+
+    .guide-item:hover {
+      border-color: var(--sun-teal);
+      background: rgba(5, 217, 232, 0.06);
+      transform: translateX(4px);
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+  </style>
 </head>
 <body>
-  <div id="app-container">
+
+  <div class="container">
     
-    <!-- TOP APP BAR (Snapped to top of viewport like bottom toolbar) -->
-    <header id="top-bar">
-      <!-- Quick Action / View Filter Pills (Clean 3-Button Stacked Architecture) -->
-      <nav id="top-nav-pills">
-        <button class="top-btn" id="btn-weather" onclick="window.app.switchViewport('weather')">
-          <span class="btn-top-icon">☀️</span>
-          <span class="btn-top-title">Weather</span>
-          <span id="weather-temp-pill" class="btn-top-subtitle">78°F Clear</span>
-        </button>
-        <button class="top-btn" id="btn-venue" onclick="window.app.switchViewport('venue')">
-          <span class="btn-top-icon">🏟️</span>
-          <span class="btn-top-title">Venue</span>
-          <span id="venue-info-pill" class="btn-top-subtitle">Superspeedway</span>
-        </button>
-        <button class="top-btn" id="btn-timeline" onclick="window.app.openTodaysProgram()">
-          <span class="btn-top-icon">📅</span>
-          <span class="btn-top-title">Program</span>
-          <span id="program-day-pill" class="btn-top-subtitle">Today</span>
-        </button>
-      </nav>
+    <!-- 1. Sun Map Concept & Vision Header -->
+    <header class="hero-block">
+      <div class="solar-icon">☀️</div>
+      <h1 class="brand-title">Sun Map</h1>
+      <div class="brand-tagline">Zero-Download Offline Companion Platform</div>
+      <p class="brand-manifesto">
+        Sun Map builds offline-first companion guides, program concierges, and interactive vector maps for high-density live gatherings, night markets, and subterranean culture. <strong>Celebrating a dependency shift and shared human experiences.</strong>
+      </p>
     </header>
 
-    <!-- BRAND & FESTIVAL STATUS BAND (Positioned below top toolbar, above dietary bar) -->
-    <div id="brand-status-band" class="brand-status-band">
-      <div id="brand-logo-wrap">
-        <span class="sun-icon">☀️</span>
-        <span id="top-bar-event-name">FoodieLand Nashville 2026</span>
+    <!-- 2. Primary Spotlight: Eats Map Series Feature -->
+    <section class="card hero-spotlight-card">
+      <div class="category-badge">
+        <span>🥢</span> Featured Companion Series
       </div>
-      <div id="festival-indicator">
-        <span id="top-bar-status" class="status-badge live">LIVE</span>
-      </div>
-    </div>
+      <h2 style="font-size: 1.6rem; font-weight: 900; color: #fff; letter-spacing: -0.02em; margin-bottom: 6px;">
+        Eats Map: Night Markets & Street Culinary
+      </h2>
+      <p style="font-size: 0.85rem; color: #cbd5e1; line-height: 1.5; margin-bottom: 14px;">
+        Transforming 200+ vendor food festival circuits into interactive offline experiences. Deep culinary heritage notes, live dish queues, in-line allergen scanners, and GPS car finders.
+      </p>
 
-    <!-- MAIN VIEWPORT CONTAINER -->
-    <main id="main-viewport">
-      <!-- Active view dynamically injected here -->
-      <div id="loading-spinner" style="text-align: center; padding: 40px; color: var(--text-secondary);">
-        <p>Loading FoodieLand Guide...</p>
-      </div>
-    </main>
+      <a href="./eats/index.html" class="big-launch-btn">
+        <span>🥢 Explore Eats Map Portal & Guides</span>
+        <span style="font-size: 1.3rem;">→</span>
+      </a>
+    </section>
 
-    <!-- DETAIL / PROGRAM / PASSPORT MODAL (SHARED OVERLAY) -->
-    <div id="detail-modal" class="modal-backdrop modal-overlay">
-      <div id="modal-content" class="modal-sheet modal-card">
-        <!-- Modal content injected dynamically -->
-      </div>
-    </div>
-
-    <!-- BOTTOM APP NAVIGATION (Cockpit Toolbar: Menu | Left Wing [🗺️] | Center Sun [☀️] | Right Wing [❓] | Wishlist) -->
-    <footer id="bottom-bar" class="dashboard-bottom">
-      <!-- Left Action Bay: Menu + Booth Count -->
-      <button class="bottom-btn" id="btn-booths" onclick="window.app.switchViewport('booths')">
-        <span class="nav-icon">📖</span>
-        <span class="nav-label">MENU</span>
-        <span id="booth-count-subtext" class="nav-subtext">8 Booths</span>
-      </button>
-
-      <!-- Center Anchor Container with Left Wing (Map) and Right Wing (Help) -->
-      <div class="home-btn-container">
-        <!-- Left Wing: Event Overview Map with nearest Water & Restrooms -->
-        <button class="tiny-foot-btn" id="btn-foot-map" onclick="window.app.openEventOverviewMap()" title="Grounds Overview Map (Water & Restrooms)" aria-label="Grounds Map">
-          🗺️
-        </button>
-
-        <!-- Center Raised Sun Button: Eats Map Home -->
-        <button class="bottom-btn active center-brand-btn" id="btn-home" onclick="window.app.switchViewport('home')" aria-label="Eats Map Home">
-          <span class="nav-icon">☀️</span>
-          <span class="nav-label one-line">EATS MAP</span>
-        </button>
-
-        <!-- Right Wing: Instant Help, Safety, & Short About -->
-        <button class="tiny-foot-btn" id="btn-foot-help" onclick="window.app.openContextHelpModal()" title="Help, Safety & Info" aria-label="Help">
-          ❓
-        </button>
+    <!-- 3. Latest Active Sun Maps Roster -->
+    <section class="card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px;">
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff;">
+          ☀️ Latest Companion Guides
+        </h3>
+        <span style="font-size: 0.75rem; color: var(--sun-lime); font-weight: 700;">● Active Deployments</span>
       </div>
 
-      <!-- Right Action Bay: Wishlist + Live Saved Count -->
-      <button class="bottom-btn" id="btn-passport" onclick="window.app.switchViewport('passport')">
-        <span class="nav-icon">⭐</span>
-        <span class="nav-label">WISHLIST</span>
-        <span id="wishlist-count-subtext" class="nav-subtext">0 Saved</span>
-      </button>
+      <!-- FoodieLand Nashville 2026 Direct Launch -->
+      <a href="./eats/foodieland/index.html" class="guide-item">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.1rem;">☀️</span>
+            <strong style="color: #fff; font-size: 0.95rem;">FoodieLand Nashville 2026</strong>
+            <span style="font-size: 0.68rem; background: rgba(0,240,144,0.15); border: 1px solid var(--sun-lime); color: var(--sun-lime); padding: 2px 6px; border-radius: 4px; font-weight: 800;">LIVE</span>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--sun-teal); margin-top: 3px;">
+            Nashville Superspeedway • 200+ Booths • Aug 28–30, 2026
+          </div>
+        </div>
+        <span style="color: var(--sun-yellow); font-weight: 800; font-size: 0.88rem;">Launch App →</span>
+      </a>
+
+      <!-- Eats Map Landing Link -->
+      <a href="./eats/index.html" class="guide-item">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1.1rem;">🥢</span>
+            <strong style="color: #fff; font-size: 0.95rem;">Eats Map Directory & Message Drop</strong>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 3px;">
+            Festival circuit series & offline AI feedback buffer (/eats/)
+          </div>
+        </div>
+        <span style="color: var(--sun-teal); font-weight: 700; font-size: 0.88rem;">View Series →</span>
+      </a>
+    </section>
+
+    <!-- 4. Sun Map Universe Categories (Expanding Horizons) -->
+    <section class="card">
+      <h3 style="font-size: 1.15rem; font-weight: 800; color: #fff; margin-bottom: 6px;">
+        🌌 The Sun Map Universe
+      </h3>
+      <p style="font-size: 0.80rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 12px;">
+        Specialized companion architectures engineered for unique spatial, physical, and subcultural gatherings.
+      </p>
+
+      <div class="universe-grid">
+        <a href="./eats/index.html" class="universe-pill active-link">
+          <strong style="color: var(--sun-yellow); font-size: 0.88rem;">🥢 Eats Maps</strong>
+          <span style="font-size: 0.74rem; color: #cbd5e1;">Food festivals, night markets, and street culinary circuits.</span>
+        </a>
+
+        <div class="universe-pill upcoming">
+          <strong style="color: #cbd5e1; font-size: 0.88rem;">🎪 Fair Maps</strong>
+          <span style="font-size: 0.74rem; color: var(--text-muted);">County fairs, state expos, rides, and midway crawls.</span>
+        </div>
+
+        <div class="universe-pill upcoming">
+          <strong style="color: #cbd5e1; font-size: 0.88rem;">🏕️ Gather Maps</strong>
+          <span style="font-size: 0.74rem; color: var(--text-muted);">Multi-day retreats, outdoor arts campouts, and unconferences.</span>
+        </div>
+
+        <div class="universe-pill upcoming">
+          <strong style="color: #cbd5e1; font-size: 0.88rem;">📍 Scene & Secret Maps</strong>
+          <span style="font-size: 0.74rem; color: var(--text-muted);">Underground DIY scenes, fictional locations & pop-culture trails.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div style="color: var(--sun-yellow); font-weight: 700; margin-bottom: 2px;">
+        ☀️ Crafted by foodies & fans, free, for the love of the show.
+      </div>
+      <div>Free personal attendee use & peer sharing • CC BY-NC-ND 4.0</div>
+      <div style="margin-top: 4px;">
+        © 2026 Sun Map • Architecture & Tour Inquiries: <a href="https://sunmap.dev" style="color: var(--sun-teal); text-decoration: underline;">sunmap.dev</a>
+      </div>
     </footer>
 
   </div>
 
-  <!-- Leaflet Vector Engine -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  
-  <!-- App Scripts & Embedded Data Bundles -->
-  <script src="./data_bundle.js"></script>
-  <script src="./map_logic.js"></script>
-  <script src="./app.js"></script>
 </body>
 </html>
